@@ -12,6 +12,9 @@ namespace Corum2.Core
         public bool HitRightBound;
         public bool HitCeiling;
         public bool Landed;        // blocked from below while moving down
+        /// <summary>The body already overlapped a solid before moving. That solid is ignored for this move
+        /// (it never pushes the body against the input direction); callers log it as a diagnostic.</summary>
+        public bool StartedInside;
     }
 
     /// <summary>
@@ -27,6 +30,9 @@ namespace Corum2.Core
         {
             var r = new MoveResult { Position = feet };
             var pos = feet;
+            var start = Aabb.FromFeet(feet, width, height);
+            foreach (var s in map.Solids)
+                if (start.Overlaps(s)) r.StartedInside = true;
 
             if (dx != 0f)
             {
@@ -34,7 +40,7 @@ namespace Corum2.Core
                 var box = Aabb.FromFeet(new Vec2(nx, pos.Y), width, height);
                 foreach (var s in map.Solids)
                 {
-                    if (!box.Overlaps(s)) continue;
+                    if (!box.Overlaps(s) || start.Overlaps(s)) continue; // WP-01-R1 F-01: no push-out against the move
                     if (dx > 0f)
                     {
                         nx = Math.Min(nx, s.MinX - width * 0.5f - Skin);
@@ -66,9 +72,10 @@ namespace Corum2.Core
             {
                 var ny = pos.Y + dy;
                 var box = Aabb.FromFeet(new Vec2(pos.X, ny), width, height);
+                var startY = Aabb.FromFeet(pos, width, height);
                 foreach (var s in map.Solids)
                 {
-                    if (!box.Overlaps(s)) continue;
+                    if (!box.Overlaps(s) || startY.Overlaps(s)) continue;
                     if (dy > 0f)
                     {
                         ny = Math.Min(ny, s.MinY - height - Skin);

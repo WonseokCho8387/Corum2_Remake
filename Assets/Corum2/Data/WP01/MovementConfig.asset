@@ -15,7 +15,7 @@ MonoBehaviour:
   meta:
     domainId: movement.player
     schemaVersion: 1
-    dataVersion: wp01-1
+    dataVersion: wp01-r1
     status: experimental
     policyIds:
     - EXP-MOVE-01

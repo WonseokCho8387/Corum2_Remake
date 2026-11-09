@@ -190,7 +190,7 @@ namespace Corum2.Core
             if (IsGroundState(State))
             {
                 if (dir == Dir8.Down) return StartSlide(map, e);
-                if (dir == Dir8.DownLeft || dir == Dir8.DownRight) return StartRoll(e, Dir8Util.Horizontal(dir));
+                if (dir == Dir8.DownLeft || dir == Dir8.DownRight) return StartRoll(map, e, Dir8Util.Horizontal(dir));
                 return StartJump(map, e);
             }
             if (State == MotorState.Airborne) return TryExtraJump(e);
@@ -321,8 +321,12 @@ namespace Corum2.Core
             return "slide";
         }
 
-        string StartRoll(in InputEvent e, int h)
+        string StartRoll(MapData map, in InputEvent e, int h)
         {
+            // WP-01-R1 F-01: rolling uses the standing body, so it needs standing clearance.
+            // Under a low ceiling the roll is refused and the player stays crouched in place (EXP-MOVE-06).
+            if (!Collision.Fits(map, Position, _m.BodyWidth, _m.StandHeight))
+                return Reject(e, "CeilingBlocked", "EXP-MOVE-06: roll needs standing clearance; posture and position unchanged");
             var before = State;
             State = MotorState.Roll;
             _stateTimer = _m.RollDuration;

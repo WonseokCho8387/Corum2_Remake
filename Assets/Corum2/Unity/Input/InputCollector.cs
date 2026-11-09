@@ -61,14 +61,14 @@ namespace Corum2.Unity
         void OnMove(InputAction.CallbackContext ctx)
         {
             _stick = ctx.ReadValue<Vector2>();
-            _lastDevice = ctx.control != null ? ctx.control.device.layout : _lastDevice;
+            _lastDevice = ctx.control != null ? ctx.control.device.name : _lastDevice;
             var d = Dir8Util.FromStick(_stick.x, _stick.y, _deadzone);
             EmitDir(d, ctx.time, _lastDevice, ctx.control != null ? ctx.control.path : "move");
         }
 
         void OnButton(InputAction.CallbackContext ctx, LogicalAction action, InputEdge edge)
         {
-            _lastDevice = ctx.control != null ? ctx.control.device.layout : _lastDevice;
+            _lastDevice = ctx.control != null ? ctx.control.device.name : _lastDevice;
             _transport.Enqueue(new InputEvent(_transport.NextEventId(), action, edge, ctx.time, _lastDevice, ctx.control != null ? ctx.control.path : action.ToString()));
         }
 

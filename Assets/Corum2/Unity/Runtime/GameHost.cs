@@ -66,6 +66,17 @@ namespace Corum2.Unity
         int _scriptIndex;
         public bool ScriptRunning => _scriptIndex < _script.Count;
 
+        VirtualDevices _virtual;
+        float _savedCaptureDt;
+        VirtualDevices Virtual => _virtual ?? (_virtual = CreateVirtual());
+
+        VirtualDevices CreateVirtual()
+        {
+            _savedCaptureDt = Time.captureDeltaTime;
+            Sim.Log.Emit("marker", "", "", "", "", "VirtualDevicesAdded", ("keyboard", VirtualDevices.KeyboardName), ("gamepad", VirtualDevices.GamepadName));
+            return new VirtualDevices();
+        }
+
         void Awake()
         {
             Instance = this;
@@ -174,6 +185,7 @@ namespace Corum2.Unity
         void OnDestroy()
         {
             _collector?.Dispose();
+            _virtual?.Dispose();
             if (Sim != null)
             {
                 Sim.Log.Emit("view.planeCheck", "player", "", "", "", "RenderedPlayerDepth",
@@ -196,7 +208,8 @@ namespace Corum2.Unity
         {
             _script.Clear();
             _scriptIndex = 0;
-            _scriptStart = Time.realtimeSinceStartupAsDouble;
+            // Script times are game seconds, so a recorder that locks frame time keeps the sequence intact.
+            _scriptStart = Time.timeAsDouble;
             foreach (var part in script.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries))
             {
                 var i = part.IndexOf(':');
@@ -209,7 +222,7 @@ namespace Corum2.Unity
 
         void RunScript()
         {
-            var now = Time.realtimeSinceStartupAsDouble - _scriptStart;
+            var now = Time.timeAsDouble - _scriptStart;
             while (_scriptIndex < _script.Count && _script[_scriptIndex].at <= now)
             {
                 Exec(_script[_scriptIndex].cmd);
@@ -262,6 +275,38 @@ namespace Corum2.Unity
                 case "flush":
                     _sink?.Flush();
                     break;
+                // Device-level input (virtual keyboard/gamepad through Input System bindings), WP-01-R1 F-03.
+                case "kb":
+                {
+                    var kv = arg.Split(':');
+                    Virtual.Key(kv[0], kv[1] == "down");
+                    break;
+                }
+                case "kbtap":
+                    Virtual.Key(arg, true);
+                    Virtual.Key(arg, false);
+                    break;
+                case "pad":
+                {
+                    var xy = arg.Split(',');
+                    Virtual.Stick(float.Parse(xy[0], CultureInfo.InvariantCulture), float.Parse(xy[1], CultureInfo.InvariantCulture));
+                    break;
+                }
+                case "padbtn":
+                {
+                    var kv = arg.Split(':');
+                    Virtual.Button(kv[0], kv[1] == "down");
+                    break;
+                }
+                case "padtap":
+                    Virtual.Button(arg, true);
+                    Virtual.Button(arg, false);
+                    break;
+                case "framedt":
+                    // Test-only: frame length in game seconds (e.g. 0.1 = five fixed ticks per rendered frame).
+                    Time.captureDeltaTime = arg == "restore" ? _savedCaptureDt : float.Parse(arg, CultureInfo.InvariantCulture);
+                    Sim.Log.Emit("marker", "", "", "", "", "FrameDeltaChanged", ("captureDeltaTime", Time.captureDeltaTime));
+                    break;
                 default:
                     Debug.LogWarning("[Corum2] Unknown script command: " + cmd);
                     break;
@@ -309,10 +354,10 @@ namespace Corum2.Unity
             rt.anchorMax = new Vector2(0, 1);
             rt.pivot = new Vector2(0, 1);
             rt.anchoredPosition = new Vector2(12, -10);
-            rt.sizeDelta = new Vector2(760, 420);
+            rt.sizeDelta = new Vector2(1000, 560);
             _hud = textGo.GetComponent<Text>();
             _hud.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
-            _hud.fontSize = 15;
+            _hud.fontSize = 19;
             _hud.color = Color.white;
             _hud.raycastTarget = false;
             var shadow = textGo.AddComponent<Shadow>();
@@ -331,7 +376,8 @@ namespace Corum2.Unity
                 return;
             }
             var p = Sim.Player;
-            sb.Append("WP-01 map/input/movement — experimental build    ").Append(RunId).AppendLine();
+            sb.AppendFormat("<size=30><b>{0}</b>   {1}   tick {2}</size>\n", Sim.Log.TestCaseId, p.State, Sim.Tick);
+            sb.Append("experimental build    ").Append(RunId).AppendLine();
             sb.AppendFormat(CultureInfo.InvariantCulture, "map {0}   tick {1}   fps {2:0}   sim {3:0}Hz\n", Sim.CurrentMap.Id, Sim.Tick, _fpsSmoothed, 1f / Time.fixedDeltaTime);
             sb.AppendFormat(CultureInfo.InvariantCulture, "state {0}   grounded {1}   facing {2}   pos {3}   vel ({4:0.00}, {5:0.00})\n",
                 p.State, p.Grounded, p.Facing > 0 ? "R" : "L", p.Position, p.VelX, p.VelY);

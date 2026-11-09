@@ -20,7 +20,7 @@ namespace Corum2.EditorTools
         const string DataDir = "Assets/Corum2/Data/WP01";
         const string SceneDir = "Assets/Corum2/Scenes";
         public const string ScenePath = SceneDir + "/WP01_MapMovement.unity";
-        const string Version = "wp01-1";
+        const string Version = "wp01-r1";
 
         [MenuItem("Corum2/WP-01/Build Test Content")]
         public static void Build()
@@ -46,7 +46,7 @@ namespace Corum2.EditorTools
             a.spawns = new List<SpawnData>
             {
                 Spawn("Start", 4, 1), Spawn("FromRight", 78, -1), Spawn("FromAbove", 56, 1),
-                Spawn("TestPassageWest", 38.5f, 1), Spawn("TestOpen", 12, 1),
+                Spawn("TestPassageWest", 38.5f, 1), Spawn("TestOpen", 12, 1), Spawn("TestPassageSlide", 37.55f, 1),
             };
             a.left = new EdgeData { policy = EdgePolicy.Blocked };
             a.right = new EdgeData { policy = EdgePolicy.Connected, connectionId = "C-M01-M02", targetMapId = "M02", targetSpawnId = "FromLeft" };

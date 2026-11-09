@@ -31,8 +31,9 @@ namespace Corum2.Core
             if (move != null) ValidateMovement(issues, move);
             if (input != null)
             {
-                if (input.StickDeadzone < 0f || input.StickDeadzone >= 1f) issues.Add(new ValidationIssue("InputProfile", "StickDeadzone must be in [0,1)."));
-                if (input.DoubleTapWindow <= 0.0) issues.Add(new ValidationIssue("InputProfile", "DoubleTapWindow must be > 0."));
+                // WP-01-R1 F-04: range checks written as "must be inside" so NaN fails them too.
+                if (!(input.StickDeadzone >= 0f && input.StickDeadzone < 1f)) issues.Add(new ValidationIssue("InputProfile", "StickDeadzone must be a finite value in [0,1) (got " + input.StickDeadzone + ")."));
+                if (!(input.DoubleTapWindow > 0.0 && input.DoubleTapWindow < 10.0)) issues.Add(new ValidationIssue("InputProfile", "DoubleTapWindow must be a finite value in (0,10) s (got " + input.DoubleTapWindow + ")."));
             }
 
             if (world == null)
@@ -68,10 +69,29 @@ namespace Corum2.Core
             if (meta.Status != "experimental" && meta.Status != "approved") issues.Add(new ValidationIssue(source, "Status must be 'experimental' or 'approved'."));
         }
 
+        static bool IsFinite(float v) => !float.IsNaN(v) && !float.IsInfinity(v);
+
+        /// <summary>Rejects NaN/Infinity with source and field name (WP-01-R1 F-04).</summary>
+        static bool Finite(List<ValidationIssue> issues, string source, string field, float v)
+        {
+            if (IsFinite(v)) return true;
+            issues.Add(new ValidationIssue(source, field + " must be finite (got " + v + ")."));
+            return false;
+        }
+
+        static void FiniteBox(List<ValidationIssue> issues, string source, string field, Aabb b)
+        {
+            Finite(issues, source, field + ".MinX", b.MinX);
+            Finite(issues, source, field + ".MinY", b.MinY);
+            Finite(issues, source, field + ".MaxX", b.MaxX);
+            Finite(issues, source, field + ".MaxY", b.MaxY);
+        }
+
         static void ValidateMovement(List<ValidationIssue> issues, MovementProfile m)
         {
             void Positive(string name, float v)
             {
+                if (!Finite(issues, "MovementProfile", name, v)) return;
                 if (!(v > 0f)) issues.Add(new ValidationIssue("MovementProfile", name + " must be > 0."));
             }
 
@@ -93,18 +113,33 @@ namespace Corum2.Core
             Positive("BodyWidth", m.BodyWidth);
             Positive("StandHeight", m.StandHeight);
             Positive("CrouchHeight", m.CrouchHeight);
-            if (m.DashEndSpeed < 0f) issues.Add(new ValidationIssue("MovementProfile", "DashEndSpeed must be >= 0."));
+            if (Finite(issues, "MovementProfile", "DashEndSpeed", m.DashEndSpeed) && m.DashEndSpeed < 0f) issues.Add(new ValidationIssue("MovementProfile", "DashEndSpeed must be >= 0."));
+            Finite(issues, "MovementProfile", "DiveAngleDeg", m.DiveAngleDeg);
             // R-03-02 / spec 11.2: walk jump distance < run jump distance.
             if (!(m.WalkSpeed < m.RunSpeed)) issues.Add(new ValidationIssue("MovementProfile", "WalkSpeed must be < RunSpeed (walk jump shorter than run jump)."));
             if (!(m.CrouchHeight < m.StandHeight)) issues.Add(new ValidationIssue("MovementProfile", "CrouchHeight must be < StandHeight."));
-            if (m.DiveAngleDeg <= 0f || m.DiveAngleDeg >= 90f) issues.Add(new ValidationIssue("MovementProfile", "DiveAngleDeg must be in (0,90) for a diagonal dive."));
+            if (!(m.DiveAngleDeg > 0f && m.DiveAngleDeg < 90f)) issues.Add(new ValidationIssue("MovementProfile", "DiveAngleDeg must be in (0,90) for a diagonal dive."));
         }
 
         static void ValidateMap(List<ValidationIssue> issues, WorldData world, MapData m, MovementProfile move)
         {
             var src = "Map " + m.Id;
             CheckMeta(issues, src, m.Meta);
-            if (!(m.MinX < m.MaxX)) issues.Add(new ValidationIssue(src, "MinX must be < MaxX."));
+            Finite(issues, src, "MinX", m.MinX);
+            Finite(issues, src, "MaxX", m.MaxX);
+            Finite(issues, src, "KillY", m.KillY);
+            Finite(issues, src, "CombatPlaneZ", m.CombatPlaneZ);
+            Finite(issues, src, "Camera.MinX", m.Camera.MinX);
+            Finite(issues, src, "Camera.MaxX", m.Camera.MaxX);
+            Finite(issues, src, "Camera.Y", m.Camera.Y);
+            Finite(issues, src, "Camera.FollowSharpness", m.Camera.FollowSharpness);
+            for (var i = 0; i < m.Solids.Count; i++) FiniteBox(issues, src, "Solids[" + i + "]", m.Solids[i]);
+            foreach (var s in m.Spawns)
+            {
+                Finite(issues, src, "Spawn " + s.Id + ".X", s.Position.X);
+                Finite(issues, src, "Spawn " + s.Id + ".Y", s.Position.Y);
+            }
+            foreach (var p in m.Points) FiniteBox(issues, src, "Point " + p.Id + ".Area", p.Area);            if (!(m.MinX < m.MaxX)) issues.Add(new ValidationIssue(src, "MinX must be < MaxX."));
             if (m.Camera.MinX > m.Camera.MaxX) issues.Add(new ValidationIssue(src, "Camera MinX must be <= MaxX."));
             if (m.Camera.FollowSharpness < 0f) issues.Add(new ValidationIssue(src, "Camera FollowSharpness must be >= 0."));
             if (m.Spawns.Count == 0) issues.Add(new ValidationIssue(src, "Map needs at least one spawn."));

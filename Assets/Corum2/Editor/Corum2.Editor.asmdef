@@ -5,7 +5,10 @@
         "Corum2.Core",
         "Corum2.Unity",
         "Unity.RenderPipelines.Core.Runtime",
-        "Unity.RenderPipelines.Universal.Runtime"
+        "Unity.RenderPipelines.Universal.Runtime",
+        "Unity.Recorder.Editor",
+        "Unity.Recorder.Base",
+        "Unity.Recorder"
     ],
     "includePlatforms": [
         "Editor"

@@ -15,7 +15,7 @@ MonoBehaviour:
   meta:
     domainId: map.M01
     schemaVersion: 1
-    dataVersion: wp01-1
+    dataVersion: wp01-r1
     status: experimental
     policyIds:
     - EXP-MAP-01
@@ -56,6 +56,9 @@ MonoBehaviour:
     facing: 1
   - id: TestOpen
     position: {x: 12, y: 0}
+    facing: 1
+  - id: TestPassageSlide
+    position: {x: 37.55, y: 0}
     facing: 1
   left:
     policy: 0

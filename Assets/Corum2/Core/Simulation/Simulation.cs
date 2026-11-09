@@ -55,6 +55,7 @@ namespace Corum2.Core
             "EXP-MOVE-02 roll keeps facing; down-diagonals crouch when held without A",
             "EXP-MOVE-03 dash/dive need a horizontal input component",
             "EXP-MOVE-05 slide/roll/dash/dive cannot be cancelled by other movement input",
+            "EXP-MOVE-06 roll refused under a ceiling lower than standing height (stays crouched, no movement)",
             "EXP-AIR-01 air uses consumed when the action starts (U-04)",
             "EXP-AIR-02 extra jump/dash/dive allowed after walking off a ledge (U-04)",
             "EXP-MAP-01 map transition resets velocity, run and air uses; player placed grounded at spawn (U-01)",
@@ -130,6 +131,9 @@ namespace Corum2.Core
             }
 
             var r = Player.Integrate(CurrentMap, dt);
+            if (r.StartedInside)
+                Log.Emit("collision.startInside", PlayerMotor.Actor, "", Player.State.ToString(), Player.State.ToString(),
+                    "BodyOverlappedSolidBeforeMove(diagnostic)", ("position", Player.Position), ("height", Player.Height));
 
             if (Player.Position.Y < CurrentMap.KillY)
             {

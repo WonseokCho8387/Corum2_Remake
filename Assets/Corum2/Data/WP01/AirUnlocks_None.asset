@@ -15,7 +15,7 @@ MonoBehaviour:
   meta:
     domainId: unlock.AirUnlocks_None
     schemaVersion: 1
-    dataVersion: wp01-1
+    dataVersion: wp01-r1
     status: experimental
     policyIds: []
     relatedRIds:

@@ -3,6 +3,7 @@
     "rootNamespace": "Corum2.Tests",
     "references": [
         "Corum2.Core",
+        "Corum2.Unity",
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner"
     ],
