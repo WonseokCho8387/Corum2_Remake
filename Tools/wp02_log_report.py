@@ -10,10 +10,10 @@ KEEP = {
     "attack.start", "attack.end", "attack.buffered", "attack.bufferExecuted", "attack.reserved", "attack.reservationExecuted",
     "hit", "hit.skip", "hit.player", "hitstop", "combo.begin", "combo.end", "combo.window", "combo.linkEnd",
     "guard.block", "guard.parry", "guard.turn", "dodge", "enemy.vanish", "enemy.removed", "player.death",
-    "input.reject", "motor.jump", "marker",
+    "input.reject", "motor.jump", "marker", "hitstop.skip",
 }
 FIELDS = ("attackId", "attackInstanceId", "attackChainStep", "comboBefore", "comboAfter", "comboHits", "damageD", "damageTaken",
-          "hpBefore", "hpAfter", "rbToHit", "front", "superArmor", "knockbackVel", "detail", "seconds", "targets", "elapsed", "hits")
+          "hpBefore", "hpAfter", "rbToHit", "front", "superArmor", "knockbackVel", "detail", "seconds", "targets", "elapsed", "hits", "hitEventId", "chainHasDash", "cf")
 
 
 def main(path):

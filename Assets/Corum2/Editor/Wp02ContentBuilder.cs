@@ -17,7 +17,7 @@ namespace Corum2.EditorTools
         const string Dir = "Assets/Corum2/Data/WP02";
         const string Wp01 = "Assets/Corum2/Data/WP01";
         public const string ScenePath = "Assets/Corum2/Scenes/WP02_Combat.unity";
-        const string Version = "wp02-1";
+        const string Version = "wp02-r1";
 
         [MenuItem("Corum2/WP-02/Build Test Content")]
         public static void Build()
@@ -58,16 +58,18 @@ namespace Corum2.EditorTools
             map.meta.dataVersion = Version;
             map.mapId = "C01";
             map.minX = 0;
-            map.maxX = 70;
+            map.maxX = 100;
             map.cameraMinX = 9;
-            map.cameraMaxX = 61;
+            map.cameraMaxX = 91;
             map.cameraY = 2.5f;
             map.cameraFollowSharpness = 10f;
             map.groundColor = new Color(0.4f, 0.4f, 0.36f);
-            map.solids = new List<BoxData> { new BoxData { min = new Vector2(-1, -2), max = new Vector2(71, 0) } };
+            map.solids = new List<BoxData> { new BoxData { min = new Vector2(-1, -2), max = new Vector2(101, 0) } };
             map.spawns = new List<SpawnData>
             {
                 Sp("Start", 4), Sp("TestOpenWest", 7), Sp("TestBags", 13), Sp("TestHitter", 28.5f), Sp("TestArmor", 38.5f), Sp("TestBoss", 46.6f), Sp("TestCluster", 55f),
+                // WP-02-R1 zones: F01 two attackers + bag, F02 piercing dash through spaced bags, F03 launch-immune cap target
+                Sp("TestMultiDodge", 64.5f), Sp("TestPierce", 74f), Sp("TestCap", 86.6f),
             };
             map.left = new EdgeData { policy = EdgePolicy.Blocked };
             map.right = new EdgeData { policy = EdgePolicy.Blocked };
@@ -76,6 +78,9 @@ namespace Corum2.EditorTools
             {
                 En("bag1", "bag", 14f), En("hitter1", "hitter", 30f), En("armor1", "armor", 39.7f), En("boss1", "boss", 48f),
                 En("c1", "weak", 56f), En("c2", "bag", 56f), En("c3", "bag", 56f),
+                En("md1", "hitter", 66f), En("md2", "hitter", 66f), En("md3", "bag", 66f),
+                En("p1", "bag", 75.4f), En("p2", "bag", 76.2f), En("p3", "bag", 77.0f),
+                En("cap1", "boss", 88f),
             };
 
             var world = Save(ScriptableObject.CreateInstance<WorldDefinition>(), "World_WP02");

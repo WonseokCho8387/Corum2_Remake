@@ -15,7 +15,7 @@ MonoBehaviour:
   meta:
     domainId: map.C01
     schemaVersion: 1
-    dataVersion: wp02-1
+    dataVersion: wp02-r1
     status: experimental
     policyIds: []
     relatedRIds:
@@ -27,12 +27,12 @@ MonoBehaviour:
     changeRequestId: 
   mapId: C01
   minX: 0
-  maxX: 70
+  maxX: 100
   killY: -10
   combatPlaneZ: 0
   solids:
   - min: {x: -1, y: -2}
-    max: {x: 71, y: 0}
+    max: {x: 101, y: 0}
   spawns:
   - id: Start
     position: {x: 4, y: 0}
@@ -54,6 +54,15 @@ MonoBehaviour:
     facing: 1
   - id: TestCluster
     position: {x: 55, y: 0}
+    facing: 1
+  - id: TestMultiDodge
+    position: {x: 64.5, y: 0}
+    facing: 1
+  - id: TestPierce
+    position: {x: 74, y: 0}
+    facing: 1
+  - id: TestCap
+    position: {x: 86.6, y: 0}
     facing: 1
   left:
     policy: 0
@@ -95,8 +104,36 @@ MonoBehaviour:
     enemyId: bag
     position: {x: 56, y: 0}
     facing: -1
+  - instanceId: md1
+    enemyId: hitter
+    position: {x: 66, y: 0}
+    facing: -1
+  - instanceId: md2
+    enemyId: hitter
+    position: {x: 66, y: 0}
+    facing: -1
+  - instanceId: md3
+    enemyId: bag
+    position: {x: 66, y: 0}
+    facing: -1
+  - instanceId: p1
+    enemyId: bag
+    position: {x: 75.4, y: 0}
+    facing: -1
+  - instanceId: p2
+    enemyId: bag
+    position: {x: 76.2, y: 0}
+    facing: -1
+  - instanceId: p3
+    enemyId: bag
+    position: {x: 77, y: 0}
+    facing: -1
+  - instanceId: cap1
+    enemyId: boss
+    position: {x: 88, y: 0}
+    facing: -1
   cameraMinX: 9
-  cameraMaxX: 61
+  cameraMaxX: 91
   cameraY: 2.5
   cameraFollowSharpness: 10
   groundColor: {r: 0.4, g: 0.4, b: 0.36, a: 1}

@@ -65,6 +65,9 @@ namespace Corum2.Core
         public int Hits;
         public readonly List<HashSet<string>> HitByEvent = new List<HashSet<string>>();
         public readonly HashSet<string> SkipLogged = new HashSet<string>();
+        /// <summary>Hit events of this attack whose attacker hitstop was already applied (R-06-03, WP02-F02).
+        /// Key = hit event index; -1 = dive landing area.</summary>
+        public readonly HashSet<int> HitstopEvents = new HashSet<int>();
         public bool MotorDriven => Def.Kind == AttackKind.AirDash || Def.Kind == AttackKind.Dive;
     }
 
@@ -90,6 +93,10 @@ namespace Corum2.Core
         public int ChainSteps { get; private set; }
         public int GroundSteps { get; private set; }
         public int AirSteps { get; private set; }
+        /// <summary>R-04-01 standard chain maximum (4+1+4+1). Enforced on every non-dash path (WP02-F03, EXP-COMBO-04).</summary>
+        public const int StandardChainMax = 10;
+        /// <summary>True once an air dash joined the current chain: the CF-03 branch (held, not decided).</summary>
+        public bool ChainHasDash { get; private set; }
         public int ComboHits { get; private set; }
         public float ChainWindow { get; private set; }
         public string LastChainEndReason { get; private set; } = "";
@@ -285,6 +292,10 @@ namespace Corum2.Core
         {
             AttackDefinition def;
             var newChain = !ChainAlive;
+            if (!newChain && ChainSteps >= StandardChainMax)
+                return Reject(e, "ChainMax:Total" + StandardChainMax,
+                    "R-04-01 standard max " + StandardChainMax + "; extra press rejected, chain kept until its window ends (EXP-COMBO-04)" +
+                    (ChainHasDash ? "; dash branch CF-03 held: only the dive after the dash may pass " + StandardChainMax : ""));
             if (newChain) BeginChain(e.EventId);
             switch (kind)
             {
@@ -334,6 +345,7 @@ namespace Corum2.Core
             ChainId = _nextChainId++;
             ChainAlive = true;
             ChainSteps = 0;
+            ChainHasDash = false;
             GroundSteps = 0;
             AirSteps = 0;
             ComboHits = 0;
@@ -458,13 +470,23 @@ namespace Corum2.Core
             if (Attack == null && (P.State == MotorState.AirDash || P.State == MotorState.Dive))
             {
                 var kind = P.State == MotorState.AirDash ? AttackKind.AirDash : AttackKind.Dive;
+                var cf03 = "";
+                if (ChainAlive && ChainSteps >= StandardChainMax)
+                {
+                    if (kind == AttackKind.Dive && ChainHasDash)
+                        cf03 = "CF-03 held: dive after a dash counted past " + StandardChainMax + " (not approved)";
+                    else
+                        EndChain("ChainMax:Total" + StandardChainMax + "(R-04-01, EXP-COMBO-04)"); // movement cannot be rejected; new chain
+                }
                 if (!ChainAlive) BeginChain(0);
+                if (kind == AttackKind.AirDash) ChainHasDash = true;
                 ChainSteps++;
                 Attack = NewAttack(kind == AttackKind.AirDash ? _p.AirDash : _p.Dive);
                 Log.Emit("attack.start", Pl, "", "", P.State.ToString(), "Attack:" + kind, ("attackInstanceId", Attack.InstanceId),
                     ("attackId", Attack.Def.Id), ("chainId", ChainId), ("attackChainStep", ChainSteps), ("startGameTime", _sim.GameTime),
                     ("upgrade", kind == AttackKind.AirDash ? "pierce=" + Unlocks.DashPierce : "area=" + Unlocks.DiveArea),
-                    ("cf", "CF-03: step counting of the dash branch is undecided; no 10-step cap enforced"));
+                    ("chainHasDash", ChainHasDash),
+                    ("cf", cf03 != "" ? cf03 : "CF-03: step counting of the dash branch is undecided"));
             }
         }
 
@@ -631,6 +653,8 @@ namespace Corum2.Core
         {
             _pc.Clear();
             _ec.Clear();
+            // WP02-F01: capture the attack once. A Dodge cancels Attack; later candidates of this tick keep using this object.
+            var atk = Attack;
             var box = playerFrozen ? null : ActivePlayerHitbox();
             if (box.HasValue)
             {
@@ -706,21 +730,32 @@ namespace Corum2.Core
 
             if (_pc.Count > 0)
             {
-                var a = Attack ?? _lastDodgedAttack;
-                foreach (var (en, ev) in _pc) ApplyHitToEnemy(a, en, ev, "Overlap");
-                // R-06-03: one hitstop per attack event regardless of the number of targets.
-                PlayerHitstop = Math.Max(PlayerHitstop, a.Def.Hitstop);
-                Log.Emit("hitstop", Pl, "", "", "", "Hitstop(R-06-03, EXP-HITSTOP-01 attacker+targets)", ("attackInstanceId", a.InstanceId),
-                    ("seconds", a.Def.Hitstop), ("targets", _pc.Count));
+                var a = atk;
+                var how = Attack == null ? "Overlap(sameTickAfterDodge, EXP-DODGE-01)" : "Overlap";
+                foreach (var (en, ev) in _pc) ApplyHitToEnemy(a, en, ev, how);
+                ApplyAttackerHitstop(a, _pc[0].ev, _pc.Count);
                 if (a.Def.Kind == AttackKind.AirDash && !Unlocks.DashPierce && P.State == MotorState.AirDash)
                     P.EndDash("DashStoppedAtFirstTarget(R-04-06)");
             }
-            _lastDodgedAttack = null;
 
             foreach (var en in _ec) ApplyHitToPlayer(en);
         }
 
-        PlayerAttack _lastDodgedAttack;
+        /// <summary>R-06-03: the attacker stops once per hit event, however many targets it reaches and on whichever ticks
+        /// they enter the hitbox (WP02-F02). A new hit event (multi-hit data, dive landing area) stops again.
+        /// Each struck target still gets its own reaction stop (EXP-HITSTOP-01; composition is U-06).</summary>
+        void ApplyAttackerHitstop(PlayerAttack a, int eventKey, int targets)
+        {
+            if (!a.HitstopEvents.Add(eventKey))
+            {
+                Log.Emit("hitstop.skip", Pl, "", "", "", "SameHitEventAlreadyStopped(R-06-03)", ("attackInstanceId", a.InstanceId),
+                    ("hitEventId", a.InstanceId + ":" + eventKey), ("targets", targets));
+                return;
+            }
+            PlayerHitstop = Math.Max(PlayerHitstop, a.Def.Hitstop);
+            Log.Emit("hitstop", Pl, "", "", "", "Hitstop(R-06-03, EXP-HITSTOP-01 attacker+targets)", ("attackInstanceId", a.InstanceId),
+                ("hitEventId", a.InstanceId + ":" + eventKey), ("seconds", a.Def.Hitstop), ("targets", targets));
+        }
 
         void DiveAreaHit()
         {
@@ -733,7 +768,7 @@ namespace Corum2.Core
                 ApplyHitToEnemy(a, en, 0, "DiveArea(R-04-08 upgraded)");
                 n++;
             }
-            if (n > 0) PlayerHitstop = Math.Max(PlayerHitstop, a.Def.Hitstop);
+            if (n > 0) ApplyAttackerHitstop(a, -1, n); // landing area = its own hit event (EXP-HITSTOP-02)
         }
 
         void Dodge(EnemyActor en)
@@ -744,7 +779,6 @@ namespace Corum2.Core
                 ("playerAttackInstanceId", Attack?.InstanceId ?? 0), ("enemyAttackInstanceId", en.AttackInstanceId),
                 ("playerHp", PlayerHp), ("enemyHp", en.Hp), ("damage", 0), ("comboBefore", ComboHits),
                 ("window", "same tick (EXP-DODGE-01, CF-05)"), ("enemyArmor", en.Def.Attack.SuperArmor));
-            _lastDodgedAttack = Attack;
             if (Attack != null) CancelAttack("Dodge");
             EndChain("Dodge");
             P.EnterLocked(MotorState.DodgeReact, "Dodge");

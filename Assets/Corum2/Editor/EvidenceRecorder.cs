@@ -37,6 +37,8 @@ namespace Corum2.EditorTools
             Time.captureFramerate = fps;
             host.CaptureWidth = width;
             host.CaptureHeight = height;
+            host.AnnotateManifest("capture", _path.Replace('\\', '/') + " (MediaEncoder H.264 " + width + "x" + height + " " + fps +
+                "fps, Time.captureFramerate=" + fps + ": game-time recording, one frame per tick; not device latency/FPS evidence)");
             var stillDir = outputPathWithoutExtension + "_stills";
             Directory.CreateDirectory(stillDir);
             host.FrameSink = tex =>

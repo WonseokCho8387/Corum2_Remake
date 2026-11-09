@@ -15,7 +15,7 @@ MonoBehaviour:
   meta:
     domainId: enemy.armor
     schemaVersion: 1
-    dataVersion: wp02-1
+    dataVersion: wp02-r1
     status: experimental
     policyIds: []
     relatedRIds:

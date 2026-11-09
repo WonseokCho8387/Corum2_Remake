@@ -82,7 +82,10 @@ namespace Corum2.Unity
         VirtualDevices CreateVirtual()
         {
             Sim.Log.Emit("marker", "", "", "", "", "VirtualDevicesAdded", ("keyboard", VirtualDevices.KeyboardName), ("gamepad", VirtualDevices.GamepadName));
-            return new VirtualDevices();
+            var v = new VirtualDevices();
+            AnnotateManifest("input_devices", DescribeDevices() + "; scripted input goes through " + VirtualDevices.KeyboardName + "/" +
+                VirtualDevices.GamepadName + " (Input System bindings), no physical device or Steam Deck");
+            return v;
         }
 
         void Awake()
@@ -288,6 +291,34 @@ namespace Corum2.Unity
             _script.Clear();
             _script.AddRange(ordered);
             Sim.Log.Emit("script.start", "", "", "", "", "InputScript", ("script", script));
+
+            // WP02-M01: the command list goes next to the run files and the manifest names it.
+            var cmdPath = Path.Combine(Path.GetDirectoryName(LogPath), RunId + ".commands.txt");
+            File.WriteAllText(cmdPath, "# GameHost.RunInputScript input (game seconds:command), started at game time " +
+                _scriptStart.ToString("R", CultureInfo.InvariantCulture) + "\n" + string.Join("\n", script.Split(';')) + "\n", new UTF8Encoding(false));
+            _tester = "Claude Code (automated: GameHost.RunInputScript)";
+            _commands = Path.GetFileName(cmdPath) + " sha256 " + RunFiles.FileSha256(cmdPath);
+            AnnotateManifest("input_devices", DescribeDevices());
+        }
+
+        string _tester = "manual (Editor Play mode)";
+        string _commands = "manual play; every input is in the log (input.* events)";
+        readonly List<(string key, string value)> _manifestExtra = new List<(string, string)>();
+
+        /// <summary>Adds or replaces a manifest field and rewrites the manifest (evidence recorder, script start).</summary>
+        public void AnnotateManifest(string key, string value)
+        {
+            _manifestExtra.RemoveAll(x => x.key == key);
+            _manifestExtra.Add((key, value));
+            if (ManifestPath != null) WriteManifest(Path.GetDirectoryName(ManifestPath));
+        }
+
+        static string DescribeDevices()
+        {
+            var names = new List<string>();
+            foreach (var d in UnityEngine.InputSystem.InputSystem.devices)
+                names.Add(d.name + (d.native ? "" : "(virtual)"));
+            return "[" + string.Join(", ", names) + "]";
         }
 
         string _awaitEnemy;
@@ -368,6 +399,13 @@ namespace Corum2.Unity
                     Sim.Unlocks.AirDash = f[1] == "1";
                     Sim.Unlocks.Dive = f[2] == "1";
                     Sim.Log.Emit("marker", "", "", "", "", "UnlockFixtureChanged", ("unlocks", arg));
+                    break;
+                case "cunlock":
+                    // cunlock=1,0 -> dash pierce, dive area (combat unlock test fixture switch, spec 11.6)
+                    var cf = arg.Split(',');
+                    Sim.Combat.Unlocks.DashPierce = cf[0] == "1";
+                    Sim.Combat.Unlocks.DiveArea = cf[1] == "1";
+                    Sim.Log.Emit("marker", "", "", "", "", "CombatUnlockFixtureChanged", ("combatUnlocks", arg));
                     break;
                 case "spawn":
                     // spawn=<spawnId> on the current map (test setup)
@@ -508,15 +546,16 @@ namespace Corum2.Unity
             var path = Path.Combine(dir, RunId + ".manifest.yaml");
             var dataHash = RunFiles.FileSha256(DataSnapshotPath);
             var sb = new StringBuilder();
-            sb.AppendLine("# Run manifest (spec 13.3). Fields Claude fills in the work packet are marked <packet>.");
+            sb.AppendLine("# Run manifest (spec 13.3). Rewritten when the input script or the recorder starts (WP02-M01).");
             sb.AppendLine("run_id: " + RunId);
             sb.AppendLine("spec_id: CORUM2-P0-MASTER");
             sb.AppendLine("spec_version: 1.2.0");
             sb.AppendLine("engine_appendix_version: 1.0.0");
-            sb.AppendLine("spec_sha256: <packet>");
-            sb.AppendLine("engine_appendix_sha256: <packet>");
+            sb.AppendLine("spec_sha256: " + SpecHash(SpecFile));
+            sb.AppendLine("engine_appendix_sha256: " + SpecHash(AppendixFile));
             sb.AppendLine("build_id: " + (Application.isEditor ? "editor-playmode" : Application.version));
-            sb.AppendLine("source_revision: <packet>");
+            sb.AppendLine("source_revision: " + _git.rev);
+            sb.AppendLine("source_dirty: " + _git.dirty);
             sb.AppendLine("source_capture_mode: git");
             sb.AppendLine("engine: Unity");
             sb.AppendLine("engine_version: " + Application.unityVersion);
@@ -534,11 +573,65 @@ namespace Corum2.Unity
             sb.AppendLine("save_fixture: none");
             sb.AppendLine("random_seed: not used");
             sb.AppendLine("started_at: " + DateTimeOffset.Now.ToString("yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture));
-            sb.AppendLine("tester: <packet>");
-            sb.AppendLine("commands_or_steps: <packet>");
+            sb.AppendLine("tester: " + _tester);
+            sb.AppendLine("commands_or_steps: " + _commands);
+            foreach (var (k, v) in _manifestExtra) sb.AppendLine(k + ": " + v);
             sb.AppendLine("log: " + Path.GetFileName(LogPath));
             File.WriteAllText(path, sb.ToString(), new UTF8Encoding(false));
             return path;
+        }
+
+        const string SpecFile = "CORUM2_P0_Master_Spec_v1.2.md";
+        const string AppendixFile = "CORUM2_Unity_Implementation_Appendix_v1.0.md";
+
+        /// <summary>Spec documents live in the sibling analysis folder (D:\ProjectR\Corum2\docs\GPT).</summary>
+        static string SpecHash(string file)
+        {
+            var p = Path.GetFullPath(Path.Combine(Application.dataPath, "..", "..", "Corum2", "docs", "GPT", file));
+            return File.Exists(p) ? RunFiles.FileSha256(p) + " (" + file + ")" : "unavailable (" + p.Replace('\\', '/') + " not found)";
+        }
+
+        (string rev, string dirty) _gitCache;
+        (string rev, string dirty) _git
+        {
+            get
+            {
+                if (_gitCache.rev == null) _gitCache = ReadGit();
+                return _gitCache;
+            }
+        }
+
+        static (string rev, string dirty) ReadGit()
+        {
+            var root = Path.GetFullPath(Path.Combine(Application.dataPath, ".."));
+            var rev = Git(root, "rev-parse HEAD");
+            var status = Git(root, "status --porcelain");
+            if (rev == null) return ("unavailable (git not found)", "unknown");
+            var lines = status == null ? new string[0] : status.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
+            if (lines.Length == 0) return (rev.Trim(), "false (clean)");
+            var shown = string.Join(", ", lines.Take(8).Select(l => l.Trim()));
+            return (rev.Trim(), "true (" + lines.Length + " paths: " + shown + (lines.Length > 8 ? ", ..." : "") + ")");
+        }
+
+        static string Git(string root, string args)
+        {
+            try
+            {
+                var psi = new System.Diagnostics.ProcessStartInfo("git", "-C \"" + root + "\" " + args)
+                {
+                    UseShellExecute = false, RedirectStandardOutput = true, RedirectStandardError = true, CreateNoWindow = true,
+                };
+                using (var p = System.Diagnostics.Process.Start(psi))
+                {
+                    var o = p.StandardOutput.ReadToEnd();
+                    p.WaitForExit(5000);
+                    return p.ExitCode == 0 ? o : null;
+                }
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
     }
 }
