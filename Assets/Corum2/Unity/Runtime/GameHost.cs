@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text;
 using Corum2.Core;
 using UnityEngine;
@@ -282,12 +283,16 @@ namespace Corum2.Unity
                 if (i < 0) continue;
                 _script.Add((double.Parse(part.Substring(0, i).Trim(), CultureInfo.InvariantCulture), part.Substring(i + 1).Trim()));
             }
-            _script.Sort((a, b) => a.at.CompareTo(b.at));
+            // Stable: equal times keep their written order (e.g. spawn before await).
+            var ordered = _script.Select((x, i) => (x, i)).OrderBy(p => p.x.at).ThenBy(p => p.i).Select(p => p.x).ToList();
+            _script.Clear();
+            _script.AddRange(ordered);
             Sim.Log.Emit("script.start", "", "", "", "", "InputScript", ("script", script));
         }
 
         string _awaitEnemy;
         string _awaitState;
+        double _awaitLimit;
 
         void RunScript()
         {
@@ -297,7 +302,14 @@ namespace Corum2.Unity
                 var en = Sim.Combat?.Find(_awaitEnemy);
                 if (en == null || en.State.ToString() != _awaitState)
                 {
-                    _scriptStart += Time.deltaTime;
+                    _awaitLimit -= Time.deltaTime;
+                    if (_awaitLimit > 0)
+                    {
+                        _scriptStart += Time.deltaTime;
+                        return;
+                    }
+                    Sim.Log.Emit("marker", "", _awaitEnemy, "", en != null ? en.State.ToString() : "missing", "AwaitTimeout", ("awaited", _awaitState));
+                    _awaitEnemy = null;
                     return;
                 }
                 Sim.Log.Emit("marker", "", _awaitEnemy, "", _awaitState, "AwaitMet", ("enemyState", _awaitState));
@@ -339,10 +351,11 @@ namespace Corum2.Unity
                     break;
                 case "await":
                 {
-                    // await=<enemyInstanceId>:<EnemyState>
+                    // await=<enemyInstanceId>:<EnemyState>[:<timeoutSeconds, default 5>]
                     var kv = arg.Split(':');
                     _awaitEnemy = kv[0];
                     _awaitState = kv[1];
+                    _awaitLimit = kv.Length > 2 ? double.Parse(kv[2], CultureInfo.InvariantCulture) : 5.0;
                     return;
                 }
                 case "mark":
