@@ -136,3 +136,6 @@ crashlytics-build.properties
 
 # Auto-generated cache in Assets folder
 /[Aa]ssets/[Ss]ceneDependencyCache*
+
+# Corum2 run logs, data snapshots and test results (evidence is attached to work packets)
+/[Dd]iagnostics/
