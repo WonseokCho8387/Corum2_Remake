@@ -1,0 +1,14 @@
+# Fills the <packet> fields of RUN-20261110-002149.manifest.yaml (that file is kept byte-identical; see SHA256SUMS.txt).
+run_id: RUN-20261110-002149
+spec_sha256: ed7e0a1b031d8a599c9171ece33fc77dee5637cf1d883b0c8206b3654afa3af3   # CORUM2_P0_Master_Spec_v1.2.md
+engine_appendix_sha256: 0ffa335901dbebaf009c5df19acd4daee2578d08ab1f4875f1c38abd3a7d6c2c   # CORUM2_Unity_Implementation_Appendix_v1.0.md
+build_id: editor-playmode (no player build)
+source_revision: e4060f4   # github.com/WonseokCho8387/Corum2_Remake main
+source_capture_mode: git
+working_tree_dirty: false   # git status had 0 entries when the run and the EditMode tests executed
+dirty_diff_artifact: null
+display_note: "Game view 326x580 (Editor layout). Screenshots are camera renders at 1280x800 with Camera.aspect forced to 1.6 for capture only; the HUD overlay is laid out for the Game view size."
+render_fps_observed: "~56 fps in Editor Play mode (1986 rendered frames / 35.2 s game time), Editor unfocused with Pipeline auto-tick"
+tester: Claude Code (scripted input; no human play)
+commands_or_steps: evidence_run_steps.sh (timed input script injected at the logical-action level through InputCollector.InjectDir/InjectButton)
+input_path_note: "Scripted input bypasses physical devices: Input System bindings for keyboard/pad were not exercised in this run."
