@@ -1,0 +1,11 @@
+# WP02-M01 supplement packet for RUN-20261110-020410 (written 2026-11-10 for WP-02-R1). The original run files are unchanged.
+run_id: RUN-20261110-020410
+supplements_manifest: Evidence/WP-02/runs/RUN-20261110-020410.manifest.yaml sha256 91dcae970f60b239387237627a3bf132111a3db97c15a35ba0f3cda9e2d8f142
+spec_sha256: ed7e0a1b031d8a599c9171ece33fc77dee5637cf1d883b0c8206b3654afa3af3 (CORUM2_P0_Master_Spec_v1.2.md, file last modified 2026-11-09 23:46 KST, before the run)
+engine_appendix_sha256: 0ffa335901dbebaf009c5df19acd4daee2578d08ab1f4875f1c38abd3a7d6c2c (CORUM2_Unity_Implementation_Appendix_v1.0.md, last modified 2026-11-09 23:43 KST)
+source_revision: 4cf88ba62ae2f0a8eb2afdd8fe0c7297b263e2c2
+source_dirty: not recorded at run time. Assets/, Packages/, ProjectSettings/ and Tools/ are identical between 4cf88ba and 3e86250 (the evidence commit); GPT confirmed the same in its WP-02 review.
+tester: Claude Code (automated: GameHost.RunInputScript)
+commands_or_steps: Evidence/WP-02/evidence_steps_main.sh sha256 2d5b71ef4f758b3b99efcd092481ad0ebeac9c8f3fb08be707be0e2f1aa3967a (variable MAIN is the input script); the log's script.start event holds the exact string
+input_devices: Corum2VirtualKeyboard (Input System virtual device; log marker VirtualDevicesAdded). No physical keyboard/gamepad or Steam Deck.
+capture: Evidence/WP-02/video/main-RUN-20261110-020410.mp4 (MediaEncoder H.264 1280x800 50fps, Time.captureFramerate=50: game-time recording; not device latency/FPS evidence). Frame index = tick offset from recording start; the first frame is one tick after the recording-start marker, so match frames by the HUD tick.

@@ -1,0 +1,153 @@
+run RUN-20261110-075442  events 1300
+dataVersion movement.player@wp01-r1(experimental);input.profile@wp01-r1(experimental);unlock.AirUnlocks_All@wp01-r1(experimental);world:map.C01@wp02-r1(experimental);combat.player@wp02-r1(experimental);combat.CombatUnlocks_None@wp02-r1(experimental)
+
+== TC-06-16  ticks 178..263
+  t  178 marker                                  -> [TestCase] 
+  t  179 marker                 ->md1            ->AttackStartup [AwaitMet] 
+  t  190 marker                                  -> [VirtualDevicesAdded] 
+  t  192 combo.begin            player           -> [NewChain] 
+  t  192 attack.start           player           ->GroundAttack [Attack:GroundNormal] attackId=ground1 attackInstanceId=3 attackChainStep=1 comboHits=0
+  t  194 dodge                  player->md2      GroundAttack->DodgeReact [SimultaneousHit(R-06-15)] comboBefore=0
+  t  194 attack.end             player           ->GroundAttack [Dodge] attackId=ground1 attackInstanceId=3 elapsed=0.0599999763 hits=0
+  t  194 combo.end              player           -> [Dodge] attackChainStep=1 comboHits=0
+  t  194 dodge                  player->md1      DodgeReact->DodgeReact [SimultaneousHit(R-06-15)] comboBefore=0
+  t  194 hit                    player->md3      Idle->Stagger [Stagger(R-06-04)] attackId=ground1 attackInstanceId=3 attackChainStep=1 comboBefore=0 comboAfter=0 damageD=10 hpBefore=1000 hpAfter=990 superArmor=False knockbackVel=1.5 hitEventId=3:0
+  t  194 hitstop                player           -> [Hitstop(R-06-03, EXP-HITSTOP-01 attacker+targets)] attackInstanceId=3 seconds=0.04 targets=1 hitEventId=3:0
+  t  233 marker                                  -> [multiDodgeDone] 
+
+== TC-06-03  ticks 263..363
+  t  263 marker                                  -> [TestCase] 
+  t  263 marker                                  -> [CombatUnlockFixtureChanged] 
+  t  275 motor.jump             player           Idle->Airborne [Jump:Standing] 
+  t  280 combo.begin            player           -> [NewChain] 
+  t  280 attack.start           player           ->AirDash [Attack:AirDash] attackId=airDash attackInstanceId=4 attackChainStep=1 chainHasDash=True cf=CF-03: step counting of the dash branch is undecided
+  t  280 hit                    player->p1       Idle->Stagger [Stagger(R-06-04)] attackId=airDash attackInstanceId=4 attackChainStep=1 comboBefore=0 comboAfter=1 damageD=12 hpBefore=1000 hpAfter=988 superArmor=False knockbackVel=3 hitEventId=4:0
+  t  280 hitstop                player           -> [Hitstop(R-06-03, EXP-HITSTOP-01 attacker+targets)] attackInstanceId=4 seconds=0.06 targets=1 hitEventId=4:0
+  t  287 hit                    player->p2       Idle->Stagger [Stagger(R-06-04)] attackId=airDash attackInstanceId=4 attackChainStep=1 comboBefore=1 comboAfter=2 damageD=12 hpBefore=1000 hpAfter=988 superArmor=False knockbackVel=3 hitEventId=4:0
+  t  287 hitstop.skip           player           -> [SameHitEventAlreadyStopped(R-06-03)] attackInstanceId=4 targets=1 hitEventId=4:0
+  t  290 hit                    player->p3       Idle->Stagger [Stagger(R-06-04)] attackId=airDash attackInstanceId=4 attackChainStep=1 comboBefore=2 comboAfter=3 damageD=12 hpBefore=1000 hpAfter=988 superArmor=False knockbackVel=3 hitEventId=4:0
+  t  290 hitstop.skip           player           -> [SameHitEventAlreadyStopped(R-06-03)] attackInstanceId=4 targets=1 hitEventId=4:0
+  t  296 attack.end             player           ->Airborne [AirDashEnd] attackId=airDash attackInstanceId=4 elapsed=0 hits=3
+  t  296 combo.window           player           -> [WindowOpen(R-04-09)] 
+  t  321 combo.end              player           -> [Timeout] attackChainStep=1 comboHits=3
+  t  343 marker                                  -> [CombatUnlockFixtureChanged] 
+  t  343 marker                                  -> [pierceDone] 
+
+== TC-04-01  ticks 363..996
+  t  363 marker                                  -> [TestCase] 
+  t  375 combo.begin            player           -> [NewChain] 
+  t  375 attack.start           player           ->GroundAttack [Attack:Launcher] attackId=launcher attackInstanceId=5 attackChainStep=1 comboHits=0
+  t  377 hit                    player->cap1     Idle->Stagger [LaunchImmune:DamageAndCount(R-04-04)] attackId=launcher attackInstanceId=5 attackChainStep=1 comboBefore=0 comboAfter=1 damageD=12 hpBefore=3000 hpAfter=2988 superArmor=False knockbackVel=0 hitEventId=5:0
+  t  377 hitstop                player           -> [Hitstop(R-06-03, EXP-HITSTOP-01 attacker+targets)] attackInstanceId=5 seconds=0.08 targets=1 hitEventId=5:0
+  t  392 attack.end             player           ->GroundAttack [MotionEnd] attackId=launcher attackInstanceId=5 elapsed=0.259999931 hits=1
+  t  392 combo.window           player           -> [WindowOpen(R-04-09)] 
+  t  395 attack.start           player           ->GroundAttack [Attack:Launcher] attackId=launcher attackInstanceId=6 attackChainStep=2 comboHits=1
+  t  397 hit                    player->cap1     Idle->Stagger [LaunchImmune:DamageAndCount(R-04-04)] attackId=launcher attackInstanceId=6 attackChainStep=2 comboBefore=1 comboAfter=2 damageD=12 hpBefore=2988 hpAfter=2976 superArmor=False knockbackVel=0 hitEventId=6:0
+  t  397 hitstop                player           -> [Hitstop(R-06-03, EXP-HITSTOP-01 attacker+targets)] attackInstanceId=6 seconds=0.08 targets=1 hitEventId=6:0
+  t  412 attack.end             player           ->GroundAttack [MotionEnd] attackId=launcher attackInstanceId=6 elapsed=0.259999931 hits=1
+  t  412 combo.window           player           -> [WindowOpen(R-04-09)] 
+  t  415 attack.start           player           ->GroundAttack [Attack:Launcher] attackId=launcher attackInstanceId=7 attackChainStep=3 comboHits=2
+  t  417 hit                    player->cap1     Idle->Stagger [LaunchImmune:DamageAndCount(R-04-04)] attackId=launcher attackInstanceId=7 attackChainStep=3 comboBefore=2 comboAfter=3 damageD=12 hpBefore=2976 hpAfter=2964 superArmor=False knockbackVel=0 hitEventId=7:0
+  t  417 hitstop                player           -> [Hitstop(R-06-03, EXP-HITSTOP-01 attacker+targets)] attackInstanceId=7 seconds=0.08 targets=1 hitEventId=7:0
+  t  432 attack.end             player           ->GroundAttack [MotionEnd] attackId=launcher attackInstanceId=7 elapsed=0.259999931 hits=1
+  t  432 combo.window           player           -> [WindowOpen(R-04-09)] 
+  t  435 attack.start           player           ->GroundAttack [Attack:Launcher] attackId=launcher attackInstanceId=8 attackChainStep=4 comboHits=3
+  t  437 hit                    player->cap1     Idle->Stagger [LaunchImmune:DamageAndCount(R-04-04)] attackId=launcher attackInstanceId=8 attackChainStep=4 comboBefore=3 comboAfter=4 damageD=12 hpBefore=2964 hpAfter=2952 superArmor=False knockbackVel=0 hitEventId=8:0
+  t  437 hitstop                player           -> [Hitstop(R-06-03, EXP-HITSTOP-01 attacker+targets)] attackInstanceId=8 seconds=0.08 targets=1 hitEventId=8:0
+  t  452 attack.end             player           ->GroundAttack [MotionEnd] attackId=launcher attackInstanceId=8 elapsed=0.259999931 hits=1
+  t  452 combo.window           player           -> [WindowOpen(R-04-09)] 
+  t  455 attack.start           player           ->GroundAttack [Attack:Launcher] attackId=launcher attackInstanceId=9 attackChainStep=5 comboHits=4
+  t  457 hit                    player->cap1     Idle->Stagger [LaunchImmune:DamageAndCount(R-04-04)] attackId=launcher attackInstanceId=9 attackChainStep=5 comboBefore=4 comboAfter=5 damageD=12 hpBefore=2952 hpAfter=2940 superArmor=False knockbackVel=0 hitEventId=9:0
+  t  457 hitstop                player           -> [Hitstop(R-06-03, EXP-HITSTOP-01 attacker+targets)] attackInstanceId=9 seconds=0.08 targets=1 hitEventId=9:0
+  t  472 attack.end             player           ->GroundAttack [MotionEnd] attackId=launcher attackInstanceId=9 elapsed=0.259999931 hits=1
+  t  472 combo.window           player           -> [WindowOpen(R-04-09)] 
+  t  475 attack.start           player           ->GroundAttack [Attack:Launcher] attackId=launcher attackInstanceId=10 attackChainStep=6 comboHits=5
+  t  477 hit                    player->cap1     Idle->Stagger [LaunchImmune:DamageAndCount(R-04-04)] attackId=launcher attackInstanceId=10 attackChainStep=6 comboBefore=5 comboAfter=6 damageD=12 hpBefore=2940 hpAfter=2928 superArmor=False knockbackVel=0 hitEventId=10:0
+  t  477 hitstop                player           -> [Hitstop(R-06-03, EXP-HITSTOP-01 attacker+targets)] attackInstanceId=10 seconds=0.08 targets=1 hitEventId=10:0
+  t  492 attack.end             player           ->GroundAttack [MotionEnd] attackId=launcher attackInstanceId=10 elapsed=0.259999931 hits=1
+  t  492 combo.window           player           -> [WindowOpen(R-04-09)] 
+  t  495 attack.start           player           ->GroundAttack [Attack:Launcher] attackId=launcher attackInstanceId=11 attackChainStep=7 comboHits=6
+  t  497 hit                    player->cap1     Idle->Stagger [LaunchImmune:DamageAndCount(R-04-04)] attackId=launcher attackInstanceId=11 attackChainStep=7 comboBefore=6 comboAfter=7 damageD=12 hpBefore=2928 hpAfter=2916 superArmor=False knockbackVel=0 hitEventId=11:0
+  t  497 hitstop                player           -> [Hitstop(R-06-03, EXP-HITSTOP-01 attacker+targets)] attackInstanceId=11 seconds=0.08 targets=1 hitEventId=11:0
+  t  512 attack.end             player           ->GroundAttack [MotionEnd] attackId=launcher attackInstanceId=11 elapsed=0.259999931 hits=1
+  t  512 combo.window           player           -> [WindowOpen(R-04-09)] 
+  t  515 attack.start           player           ->GroundAttack [Attack:Launcher] attackId=launcher attackInstanceId=12 attackChainStep=8 comboHits=7
+  t  517 hit                    player->cap1     Idle->Stagger [LaunchImmune:DamageAndCount(R-04-04)] attackId=launcher attackInstanceId=12 attackChainStep=8 comboBefore=7 comboAfter=8 damageD=12 hpBefore=2916 hpAfter=2904 superArmor=False knockbackVel=0 hitEventId=12:0
+  t  517 hitstop                player           -> [Hitstop(R-06-03, EXP-HITSTOP-01 attacker+targets)] attackInstanceId=12 seconds=0.08 targets=1 hitEventId=12:0
+  t  532 attack.end             player           ->GroundAttack [MotionEnd] attackId=launcher attackInstanceId=12 elapsed=0.259999931 hits=1
+  t  532 combo.window           player           -> [WindowOpen(R-04-09)] 
+  t  535 attack.start           player           ->GroundAttack [Attack:Launcher] attackId=launcher attackInstanceId=13 attackChainStep=9 comboHits=8
+  t  537 hit                    player->cap1     Idle->Stagger [LaunchImmune:DamageAndCount(R-04-04)] attackId=launcher attackInstanceId=13 attackChainStep=9 comboBefore=8 comboAfter=9 damageD=12 hpBefore=2904 hpAfter=2892 superArmor=False knockbackVel=0 hitEventId=13:0
+  t  537 hitstop                player           -> [Hitstop(R-06-03, EXP-HITSTOP-01 attacker+targets)] attackInstanceId=13 seconds=0.08 targets=1 hitEventId=13:0
+  t  552 attack.end             player           ->GroundAttack [MotionEnd] attackId=launcher attackInstanceId=13 elapsed=0.259999931 hits=1
+  t  552 combo.window           player           -> [WindowOpen(R-04-09)] 
+  t  555 attack.start           player           ->GroundAttack [Attack:Launcher] attackId=launcher attackInstanceId=14 attackChainStep=10 comboHits=9
+  t  557 hit                    player->cap1     Idle->Stagger [LaunchImmune:DamageAndCount(R-04-04)] attackId=launcher attackInstanceId=14 attackChainStep=10 comboBefore=9 comboAfter=10 damageD=12 hpBefore=2892 hpAfter=2880 superArmor=False knockbackVel=0 hitEventId=14:0
+  t  557 hitstop                player           -> [Hitstop(R-06-03, EXP-HITSTOP-01 attacker+targets)] attackInstanceId=14 seconds=0.08 targets=1 hitEventId=14:0
+  t  572 attack.end             player           ->GroundAttack [MotionEnd] attackId=launcher attackInstanceId=14 elapsed=0.259999931 hits=1
+  t  572 combo.window           player           -> [WindowOpen(R-04-09)] 
+  t  575 input.reject           player           Idle->Idle [ChainMax:Total10] detail=R-04-01 standard max 10; extra press rejected, chain kept until its window ends (EXP-COMBO-04)
+  t  583 marker                                  -> [eleventhPressed] 
+  t  597 combo.end              player           -> [Timeout] attackChainStep=10 comboHits=10
+  t  640 combo.begin            player           -> [NewChain] 
+  t  640 attack.start           player           ->GroundAttack [Attack:Launcher] attackId=launcher attackInstanceId=15 attackChainStep=1 comboHits=0
+  t  642 hit                    player->cap1     Idle->Stagger [LaunchImmune:DamageAndCount(R-04-04)] attackId=launcher attackInstanceId=15 attackChainStep=1 comboBefore=0 comboAfter=1 damageD=12 hpBefore=2880 hpAfter=2868 superArmor=False knockbackVel=0 hitEventId=15:0
+  t  642 hitstop                player           -> [Hitstop(R-06-03, EXP-HITSTOP-01 attacker+targets)] attackInstanceId=15 seconds=0.08 targets=1 hitEventId=15:0
+  t  657 attack.end             player           ->GroundAttack [MotionEnd] attackId=launcher attackInstanceId=15 elapsed=0.259999931 hits=1
+  t  657 combo.window           player           -> [WindowOpen(R-04-09)] 
+  t  660 attack.start           player           ->GroundAttack [Attack:Launcher] attackId=launcher attackInstanceId=16 attackChainStep=2 comboHits=1
+  t  662 hit                    player->cap1     Idle->Stagger [LaunchImmune:DamageAndCount(R-04-04)] attackId=launcher attackInstanceId=16 attackChainStep=2 comboBefore=1 comboAfter=2 damageD=12 hpBefore=2868 hpAfter=2856 superArmor=False knockbackVel=0 hitEventId=16:0
+  t  662 hitstop                player           -> [Hitstop(R-06-03, EXP-HITSTOP-01 attacker+targets)] attackInstanceId=16 seconds=0.08 targets=1 hitEventId=16:0
+  t  677 attack.end             player           ->GroundAttack [MotionEnd] attackId=launcher attackInstanceId=16 elapsed=0.259999931 hits=1
+  t  677 combo.window           player           -> [WindowOpen(R-04-09)] 
+  t  680 attack.start           player           ->GroundAttack [Attack:Launcher] attackId=launcher attackInstanceId=17 attackChainStep=3 comboHits=2
+  t  682 hit                    player->cap1     Idle->Stagger [LaunchImmune:DamageAndCount(R-04-04)] attackId=launcher attackInstanceId=17 attackChainStep=3 comboBefore=2 comboAfter=3 damageD=12 hpBefore=2856 hpAfter=2844 superArmor=False knockbackVel=0 hitEventId=17:0
+  t  682 hitstop                player           -> [Hitstop(R-06-03, EXP-HITSTOP-01 attacker+targets)] attackInstanceId=17 seconds=0.08 targets=1 hitEventId=17:0
+  t  697 attack.end             player           ->GroundAttack [MotionEnd] attackId=launcher attackInstanceId=17 elapsed=0.259999931 hits=1
+  t  697 combo.window           player           -> [WindowOpen(R-04-09)] 
+  t  700 attack.start           player           ->GroundAttack [Attack:Launcher] attackId=launcher attackInstanceId=18 attackChainStep=4 comboHits=3
+  t  702 hit                    player->cap1     Idle->Stagger [LaunchImmune:DamageAndCount(R-04-04)] attackId=launcher attackInstanceId=18 attackChainStep=4 comboBefore=3 comboAfter=4 damageD=12 hpBefore=2844 hpAfter=2832 superArmor=False knockbackVel=0 hitEventId=18:0
+  t  702 hitstop                player           -> [Hitstop(R-06-03, EXP-HITSTOP-01 attacker+targets)] attackInstanceId=18 seconds=0.08 targets=1 hitEventId=18:0
+  t  717 attack.end             player           ->GroundAttack [MotionEnd] attackId=launcher attackInstanceId=18 elapsed=0.259999931 hits=1
+  t  717 combo.window           player           -> [WindowOpen(R-04-09)] 
+  t  720 attack.start           player           ->GroundAttack [Attack:Launcher] attackId=launcher attackInstanceId=19 attackChainStep=5 comboHits=4
+  t  722 hit                    player->cap1     Idle->Stagger [LaunchImmune:DamageAndCount(R-04-04)] attackId=launcher attackInstanceId=19 attackChainStep=5 comboBefore=4 comboAfter=5 damageD=12 hpBefore=2832 hpAfter=2820 superArmor=False knockbackVel=0 hitEventId=19:0
+  t  722 hitstop                player           -> [Hitstop(R-06-03, EXP-HITSTOP-01 attacker+targets)] attackInstanceId=19 seconds=0.08 targets=1 hitEventId=19:0
+  t  737 attack.end             player           ->GroundAttack [MotionEnd] attackId=launcher attackInstanceId=19 elapsed=0.259999931 hits=1
+  t  737 combo.window           player           -> [WindowOpen(R-04-09)] 
+  t  740 attack.start           player           ->GroundAttack [Attack:Launcher] attackId=launcher attackInstanceId=20 attackChainStep=6 comboHits=5
+  t  742 hit                    player->cap1     Idle->Stagger [LaunchImmune:DamageAndCount(R-04-04)] attackId=launcher attackInstanceId=20 attackChainStep=6 comboBefore=5 comboAfter=6 damageD=12 hpBefore=2820 hpAfter=2808 superArmor=False knockbackVel=0 hitEventId=20:0
+  t  742 hitstop                player           -> [Hitstop(R-06-03, EXP-HITSTOP-01 attacker+targets)] attackInstanceId=20 seconds=0.08 targets=1 hitEventId=20:0
+  t  757 attack.end             player           ->GroundAttack [MotionEnd] attackId=launcher attackInstanceId=20 elapsed=0.259999931 hits=1
+  t  757 combo.window           player           -> [WindowOpen(R-04-09)] 
+  t  760 attack.start           player           ->GroundAttack [Attack:Launcher] attackId=launcher attackInstanceId=21 attackChainStep=7 comboHits=6
+  t  762 hit                    player->cap1     Idle->Stagger [LaunchImmune:DamageAndCount(R-04-04)] attackId=launcher attackInstanceId=21 attackChainStep=7 comboBefore=6 comboAfter=7 damageD=12 hpBefore=2808 hpAfter=2796 superArmor=False knockbackVel=0 hitEventId=21:0
+  t  762 hitstop                player           -> [Hitstop(R-06-03, EXP-HITSTOP-01 attacker+targets)] attackInstanceId=21 seconds=0.08 targets=1 hitEventId=21:0
+  t  777 attack.end             player           ->GroundAttack [MotionEnd] attackId=launcher attackInstanceId=21 elapsed=0.259999931 hits=1
+  t  777 combo.window           player           -> [WindowOpen(R-04-09)] 
+  t  780 attack.start           player           ->GroundAttack [Attack:Launcher] attackId=launcher attackInstanceId=22 attackChainStep=8 comboHits=7
+  t  782 hit                    player->cap1     Idle->Stagger [LaunchImmune:DamageAndCount(R-04-04)] attackId=launcher attackInstanceId=22 attackChainStep=8 comboBefore=7 comboAfter=8 damageD=12 hpBefore=2796 hpAfter=2784 superArmor=False knockbackVel=0 hitEventId=22:0
+  t  782 hitstop                player           -> [Hitstop(R-06-03, EXP-HITSTOP-01 attacker+targets)] attackInstanceId=22 seconds=0.08 targets=1 hitEventId=22:0
+  t  797 attack.end             player           ->GroundAttack [MotionEnd] attackId=launcher attackInstanceId=22 elapsed=0.259999931 hits=1
+  t  797 combo.window           player           -> [WindowOpen(R-04-09)] 
+  t  800 attack.start           player           ->GroundAttack [Attack:Launcher] attackId=launcher attackInstanceId=23 attackChainStep=9 comboHits=8
+  t  802 hit                    player->cap1     Idle->Stagger [LaunchImmune:DamageAndCount(R-04-04)] attackId=launcher attackInstanceId=23 attackChainStep=9 comboBefore=8 comboAfter=9 damageD=12 hpBefore=2784 hpAfter=2772 superArmor=False knockbackVel=0 hitEventId=23:0
+  t  802 hitstop                player           -> [Hitstop(R-06-03, EXP-HITSTOP-01 attacker+targets)] attackInstanceId=23 seconds=0.08 targets=1 hitEventId=23:0
+  t  817 attack.end             player           ->GroundAttack [MotionEnd] attackId=launcher attackInstanceId=23 elapsed=0.259999931 hits=1
+  t  817 combo.window           player           -> [WindowOpen(R-04-09)] 
+  t  820 attack.start           player           ->GroundAttack [Attack:Launcher] attackId=launcher attackInstanceId=24 attackChainStep=10 comboHits=9
+  t  822 hit                    player->cap1     Idle->Stagger [LaunchImmune:DamageAndCount(R-04-04)] attackId=launcher attackInstanceId=24 attackChainStep=10 comboBefore=9 comboAfter=10 damageD=12 hpBefore=2772 hpAfter=2760 superArmor=False knockbackVel=0 hitEventId=24:0
+  t  822 hitstop                player           -> [Hitstop(R-06-03, EXP-HITSTOP-01 attacker+targets)] attackInstanceId=24 seconds=0.08 targets=1 hitEventId=24:0
+  t  837 attack.end             player           ->GroundAttack [MotionEnd] attackId=launcher attackInstanceId=24 elapsed=0.259999931 hits=1
+  t  837 combo.window           player           -> [WindowOpen(R-04-09)] 
+  t  840 motor.jump             player           Idle->Airborne [Jump:Standing] 
+  t  848 combo.end              player           -> [ChainMax:Total10(R-04-01, EXP-COMBO-04)] attackChainStep=10 comboHits=10
+  t  848 combo.begin            player           -> [NewChain] 
+  t  848 attack.start           player           ->Dive [Attack:Dive] attackId=dive attackInstanceId=25 attackChainStep=1 chainHasDash=False cf=CF-03: step counting of the dash branch is undecided
+  t  848 hit                    player->cap1     Idle->Idle [StaggerResisted(R-06-04)] attackId=dive attackInstanceId=25 attackChainStep=1 comboBefore=0 comboAfter=1 damageD=20 hpBefore=2760 hpAfter=2740 superArmor=False knockbackVel=0 hitEventId=25:0
+  t  848 hitstop                player           -> [Hitstop(R-06-03, EXP-HITSTOP-01 attacker+targets)] attackInstanceId=25 seconds=0.12 targets=1 hitEventId=25:0
+  t  862 attack.end             player           ->Idle [DiveEnd] attackId=dive attackInstanceId=25 elapsed=0 hits=1
+  t  862 combo.window           player           -> [WindowOpen(R-04-09)] 
+  t  887 combo.end              player           -> [Timeout] attackChainStep=1 comboHits=1
+  t  913 marker                                  -> [ScriptEnd] 
+  t  949 marker                                  -> [VideoRecordingStopped] 
