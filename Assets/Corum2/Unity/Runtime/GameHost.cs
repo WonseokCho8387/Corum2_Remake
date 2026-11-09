@@ -70,9 +70,10 @@ namespace Corum2.Unity
         float _savedCaptureDt;
         VirtualDevices Virtual => _virtual ?? (_virtual = CreateVirtual());
 
+        bool _captureDtSaved;
+
         VirtualDevices CreateVirtual()
         {
-            _savedCaptureDt = Time.captureDeltaTime;
             Sim.Log.Emit("marker", "", "", "", "", "VirtualDevicesAdded", ("keyboard", VirtualDevices.KeyboardName), ("gamepad", VirtualDevices.GamepadName));
             return new VirtualDevices();
         }
@@ -344,6 +345,11 @@ namespace Corum2.Unity
                     break;
                 case "framedt":
                     // Test-only: frame length in game seconds (e.g. 0.1 = five fixed ticks per rendered frame).
+                    if (!_captureDtSaved)
+                    {
+                        _savedCaptureDt = Time.captureDeltaTime;
+                        _captureDtSaved = true;
+                    }
                     Time.captureDeltaTime = arg == "restore" ? _savedCaptureDt : float.Parse(arg, CultureInfo.InvariantCulture);
                     Sim.Log.Emit("marker", "", "", "", "", "FrameDeltaChanged", ("captureDeltaTime", Time.captureDeltaTime));
                     break;

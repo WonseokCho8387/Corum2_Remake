@@ -1,0 +1,44 @@
+# Run manifest (spec 13.3). Fields Claude fills in the work packet are marked <packet>.
+run_id: RUN-20261110-012104
+spec_id: CORUM2-P0-MASTER
+spec_version: 1.2.0
+engine_appendix_version: 1.0.0
+spec_sha256: <packet>
+engine_appendix_sha256: <packet>
+build_id: editor-playmode
+source_revision: <packet>
+source_capture_mode: git
+engine: Unity
+engine_version: 6000.3.28f1
+platform_os: Windows 10  (10.0.19045) 64bit
+device_input: InputProfile wp01-r1 (EXP-INPUT-01/02/03)
+display: 1280x800 @59.94Hz
+render_fps_observed: see HUD / tick log
+simulation_tick: 0.0199999921 s (50 Hz game time)
+time_policy_version: none-approved (U-06); input double tap on raw time EXP-TIME-01
+data_snapshot: RUN-20261110-012104.data.json sha256 07e15e30a3d7779c80f3699ad77c353cb531bfd499f40a49d2128375a535dcad
+data_version: "movement.player@wp01-r1(experimental);input.profile@wp01-r1(experimental);unlock.AirUnlocks_All@wp01-r1(experimental);world:map.M01@wp01-r1(experimental),map.M02@wp01-r1(experimental),map.M03@wp01-r1(experimental)"
+experimental_policies:
+  - "EXP-INPUT-01 SpecialAttack on pad Y (temporary)"
+  - "EXP-INPUT-02 temporary keyboard mapping"
+  - "EXP-INPUT-03 8-sector direction, radial deadzone"
+  - "EXP-TIME-01 double tap measured press-to-press on raw input time"
+  - "EXP-MOVE-01 all MovementProfile numbers are tuning values (U-04)"
+  - "EXP-MOVE-02 roll keeps facing; down-diagonals crouch when held without A"
+  - "EXP-MOVE-03 dash/dive need a horizontal input component"
+  - "EXP-MOVE-05 slide/roll/dash/dive cannot be cancelled by other movement input"
+  - "EXP-MOVE-06 roll refused under a ceiling lower than standing height (stays crouched, no movement)"
+  - "EXP-AIR-01 air uses consumed when the action starts (U-04)"
+  - "EXP-AIR-02 extra jump/dash/dive allowed after walking off a ledge (U-04)"
+  - "EXP-MAP-01 map transition resets velocity, run and air uses; player placed grounded at spawn (U-01)"
+  - "EXP-MAP-02 up/down points need a press of pure Up/Down while grounded and not locked"
+  - "EXP-MAP-03 edge transition when movement is blocked by a connected edge (push outward)"
+  - "EXP-CAM-01 camera Y fixed per map, exponential horizontal follow, snap on transition (U-01)"
+  - "IMPL-PHYS-01 Core AABB kinematic movement instead of Unity physics"
+scene_map: Assets/Corum2/Scenes/WP01_MapMovement.unity start M01/Start
+save_fixture: none
+random_seed: not used
+started_at: 2026-11-10T01:21:04+09:00
+tester: <packet>
+commands_or_steps: <packet>
+log: RUN-20261110-012104.ndjson
