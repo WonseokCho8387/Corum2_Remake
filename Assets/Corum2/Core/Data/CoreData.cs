@@ -129,6 +129,8 @@ namespace Corum2.Core
         public readonly List<Aabb> Solids = new List<Aabb>();
         public readonly List<SpawnPoint> Spawns = new List<SpawnPoint>();
         public readonly List<TransitionPoint> Points = new List<TransitionPoint>();
+        /// <summary>Test enemies placed in this map (WP-02 training dummies).</summary>
+        public readonly List<EnemySpawn> Enemies = new List<EnemySpawn>();
         public EdgeRule Left = new EdgeRule();
         public EdgeRule Right = new EdgeRule();
         public CameraProfile Camera = new CameraProfile();

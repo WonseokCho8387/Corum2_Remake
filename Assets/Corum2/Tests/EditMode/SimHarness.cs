@@ -19,14 +19,31 @@ namespace Corum2.Tests
         readonly List<InputEvent> _scratch = new List<InputEvent>();
         double _now;
 
-        public SimHarness(string testCaseId, AirUnlocks unlocks = null, WorldData world = null, MovementProfile move = null)
+        public SimHarness(string testCaseId, AirUnlocks unlocks = null, WorldData world = null, MovementProfile move = null,
+            CombatProfile combat = null, CombatUnlocks combatUnlocks = null, List<EnemyDefinition> enemies = null)
         {
             var log = new DiagLogger(Sink) { RunId = "editmode", TestCaseId = testCaseId, TickSamples = true };
-            Sim = new Simulation(world ?? Fixtures.World(), move ?? Fixtures.Movement(), Fixtures.Input(), unlocks ?? Fixtures.Unlocks(false, false, false), log);
+            Sim = new Simulation(world ?? Fixtures.World(), move ?? Fixtures.Movement(), Fixtures.Input(), unlocks ?? Fixtures.Unlocks(false, false, false), log,
+                combat, combatUnlocks, enemies);
             Sim.Start(0);
         }
 
         public PlayerMotor P => Sim.Player;
+        public CombatSystem C => Sim.Combat;
+
+        public SimHarness StepUntil(System.Func<bool> cond, int limit = 300)
+        {
+            for (var i = 0; i < limit && !cond(); i++) Step();
+            return this;
+        }
+
+        public int Count(string type, string reasonPrefix = null)
+        {
+            var n = 0;
+            foreach (var e in Sink.Events)
+                if (e.Type == type && (reasonPrefix == null || e.Reason.StartsWith(reasonPrefix))) n++;
+            return n;
+        }
         public double Now => _now;
 
         /// <summary>Sets the held direction at the current time (emits Move* edges).</summary>

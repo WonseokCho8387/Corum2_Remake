@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Corum2.Core
 {
@@ -63,17 +64,49 @@ namespace Corum2.Core
             "EXP-MAP-03 edge transition when movement is blocked by a connected edge (push outward)",
             "EXP-CAM-01 camera Y fixed per map, exponential horizontal follow, snap on transition (U-01)",
             "IMPL-PHYS-01 Core AABB kinematic movement instead of Unity physics",
+            // WP-02 combat (only reported when combat data is present)
+            "TEST-DMG-01 fixed D per attack from the test DamageResolver (not the remake formula, U-09)",
+            "EXP-ATK-00 attack timings/hitboxes/knockback/hitstop are tuning values",
+            "EXP-ATK-01 facing set at attack start, no turning during a motion (U-05)",
+            "EXP-ATK-02 landing ends an air normal attack; chain window opens if it hit",
+            "EXP-ATK-03 air normal attack caps fall speed (AirAttackFallSpeed) (U-06)",
+            "EXP-ATK-04 attack input refused during slide/roll",
+            "EXP-ATK-05 initial dash/dive pick the closest overlapping target (U-05)",
+            "EXP-COMBO-01 one attack press during a motion is kept and executed at motion end (buffer length R-05-06 undecided)",
+            "EXP-COMBO-02 chain window counts from motion end; ComboWindow editable (R-04-09)",
+            "EXP-COMBO-03 after-dash reservation kept until landing; chain window paused while it waits (U-05)",
+            "EXP-GUARD-01 guard damage floor for g>=1 (U-09)",
+            "EXP-GUARD-02 held direction turns facing while guarding, no movement (U-09)",
+            "EXP-GUARD-03 RB refused during slide/roll",
+            "EXP-GUARD-04 attacker at equal X counts as front (U-09)",
+            "EXP-GUARD-05 guard break releases guard without extra stun or damage change (U-09)",
+            "EXP-GUARD-07 attack press from guard leaves guard and attacks",
+            "EXP-PARRY-01 parry = RB pressed within ParryWindow game seconds before the hit (CF-04)",
+            "EXP-PARRY-02 parry damage uses the guard rule (U-09); unblockable attacks are not parried (EXP-PARRY-03)",
+            "EXP-DODGE-01 simultaneous = same 50 Hz tick (CF-05); other targets hit in that tick still apply (CF-06)",
+            "EXP-HITSTOP-01 hitstop freezes the attacker and the hit targets only (U-06)",
+            "EXP-DOWN-01 a launched enemy that lands goes down (CF-10)",
+            "EXP-DOWN-02 down-diagonal + special without a downed enemy in range becomes the launcher (CF-10)",
+            "EXP-BODY-01 bodies pass through each other (no push)",
+            "FIXTURE-ENEMY-01 training dummies attack on a timer when in range (test fixture, not P0-08 AI)",
         };
 
-        public Simulation(WorldData world, MovementProfile movement, InputProfile input, AirUnlocks unlocks, DiagLogger log)
+        /// <summary>Null when the run has no combat data (WP-01 scenes).</summary>
+        public readonly CombatSystem Combat;
+
+        public Simulation(WorldData world, MovementProfile movement, InputProfile input, AirUnlocks unlocks, DiagLogger log,
+            CombatProfile combat = null, CombatUnlocks combatUnlocks = null, IEnumerable<EnemyDefinition> enemies = null)
         {
             World = world;
             Movement = movement;
             Input = input;
             Unlocks = unlocks;
             Log = log;
-            Log.DataVersion = movement.Meta.Tag + ";" + input.Meta.Tag + ";" + unlocks.Meta.Tag + ";world:" + WorldVersion(world);
+            Log.DataVersion = movement.Meta.Tag + ";" + input.Meta.Tag + ";" + unlocks.Meta.Tag + ";world:" + WorldVersion(world) +
+                              (combat != null ? ";" + combat.Meta.Tag + ";" + (combatUnlocks?.Meta.Tag ?? "") : "");
             Player = new PlayerMotor(movement, input, unlocks, log);
+            if (combat != null)
+                Combat = new CombatSystem(this, combat, combatUnlocks ?? new CombatUnlocks(), enemies ?? new EnemyDefinition[0]);
         }
 
         static string WorldVersion(WorldData w)
@@ -95,6 +128,7 @@ namespace Corum2.Core
             CurrentMap = map;
             Player.PlaceAt(map, map.FindSpawn(World.StartSpawnId), "RunStart");
             Camera.Snap(map, Player.Position);
+            Combat?.OnMapEntered(map, "RunStart");
         }
 
         public void Step(TickInput input, float dt)
@@ -108,7 +142,7 @@ namespace Corum2.Core
             foreach (var e in input.Events)
             {
                 var stateBefore = Player.State;
-                var outcome = Player.HandleEvent(CurrentMap, e);
+                var outcome = Combat?.HandleEvent(CurrentMap, e) ?? Player.HandleEvent(CurrentMap, e);
                 Log.Emit("input", PlayerMotor.Actor, "", stateBefore.ToString(), Player.State.ToString(), outcome,
                     ("device", e.Device), ("control", e.Control), ("action", e.Action), ("edge", e.Edge),
                     ("inputEventId", e.EventId), ("requestTime", e.RawTime), ("deliveredTick", Tick),
@@ -130,7 +164,9 @@ namespace Corum2.Core
                 if (Player.RunDir != 0 && Player.RunDir != sampledH) Player.RunDir = 0;
             }
 
-            var r = Player.Integrate(CurrentMap, dt);
+            var frozen = Combat != null && Combat.BeginTick(dt);
+            var r = frozen ? new MoveResult { Position = Player.Position } : Player.Integrate(CurrentMap, dt);
+            Combat?.Step(CurrentMap, dt, frozen);
             if (r.StartedInside)
                 Log.Emit("collision.startInside", PlayerMotor.Actor, "", Player.State.ToString(), Player.State.ToString(),
                     "BodyOverlappedSolidBeforeMove(diagnostic)", ("position", Player.Position), ("height", Player.Height));
@@ -165,7 +201,9 @@ namespace Corum2.Core
                 Log.Emit("tick", PlayerMotor.Actor, "", "", Player.State.ToString(), "",
                     ("mapId", CurrentMap.Id), ("x", Player.Position.X), ("y", Player.Position.Y), ("vx", Player.VelX), ("vy", Player.VelY),
                     ("grounded", Player.Grounded), ("facing", Player.Facing), ("runDir", Player.RunDir), ("heldDir", Player.HeldDir),
-                    ("air", Player.Air.Describe()), ("camX", Camera.X), ("camY", Camera.Y), ("planeZ", CurrentMap.CombatPlaneZ));
+                    ("air", Player.Air.Describe()), ("camX", Camera.X), ("camY", Camera.Y), ("planeZ", CurrentMap.CombatPlaneZ),
+                    ("hp", Combat?.PlayerHp ?? -1f), ("chainId", Combat?.ChainId ?? 0), ("combo", Combat?.ComboHits ?? 0),
+                    ("enemies", Combat?.DescribeEnemies() ?? ""));
         }
 
         void TryPointTransition(in InputEvent e)
@@ -206,6 +244,7 @@ namespace Corum2.Core
             TransitionCount++;
             Player.PlaceAt(target, spawn, "MapTransition(EXP-MAP-01)");
             Camera.Snap(target, Player.Position);
+            Combat?.OnMapEntered(target, "MapTransition");
             Log.Emit("map.transition", PlayerMotor.Actor, "", from.Id, target.Id, reason,
                 ("fromMapId", from.Id), ("toMapId", target.Id), ("connectionId", connectionId), ("spawnId", spawnId),
                 ("fromPosition", fromPos), ("toPosition", Player.Position), ("inputEventId", inputEventId),

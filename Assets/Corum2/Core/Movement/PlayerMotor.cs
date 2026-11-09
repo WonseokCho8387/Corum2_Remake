@@ -13,6 +13,13 @@ namespace Corum2.Core
         Airborne,
         AirDash,
         Dive,
+        // Combat-locked states (WP-02). The combat system enters and releases them.
+        GroundAttack,
+        AirAttack,
+        Guard,
+        HitStun,
+        DodgeReact,
+        Dead,
     }
 
     /// <summary>AirAbilityState (spec 11.2): three independent once-per-airtime uses (R-03-07).</summary>
@@ -76,6 +83,49 @@ namespace Corum2.Core
             _input = input;
             _unlocks = unlocks;
             _log = log;
+        }
+
+        /// <summary>Max fall speed while in a combat-locked state (air normal attacks fall slowly, U-06).</summary>
+        public float LockedMaxFall = float.MaxValue;
+        public float KnockbackDecel = 30f;
+        public bool LandedThisTick { get; private set; }
+        public MotorState LandedFromState { get; private set; }
+        public float RollElapsed => State == MotorState.Roll ? _m.RollDuration - _stateTimer : -1f;
+
+        public static bool IsLockedState(MotorState s) =>
+            s == MotorState.GroundAttack || s == MotorState.AirAttack || s == MotorState.Guard ||
+            s == MotorState.HitStun || s == MotorState.DodgeReact || s == MotorState.Dead;
+
+        /// <summary>Combat entry: user movement/jump is locked until ReleaseLocked (R-05-01, R-05-04).</summary>
+        public void EnterLocked(MotorState s, string reason)
+        {
+            var before = State;
+            State = s;
+            RunDir = 0;
+            LockedMaxFall = float.MaxValue;
+            KnockbackDecel = 30f;
+            if (s == MotorState.Dead) VelX = 0f;
+            _log.Emit("motor.state", Actor, "", before.ToString(), State.ToString(), reason, ("position", Position), ("grounded", Grounded));
+        }
+
+        public void ReleaseLocked(string reason)
+        {
+            if (!IsLockedState(State) || State == MotorState.Dead) return;
+            var before = State;
+            State = Grounded ? MotorState.Idle : MotorState.Airborne;
+            LockedMaxFall = float.MaxValue;
+            if (!Grounded) _launchSpeedAbs = Math.Abs(VelX);
+            _log.Emit("motor.state", Actor, "", before.ToString(), State.ToString(), reason, ("position", Position));
+        }
+
+        /// <summary>Stops an air dash early (initial dash stops at the first enemy, R-04-06).</summary>
+        public void EndDash(string reason)
+        {
+            if (State != MotorState.AirDash) return;
+            State = MotorState.Airborne;
+            VelX = 0f;
+            _launchSpeedAbs = _m.AirControlSpeed;
+            _log.Emit("motor.state", Actor, "", "AirDash", "Airborne", reason, ("position", Position));
         }
 
         public Dir8 HeldDir => Dir8Util.FromComponents(HeldH, HeldV);
@@ -356,7 +406,15 @@ namespace Corum2.Core
         public MoveResult Integrate(MapData map, float dt)
         {
             var before = State;
+            LandedThisTick = false;
             MoveResult r;
+            if (IsLockedState(State))
+            {
+                r = IntegrateLocked(map, dt);
+                _stateLogged = false;
+                _transitionReason = null;
+                return r;
+            }
             switch (State)
             {
                 case MotorState.Idle:
@@ -497,9 +555,42 @@ namespace Corum2.Core
             return r;
         }
 
+        /// <summary>Combat-locked states: no user steering; gravity, knockback deceleration and landing still apply.</summary>
+        MoveResult IntegrateLocked(MapData map, float dt)
+        {
+            float dy = 0f;
+            if (!Grounded)
+            {
+                var vyOld = VelY;
+                VelY = Math.Max(VelY - _m.Gravity * dt, -Math.Min(_m.MaxFallSpeed, LockedMaxFall));
+                dy = (vyOld + VelY) * 0.5f * dt;
+            }
+            else VelY = 0f;
+            VelX = MathUtil.MoveTowards(VelX, 0f, KnockbackDecel * dt);
+            var r = Collision.Move(map, Position, _m.BodyWidth, Height, VelX * dt, dy);
+            Position = r.Position;
+            if (r.HitCeiling && VelY > 0f) VelY = 0f;
+            if ((r.HitLeft && VelX < 0f) || (r.HitRight && VelX > 0f)) VelX = 0f;
+            if (r.Landed && !Grounded)
+            {
+                var airBefore = Air.Describe();
+                Air.Reset(); // R-03-10 landing reset also while locked
+                Grounded = true;
+                VelY = 0f;
+                LandedThisTick = true;
+                LandedFromState = State;
+                _log.Emit("motor.land", Actor, "", State.ToString(), State.ToString(), "LandedWhileLocked(R-03-10)",
+                    ("position", Position), ("airBefore", airBefore), ("airAfter", Air.Describe()));
+            }
+            else if (Grounded && !Collision.HasGround(map, Position, _m.BodyWidth)) Grounded = false;
+            return r;
+        }
+
         void Land(MapData map)
         {
             var before = State;
+            LandedThisTick = true;
+            LandedFromState = before;
             var airBefore = Air.Describe();
             Air.Reset(); // R-03-10
             Grounded = true;

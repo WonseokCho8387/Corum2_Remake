@@ -57,6 +57,97 @@ namespace Corum2.Core
             return issues;
         }
 
+        /// <summary>WP-02 combat data checks (spec 11.2): finite values, timings, sizes, mandatory magic knockback.</summary>
+        public static List<ValidationIssue> ValidateCombat(CombatProfile p, CombatUnlocks u, IList<EnemyDefinition> enemies, WorldData world)
+        {
+            var issues = new List<ValidationIssue>();
+            CheckMeta(issues, "CombatProfile", p?.Meta);
+            CheckMeta(issues, "CombatUnlocks", u?.Meta);
+            if (p == null) return issues;
+            if (p.GroundNormals.Length != 4) issues.Add(new ValidationIssue("CombatProfile", "GroundNormals must have 4 entries (R-04-01)."));
+            if (p.AirNormals.Length != 4) issues.Add(new ValidationIssue("CombatProfile", "AirNormals must have 4 entries (R-04-01)."));
+            var all = new List<AttackDefinition>(p.GroundNormals);
+            all.AddRange(p.AirNormals);
+            all.Add(p.Launcher);
+            all.Add(p.AirDash);
+            all.Add(p.Dive);
+            all.Add(p.DownAttack);
+            foreach (var a in all) ValidateAttack(issues, "CombatProfile attack " + a?.Id, a);
+            if (p.Launcher != null && !(p.Launcher.LaunchVelocity > 0f)) issues.Add(new ValidationIssue("CombatProfile", "Launcher.LaunchVelocity must be > 0."));
+            if (p.DownAttack != null && !p.DownAttack.HitsDowned) issues.Add(new ValidationIssue("CombatProfile", "DownAttack must hit downed targets (R-06-09)."));
+            if (p.Dive != null && !p.Dive.HitsDowned) issues.Add(new ValidationIssue("CombatProfile", "Dive must hit downed targets (R-06-09)."));
+            foreach (var (name, v, min) in new[]
+                     {
+                         ("PlayerMaxHp", p.PlayerMaxHp, 0f), ("ComboWindow", p.ComboWindow, 0f), ("AirAttackFallSpeed", p.AirAttackFallSpeed, 0f),
+                         ("ParryWindow", p.ParryWindow, 0f), ("ParryStunTime", p.ParryStunTime, 0f), ("ParryKnockback", p.ParryKnockback, 0f),
+                         ("DodgeReactionTime", p.DodgeReactionTime, 0f), ("DodgeKnockback", p.DodgeKnockback, 0f), ("PlayerHitstun", p.PlayerHitstun, 0f),
+                         ("KnockbackDecel", p.KnockbackDecel, 0f), ("DiveAreaRadius", p.DiveAreaRadius, 0f), ("DownAttackRange", p.DownAttackRange, 0f),
+                     })
+            {
+                if (Finite(issues, "CombatProfile", name, v) && !(v > min)) issues.Add(new ValidationIssue("CombatProfile", name + " must be > 0."));
+            }
+            if (Finite(issues, "CombatProfile", "RollInvulnStart", p.RollInvulnStart) & Finite(issues, "CombatProfile", "RollInvulnEnd", p.RollInvulnEnd) &&
+                !(p.RollInvulnStart >= 0f && p.RollInvulnEnd > p.RollInvulnStart))
+                issues.Add(new ValidationIssue("CombatProfile", "Roll invulnerability must be a part of the roll: 0 <= start < end (R-06-13)."));
+
+            var ids = new HashSet<string>();
+            foreach (var e in enemies ?? new EnemyDefinition[0])
+            {
+                var src = "Enemy " + e.Id;
+                CheckMeta(issues, src, e.Meta);
+                if (string.IsNullOrEmpty(e.Id) || !ids.Add(e.Id)) issues.Add(new ValidationIssue(src, "Enemy id empty or duplicated."));
+                foreach (var (name, v) in new[] { ("MaxHp", e.MaxHp), ("BodyWidth", e.BodyWidth), ("BodyHeight", e.BodyHeight), ("Gravity", e.Gravity), ("StaggerTime", e.StaggerTime),
+                             ("JuggleFallSpeed", e.JuggleFallSpeed), ("JuggleSlowTime", e.JuggleSlowTime), ("DownTime", e.DownTime), ("WakeupTime", e.WakeupTime),
+                             ("DeathTime", e.DeathTime), ("VanishTime", e.VanishTime) })
+                    if (Finite(issues, src, name, v) && !(v > 0f)) issues.Add(new ValidationIssue(src, name + " must be > 0."));
+                if (Finite(issues, src, "StaggerResistance", e.StaggerResistance) && !(e.StaggerResistance >= 0f && e.StaggerResistance <= 1f))
+                    issues.Add(new ValidationIssue(src, "StaggerResistance must be in [0,1]."));
+                if (Finite(issues, src, "PhysicalKnockbackScale", e.PhysicalKnockbackScale) && e.PhysicalKnockbackScale < 0f)
+                    issues.Add(new ValidationIssue(src, "PhysicalKnockbackScale must be >= 0 (0 allowed, R-06-05)."));
+                if (Finite(issues, src, "MagicKnockbackScale", e.MagicKnockbackScale) && !(e.MagicKnockbackScale > 0f))
+                    issues.Add(new ValidationIssue(src, "MagicKnockbackScale must be > 0: magic knockback 0 is not allowed (R-06-06)."));
+                if (Finite(issues, src, "LaunchResistScale", e.LaunchResistScale) && !(e.LaunchResistScale > 0f && e.LaunchResistScale < 1f))
+                    issues.Add(new ValidationIssue(src, "LaunchResistScale must be in (0,1)."));
+                if (e.Attack != null)
+                {
+                    ValidateAttack(issues, src + " attack", e.Attack);
+                    foreach (var (name, v) in new[] { ("AttackRange", e.AttackRange), ("AttackInterval", e.AttackInterval) })
+                        if (Finite(issues, src, name, v) && !(v > 0f)) issues.Add(new ValidationIssue(src, name + " must be > 0."));
+                    if (Finite(issues, src, "FirstAttackDelay", e.FirstAttackDelay) && e.FirstAttackDelay < 0f)
+                        issues.Add(new ValidationIssue(src, "FirstAttackDelay must be >= 0."));
+                }
+            }
+            if (world != null)
+                foreach (var m in world.Maps)
+                foreach (var s in m.Enemies)
+                {
+                    var src = "Map " + m.Id + " enemy " + s.InstanceId;
+                    if (!ids.Contains(s.EnemyId)) issues.Add(new ValidationIssue(src, "Enemy definition '" + s.EnemyId + "' not found."));
+                    Finite(issues, src, "X", s.Position.X);
+                    Finite(issues, src, "Y", s.Position.Y);
+                    if (s.Facing != 1 && s.Facing != -1) issues.Add(new ValidationIssue(src, "Facing must be 1 or -1."));
+                }
+            return issues;
+        }
+
+        static void ValidateAttack(List<ValidationIssue> issues, string src, AttackDefinition a)
+        {
+            if (a == null)
+            {
+                issues.Add(new ValidationIssue(src, "Attack missing."));
+                return;
+            }
+            foreach (var (name, v) in new[] { ("Startup", a.Startup), ("Recovery", a.Recovery), ("Hitstop", a.Hitstop), ("TestDamage", a.TestDamage), ("Knockback", a.Knockback), ("LaunchVelocity", a.LaunchVelocity) })
+                if (Finite(issues, src, name, v) && v < 0f) issues.Add(new ValidationIssue(src, name + " must be >= 0."));
+            foreach (var (name, v) in new[] { ("Active", a.Active), ("HitboxWidth", a.HitboxWidth), ("HitboxHeight", a.HitboxHeight) })
+                if (Finite(issues, src, name, v) && !(v > 0f)) issues.Add(new ValidationIssue(src, name + " must be > 0."));
+            Finite(issues, src, "HitboxOffsetX", a.HitboxOffsetX);
+            Finite(issues, src, "HitboxOffsetY", a.HitboxOffsetY);
+            if (a.HitEvents < 1) issues.Add(new ValidationIssue(src, "HitEvents must be >= 1."));
+            if (a.DamageType == DamageType.Magic && !(a.Knockback > 0f))
+                issues.Add(new ValidationIssue(src, "Magic attack knockback must be > 0 (R-06-06)."));
+        }
+
         static void CheckMeta(List<ValidationIssue> issues, string source, DataMeta meta)
         {
             if (meta == null)
