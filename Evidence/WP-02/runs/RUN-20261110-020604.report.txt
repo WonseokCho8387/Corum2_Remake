@@ -1,0 +1,20 @@
+run RUN-20261110-020604  events 729
+dataVersion movement.player@wp01-r1(experimental);input.profile@wp01-r1(experimental);unlock.AirUnlocks_All@wp01-r1(experimental);world:map.C01@wp02-1(experimental);combat.player@wp02-1(experimental);combat.CombatUnlocks_None@wp02-1(experimental)
+
+== TC-07-04  ticks 176..684
+  t  176 marker                                  -> [TestCase] 
+  t  178 marker                 ->hitter1        ->AttackStartup [AwaitMet] 
+  t  186 marker                                  -> [VirtualDevicesAdded] 
+  t  192 guard.parry            player->hitter1  Guard->Guard [Parry(R-07-04/05)] damageD=10 damageTaken=1 hpBefore=100 hpAfter=99 rbToHit=0.07999996840953827
+  t  241 marker                                  -> [TestCase] 
+  t  493 marker                 ->hitter1        ->Idle [AwaitTimeout] 
+  t  561 marker                                  -> [ScriptEnd] 
+  t  636 marker                                  -> [VideoRecordingStopped] 
+
+== TC-07-05  ticks 199..241
+  t  199 marker                                  -> [TestCase] 
+  t  201 combo.begin            player           -> [NewChain] 
+  t  201 attack.start           player           ->GroundAttack [Attack:GroundNormal] attackId=ground1 attackInstanceId=2 attackChainStep=1 comboHits=0
+  t  213 attack.end             player           ->GroundAttack [MotionEnd] attackId=ground1 attackInstanceId=2 elapsed=0.259999931 hits=0
+  t  213 combo.end              player           -> [Miss] attackChainStep=1 comboHits=0
+  t  237 marker                 ->hitter1        ->Idle [AwaitMet] 
