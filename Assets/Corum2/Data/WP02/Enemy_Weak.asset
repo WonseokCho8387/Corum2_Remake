@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 125c746adf4ff87488a0826b46907adc, type: 3}
+  m_Name: Enemy_Weak
+  m_EditorClassIdentifier: Corum2.Unity::Corum2.Unity.EnemyDefinitionAsset
+  meta:
+    domainId: enemy.weak
+    schemaVersion: 1
+    dataVersion: wp02-1
+    status: experimental
+    policyIds: []
+    relatedRIds:
+    - R-06-04
+    - R-06-05
+    - R-06-06
+    - R-06-08
+    changeRequestId: 
+  enemyId: weak
+  maxHp: 15
+  bodyWidth: 0.8
+  bodyHeight: 1.6
+  gravity: 30
+  staggerTime: 0.4
+  staggerResistance: 0
+  physicalKnockbackScale: 1
+  magicKnockbackScale: 1
+  launch: 0
+  launchResistScale: 0.5
+  juggleFallSpeed: 2
+  juggleSlowTime: 0.35
+  downTime: 1
+  wakeupTime: 0.6
+  deathTime: 0.8
+  vanishTime: 0.4
+  hasAttack: 0
+  attack:
+    id: 
+    kind: 6
+    damageType: 0
+    startup: 0.06
+    active: 0.08
+    recovery: 0.12
+    offsetX: 0.8
+    offsetY: 0.9
+    width: 1
+    height: 1.2
+    testDamage: 10
+    hitstop: 0.04
+    knockback: 1.5
+    launchVelocity: 0
+    hitEvents: 1
+    unblockable: 0
+    guardBreak: 0
+    superArmor: 0
+    hitsDowned: 0
+  attackRange: 1.6
+  attackInterval: 1.5
+  firstAttackDelay: 1
+  color: {r: 0.9, g: 0.8, b: 0.3, a: 1}

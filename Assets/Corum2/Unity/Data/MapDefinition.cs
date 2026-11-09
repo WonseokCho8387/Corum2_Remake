@@ -20,6 +20,7 @@ namespace Corum2.Unity
         public EdgeData left = new EdgeData();
         public EdgeData right = new EdgeData();
         public List<PointData> points = new List<PointData>();
+        [Tooltip("WP-02 test enemies (training dummies).")] public List<EnemySpawnData> enemies = new List<EnemySpawnData>();
         [Header("Camera (U-01, EXP-CAM-01)")] public float cameraMinX;
         public float cameraMaxX = 30f;
         public float cameraY = 2.5f;
@@ -44,6 +45,9 @@ namespace Corum2.Unity
             foreach (var s in spawns) m.Spawns.Add(new SpawnPoint { Id = s.id, Position = new Vec2(s.position.x, s.position.y), Facing = s.facing });
             foreach (var p in points)
                 m.Points.Add(new TransitionPoint { Id = p.id, Area = p.area.ToCore(), Direction = p.direction, TargetMapId = p.targetMapId, TargetSpawnId = p.targetSpawnId });
+            if (enemies != null)
+                foreach (var e in enemies)
+                    m.Enemies.Add(new EnemySpawn { InstanceId = e.instanceId, EnemyId = e.enemyId, Position = new Vec2(e.position.x, e.position.y), Facing = e.facing });
             return m;
         }
     }

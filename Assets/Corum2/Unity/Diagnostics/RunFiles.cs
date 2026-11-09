@@ -73,7 +73,8 @@ namespace Corum2.Unity
         }
 
         /// <summary>Data snapshot (D): the exact Inspector values used by this run.</summary>
-        public static string WriteDataSnapshot(string dir, string runId, WorldDefinition world, MovementConfig move, InputProfileConfig input, AirUnlockFixture unlocks)
+        public static string WriteDataSnapshot(string dir, string runId, WorldDefinition world, MovementConfig move, InputProfileConfig input, AirUnlockFixture unlocks,
+            System.Collections.Generic.List<ScriptableObject> extra = null)
         {
             var sb = new StringBuilder();
             sb.Append("{\n\"runId\":\"").Append(runId).Append("\",\n");
@@ -86,7 +87,19 @@ namespace Corum2.Unity
                 if (i > 0) sb.Append(",\n");
                 sb.Append(JsonUtility.ToJson(world.maps[i], true));
             }
-            sb.Append("]}\n}\n");
+            sb.Append("]}");
+            if (extra != null && extra.Count > 0)
+            {
+                sb.Append(",\n\"extra\":[\n");
+                for (var i = 0; i < extra.Count; i++)
+                {
+                    if (i > 0) sb.Append(",\n");
+                    sb.Append("{\"asset\":\"").Append(extra[i].name).Append("\",\"type\":\"").Append(extra[i].GetType().Name).Append("\",\"data\":")
+                      .Append(JsonUtility.ToJson(extra[i], true)).Append('}');
+                }
+                sb.Append("]");
+            }
+            sb.Append("\n}\n");
             var path = System.IO.Path.Combine(dir, runId + ".data.json");
             File.WriteAllText(path, sb.ToString(), new UTF8Encoding(false));
             return path;

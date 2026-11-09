@@ -24,6 +24,11 @@ namespace Corum2.Unity
         public InputProfileConfig inputProfile;
         public AirUnlockFixture unlocks;
 
+        [Header("Combat (WP-02; leave empty for movement-only scenes)")]
+        public CombatConfig combat;
+        public CombatUnlockFixture combatUnlocks;
+        public List<EnemyDefinitionAsset> enemies = new List<EnemyDefinitionAsset>();
+
         [Header("Run")]
         public string testCaseId = "manual";
         [Tooltip("Write a 'tick' log line every fixed step (trajectory logs).")]
@@ -48,6 +53,7 @@ namespace Corum2.Unity
         NdjsonFileSink _sink;
         readonly TickInput _tick = new TickInput();
         WorldView _worldView;
+        CombatView _combatView;
         PlayerView _playerView;
         Camera _camera;
         Text _hud;
@@ -92,6 +98,18 @@ namespace Corum2.Unity
 
             foreach (var issue in DataValidator.Validate(worldData, move, input, unlock))
                 ValidationErrors.Add(issue.ToString());
+            CombatProfile combatProfile = null;
+            CombatUnlocks combatUnlock = null;
+            var enemyDefs = new List<EnemyDefinition>();
+            if (combat != null)
+            {
+                combatProfile = combat.ToCore();
+                combatUnlock = combatUnlocks != null ? combatUnlocks.ToCore() : null;
+                foreach (var e in enemies)
+                    if (e != null) enemyDefs.Add(e.ToCore());
+                foreach (var issue in DataValidator.ValidateCombat(combatProfile, combatUnlock, enemyDefs, worldData))
+                    ValidationErrors.Add(issue.ToString());
+            }
             BuildHud();
             if (ValidationErrors.Count > 0)
             {
@@ -105,16 +123,22 @@ namespace Corum2.Unity
             var dir = RunFiles.RunDirectory();
             LogPath = Path.Combine(dir, RunId + ".ndjson");
             _sink = new NdjsonFileSink(LogPath);
-            DataSnapshotPath = RunFiles.WriteDataSnapshot(dir, RunId, world, movement, inputProfile, unlocks);
+            var extra = new List<ScriptableObject>();
+            if (combat != null) extra.Add(combat);
+            if (combatUnlocks != null) extra.Add(combatUnlocks);
+            foreach (var e in enemies)
+                if (e != null) extra.Add(e);
+            DataSnapshotPath = RunFiles.WriteDataSnapshot(dir, RunId, world, movement, inputProfile, unlocks, extra);
 
             var log = new DiagLogger(new SinkTee(_sink, this)) { RunId = RunId, TestCaseId = testCaseId, TickSamples = tickSamples };
-            Sim = new Simulation(worldData, move, input, unlock, log);
+            Sim = new Simulation(worldData, move, input, unlock, log, combatProfile, combatUnlock, enemyDefs);
             _transport = new InputTransport();
             _collector = new InputCollector(inputProfile, _transport);
 
             _worldView = new WorldView(transform);
             _worldView.Build(worldData, world.maps);
             _playerView = new PlayerView(transform, _worldView, move.BodyWidth);
+            if (Sim.Combat != null) _combatView = new CombatView(transform, _worldView, enemies);
             _camera = Camera.main;
             if (_camera != null)
             {
@@ -170,6 +194,7 @@ namespace Corum2.Unity
             var z = map.CombatPlaneZ;
             _playerView.Apply(new Vector3(p.x, p.y, z), Sim.Player.Height, Sim.Player.Facing, Sim.Player.State);
             // TC-01-01 / TC-UNITY-02: the rendered player must stay on the combat plane.
+            if (_combatView != null) _combatView.Sync(Sim.Combat, z);
             _viewFrames++;
             _maxViewZError = Mathf.Max(_maxViewZError, Mathf.Abs(_playerView.Root.position.z - z));
             if (_camera != null)
@@ -261,10 +286,25 @@ namespace Corum2.Unity
             Sim.Log.Emit("script.start", "", "", "", "", "InputScript", ("script", script));
         }
 
+        string _awaitEnemy;
+        string _awaitState;
+
         void RunScript()
         {
+            if (_awaitEnemy != null)
+            {
+                // Script clock is frozen until the awaited enemy state appears (deterministic evidence timing).
+                var en = Sim.Combat?.Find(_awaitEnemy);
+                if (en == null || en.State.ToString() != _awaitState)
+                {
+                    _scriptStart += Time.deltaTime;
+                    return;
+                }
+                Sim.Log.Emit("marker", "", _awaitEnemy, "", _awaitState, "AwaitMet", ("enemyState", _awaitState));
+                _awaitEnemy = null;
+            }
             var now = Time.timeAsDouble - _scriptStart;
-            while (_scriptIndex < _script.Count && _script[_scriptIndex].at <= now)
+            while (_awaitEnemy == null && _scriptIndex < _script.Count && _script[_scriptIndex].at <= now)
             {
                 Exec(_script[_scriptIndex].cmd);
                 _scriptIndex++;
@@ -297,6 +337,14 @@ namespace Corum2.Unity
                     Sim.Log.TestCaseId = arg;
                     Sim.Log.Emit("marker", "", "", "", "", "TestCase", ("testCaseId", arg));
                     break;
+                case "await":
+                {
+                    // await=<enemyInstanceId>:<EnemyState>
+                    var kv = arg.Split(':');
+                    _awaitEnemy = kv[0];
+                    _awaitState = kv[1];
+                    return;
+                }
                 case "mark":
                     Sim.Log.Emit("marker", "", "", "", "", arg);
                     break;
@@ -430,6 +478,13 @@ namespace Corum2.Unity
                 p.State, p.Grounded, p.Facing > 0 ? "R" : "L", p.Position, p.VelX, p.VelY);
             sb.AppendFormat("dir {0}   runDir {1}   air {2}\n", p.HeldDir, p.RunDir, p.Air.Describe());
             sb.AppendFormat("unlocks jump={0} dash={1} dive={2}   test case {3}\n", Sim.Unlocks.ExtraJump, Sim.Unlocks.AirDash, Sim.Unlocks.Dive, Sim.Log.TestCaseId);
+            var c = Sim.Combat;
+            if (c != null)
+            {
+                sb.AppendFormat(CultureInfo.InvariantCulture, "<size=24><b>HP {0:0}   COMBO {1}   step {2}</b></size>  chain {3}{4}  last end {5} ({6})\n",
+                    c.PlayerHp, c.ComboHits, c.ChainSteps, c.ChainId, c.ChainAlive ? " alive" : "", c.LastChainEndReason, c.LastComboHits);
+                sb.Append("enemies ").AppendLine(c.DescribeEnemies());
+            }
             sb.AppendLine("<color=#aaaaaa>pad: stick move, A jump, X attack, Y special(EXP-INPUT-01) | kb: WASD/arrows, Space, J, K</color>");
             foreach (var l in _recentInputs) sb.AppendLine("<color=#c8e6ff>" + l + "</color>");
             _hud.text = sb.ToString();
