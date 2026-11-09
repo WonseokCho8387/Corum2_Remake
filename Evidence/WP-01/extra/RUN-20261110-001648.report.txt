@@ -1,0 +1,82 @@
+run RUN-20261110-001648  events 1885  dataVersion movement.player@wp01-1(experimental);input.profile@wp01-1(experimental);unlock.AirUnlocks_All@wp01-1(experimental);world:map.M01@wp01-1(experimental),map.M02@wp01-1(experimental),map.M03@wp01-1(experimental)
+ticks 1715  planeZ values [0]  maps visited ['M01', 'M02', 'M03']
+input events 76  latency raw->tick min 0.014s median 0.017s max 0.080s
+input event ids unique: True  desync events: 0
+
+== TC-03-01  ticks 183..313
+  t  183 marker              ->   [TestCase]  
+  |vx| per state: Walk=[3.5], Idle=[0]
+
+== TC-03-02  ticks 313..523
+  t  313 marker              ->   [TestCase]  
+  t  314 motor.jump         Idle -> Airborne  [Jump:Standing]  kind=Standing
+  t  352 motor.land         Airborne -> Idle  [Landed(R-03-10)]  airBefore=jump=free,dash=free,dive=free airAfter=jump=free,dash=free,dive=free position=[10.579999, 0]
+  t  383 motor.jump         Walk -> Airborne  [Jump:Walk]  kind=Walk
+  t  421 motor.land         Airborne -> Idle  [Landed(R-03-10)]  airBefore=jump=free,dash=free,dive=free airAfter=jump=free,dash=free,dive=free position=[13.9399843, 0]
+  t  454 motor.run          runDir=0 -> runDir=-1  [DoubleTap]  tapGap=0.2025696999999127
+  t  466 motor.jump         Run -> Airborne  [Jump:Run]  kind=Run
+  t  466 motor.run          runDir=-1 -> runDir=0  [RunDirectionReleased(R-03-01)]  
+  t  504 motor.land         Airborne -> Idle  [Landed(R-03-10)]  airBefore=jump=free,dash=free,dive=free airAfter=jump=free,dash=free,dive=free position=[6.449974, 0]
+  jump Standing peak 2.200 m  horizontal 0.000 m  ticks 314->352  airUseDuring=False
+  jump Walk     peak 2.200 m  horizontal 2.730 m  ticks 383->421  airUseDuring=False
+  jump Run      peak 2.200 m  horizontal 5.460 m  ticks 466->504  airUseDuring=False
+
+== TC-03-05  ticks 523..625
+  t  523 marker              ->   [TestCase]  
+  t  524 map.pointCheck     M01 -> M01  [NoPointHere]  direction=Down position=[6.449974, 0]
+  t  529 motor.state        Crouch -> Roll  [Roll(R-03-05)]  dir=1 facing=-1
+  t  549 motor.state        Roll -> Idle  [RollEnd]  position=[9.389976, 0]
+  t  569 map.pointCheck     M01 -> M01  [NoPointHere]  direction=Down position=[9.389976, 0]
+  t  574 motor.state        Crouch -> Roll  [Roll(R-03-05)]  dir=-1 facing=-1
+  t  594 motor.state        Roll -> Idle  [RollEnd]  position=[6.449974, 0]
+
+== TC-03-06  ticks 625..723
+  t  625 marker              ->   [TestCase]  
+  t  626 motor.jump         Idle -> Airborne  [Jump:Standing]  kind=Standing
+  t  641 motor.run          runDir=0 -> runDir=0  [AirDoubleTapIgnored(R-03-06)]  tapGap=0.1539412000001903
+  t  646 air.use            jump=free,dash=free,dive=free -> jump=used,dash=free,dive=free  [ExtraJump]  ability=ExtraJump
+  t  654 air.use            jump=used,dash=free,dive=free -> jump=used,dash=used,dive=free  [AirDash]  ability=AirDash dir=1
+  t  666 motor.state        AirDash -> Airborne  [AirDashEnd]  position=[10.5959711, 3.47441936]
+  t  674 map.pointCheck     M01 -> M01  [NoPointHere]  direction=Down position=[11.085969, 3.18041968]
+  t  676 air.use            jump=used,dash=used,dive=free -> jump=used,dash=used,dive=used,diveFinished  [Dive]  ability=Dive dir=1
+  t  691 motor.land         Dive -> Idle  [DiveLanding(CF-02 landing lock not applied)]  airBefore=jump=used,dash=used,dive=used,diveFinished airAfter=jump=free,dash=free,dive=free position=[14.3938, 0]
+
+== TC-03-08  ticks 723..783
+  t  723 marker              ->   [TestCase]  
+  t  724 motor.jump         Idle -> Airborne  [Jump:Standing]  kind=Standing
+  t  741 air.use            jump=free,dash=free,dive=free -> jump=free,dash=free,dive=used,diveFinished  [Dive]  ability=Dive dir=1
+  t  744 input.reject       Dive -> Dive  [ActionLock:Dive]  detail=EXP-MOVE-05: no cancel of this state
+  t  745 input.reject       Dive -> Dive  [ActionLock:Dive]  detail=R-03-08/R-03-09
+  t  751 motor.land         Dive -> Idle  [DiveLanding(CF-02 landing lock not applied)]  airBefore=jump=free,dash=free,dive=used,diveFinished airAfter=jump=free,dash=free,dive=free position=[16.5932865, 0]
+  t  783 motor.place        Idle -> Idle  [ScriptSpawn]  facing=1 spawnId=TestPassageWest airBefore=jump=free,dash=free,dive=free airAfter=jump=free,dash=free,dive=free position=[38.5, 0]
+
+== TC-03-04  ticks 783..883
+  t  783 marker              ->   [TestCase]  
+  t  833 map.pointCheck     M01 -> M01  [NoPointHere]  direction=Down position=[39.6999, 0]
+  t  844 motor.state        Crouch -> Slide  [Slide(R-03-04)]  dir=1
+  t  861 motor.state        Slide -> Idle  [SlideEnd]  position=[42.9399071, 0]
+  x range 38.500..42.940  final state Idle at x 42.940
+
+== TC-01-02  ticks 883..1073
+  t  883 marker              ->   [TestCase]  
+  map ids ['M01']  camX 42.945->55.174  player x 43.010->55.190  max |camX-x| 0.316  camY [2.5]
+
+== TC-01-04  ticks 1073..1198
+  t 1073 marker              ->   [TestCase]  
+  t 1074 motor.place        Idle -> Idle  [MapTransition(EXP-MAP-01)]  facing=1 spawnId=FromBelow airBefore=jump=free,dash=free,dive=free airAfter=jump=free,dash=free,dive=free position=[12, 0]
+  t 1074 map.transition     M01 -> M03  [UpPoint(R-01-04)]  fromMapId=M01 toMapId=M03 connectionId=P-M01-UP spawnId=FromBelow toPosition=[12, 0]
+  t 1112 motor.place        Idle -> Idle  [MapTransition(EXP-MAP-01)]  facing=1 spawnId=FromAbove airBefore=jump=free,dash=free,dive=free airAfter=jump=free,dash=free,dive=free position=[56, 0]
+  t 1112 map.transition     M03 -> M01  [DownPoint(R-01-04)]  fromMapId=M03 toMapId=M01 connectionId=P-M03-DOWN spawnId=FromAbove toPosition=[56, 0]
+  t 1174 map.pointCheck     M01 -> M01  [NoPointHere]  direction=Up position=[53.90001, 0]
+
+== TC-01-03  ticks 1198..1715
+  t 1198 marker              ->   [TestCase]  
+  t 1209 motor.run          runDir=0 -> runDir=1  [DoubleTap]  tapGap=0.2097120000007635
+  t 1390 motor.place        Run -> Idle  [MapTransition(EXP-MAP-01)]  facing=1 spawnId=FromLeft airBefore=jump=free,dash=free,dive=free airAfter=jump=free,dash=free,dive=free position=[2, 0]
+  t 1390 map.transition     M01 -> M02  [RightEdge(R-01-03)]  fromMapId=M01 toMapId=M02 connectionId=C-M01-M02 spawnId=FromLeft toPosition=[2, 0]
+  t 1480 motor.place        Walk -> Idle  [MapTransition(EXP-MAP-01)]  facing=-1 spawnId=FromRight airBefore=jump=free,dash=free,dive=free airAfter=jump=free,dash=free,dive=free position=[78, 0]
+  t 1480 map.transition     M02 -> M01  [LeftEdge(R-01-03)]  fromMapId=M02 toMapId=M01 connectionId=C-M02-M01 spawnId=FromRight toPosition=[78, 0]
+  t 1533 marker              ->   [ScriptEnd]  
+  t 1538 script.end          ->   [InputScriptDone]  
+  t 1715 run.end             ->   [HostDestroyed]  
+
