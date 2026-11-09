@@ -182,6 +182,46 @@ namespace Corum2.Unity
             RefreshHud();
         }
 
+        // ---------------------------------------------------------------- frame capture (video evidence)
+
+        /// <summary>Set by the Editor evidence recorder. Receives one frame per rendered frame while set.</summary>
+        public Action<Texture2D> FrameSink;
+        public int CaptureWidth = 1280;
+        public int CaptureHeight = 800;
+        RenderTexture _captureRt;
+        Texture2D _captureTex;
+        Canvas _hudCanvas;
+
+        void LateUpdate()
+        {
+            if (FrameSink == null || _camera == null) return;
+            if (_captureRt == null || _captureRt.width != CaptureWidth || _captureRt.height != CaptureHeight)
+            {
+                _captureRt = new RenderTexture(CaptureWidth, CaptureHeight, 24, RenderTextureFormat.ARGB32);
+                _captureTex = new Texture2D(CaptureWidth, CaptureHeight, TextureFormat.RGBA32, false);
+            }
+            // HUD into the camera image: overlay canvases are not drawn by a camera render.
+            if (_hudCanvas != null && _hudCanvas.renderMode != RenderMode.ScreenSpaceCamera)
+            {
+                _hudCanvas.renderMode = RenderMode.ScreenSpaceCamera;
+                _hudCanvas.worldCamera = _camera;
+                _hudCanvas.planeDistance = 1f;
+            }
+            var prevTarget = _camera.targetTexture;
+            var prevAspect = _camera.aspect;
+            _camera.targetTexture = _captureRt;
+            _camera.aspect = (float)CaptureWidth / CaptureHeight;
+            _camera.Render();
+            var prevActive = RenderTexture.active;
+            RenderTexture.active = _captureRt;
+            _captureTex.ReadPixels(new Rect(0, 0, CaptureWidth, CaptureHeight), 0, 0);
+            _captureTex.Apply(false);
+            RenderTexture.active = prevActive;
+            _camera.targetTexture = prevTarget;
+            _camera.aspect = prevAspect;
+            FrameSink(_captureTex);
+        }
+
         void OnDestroy()
         {
             _collector?.Dispose();
@@ -344,6 +384,7 @@ namespace Corum2.Unity
             canvasGo.transform.SetParent(transform, false);
             var canvas = canvasGo.GetComponent<Canvas>();
             canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+            _hudCanvas = canvas;
             var scaler = canvasGo.GetComponent<CanvasScaler>();
             scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
             scaler.referenceResolution = new Vector2(1280, 800);
