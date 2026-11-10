@@ -288,6 +288,17 @@ namespace Corum2.Tests
             Assert.AreEqual(0, h.Count("boss.pattern"));
         }
 
+        [Test, Category("TC_08_08")]
+        public void Boss_BeyondTrackRange_Waits()
+        {
+            var boss = SelectorBoss();
+            boss.Ai.TrackRange = 12f;
+            var h = AiFixtures.H("TC-08-08", World(("b", "sel", 40f)), boss);
+            h.Step(30);
+            Assert.AreEqual(40f, h.C.Find("b").Position.X, 1e-4, "distance 30 > track range 12 (EXP-AI-01)");
+            Assert.AreEqual(1, h.Count("ai.decide", "BeyondTrackRange"));
+        }
+
         static EnemyDefinition OnePhase() => AiFixtures.Boss("A", "only", AiFixtures.Phase("only", AiFixtures.Pattern("a1", 0f, 2f)));
 
         static EnemyDefinition TwoPhase()

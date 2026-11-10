@@ -357,6 +357,12 @@ namespace Corum2.Core
                 return;
             }
             if (!en.Grounded) return;
+            if (dist > en.Ai.TrackRange)
+            {
+                en.MoveVelX = 0f;
+                Decide(en, "Wait", "BeyondTrackRange(EXP-AI-01)", dist);
+                return;
+            }
             var ph = en.Phase;
             if (en.Cooldown <= 0f)
             {
