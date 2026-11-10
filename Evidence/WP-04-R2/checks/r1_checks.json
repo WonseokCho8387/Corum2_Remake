@@ -1,0 +1,441 @@
+{
+ "log": "Evidence/WP-04-R2/runs/RUN-20261110-180516.ndjson",
+ "C01_ten_simultaneous_start": {
+  "tick": 364,
+  "count": 10
+ },
+ "C02_boss_dodge": [
+  [
+   2639,
+   "boss"
+  ]
+ ],
+ "F01_propulsion_cuts": [
+  [
+   2545,
+   "boss",
+   "Move",
+   "Stagger",
+   "HitReaction:Stagger(R-06-04)(EXP-AI-09)",
+   -2,
+   false
+  ],
+  [
+   2719,
+   "boss",
+   "Move",
+   "Stagger",
+   "HitReaction:Stagger(R-06-04)(EXP-AI-09)",
+   -2,
+   false
+  ],
+  [
+   3989,
+   "sentinel",
+   "Jump",
+   "Idle",
+   "HitReaction:AirHit:SlowFall(R-06-07)(EXP-AI-09)",
+   -4,
+   true
+  ],
+  [
+   4049,
+   "sentinel",
+   "Move",
+   "Stagger",
+   "HitReaction:Stagger(R-06-04)(EXP-AI-09)",
+   8,
+   false
+  ],
+  [
+   4109,
+   "sentinel",
+   "Move",
+   "Stagger",
+   "HitReaction:Stagger(R-06-04)(EXP-AI-09)",
+   8,
+   false
+  ]
+ ],
+ "F02_jumperQuick": {
+  "jumps": [
+   [
+    4176,
+    4
+   ],
+   [
+    4236,
+    3.4
+   ]
+  ],
+  "air_attack_starts": [
+   4194
+  ],
+  "air_blocked": [
+   [
+    4248,
+    "Cooldown:ReattackInterval:Air(R-08-07)(R-08-02)",
+    2.38
+   ]
+  ],
+  "lands": [
+   4205,
+   4265
+  ]
+ },
+ "F03_transitions": [
+  {
+   "actor": "boss",
+   "from": "p1",
+   "to": "p2",
+   "condition": "HpBelow:0.6",
+   "start": 2791,
+   "transitionTime": 1,
+   "end": 2850,
+   "end_reason": "TransitionDoneDuringReaction(EXP-BOSS-03)",
+   "hits_inside": [
+    [
+     2814,
+     "PhaseTransition",
+     "Stagger",
+     "Stagger(R-06-04)"
+    ],
+    [
+     2830,
+     "PhaseTransition",
+     "Stagger",
+     "Stagger(R-06-04)"
+    ],
+    [
+     2846,
+     "PhaseTransition",
+     "Stagger",
+     "Stagger(R-06-04)"
+    ]
+   ],
+   "first_attack_start": 2860,
+   "no_attack_before_end": true
+  },
+  {
+   "actor": "boss",
+   "from": "p2",
+   "to": "p3",
+   "condition": "PatternUsed:crushx2",
+   "start": 2975,
+   "transitionTime": 1,
+   "end": 3025,
+   "end_reason": "TransitionDone(EXP-BOSS-03)",
+   "hits_inside": [],
+   "first_attack_start": 3025,
+   "no_attack_before_end": true
+  },
+  {
+   "actor": "boss",
+   "from": "p3",
+   "to": "p1",
+   "condition": "Event:calm",
+   "start": 3216,
+   "transitionTime": 0,
+   "end": 3217,
+   "end_reason": "TransitionDone(EXP-BOSS-03)",
+   "hits_inside": [],
+   "first_attack_start": 3267,
+   "no_attack_before_end": true
+  },
+  {
+   "actor": "boss",
+   "from": "p1",
+   "to": "p2",
+   "condition": "HpBelow:0.6",
+   "start": 3217,
+   "transitionTime": 1,
+   "end": 3217,
+   "end_reason": "TransitionDone(EXP-BOSS-03)",
+   "hits_inside": [],
+   "first_attack_start": 3267,
+   "no_attack_before_end": true
+  },
+  {
+   "actor": "boss",
+   "from": "p2",
+   "to": "p3",
+   "condition": "PatternUsed:crushx2",
+   "start": 3366,
+   "transitionTime": 1,
+   "end": 3416,
+   "end_reason": "TransitionDone(EXP-BOSS-03)",
+   "hits_inside": [],
+   "first_attack_start": null,
+   "no_attack_before_end": true
+  },
+  {
+   "actor": "sentinel",
+   "from": "s1",
+   "to": "s2",
+   "condition": "Event:shift",
+   "start": 3791,
+   "transitionTime": 1,
+   "end": 3841,
+   "end_reason": "TransitionDone(EXP-BOSS-03)",
+   "hits_inside": [],
+   "first_attack_start": 3883,
+   "no_attack_before_end": true
+  }
+ ],
+ "M01_defense": [
+  {
+   "tick": 3542,
+   "actor": "sentinel",
+   "phase": "s1",
+   "pick": "None",
+   "guardFrequency": 0.5,
+   "evadeFrequency": 0,
+   "guardAcc": 0.5,
+   "evadeAcc": 0,
+   "distance": 1.778,
+   "next_hit": [
+    3544,
+    "Idle",
+    "Stagger",
+    "Stagger(R-06-04)",
+    10,
+    10
+   ]
+  },
+  {
+   "tick": 3582,
+   "actor": "sentinel",
+   "phase": "s1",
+   "pick": "Guard",
+   "guardFrequency": 0.5,
+   "evadeFrequency": 0,
+   "guardAcc": 0,
+   "evadeAcc": 0,
+   "distance": 1.752,
+   "next_hit": [
+    3584,
+    "Guard",
+    "Guard",
+    "BossGuard:GuardRule(R-08-11, EXP-BOSS-06)",
+    10,
+    1
+   ]
+  },
+  {
+   "tick": 3622,
+   "actor": "sentinel",
+   "phase": "s1",
+   "pick": "None",
+   "guardFrequency": 0.5,
+   "evadeFrequency": 0,
+   "guardAcc": 0.5,
+   "evadeAcc": 0,
+   "distance": 1.752,
+   "next_hit": [
+    3624,
+    "Idle",
+    "Stagger",
+    "Stagger(R-06-04)",
+    10,
+    10
+   ]
+  },
+  {
+   "tick": 3662,
+   "actor": "sentinel",
+   "phase": "s1",
+   "pick": "Guard",
+   "guardFrequency": 0.5,
+   "evadeFrequency": 0,
+   "guardAcc": 0,
+   "evadeAcc": 0,
+   "distance": 1.776,
+   "next_hit": [
+    3664,
+    "Guard",
+    "Guard",
+    "BossGuard:GuardRule(R-08-11, EXP-BOSS-06)",
+    10,
+    1
+   ]
+  },
+  {
+   "tick": 3742,
+   "actor": "sentinel",
+   "phase": "s1",
+   "pick": "None",
+   "guardFrequency": 0.5,
+   "evadeFrequency": 0,
+   "guardAcc": 0.5,
+   "evadeAcc": 0,
+   "distance": 1.776,
+   "next_hit": [
+    3744,
+    "Idle",
+    "Stagger",
+    "Stagger(R-06-04)",
+    10,
+    10
+   ]
+  },
+  {
+   "tick": 3867,
+   "actor": "sentinel",
+   "phase": "s2",
+   "pick": "Evade",
+   "guardFrequency": 0,
+   "evadeFrequency": 1,
+   "guardAcc": 0,
+   "evadeAcc": 0,
+   "distance": 1.8,
+   "next_hit": null
+  },
+  {
+   "tick": 4047,
+   "actor": "sentinel",
+   "phase": "s2",
+   "pick": "Evade",
+   "guardFrequency": 0,
+   "evadeFrequency": 1,
+   "guardAcc": 0,
+   "evadeAcc": 0,
+   "distance": 0.158,
+   "next_hit": [
+    4049,
+    "Evade",
+    "Stagger",
+    "Stagger(R-06-04)",
+    10,
+    10
+   ]
+  },
+  {
+   "tick": 4107,
+   "actor": "sentinel",
+   "phase": "s2",
+   "pick": "Evade",
+   "guardFrequency": 0,
+   "evadeFrequency": 1,
+   "guardAcc": 0,
+   "evadeAcc": 0,
+   "distance": 0.662,
+   "next_hit": [
+    4109,
+    "Evade",
+    "Stagger",
+    "Stagger(R-06-04)",
+    10,
+    10
+   ]
+  }
+ ],
+ "M01_states": [
+  [
+   3582,
+   "sentinel",
+   "Idle",
+   "Guard",
+   "BossGuard(R-08-11, EXP-BOSS-05/06)",
+   [
+    245.523666,
+    0
+   ]
+  ],
+  [
+   3615,
+   "sentinel",
+   "Guard",
+   "Idle",
+   "GuardEnd",
+   [
+    245.523666,
+    0
+   ]
+  ],
+  [
+   3662,
+   "sentinel",
+   "Idle",
+   "Guard",
+   "BossGuard(R-08-11, EXP-BOSS-05/06)",
+   [
+    245.547668,
+    0
+   ]
+  ],
+  [
+   3695,
+   "sentinel",
+   "Guard",
+   "Idle",
+   "GuardEnd",
+   [
+    245.547668,
+    0
+   ]
+  ],
+  [
+   3867,
+   "sentinel",
+   "Idle",
+   "Evade",
+   "BossEvade(R-08-11, EXP-BOSS-05/07)",
+   [
+    245.731674,
+    0
+   ]
+  ],
+  [
+   3882,
+   "sentinel",
+   "Evade",
+   "Idle",
+   "EvadeEnd",
+   [
+    247.971725,
+    0
+   ]
+  ],
+  [
+   4047,
+   "sentinel",
+   "Idle",
+   "Evade",
+   "BossEvade(R-08-11, EXP-BOSS-05/07)",
+   [
+    243.861542,
+    0
+   ]
+  ],
+  [
+   4107,
+   "sentinel",
+   "Idle",
+   "Evade",
+   "BossEvade(R-08-11, EXP-BOSS-05/07)",
+   [
+    244.365555,
+    0
+   ]
+  ]
+ ],
+ "M01_boss_jumps": [
+  [
+   3966,
+   "sentinel",
+   "BossPhaseJump(R-08-11)",
+   2.08
+  ]
+ ],
+ "M01_warden_defense_events": 0,
+ "M01_input_rejects_in_sentinel_section": [
+  [
+   3702,
+   "ChainMax:Ground4"
+  ],
+  [
+   3927,
+   "ActionLock:HitStun"
+  ]
+ ]
+}

@@ -1,0 +1,8 @@
+EditMode on the d99bfee source (run just before the d99bfee commit with identical files; tree clean after commit): test-case 223, results {'Passed': 223}; root result=Passed total=223 start=2026-11-10 09:03:46Z
+New in WP-04-R2 (6, AiR2Tests):
+  Corum2.Tests.AiR2Tests.M02A_AttackStartBehindTheBoss_NotEligible_NoTurnBeforeCheck
+  Corum2.Tests.AiR2Tests.M02A_BehindThenFront_OnlyTheFrontStartCounts
+  Corum2.Tests.AiR2Tests.M02A_FrontControl_Guards
+  Corum2.Tests.AiR2Tests.M02B_StartDuringBossHitstop_NotAnsweredLater
+  Corum2.Tests.AiR2Tests.M02B_StartDuringStagger_NotAnsweredAfterTheReaction
+  Corum2.Tests.AiR2Tests.M02_StartOutOfRangeOrNoSettings_NotLoggedAsSkip
