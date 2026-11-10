@@ -1,0 +1,399 @@
+===== manual
+t    0 enemy.spawn        ten0    ->         ->Idle [RunStart] 
+t    0 enemy.spawn        ten1    ->         ->Idle [RunStart] 
+t    0 enemy.spawn        ten2    ->         ->Idle [RunStart] 
+t    0 enemy.spawn        ten3    ->         ->Idle [RunStart] 
+t    0 enemy.spawn        ten4    ->         ->Idle [RunStart] 
+t    0 enemy.spawn        ten5    ->         ->Idle [RunStart] 
+t    0 enemy.spawn        ten6    ->         ->Idle [RunStart] 
+t    0 enemy.spawn        ten7    ->         ->Idle [RunStart] 
+t    0 enemy.spawn        ten8    ->         ->Idle [RunStart] 
+t    0 enemy.spawn        ten9    ->         ->Idle [RunStart] 
+t    0 enemy.spawn        ch      ->         ->Idle [RunStart] 
+t    0 enemy.spawn        fl      ->         ->Idle [RunStart] 
+t    0 enemy.spawn        fh      ->         ->Idle [RunStart] 
+t    0 enemy.spawn        jp      ->         ->Idle [RunStart] 
+t    0 enemy.spawn        jq      ->         ->Idle [RunStart] 
+t    0 enemy.spawn        rg      ->         ->Idle [RunStart] 
+t    0 enemy.spawn        boss    ->         ->Idle [RunStart] 
+t    0 boss.phase         boss    ->         ->p1 [StartPhase(R-08-09)] condition=start hp=200 hpRatio=1 patterns=slam,shot,antiair superArmor=False staggerResistance=0 attackSpeed=1 transitionTime=0 animation= vfx= camera=
+t    0 enemy.spawn        sentinel->         ->Idle [RunStart] 
+t    0 boss.phase         sentinel->         ->s1 [StartPhase(R-08-09)] condition=start hp=300 hpRatio=1 patterns=bolt superArmor=False staggerResistance=0 attackSpeed=1 transitionTime=0 animation= vfx= camera=
+t    1 ai.decide          ten0    ->player   ->Wait [BeyondTrackRange(EXP-AI-01)] aiType=Chaser distance=17 playerState=Idle playerGrounded=True phase=
+t    1 ai.decide          ten1    ->player   ->Wait [BeyondTrackRange(EXP-AI-01)] aiType=Chaser distance=17 playerState=Idle playerGrounded=True phase=
+t    1 ai.decide          ten2    ->player   ->Wait [BeyondTrackRange(EXP-AI-01)] aiType=Chaser distance=17 playerState=Idle playerGrounded=True phase=
+t    1 ai.decide          ten3    ->player   ->Wait [BeyondTrackRange(EXP-AI-01)] aiType=Chaser distance=17 playerState=Idle playerGrounded=True phase=
+t    1 ai.decide          ten4    ->player   ->Wait [BeyondTrackRange(EXP-AI-01)] aiType=Chaser distance=17 playerState=Idle playerGrounded=True phase=
+t    1 ai.decide          ten5    ->player   ->Wait [BeyondTrackRange(EXP-AI-01)] aiType=Chaser distance=17 playerState=Idle playerGrounded=True phase=
+t    1 ai.decide          ten6    ->player   ->Wait [BeyondTrackRange(EXP-AI-01)] aiType=Chaser distance=17 playerState=Idle playerGrounded=True phase=
+t    1 ai.decide          ten7    ->player   ->Wait [BeyondTrackRange(EXP-AI-01)] aiType=Chaser distance=17 playerState=Idle playerGrounded=True phase=
+t    1 ai.decide          ten8    ->player   ->Wait [BeyondTrackRange(EXP-AI-01)] aiType=Chaser distance=17 playerState=Idle playerGrounded=True phase=
+t    1 ai.decide          ten9    ->player   ->Wait [BeyondTrackRange(EXP-AI-01)] aiType=Chaser distance=17 playerState=Idle playerGrounded=True phase=
+t    1 ai.decide          ch      ->player   ->Wait [BeyondTrackRange(EXP-AI-01)] aiType=Chaser distance=52 playerState=Idle playerGrounded=True phase=
+t    1 ai.decide          fl      ->player   ->Wait [BeyondTrackRange(EXP-AI-01)] aiType=Fleer distance=81 playerState=Idle playerGrounded=True phase=
+t    1 ai.decide          fh      ->player   ->Wait [BeyondTrackRange(EXP-AI-01)] aiType=Fleer distance=111 playerState=Idle playerGrounded=True phase=
+t    1 ai.decide          jp      ->player   ->Wait [BeyondTrackRange(EXP-AI-01)] aiType=Jumper distance=139 playerState=Idle playerGrounded=True phase=
+t    1 ai.decide          jq      ->player   ->Wait [BeyondTrackRange(EXP-AI-01)] aiType=Jumper distance=153 playerState=Idle playerGrounded=True phase=
+t    1 ai.decide          rg      ->player   ->Wait [OutOfRange:WaitInPlace(R-08-06)] aiType=Ranged distance=176 playerState=Idle playerGrounded=True phase=
+t    1 ai.decide          boss    ->player   ->Wait [BeyondTrackRange(EXP-AI-01)] aiType=Boss distance=212 playerState=Idle playerGrounded=True phase=p1
+t    1 ai.decide          sentinel->player   ->Wait [BeyondTrackRange(EXP-AI-01)] aiType=Boss distance=247 playerState=Idle playerGrounded=True phase=s1
+t  208 marker                     ->         -> [VideoRecordingStarted] 
+===== TC-08-01
+t  237 marker                     ->         -> [TestCase] 
+t  237 marker             player  ->         -> [TestSetPlayerHp] 
+t  247 marker                     ->         -> [VirtualDevicesAdded] 
+t  263 ai.decide          ten0    ->player   Wait->Approach [OutOfRange:Approach(R-08-03)] aiType=Chaser distance=7.95000458 playerState=Walk playerGrounded=True phase=
+t  263 ai.decide          ten1    ->player   Wait->Approach [OutOfRange:Approach(R-08-03)] aiType=Chaser distance=7.95000458 playerState=Walk playerGrounded=True phase=
+t  263 ai.decide          ten2    ->player   Wait->Approach [OutOfRange:Approach(R-08-03)] aiType=Chaser distance=7.95000458 playerState=Walk playerGrounded=True phase=
+t  263 ai.decide          ten3    ->player   Wait->Approach [OutOfRange:Approach(R-08-03)] aiType=Chaser distance=7.95000458 playerState=Walk playerGrounded=True phase=
+t  263 ai.decide          ten4    ->player   Wait->Approach [OutOfRange:Approach(R-08-03)] aiType=Chaser distance=7.95000458 playerState=Walk playerGrounded=True phase=
+t  263 ai.decide          ten5    ->player   Wait->Approach [OutOfRange:Approach(R-08-03)] aiType=Chaser distance=7.95000458 playerState=Walk playerGrounded=True phase=
+t  263 ai.decide          ten6    ->player   Wait->Approach [OutOfRange:Approach(R-08-03)] aiType=Chaser distance=7.95000458 playerState=Walk playerGrounded=True phase=
+t  263 ai.decide          ten7    ->player   Wait->Approach [OutOfRange:Approach(R-08-03)] aiType=Chaser distance=7.95000458 playerState=Walk playerGrounded=True phase=
+t  263 ai.decide          ten8    ->player   Wait->Approach [OutOfRange:Approach(R-08-03)] aiType=Chaser distance=7.95000458 playerState=Walk playerGrounded=True phase=
+t  263 ai.decide          ten9    ->player   Wait->Approach [OutOfRange:Approach(R-08-03)] aiType=Chaser distance=7.95000458 playerState=Walk playerGrounded=True phase=
+t  369 ai.decide          ten0    ->player   Approach->Attack [InRange:FirstChance(R-08-02)] aiType=Chaser distance=1.59003925 playerState=Idle playerGrounded=True phase=
+t  369 enemy.state        ten0    ->         Idle->AttackStartup [InRange(R-08-02)] 
+t  369 ai.decide          ten1    ->player   Approach->Attack [InRange:FirstChance(R-08-02)] aiType=Chaser distance=1.59003925 playerState=Idle playerGrounded=True phase=
+t  369 enemy.state        ten1    ->         Idle->AttackStartup [InRange(R-08-02)] 
+t  369 ai.decide          ten2    ->player   Approach->Attack [InRange:FirstChance(R-08-02)] aiType=Chaser distance=1.59003925 playerState=Idle playerGrounded=True phase=
+t  369 enemy.state        ten2    ->         Idle->AttackStartup [InRange(R-08-02)] 
+t  369 ai.decide          ten3    ->player   Approach->Attack [InRange:FirstChance(R-08-02)] aiType=Chaser distance=1.59003925 playerState=Idle playerGrounded=True phase=
+t  369 enemy.state        ten3    ->         Idle->AttackStartup [InRange(R-08-02)] 
+t  369 ai.decide          ten4    ->player   Approach->Attack [InRange:FirstChance(R-08-02)] aiType=Chaser distance=1.59003925 playerState=Idle playerGrounded=True phase=
+t  369 enemy.state        ten4    ->         Idle->AttackStartup [InRange(R-08-02)] 
+t  369 ai.decide          ten5    ->player   Approach->Attack [InRange:FirstChance(R-08-02)] aiType=Chaser distance=1.59003925 playerState=Idle playerGrounded=True phase=
+t  369 enemy.state        ten5    ->         Idle->AttackStartup [InRange(R-08-02)] 
+t  369 ai.decide          ten6    ->player   Approach->Attack [InRange:FirstChance(R-08-02)] aiType=Chaser distance=1.59003925 playerState=Idle playerGrounded=True phase=
+t  369 enemy.state        ten6    ->         Idle->AttackStartup [InRange(R-08-02)] 
+t  369 ai.decide          ten7    ->player   Approach->Attack [InRange:FirstChance(R-08-02)] aiType=Chaser distance=1.59003925 playerState=Idle playerGrounded=True phase=
+t  369 enemy.state        ten7    ->         Idle->AttackStartup [InRange(R-08-02)] 
+t  369 ai.decide          ten8    ->player   Approach->Attack [InRange:FirstChance(R-08-02)] aiType=Chaser distance=1.59003925 playerState=Idle playerGrounded=True phase=
+t  369 enemy.state        ten8    ->         Idle->AttackStartup [InRange(R-08-02)] 
+t  369 ai.decide          ten9    ->player   Approach->Attack [InRange:FirstChance(R-08-02)] aiType=Chaser distance=1.59003925 playerState=Idle playerGrounded=True phase=
+t  369 enemy.state        ten9    ->         Idle->AttackStartup [InRange(R-08-02)] 
+t  382 marker                     ->         -> [Z1Done] 
+t  384 hit.player         ten0    ->player   Idle->HitStun [Hit] via=Melee attackId=chaser.atk hpBefore=1000 hpAfter=990
+t  384 hit.player         ten1    ->player   HitStun->HitStun [Hit] via=Melee attackId=chaser.atk hpBefore=990 hpAfter=980
+t  384 hit.player         ten2    ->player   HitStun->HitStun [Hit] via=Melee attackId=chaser.atk hpBefore=980 hpAfter=970
+t  384 hit.player         ten3    ->player   HitStun->HitStun [Hit] via=Melee attackId=chaser.atk hpBefore=970 hpAfter=960
+t  384 hit.player         ten4    ->player   HitStun->HitStun [Hit] via=Melee attackId=chaser.atk hpBefore=960 hpAfter=950
+t  384 hit.player         ten5    ->player   HitStun->HitStun [Hit] via=Melee attackId=chaser.atk hpBefore=950 hpAfter=940
+t  384 hit.player         ten6    ->player   HitStun->HitStun [Hit] via=Melee attackId=chaser.atk hpBefore=940 hpAfter=930
+t  384 hit.player         ten7    ->player   HitStun->HitStun [Hit] via=Melee attackId=chaser.atk hpBefore=930 hpAfter=920
+t  384 hit.player         ten8    ->player   HitStun->HitStun [Hit] via=Melee attackId=chaser.atk hpBefore=920 hpAfter=910
+t  384 hit.player         ten9    ->player   HitStun->HitStun [Hit] via=Melee attackId=chaser.atk hpBefore=910 hpAfter=900
+===== TC-08-03
+t  392 marker                     ->         -> [TestCase] 
+t  392 marker             player  ->         -> [TestSetPlayerHp] 
+t  393 ai.decide          ch      ->player   Wait->Approach [OutOfRange:Approach(R-08-03)] aiType=Chaser distance=7 playerState=Idle playerGrounded=True phase=
+t  405 ai.decide          ten0    ->player   ->Wait [BeyondTrackRange(EXP-AI-01)] aiType=Chaser distance=34.3599663 playerState=Idle playerGrounded=True phase=
+t  405 ai.decide          ten1    ->player   ->Wait [BeyondTrackRange(EXP-AI-01)] aiType=Chaser distance=34.3599663 playerState=Idle playerGrounded=True phase=
+t  405 ai.decide          ten2    ->player   ->Wait [BeyondTrackRange(EXP-AI-01)] aiType=Chaser distance=34.3599663 playerState=Idle playerGrounded=True phase=
+t  405 ai.decide          ten3    ->player   ->Wait [BeyondTrackRange(EXP-AI-01)] aiType=Chaser distance=34.3599663 playerState=Idle playerGrounded=True phase=
+t  405 ai.decide          ten4    ->player   ->Wait [BeyondTrackRange(EXP-AI-01)] aiType=Chaser distance=34.3599663 playerState=Idle playerGrounded=True phase=
+t  405 ai.decide          ten5    ->player   ->Wait [BeyondTrackRange(EXP-AI-01)] aiType=Chaser distance=34.3599663 playerState=Idle playerGrounded=True phase=
+t  405 ai.decide          ten6    ->player   ->Wait [BeyondTrackRange(EXP-AI-01)] aiType=Chaser distance=34.3599663 playerState=Idle playerGrounded=True phase=
+t  405 ai.decide          ten7    ->player   ->Wait [BeyondTrackRange(EXP-AI-01)] aiType=Chaser distance=34.3599663 playerState=Idle playerGrounded=True phase=
+t  405 ai.decide          ten8    ->player   ->Wait [BeyondTrackRange(EXP-AI-01)] aiType=Chaser distance=34.3599663 playerState=Idle playerGrounded=True phase=
+t  405 ai.decide          ten9    ->player   ->Wait [BeyondTrackRange(EXP-AI-01)] aiType=Chaser distance=34.3599663 playerState=Idle playerGrounded=True phase=
+t  483 ai.decide          ch      ->player   Approach->Attack [InRange:FirstChance(R-08-02)] aiType=Chaser distance=1.5998764 playerState=Idle playerGrounded=True phase=
+t  483 enemy.state        ch      ->         Idle->AttackStartup [InRange(R-08-02)] 
+t  486 hit                player  ->ch       AttackStartup->Stagger [Stagger(R-06-04)] attackId=ground1 hpBefore=60 hpAfter=50
+t  502 hit                player  ->ch       Stagger->Stagger [Stagger(R-06-04)] attackId=ground2 hpBefore=50 hpAfter=40
+t  526 ai.decide          ch      ->player   ->Approach [OutOfRange:Approach(R-08-03)] aiType=Chaser distance=1.64788055 playerState=GroundAttack playerGrounded=True phase=
+t  527 ai.decide          ch      ->player   Approach->Attack [InRange:FirstChance(R-08-02)] aiType=Chaser distance=1.58787918 playerState=GroundAttack playerGrounded=True phase=
+t  527 enemy.state        ch      ->         Idle->AttackStartup [InRange(R-08-02)] 
+t  563 ai.decide          ch      ->player   ->Approach [OutOfRange:Approach(R-08-03)] aiType=Chaser distance=3.33787155 playerState=Idle playerGrounded=True phase=
+t  592 ai.blocked         ch      ->player   Idle->Idle [Cooldown:ReattackInterval(R-08-07)(R-08-02)] distance=1.59783173 cooldown=0.6000006
+t  592 ai.decide          ch      ->player   Approach->Wait [InRange:WaitCooldown(R-08-07)] aiType=Chaser distance=1.59783173 playerState=Idle playerGrounded=True phase=
+t  623 ai.decide          ch      ->player   Wait->Attack [InRange:FirstChance(R-08-02)] aiType=Chaser distance=1.59783173 playerState=Idle playerGrounded=True phase=
+t  623 enemy.state        ch      ->         Idle->AttackStartup [InRange(R-08-02)] 
+t  632 marker                     ->         -> [Z2Done] 
+t  638 hit.player         ch      ->player   Idle->HitStun [Hit] via=Melee attackId=chaser.atk hpBefore=1000 hpAfter=990
+===== TC-08-04
+t  642 marker                     ->         -> [TestCase] 
+t  642 marker             player  ->         -> [TestSetPlayerHp] 
+t  643 ai.decide          fl      ->player   Wait->Approach [OutOfRange:Approach(R-08-03)] aiType=Fleer distance=6 playerState=Idle playerGrounded=True phase=
+t  659 ai.decide          ch      ->player   ->Wait [BeyondTrackRange(EXP-AI-01)] aiType=Chaser distance=30.15216 playerState=Idle playerGrounded=True phase=
+t  717 ai.decide          fl      ->player   Approach->Attack [InRange:FirstChance(R-08-02)] aiType=Fleer distance=1.56018066 playerState=Idle playerGrounded=True phase=
+t  717 enemy.state        fl      ->         Idle->AttackStartup [InRange(R-08-02)] 
+t  732 hit.player         fl      ->player   Idle->HitStun [Hit] via=Melee attackId=fleer.atk hpBefore=1000 hpAfter=990
+t  737 marker                     ->fl       ->AttackRecovery [AwaitMet] 
+t  753 ai.decide          fl      ->player   ->Approach [OutOfRange:Approach(R-08-03)] aiType=Fleer distance=1.78817749 playerState=Idle playerGrounded=True phase=
+t  757 ai.blocked         fl      ->player   Idle->Idle [Cooldown:ReattackInterval(R-08-07)(R-08-02)] distance=1.54818726 cooldown=1.10000014
+t  757 ai.decide          fl      ->player   Approach->Wait [InRange:WaitCooldown(R-08-07)] aiType=Fleer distance=1.54818726 playerState=GroundAttack playerGrounded=True phase=
+t  757 hit                player  ->fl       Idle->Stagger [Stagger(R-06-04)] attackId=ground1 hpBefore=60 hpAfter=50
+t  773 hit                player  ->fl       Stagger->Stagger [Stagger(R-06-04)] attackId=ground2 hpBefore=50 hpAfter=40
+t  796 ai.flee            fl      ->player   Stagger->Flee [AfterHitReaction(R-08-04)] fleeTime=0.9 reapproach=True
+t  842 ai.actionEnd       fl      ->         Flee->None [FleeDone(EXP-AI-03)] 
+t  842 ai.decide          fl      ->player   ->Approach [OutOfRange:Approach(R-08-03)] aiType=Fleer distance=5.19625854 playerState=Idle playerGrounded=True phase=
+t  902 ai.decide          fl      ->player   Approach->Attack [InRange:FirstChance(R-08-02)] aiType=Fleer distance=1.596405 playerState=Idle playerGrounded=True phase=
+t  902 enemy.state        fl      ->         Idle->AttackStartup [InRange(R-08-02)] 
+t  917 hit.player         fl      ->player   Idle->HitStun [Hit] via=Melee attackId=fleer.atk hpBefore=990 hpAfter=980
+t  926 marker                     ->         -> [Z3Done] 
+t  936 marker             player  ->         -> [TestSetPlayerHp] 
+t  937 ai.decide          fh      ->player   Wait->Approach [OutOfRange:Approach(R-08-03)] aiType=Fleer distance=6 playerState=Idle playerGrounded=True phase=
+t  938 ai.decide          fl      ->player   ->Wait [BeyondTrackRange(EXP-AI-01)] aiType=Fleer distance=28.6315918 playerState=Idle playerGrounded=True phase=
+t 1011 ai.decide          fh      ->player   Approach->Attack [InRange:FirstChance(R-08-02)] aiType=Fleer distance=1.56018066 playerState=Idle playerGrounded=True phase=
+t 1011 enemy.state        fh      ->         Idle->AttackStartup [InRange(R-08-02)] 
+t 1026 hit.player         fh      ->player   Idle->HitStun [Hit] via=Melee attackId=fleerHold.atk hpBefore=1000 hpAfter=990
+t 1031 marker                     ->fh       ->AttackRecovery [AwaitMet] 
+t 1047 ai.decide          fh      ->player   ->Approach [OutOfRange:Approach(R-08-03)] aiType=Fleer distance=1.78817749 playerState=Idle playerGrounded=True phase=
+t 1051 ai.blocked         fh      ->player   Idle->Idle [Cooldown:ReattackInterval(R-08-07)(R-08-02)] distance=1.54818726 cooldown=1.10000014
+t 1051 ai.decide          fh      ->player   Approach->Wait [InRange:WaitCooldown(R-08-07)] aiType=Fleer distance=1.54818726 playerState=GroundAttack playerGrounded=True phase=
+t 1051 hit                player  ->fh       Idle->Stagger [Stagger(R-06-04)] attackId=ground1 hpBefore=60 hpAfter=50
+t 1067 hit                player  ->fh       Stagger->Stagger [Stagger(R-06-04)] attackId=ground2 hpBefore=50 hpAfter=40
+t 1090 ai.flee            fh      ->player   Stagger->Flee [AfterHitReaction(R-08-04)] fleeTime=0.9 reapproach=False
+t 1136 ai.actionEnd       fh      ->         Flee->Hold [FleeDone(EXP-AI-03)] 
+t 1136 ai.decide          fh      ->player   ->Hold [NoReapproachAfterFlee(EXP-AI-03)] aiType=Fleer distance=5.19625854 playerState=Idle playerGrounded=True phase=
+t 1220 marker                     ->         -> [Z4Done] 
+===== TC-08-05
+t 1230 marker                     ->         -> [TestCase] 
+t 1230 marker             player  ->         -> [TestSetPlayerHp] 
+t 1231 ai.decide          jp      ->player   Wait->Jump [JumpWindow[3,5](R-08-05)] aiType=Jumper distance=4 playerState=Idle playerGrounded=True phase=
+t 1231 ai.jump            jp      ->player   Idle->Air [JumpApproach(R-08-05)] distance=4
+t 1249 ai.decide          jp      ->player   Jump->AirAttack [InAirAttackRange(R-08-05)] aiType=Jumper distance=2.19989014 playerState=Idle playerGrounded=True phase=
+t 1249 enemy.state        jp      ->         Idle->AttackStartup [AirAttack(R-08-05)] 
+t 1260 ai.land            jp      ->         Air->AttackRecovery [JumpLanded] 
+t 1273 ai.decide          jp      ->player   ->Approach [OutOfRange:Approach(R-08-03)] aiType=Jumper distance=2.19989014 playerState=Idle playerGrounded=True phase=
+t 1283 ai.blocked         jp      ->player   Idle->Idle [Cooldown:ReattackInterval(R-08-07)(R-08-02)] distance=1.59991455 cooldown=0.980000257
+t 1283 ai.decide          jp      ->player   Approach->Wait [InRange:WaitCooldown(R-08-07)] aiType=Jumper distance=1.59991455 playerState=Idle playerGrounded=True phase=
+t 1333 ai.decide          jp      ->player   Wait->Attack [InRange:FirstChance(R-08-02)] aiType=Jumper distance=1.59991455 playerState=Idle playerGrounded=True phase=
+t 1333 enemy.state        jp      ->         Idle->AttackStartup [InRange(R-08-02)] 
+t 1348 hit.player         jp      ->player   Idle->HitStun [Hit] via=Melee attackId=jumper.atk hpBefore=1000 hpAfter=990
+t 1369 ai.decide          jp      ->player   ->Approach [OutOfRange:Approach(R-08-03)] aiType=Jumper distance=1.82791138 playerState=Idle playerGrounded=True phase=
+t 1370 marker                     ->         -> [Z5Done] 
+t 1373 ai.blocked         jp      ->player   Idle->Idle [Cooldown:ReattackInterval(R-08-07)(R-08-02)] distance=1.58792114 cooldown=1.10000014
+t 1373 ai.decide          jp      ->player   Approach->Wait [InRange:WaitCooldown(R-08-07)] aiType=Jumper distance=1.58792114 playerState=Idle playerGrounded=True phase=
+===== TC-08-06
+t 1380 marker                     ->         -> [TestCase] 
+t 1380 marker             player  ->         -> [TestSetPlayerHp] 
+t 1445 marker                     ->         -> [RangedBeyondTrack] 
+t 1520 marker                     ->         -> [RangedOutOfRangeWait] 
+t 1526 ai.decide          rg      ->player   Wait->Attack [InRange:FirstChance(R-08-02)] aiType=Ranged distance=4.5 playerState=Idle playerGrounded=True phase=
+t 1526 enemy.state        rg      ->         Idle->AttackStartup [InRange(R-08-02)] 
+t 1539 projectile.spawn   rg      ->player   ->Flying [Shot(R-08-06)] projectileId=1 position=[179.4, 1] pattern=
+t 1557 hit.player         rg      ->player   Idle->HitStun [Hit] via=Projectile:1 attackId=ranged.shot hpBefore=1000 hpAfter=994
+t 1559 ai.retreat         rg      ->player   AttackRecovery->Retreat [AfterAttack(R-08-06)] retreatTime=0.7
+t 1595 ai.actionEnd       rg      ->         Retreat->None [RetreatDone(EXP-AI-04)] 
+t 1595 ai.decide          rg      ->player   ->Wait [OutOfRange:WaitInPlace(R-08-06)] aiType=Ranged distance=6.82791138 playerState=Idle playerGrounded=True phase=
+t 1670 marker                     ->         -> [RangedShotRetreat] 
+t 1676 ai.decide          rg      ->player   Wait->Attack [InRange:FirstChance(R-08-02)] aiType=Ranged distance=4.59991455 playerState=Idle playerGrounded=True phase=
+t 1676 enemy.state        rg      ->         Idle->AttackStartup [InRange(R-08-02)] 
+t 1689 projectile.spawn   rg      ->player   ->Flying [Shot(R-08-06)] projectileId=2 position=[181.499908, 1] pattern=
+t 1708 guard.block        player  ->rg       Guard->Guard [FrontGuard(R-07-01/02)] via=Projectile:2 damageTaken=0 parry=not for projectiles (EXP-AI-05)
+t 1709 ai.retreat         rg      ->player   AttackRecovery->Retreat [AfterAttack(R-08-06)] retreatTime=0.7
+t 1745 ai.actionEnd       rg      ->         Retreat->None [RetreatDone(EXP-AI-04)] 
+t 1745 ai.decide          rg      ->player   ->Wait [OutOfRange:WaitInPlace(R-08-06)] aiType=Ranged distance=6.699829 playerState=Guard playerGrounded=True phase=
+t 1870 marker                     ->         -> [Z6Done] 
+===== TC-08-12
+t 1930 marker                     ->         -> [TestCase] 
+t 1930 marker             player  ->         -> [TestSetPlayerHp] 
+t 1931 boss.pattern       boss    ->player   p1->slam [Selected(R-08-08, EXP-BOSS-01)] candidates=slam distance=1.5 playerGrounded=True priority=0 uses=1 special=False
+t 1931 ai.decide          boss    ->player   Wait->Pattern:slam [PatternFits(R-08-08)] aiType=Boss distance=1.5 playerState=Idle playerGrounded=True phase=p1
+t 1931 enemy.state        boss    ->         Idle->AttackStartup [Pattern:slam] 
+t 1931 marker                     ->boss     ->AttackStartup [AwaitMet] 
+t 1949 guard.parry        player  ->boss     Guard->Guard [Parry(R-07-04/05)] rbToHit=0.13999994471669197
+t 1990 boss.pattern       boss    ->player   p1->slam [Selected(R-08-08, EXP-BOSS-01)] candidates=slam distance=2.03999329 playerGrounded=True priority=0 uses=2 special=False
+t 1990 ai.decide          boss    ->player   ->Pattern:slam [PatternFits(R-08-08)] aiType=Boss distance=2.03999329 playerState=Idle playerGrounded=True phase=p1
+t 1990 enemy.state        boss    ->         Idle->AttackStartup [Pattern:slam] 
+===== TC-08-08
+t 1995 marker                     ->         -> [TestCase] 
+t 2029 ai.decide          boss    ->player   ->Approach [BeyondPreferred:1.6(R-08-11)] aiType=Boss distance=9.539993 playerState=Idle playerGrounded=True phase=p1
+t 2089 boss.pattern       boss    ->player   p1->shot [Selected(R-08-08, EXP-BOSS-01)] candidates=shot distance=7.140396 playerGrounded=True priority=0 uses=1 special=False
+t 2089 ai.decide          boss    ->player   Approach->Pattern:shot [PatternFits(R-08-08)] aiType=Boss distance=7.140396 playerState=Idle playerGrounded=True phase=p1
+t 2089 enemy.state        boss    ->         Idle->AttackStartup [Pattern:shot] 
+t 2104 projectile.spawn   boss    ->player   ->Flying [Shot(R-08-06)] projectileId=3 position=[213.54039, 1.4] pattern=shot
+t 2125 ai.decide          boss    ->player   ->Retreat [InsidePreferred:0.8(R-08-11)] aiType=Boss distance=0.359603882 playerState=Idle playerGrounded=True phase=p1
+t 2137 ai.decide          boss    ->player   Retreat->Wait [PatternInterval] aiType=Boss distance=0.8395233 playerState=Airborne playerGrounded=False phase=p1
+t 2159 projectile.expire  boss    ->         Flying->Gone [MaxDistance(EXP-AI-06)] projectileId=3 travelled=10.0799971
+t 2185 boss.pattern       boss    ->player   p1->antiair [Selected(R-08-08, EXP-BOSS-01)] candidates=antiair distance=0.8395233 playerGrounded=False priority=2 uses=1 special=False
+t 2185 ai.decide          boss    ->player   Wait->Pattern:antiair [PatternFits(R-08-08)] aiType=Boss distance=0.8395233 playerState=Airborne playerGrounded=False phase=p1
+t 2185 enemy.state        boss    ->         Idle->AttackStartup [Pattern:antiair] 
+t 2193 hit.player         boss    ->player   Airborne->HitStun [Hit] via=Melee attackId=warden.antiair hpBefore=999 hpAfter=990
+t 2214 ai.decide          boss    ->player   ->Wait [PatternInterval] aiType=Boss distance=1.06752014 playerState=Idle playerGrounded=True phase=p1
+t 2274 boss.pattern       boss    ->player   p1->antiair [Selected(R-08-08, EXP-BOSS-01)] candidates=antiair distance=1.06752014 playerGrounded=False priority=2 uses=2 special=False
+t 2274 ai.decide          boss    ->player   Wait->Pattern:antiair [PatternFits(R-08-08)] aiType=Boss distance=1.06752014 playerState=Airborne playerGrounded=False phase=p1
+t 2274 enemy.state        boss    ->         Idle->AttackStartup [Pattern:antiair] 
+t 2282 hit.player         boss    ->player   Airborne->HitStun [Hit] via=Melee attackId=warden.antiair hpBefore=990 hpAfter=981
+t 2303 ai.decide          boss    ->player   ->Wait [PatternInterval] aiType=Boss distance=1.295517 playerState=Idle playerGrounded=True phase=p1
+===== TC-08-10
+t 2345 marker                     ->         -> [TestCase] 
+t 2346 ai.decide          boss    ->player   Wait->Approach [BeyondPreferred:1.6(R-08-11)] aiType=Boss distance=6.66047668 playerState=Idle playerGrounded=True phase=p1
+t 2363 boss.pattern       boss    ->player   p1->shot [Selected(R-08-08, EXP-BOSS-01)] candidates=shot distance=5.980591 playerGrounded=True priority=0 uses=2 special=False
+t 2363 ai.decide          boss    ->player   Approach->Pattern:shot [PatternFits(R-08-08)] aiType=Boss distance=5.980591 playerState=Idle playerGrounded=True phase=p1
+t 2363 enemy.state        boss    ->         Idle->AttackStartup [Pattern:shot] 
+t 2378 projectile.spawn   boss    ->player   ->Flying [Shot(R-08-06)] projectileId=4 position=[212.380585, 1.4] pattern=shot
+t 2399 ai.decide          boss    ->player   ->Approach [BeyondPreferred:1.6(R-08-11)] aiType=Boss distance=5.980591 playerState=Idle playerGrounded=True phase=p1
+t 2405 hit.player         boss    ->player   Idle->HitStun [Hit] via=Projectile:4 attackId=warden.shot hpBefore=981 hpAfter=973
+t 2459 boss.pattern       boss    ->player   p1->shot [Selected(R-08-08, EXP-BOSS-01)] candidates=shot distance=3.80899048 playerGrounded=True priority=0 uses=3 special=False
+t 2459 ai.decide          boss    ->player   Approach->Pattern:shot [PatternFits(R-08-08)] aiType=Boss distance=3.80899048 playerState=Idle playerGrounded=True phase=p1
+t 2459 enemy.state        boss    ->         Idle->AttackStartup [Pattern:shot] 
+t 2474 projectile.spawn   boss    ->player   ->Flying [Shot(R-08-06)] projectileId=5 position=[209.980988, 1.4] pattern=shot
+t 2489 hit.player         boss    ->player   Idle->HitStun [Hit] via=Projectile:5 attackId=warden.shot hpBefore=973 hpAfter=965
+t 2495 ai.decide          boss    ->player   ->Approach [BeyondPreferred:1.6(R-08-11)] aiType=Boss distance=4.0369873 playerState=HitStun playerGrounded=True phase=p1
+t 2550 hit                player  ->boss     Idle->Stagger [Stagger(R-06-04)] attackId=ground1 hpBefore=200 hpAfter=190
+t 2566 hit                player  ->boss     Stagger->Stagger [Stagger(R-06-04)] attackId=ground2 hpBefore=190 hpAfter=180
+t 2582 hit                player  ->boss     Stagger->Stagger [Stagger(R-06-04)] attackId=ground3 hpBefore=180 hpAfter=170
+t 2598 hit                player  ->boss     Stagger->Stagger [Stagger(R-06-04)] attackId=ground4 hpBefore=170 hpAfter=160
+t 2622 ai.decide          boss    ->player   ->Approach [BeyondPreferred:1.6(R-08-11)] aiType=Boss distance=1.89337158 playerState=Idle playerGrounded=True phase=p1
+t 2626 boss.pattern       boss    ->player   p1->slam [Selected(R-08-08, EXP-BOSS-01)] candidates=slam distance=1.73339844 playerGrounded=True priority=0 uses=3 special=False
+t 2626 ai.decide          boss    ->player   Approach->Pattern:slam [PatternFits(R-08-08)] aiType=Boss distance=1.73339844 playerState=Idle playerGrounded=True phase=p1
+t 2626 enemy.state        boss    ->         Idle->AttackStartup [Pattern:slam] 
+t 2644 dodge              player  ->boss     GroundAttack->DodgeReact [SimultaneousHit(R-06-15)] 
+t 2663 ai.decide          boss    ->player   ->Approach [BeyondPreferred:1.6(R-08-11)] aiType=Boss distance=2.46939087 playerState=Idle playerGrounded=True phase=p1
+t 2670 boss.pattern       boss    ->player   p1->slam [Selected(R-08-08, EXP-BOSS-01)] candidates=slam distance=2.18943787 playerGrounded=True priority=0 uses=4 special=False
+t 2670 ai.decide          boss    ->player   Approach->Pattern:slam [PatternFits(R-08-08)] aiType=Boss distance=2.18943787 playerState=GroundAttack playerGrounded=True phase=p1
+t 2670 enemy.state        boss    ->         Idle->AttackStartup [Pattern:slam] 
+t 2688 hit.player         boss    ->player   GroundAttack->HitStun [Hit] via=Melee attackId=warden.slam hpBefore=965 hpAfter=955
+t 2709 ai.decide          boss    ->player   ->Approach [BeyondPreferred:1.6(R-08-11)] aiType=Boss distance=2.41743469 playerState=Idle playerGrounded=True phase=p1
+t 2724 hit                player  ->boss     Idle->Stagger [Stagger(R-06-04)] attackId=ground1 hpBefore=160 hpAfter=150
+t 2740 hit                player  ->boss     Stagger->Stagger [Stagger(R-06-04)] attackId=ground2 hpBefore=150 hpAfter=140
+t 2756 hit                player  ->boss     Stagger->Stagger [Stagger(R-06-04)] attackId=ground3 hpBefore=140 hpAfter=130
+t 2772 hit                player  ->boss     Stagger->Stagger [Stagger(R-06-04)] attackId=ground4 hpBefore=130 hpAfter=120
+t 2796 boss.phase         boss    ->         p1->p2 [Transition(R-08-09/10, EXP-BOSS-04)] condition=HpBelow:0.6 hp=120 hpRatio=0.6 patterns=crush,shot2 superArmor=True staggerResistance=0.5 attackSpeed=1.5 transitionTime=1 animation=warden.roar vfx=vfx.armorGlow camera=cam.shakeSmall
+t 2796 enemy.state        boss    ->         Idle->PhaseTransition [TransitionStart(R-08-09/10, EXP-BOSS-04)] 
+t 2819 hit                player  ->boss     PhaseTransition->Stagger [Stagger(R-06-04)] attackId=ground1 hpBefore=120 hpAfter=110
+t 2832 enemy.state        boss    ->         Stagger->PhaseTransition [StaggerEnd->TransitionResumes(EXP-BOSS-03)] 
+t 2835 hit                player  ->boss     PhaseTransition->Stagger [Stagger(R-06-04)] attackId=ground2 hpBefore=110 hpAfter=100
+t 2848 enemy.state        boss    ->         Stagger->PhaseTransition [StaggerEnd->TransitionResumes(EXP-BOSS-03)] 
+t 2851 hit                player  ->boss     PhaseTransition->Stagger [Stagger(R-06-04)] attackId=ground3 hpBefore=100 hpAfter=90
+t 2855 boss.transitionEnd boss    ->         PhaseTransition->Stagger [TransitionDoneDuringReaction(EXP-BOSS-03)] 
+t 2865 boss.pattern       boss    ->player   p2->crush [Selected(R-08-08, EXP-BOSS-01)] candidates=crush distance=1.94555664 playerGrounded=True priority=0 uses=1 special=False
+t 2865 ai.decide          boss    ->player   ->Pattern:crush [PatternFits(R-08-08)] aiType=Boss distance=1.94555664 playerState=GroundAttack playerGrounded=True phase=p2
+t 2865 enemy.state        boss    ->         Idle->AttackStartup [Pattern:crush] 
+t 2867 hit                player  ->boss     AttackStartup->AttackStartup [SuperArmor:DamageOnly(R-06-11)] attackId=ground4 hpBefore=90 hpAfter=80
+t 2880 hit.player         boss    ->player   Idle->HitStun [Hit] via=Melee attackId=warden.crush hpBefore=955 hpAfter=943
+t 2895 ai.decide          boss    ->player   ->Approach [BeyondPreferred:1.6(R-08-11)] aiType=Boss distance=2.17355347 playerState=HitStun playerGrounded=True phase=p2
+t 2905 ai.decide          boss    ->player   Approach->Wait [PatternInterval] aiType=Boss distance=1.57357788 playerState=GroundAttack playerGrounded=True phase=p2
+t 2906 hit                player  ->boss     Idle->Stagger [Stagger(R-06-04)] attackId=ground1 hpBefore=80 hpAfter=70
+t 2920 ai.decide          boss    ->player   ->Wait [PatternInterval] aiType=Boss distance=1.59758 playerState=Idle playerGrounded=True phase=p2
+t 2953 boss.pattern       boss    ->player   p2->crush [Selected(R-08-08, EXP-BOSS-01)] candidates=crush distance=1.59758 playerGrounded=True priority=0 uses=2 special=False
+t 2953 ai.decide          boss    ->player   Wait->Pattern:crush [PatternFits(R-08-08)] aiType=Boss distance=1.59758 playerState=Idle playerGrounded=True phase=p2
+t 2953 enemy.state        boss    ->         Idle->AttackStartup [Pattern:crush] 
+t 2965 hit.player         boss    ->player   Idle->HitStun [Hit] via=Melee attackId=warden.crush hpBefore=943 hpAfter=931
+t 2980 boss.phase         boss    ->         p2->p3 [Transition(R-08-09/10, EXP-BOSS-04)] condition=PatternUsed:crushx2 hp=70 hpRatio=0.35 patterns=rush superArmor=False staggerResistance=0 attackSpeed=2 transitionTime=1 animation=warden.rage vfx=vfx.redAura camera=cam.zoomIn
+t 2980 enemy.state        boss    ->         Idle->PhaseTransition [TransitionStart(R-08-09/10, EXP-BOSS-04)] 
+t 3030 boss.transitionEnd boss    ->         PhaseTransition->Idle [TransitionDone(EXP-BOSS-03)] 
+t 3030 boss.pattern       boss    ->player   p3->rush [Selected(R-08-08, EXP-BOSS-01)] candidates=rush distance=1.82557678 playerGrounded=True priority=0 uses=1 special=True
+t 3030 ai.decide          boss    ->player   ->Pattern:rush [PatternFits(R-08-08)] aiType=Boss distance=1.82557678 playerState=Idle playerGrounded=True phase=p3
+t 3030 enemy.state        boss    ->         PhaseTransition->AttackStartup [Pattern:rush] 
+t 3038 hit.player         boss    ->player   Idle->HitStun [Hit] via=Melee attackId=warden.rush hpBefore=931 hpAfter=917
+t 3050 ai.decide          boss    ->player   ->Approach [BeyondPreferred:1.6(R-08-11)] aiType=Boss distance=2.05357361 playerState=HitStun playerGrounded=True phase=p3
+t 3057 ai.decide          boss    ->player   Approach->Wait [PatternInterval] aiType=Boss distance=1.56352234 playerState=HitStun playerGrounded=True phase=p3
+t 3080 boss.pattern       boss    ->player   p3->rush [Selected(R-08-08, EXP-BOSS-01)] candidates=rush distance=1.56352234 playerGrounded=True priority=0 uses=2 special=True
+t 3080 ai.decide          boss    ->player   Wait->Pattern:rush [PatternFits(R-08-08)] aiType=Boss distance=1.56352234 playerState=Idle playerGrounded=True phase=p3
+t 3080 enemy.state        boss    ->         Idle->AttackStartup [Pattern:rush] 
+t 3088 hit.player         boss    ->player   Idle->HitStun [Hit] via=Melee attackId=warden.rush hpBefore=917 hpAfter=903
+t 3100 ai.decide          boss    ->player   ->Approach [BeyondPreferred:1.6(R-08-11)] aiType=Boss distance=1.79151917 playerState=HitStun playerGrounded=True phase=p3
+t 3103 ai.decide          boss    ->player   Approach->Wait [PatternInterval] aiType=Boss distance=1.58149719 playerState=HitStun playerGrounded=True phase=p3
+t 3130 boss.pattern       boss    ->player   p3->rush [Selected(R-08-08, EXP-BOSS-01)] candidates=rush distance=1.58149719 playerGrounded=True priority=0 uses=3 special=True
+t 3130 ai.decide          boss    ->player   Wait->Pattern:rush [PatternFits(R-08-08)] aiType=Boss distance=1.58149719 playerState=Idle playerGrounded=True phase=p3
+t 3130 enemy.state        boss    ->         Idle->AttackStartup [Pattern:rush] 
+t 3138 hit.player         boss    ->player   Idle->HitStun [Hit] via=Melee attackId=warden.rush hpBefore=903 hpAfter=889
+t 3150 ai.decide          boss    ->player   ->Approach [BeyondPreferred:1.6(R-08-11)] aiType=Boss distance=1.809494 playerState=HitStun playerGrounded=True phase=p3
+t 3153 ai.decide          boss    ->player   Approach->Wait [PatternInterval] aiType=Boss distance=1.599472 playerState=HitStun playerGrounded=True phase=p3
+t 3180 boss.pattern       boss    ->player   p3->rush [Selected(R-08-08, EXP-BOSS-01)] candidates=rush distance=1.599472 playerGrounded=True priority=0 uses=4 special=True
+t 3180 ai.decide          boss    ->player   Wait->Pattern:rush [PatternFits(R-08-08)] aiType=Boss distance=1.599472 playerState=Idle playerGrounded=True phase=p3
+t 3180 enemy.state        boss    ->         Idle->AttackStartup [Pattern:rush] 
+t 3188 hit.player         boss    ->player   Idle->HitStun [Hit] via=Melee attackId=warden.rush hpBefore=889 hpAfter=875
+t 3200 ai.decide          boss    ->player   ->Approach [BeyondPreferred:1.6(R-08-11)] aiType=Boss distance=1.82746887 playerState=HitStun playerGrounded=True phase=p3
+t 3204 ai.decide          boss    ->player   Approach->Wait [PatternInterval] aiType=Boss distance=1.54743958 playerState=HitStun playerGrounded=True phase=p3
+t 3220 marker                     ->         -> [BeforeEvent] 
+t 3220 boss.event         boss    ->         p3->p3 [Event:calm(R-08-10)] 
+t 3221 boss.phase         boss    ->         p3->p1 [Transition(R-08-09/10, EXP-BOSS-04)] condition=Event:calm hp=70 hpRatio=0.35 patterns=slam,shot,antiair superArmor=False staggerResistance=0 attackSpeed=1 transitionTime=0 animation= vfx= camera=
+t 3221 enemy.state        boss    ->         Idle->PhaseTransition [TransitionStart(R-08-09/10, EXP-BOSS-04)] 
+t 3222 boss.transitionEnd boss    ->         PhaseTransition->Idle [TransitionDone(EXP-BOSS-03)] 
+t 3222 boss.phase         boss    ->         p1->p2 [Transition(R-08-09/10, EXP-BOSS-04)] condition=HpBelow:0.6 hp=70 hpRatio=0.35 patterns=crush,shot2 superArmor=True staggerResistance=0.5 attackSpeed=1.5 transitionTime=1 animation=warden.roar vfx=vfx.armorGlow camera=cam.shakeSmall
+t 3272 boss.transitionEnd boss    ->         PhaseTransition->Idle [TransitionDone(EXP-BOSS-03)] 
+t 3272 boss.pattern       boss    ->player   p2->crush [Selected(R-08-08, EXP-BOSS-01)] candidates=crush distance=1.54743958 playerGrounded=True priority=0 uses=1 special=False
+t 3272 ai.decide          boss    ->player   Wait->Pattern:crush [PatternFits(R-08-08)] aiType=Boss distance=1.54743958 playerState=Idle playerGrounded=True phase=p2
+t 3272 enemy.state        boss    ->         PhaseTransition->AttackStartup [Pattern:crush] 
+t 3284 hit.player         boss    ->player   Idle->HitStun [Hit] via=Melee attackId=warden.crush hpBefore=875 hpAfter=863
+t 3299 ai.decide          boss    ->player   ->Approach [BeyondPreferred:1.6(R-08-11)] aiType=Boss distance=1.7754364 playerState=HitStun playerGrounded=True phase=p2
+t 3302 ai.decide          boss    ->player   Approach->Wait [PatternInterval] aiType=Boss distance=1.59544373 playerState=HitStun playerGrounded=True phase=p2
+t 3344 boss.pattern       boss    ->player   p2->crush [Selected(R-08-08, EXP-BOSS-01)] candidates=crush distance=1.59544373 playerGrounded=True priority=0 uses=2 special=False
+t 3344 ai.decide          boss    ->player   Wait->Pattern:crush [PatternFits(R-08-08)] aiType=Boss distance=1.59544373 playerState=Idle playerGrounded=True phase=p2
+t 3344 enemy.state        boss    ->         Idle->AttackStartup [Pattern:crush] 
+t 3356 hit.player         boss    ->player   Idle->HitStun [Hit] via=Melee attackId=warden.crush hpBefore=863 hpAfter=851
+t 3370 marker                     ->         -> [Z7Done] 
+t 3371 boss.phase         boss    ->         p2->p3 [Transition(R-08-09/10, EXP-BOSS-04)] condition=PatternUsed:crushx2 hp=70 hpRatio=0.35 patterns=rush superArmor=False staggerResistance=0 attackSpeed=2 transitionTime=1 animation=warden.rage vfx=vfx.redAura camera=cam.zoomIn
+t 3371 enemy.state        boss    ->         Idle->PhaseTransition [TransitionStart(R-08-09/10, EXP-BOSS-04)] 
+===== TC-08-11
+t 3380 marker                     ->         -> [TestCase] 
+t 3380 marker             player  ->         -> [TestSetPlayerHp] 
+t 3381 boss.pattern       sentinel->player   s1->bolt [Selected(R-08-08, EXP-BOSS-01)] candidates=bolt distance=7 playerGrounded=True priority=0 uses=1 special=False
+t 3381 ai.decide          sentinel->player   Wait->Pattern:bolt [PatternFits(R-08-08)] aiType=Boss distance=7 playerState=Idle playerGrounded=True phase=s1
+t 3381 enemy.state        sentinel->         Idle->AttackStartup [Pattern:bolt] 
+t 3396 projectile.spawn   sentinel->player   ->Flying [Shot(R-08-06)] projectileId=6 position=[250.4, 1.3] pattern=bolt
+t 3417 ai.decide          sentinel->player   ->Approach [BeyondPreferred:1.8(R-08-11)] aiType=Boss distance=7 playerState=Idle playerGrounded=True phase=s1
+t 3421 boss.transitionEnd boss    ->         PhaseTransition->Idle [TransitionDone(EXP-BOSS-03)] 
+t 3421 ai.decide          boss    ->player   ->Wait [BeyondTrackRange(EXP-AI-01)] aiType=Boss distance=38.05252 playerState=Idle playerGrounded=True phase=p3
+t 3428 hit.player         sentinel->player   Idle->HitStun [Hit] via=Projectile:6 attackId=sentinel.bolt hpBefore=1000 hpAfter=994
+t 3526 ai.decide          sentinel->player   Approach->Wait [NoPatternFits] aiType=Boss distance=1.77766418 playerState=Idle playerGrounded=True phase=s1
+t 3540 marker                     ->         -> [SentinelGuardPhase] 
+t 3549 hit                player  ->sentinel Idle->Stagger [Stagger(R-06-04)] attackId=ground1 hpBefore=300 hpAfter=290
+t 3573 ai.decide          sentinel->player   ->Approach [BeyondPreferred:1.8(R-08-11)] aiType=Boss distance=1.80166626 playerState=Idle playerGrounded=True phase=s1
+t 3574 ai.decide          sentinel->player   Approach->Wait [NoPatternFits] aiType=Boss distance=1.75166321 playerState=Idle playerGrounded=True phase=s1
+t 3587 ai.decide          sentinel->player   Wait->Guard [PlayerAttackStart:Guard(R-08-11)] aiType=Boss distance=1.75166321 playerState=GroundAttack playerGrounded=True phase=s1
+t 3589 hit                player  ->sentinel Guard->Guard [BossGuard:GuardRule(R-08-11, EXP-BOSS-06)] attackId=ground2 hpBefore=290 hpAfter=289
+t 3621 ai.decide          sentinel->player   ->Wait [NoPatternFits] aiType=Boss distance=1.75166321 playerState=Idle playerGrounded=True phase=s1
+t 3629 hit                player  ->sentinel Idle->Stagger [Stagger(R-06-04)] attackId=ground3 hpBefore=289 hpAfter=279
+t 3653 ai.decide          sentinel->player   ->Wait [NoPatternFits] aiType=Boss distance=1.77566528 playerState=Idle playerGrounded=True phase=s1
+t 3667 ai.decide          sentinel->player   Wait->Guard [PlayerAttackStart:Guard(R-08-11)] aiType=Boss distance=1.77566528 playerState=GroundAttack playerGrounded=True phase=s1
+t 3669 hit                player  ->sentinel Guard->Guard [BossGuard:GuardRule(R-08-11, EXP-BOSS-06)] attackId=ground4 hpBefore=279 hpAfter=278
+t 3701 ai.decide          sentinel->player   ->Wait [NoPatternFits] aiType=Boss distance=1.77566528 playerState=Idle playerGrounded=True phase=s1
+t 3749 hit                player  ->sentinel Idle->Stagger [Stagger(R-06-04)] attackId=ground1 hpBefore=278 hpAfter=268
+t 3773 ai.decide          sentinel->player   ->Wait [NoPatternFits] aiType=Boss distance=1.79966736 playerState=Idle playerGrounded=True phase=s1
+t 3795 boss.event         sentinel->         s1->s1 [Event:shift(R-08-10)] 
+t 3796 boss.phase         sentinel->         s1->s2 [Transition(R-08-09/10, EXP-BOSS-04)] condition=Event:shift hp=268 hpRatio=0.8933333 patterns=bolt2 superArmor=False staggerResistance=0 attackSpeed=1 transitionTime=1 animation=sentinel.shift vfx=vfx.blink camera=cam.none
+t 3796 enemy.state        sentinel->         Idle->PhaseTransition [TransitionStart(R-08-09/10, EXP-BOSS-04)] 
+t 3846 boss.transitionEnd sentinel->         PhaseTransition->Idle [TransitionDone(EXP-BOSS-03)] 
+t 3865 marker                     ->         -> [SentinelEvadePhase] 
+t 3872 ai.decide          sentinel->player   Wait->Evade [PlayerAttackStart:Evade(R-08-11)] aiType=Boss distance=1.79966736 playerState=GroundAttack playerGrounded=True phase=s2
+t 3888 boss.pattern       sentinel->player   s2->bolt2 [Selected(R-08-08, EXP-BOSS-01)] candidates=bolt2 distance=4.19972229 playerGrounded=True priority=0 uses=1 special=False
+t 3888 ai.decide          sentinel->player   ->Pattern:bolt2 [PatternFits(R-08-08)] aiType=Boss distance=4.19972229 playerState=Idle playerGrounded=True phase=s2
+t 3888 enemy.state        sentinel->         Idle->AttackStartup [Pattern:bolt2] 
+t 3903 projectile.spawn   sentinel->player   ->Flying [Shot(R-08-06)] projectileId=7 position=[247.371719, 1.3] pattern=bolt2
+t 3917 hit.player         sentinel->player   Idle->HitStun [Hit] via=Projectile:7 attackId=sentinel.bolt2 hpBefore=994 hpAfter=988
+t 3924 ai.decide          sentinel->player   ->Approach [BeyondPreferred:1.8(R-08-11)] aiType=Boss distance=4.427719 playerState=HitStun playerGrounded=True phase=s2
+t 3971 ai.decide          sentinel->player   Approach->Jump [PhaseJump(R-08-11)] aiType=Boss distance=2.07757568 playerState=Idle playerGrounded=True phase=s2
+t 3971 ai.jump            sentinel->player   Idle->Air [BossPhaseJump(R-08-11)] distance=2.07757568
+t 3994 hit                player  ->sentinel Idle->Idle [AirHit:SlowFall(R-06-07)] attackId=ground1 hpBefore=268 hpAfter=258
+t 4005 ai.decide          sentinel->player   Jump->Wait [PatternInterval] aiType=Boss distance=0.157531738 playerState=GroundAttack playerGrounded=True phase=s2
+t 4052 ai.decide          sentinel->player   Wait->Evade [PlayerAttackStart:Evade(R-08-11)] aiType=Boss distance=0.157531738 playerState=GroundAttack playerGrounded=True phase=s2
+t 4054 hit                player  ->sentinel Evade->Stagger [Stagger(R-06-04)] attackId=ground1 hpBefore=258 hpAfter=248
+t 4078 ai.decide          sentinel->player   ->Wait [NoPatternFits] aiType=Boss distance=0.6615448 playerState=Idle playerGrounded=True phase=s2
+t 4112 ai.decide          sentinel->player   Wait->Evade [PlayerAttackStart:Evade(R-08-11)] aiType=Boss distance=0.6615448 playerState=GroundAttack playerGrounded=True phase=s2
+t 4114 hit                player  ->sentinel Evade->Stagger [Stagger(R-06-04)] attackId=ground1 hpBefore=248 hpAfter=238
+t 4138 ai.decide          sentinel->player   ->Wait [NoPatternFits] aiType=Boss distance=1.16555786 playerState=Idle playerGrounded=True phase=s2
+t 4170 marker                     ->         -> [Z8Done] 
+===== TC-08-07
+t 4180 marker                     ->         -> [TestCase] 
+t 4180 marker             player  ->         -> [TestSetPlayerHp] 
+t 4181 ai.decide          jq      ->player   Wait->Jump [JumpWindow[3,5](R-08-05)] aiType=Jumper distance=4 playerState=Idle playerGrounded=True phase=
+t 4181 ai.jump            jq      ->player   Idle->Air [JumpApproach(R-08-05)] distance=4
+t 4199 ai.decide          jq      ->player   Jump->AirAttack [InAirAttackRange(R-08-05)] aiType=Jumper distance=2.19989014 playerState=Idle playerGrounded=True phase=
+t 4199 enemy.state        jq      ->         Idle->AttackStartup [AirAttack(R-08-05)] 
+t 4210 ai.land            jq      ->         Air->AttackRecovery [JumpLanded] 
+t 4223 ai.decide          jq      ->player   ->Approach [OutOfRange:Approach(R-08-03)] aiType=Jumper distance=2.19989014 playerState=Idle playerGrounded=True phase=
+t 4233 ai.blocked         jq      ->player   Idle->Idle [Cooldown:ReattackInterval(R-08-07)(R-08-02)] distance=1.59991455 cooldown=2.78000021
+t 4233 ai.decide          jq      ->player   Approach->Wait [InRange:WaitCooldown(R-08-07)] aiType=Jumper distance=1.59991455 playerState=Idle playerGrounded=True phase=
+t 4240 marker                     ->         -> [QuickRespawnInsideInterval] 
+t 4241 ai.decide          jq      ->player   Wait->Jump [JumpWindow[3,5](R-08-05)] aiType=Jumper distance=3.3999176 playerState=Idle playerGrounded=True phase=
+t 4241 ai.jump            jq      ->player   Idle->Air [JumpApproach(R-08-05)] distance=3.3999176
+t 4253 ai.blocked         jq      ->player   Idle->Idle [Cooldown:ReattackInterval:Air(R-08-07)(R-08-02)] distance=2.19984436 cooldown=2.38000059
+t 4270 ai.land            jq      ->         Air->Idle [JumpLanded] 
+t 4271 ai.blocked         jq      ->player   Idle->Idle [Cooldown:ReattackInterval(R-08-07)(R-08-02)] distance=0.3997345 cooldown=2.020001
+t 4271 ai.decide          jq      ->player   ->Wait [InRange:WaitCooldown(R-08-07)] aiType=Jumper distance=0.3997345 playerState=Idle playerGrounded=True phase=
+t 4320 marker                     ->         -> [AirIntervalDone] 
+t 4330 marker             player  ->         -> [TestSetPlayerHp] 
+t 4331 ai.decide          ch      ->player   Wait->Attack [InRange:FirstChance(R-08-02)] aiType=Chaser distance=0.152160645 playerState=Idle playerGrounded=True phase=
+t 4331 enemy.state        ch      ->         Idle->AttackStartup [InRange(R-08-02)] 
+t 4346 player.death       player  ->ch       Idle->Dead [HP0(death flow R-06-19 not in WP-02)] 
+t 4346 hit.player         ch      ->player   Idle->Dead [Hit] via=Melee attackId=chaser.atk hpBefore=1 hpAfter=0
+t 4347 ai.decide          fh      ->player   Hold->Wait [PlayerDead:NoNewAttack(R-08-07)] aiType=Fleer distance=64.96826 playerState=Dead playerGrounded=True phase=
+t 4367 ai.decide          ch      ->player   ->Wait [PlayerDead:NoNewAttack(R-08-07)] aiType=Chaser distance=0.152160645 playerState=Dead playerGrounded=True phase=
+t 4520 marker                     ->         -> [ScriptEnd] 
+t 4590 marker                     ->         -> [VideoRecordingStopped] 

@@ -1,0 +1,22 @@
+EditMode on the 406e67d source (run before the 406e67d commit with identical files; tree clean after commit): test-case 217, results {'Passed': 217}; root result=Passed total=217 passed=217 failed=0 start=2026-11-10 08:37:30Z
+New in WP-04-R1 (19, AiR1Tests):
+  Corum2.Tests.AiR1Tests.F01_BossPhaseJump_MagicHit_NoPropulsion
+  Corum2.Tests.AiR1Tests.F01_Jumper_MagicHitMidJump_NoAiPropulsion_KnockbackAway
+  Corum2.Tests.AiR1Tests.F01_Jumper_PhysicalAirHitMidJump_StopsHorizontalPropulsion_NoAirAttack
+  Corum2.Tests.AiR1Tests.F01_ParryDuringJumperAirAttack_CutsJumpAndKnocksBack
+  Corum2.Tests.AiR1Tests.F01_ReactionStates_NeverKeepAiPropulsion
+  Corum2.Tests.AiR1Tests.F02_AirAttack_Boundary_StartsOnlyOnceTheIntervalIsOver
+  Corum2.Tests.AiR1Tests.F02_AirAttack_WaitsForReattackInterval_EvenWithJumpCooldownZero
+  Corum2.Tests.AiR1Tests.F02_JumpWithPlayerOutOfAirRange_NoAirAttack_LandsThenGround
+  Corum2.Tests.AiR1Tests.F03_DeathDuringTransition_CancelsIt
+  Corum2.Tests.AiR1Tests.F03_MagicHitDuringTransition_KeepsTransitionTime
+  Corum2.Tests.AiR1Tests.F03_NoHit_TransitionRunsFullTime
+  Corum2.Tests.AiR1Tests.F03_PhysicalHitDuringTransition_KeepsTransitionTime
+  Corum2.Tests.AiR1Tests.F03_RepeatedHits_TransitionEndsDuringReaction_ThenFree
+  Corum2.Tests.AiR1Tests.M01_EvadePerPhase_BackStepAway_OtherPhaseAndBossUnchanged
+  Corum2.Tests.AiR1Tests.M01_FrequencyCountRestartsInEachPhase
+  Corum2.Tests.AiR1Tests.M01_GuardFrequencyHalf_EveryOtherAttackGuarded_GuardRuleDamage
+  Corum2.Tests.AiR1Tests.M01_Guard_MagicAndBackHitsAreNotGuarded
+  Corum2.Tests.AiR1Tests.M01_NoGuardOrEvadeDuringTransition
+  Corum2.Tests.AiR1Tests.M01_Validator_GuardEvadeSettings
+Changed expectation: BossTests.PhaseSettings_ApplyOnlyToThatPhase reads the transition time from TransitionTimer (WP04-F03) instead of Timer.
