@@ -127,7 +127,7 @@ namespace Corum2.Core
             "EXP-BOSS-02 death wins over a phase transition (CF-09)",
             "EXP-BOSS-03 no invulnerability during a phase transition; hits react normally; the transition time keeps running through the reaction (game time, paused by hitstop) and the boss returns to the transition after it; no new attack, guard or evade until it ends; death cancels it (CF-09)",
             "EXP-BOSS-04 transitions are checked when the boss is free to decide; first satisfied in list order; one per check (CF-09)",
-            "EXP-BOSS-05 boss guard/evade frequency: each player attack start within DefenseRange in front of a free boss adds the phase frequency to an accumulator; at 1 it fires and 1 is subtracted (no randomness); evade is checked before guard",
+            "EXP-BOSS-05 boss guard/evade frequency: each player attack start within DefenseRange in front of a free boss adds the phase frequency to an accumulator; at 1 it fires and 1 is subtracted (no randomness); evade is checked before guard; the counts restart at 0 on each phase entry",
             "EXP-BOSS-06 boss guard: front physical hits deal guard-rule damage (D x 0.1, EXP-GUARD-01) with no stagger or knockback; magic, unblockable and back hits are not guarded (R-08-12)",
             "EXP-BOSS-07 boss evade: a back step away from the player for EvadeTime at EvadeSpeed; no invulnerability",
             "TEST-AI-01 enemy/boss speeds, ranges, intervals and patterns in the WP-04 scene are test data",

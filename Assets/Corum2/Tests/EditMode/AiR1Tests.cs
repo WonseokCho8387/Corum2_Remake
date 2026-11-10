@@ -389,6 +389,27 @@ namespace Corum2.Tests
             Assert.AreEqual(0, h.Events("boss.defense").Count(e => e.ActorId == "o"), "other boss has no defense settings");
         }
 
+        [Test, Category("TC_08_11")]
+        public void M01_FrequencyCountRestartsInEachPhase()
+        {
+            var boss = DefenseBoss(0.5f, 0f, 0.5f, 0f);
+            boss.Boss.Phases[1].TransitionTime = 0.2f;
+            var h = AiFixtures.H("TC-08-11", World(("b", "D", 11f)), boss);
+            var b = h.C.Find("b");
+            h.Step();
+            Free(h, b);
+            Attack(h, b);
+            Assert.AreEqual("None", h.Events("boss.defense").Last().StateAfter);
+            Assert.AreEqual(0.5f, b.GuardAcc, 1e-4);
+            Free(h, b);
+            h.C.RaiseBossEvent("b", "go");
+            h.StepUntil(() => b.PhaseId == "p2", 100);
+            Assert.AreEqual(0f, b.GuardAcc, "phase 1 count does not carry into phase 2");
+            Free(h, b);
+            Attack(h, b);
+            Assert.AreEqual("None", h.Events("boss.defense").Last().StateAfter, "first eligible attack in phase 2 starts from 0");
+        }
+
         [Test, Category("TC_08_10")]
         public void M01_NoGuardOrEvadeDuringTransition()
         {

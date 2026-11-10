@@ -389,6 +389,8 @@ namespace Corum2.Core
             en.PhaseSuperArmor = ph.SuperArmor;
             en.Cooldown = 0f;
             en.JumpTimer = ph.JumpInterval;
+            en.GuardAcc = 0f; // guard / evade frequency counts per phase (R-08-11 independent settings, EXP-BOSS-05)
+            en.EvadeAcc = 0f;
             Log.Emit("boss.phase", en.Id, "", from, ph.Id, reason, ("condition", condition), ("hp", en.Hp), ("hpRatio", en.Hp / en.Def.MaxHp),
                 ("patterns", string.Join(",", ph.Patterns.ConvertAll(x => x.Id))), ("superArmor", ph.SuperArmor),
                 ("staggerResistance", ph.StaggerResistance), ("launch", ph.Launch), ("attackSpeed", ph.AttackSpeed),
