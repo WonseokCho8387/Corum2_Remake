@@ -1,0 +1,286 @@
+{
+ "log": "Evidence/WP-04-R4/runs/RUN-20261110-193306.ndjson",
+ "transitions": [
+  {
+   "actor": "boss",
+   "from": "p1",
+   "to": "p2",
+   "condition": "HpBelow:0.6",
+   "start_tick": 2774,
+   "start_eventId": 3516,
+   "transitionTime": 1,
+   "end_tick": 2833,
+   "end_eventId": 3690,
+   "end_type": "boss.transitionEnd",
+   "end_reason": "TransitionDoneDuringReaction(EXP-BOSS-03)",
+   "hits_inside": [
+    [
+     2797,
+     "PhaseTransition",
+     "Stagger",
+     "Stagger(R-06-04)"
+    ],
+    [
+     2813,
+     "PhaseTransition",
+     "Stagger",
+     "Stagger(R-06-04)"
+    ],
+    [
+     2829,
+     "PhaseTransition",
+     "Stagger",
+     "Stagger(R-06-04)"
+    ]
+   ],
+   "actions_before_end": [],
+   "status": "ended",
+   "complete": true,
+   "no_action_before_end": true
+  },
+  {
+   "actor": "boss",
+   "from": "p2",
+   "to": "p3",
+   "condition": "PatternUsed:crushx2",
+   "start_tick": 2958,
+   "start_eventId": 3890,
+   "transitionTime": 1,
+   "end_tick": 3008,
+   "end_eventId": 3994,
+   "end_type": "boss.transitionEnd",
+   "end_reason": "TransitionDone(EXP-BOSS-03)",
+   "hits_inside": [],
+   "actions_before_end": [],
+   "status": "ended",
+   "complete": true,
+   "no_action_before_end": true
+  },
+  {
+   "actor": "boss",
+   "from": "p3",
+   "to": "p1",
+   "condition": "Event:calm",
+   "start_tick": 3199,
+   "start_eventId": 4234,
+   "transitionTime": 0,
+   "end_tick": 3200,
+   "end_eventId": 4239,
+   "end_type": "boss.transitionEnd",
+   "end_reason": "TransitionDone(EXP-BOSS-03)",
+   "hits_inside": [],
+   "actions_before_end": [],
+   "status": "ended",
+   "complete": true,
+   "no_action_before_end": true
+  },
+  {
+   "actor": "boss",
+   "from": "p1",
+   "to": "p2",
+   "condition": "HpBelow:0.6",
+   "start_tick": 3200,
+   "start_eventId": 4240,
+   "transitionTime": 1,
+   "end_tick": 3250,
+   "end_eventId": 4343,
+   "end_type": "boss.transitionEnd",
+   "end_reason": "TransitionDone(EXP-BOSS-03)",
+   "hits_inside": [],
+   "actions_before_end": [],
+   "status": "ended",
+   "complete": true,
+   "no_action_before_end": true
+  },
+  {
+   "actor": "boss",
+   "from": "p2",
+   "to": "p3",
+   "condition": "PatternUsed:crushx2",
+   "start_tick": 3349,
+   "start_eventId": 4465,
+   "transitionTime": 1,
+   "end_tick": 3399,
+   "end_eventId": 4580,
+   "end_type": "boss.transitionEnd",
+   "end_reason": "TransitionDone(EXP-BOSS-03)",
+   "hits_inside": [],
+   "actions_before_end": [],
+   "status": "ended",
+   "complete": true,
+   "no_action_before_end": true
+  },
+  {
+   "actor": "sentinel",
+   "from": "s1",
+   "to": "s2",
+   "condition": "Event:shift",
+   "start_tick": 3774,
+   "start_eventId": 5050,
+   "transitionTime": 1,
+   "end_tick": 3824,
+   "end_eventId": 5153,
+   "end_type": "boss.transitionEnd",
+   "end_reason": "TransitionDone(EXP-BOSS-03)",
+   "hits_inside": [],
+   "actions_before_end": [],
+   "status": "ended",
+   "complete": true,
+   "no_action_before_end": true
+  }
+ ],
+ "unmatched_end_events": [],
+ "all_complete": true,
+ "all_no_action_before_end": true,
+ "defense": {
+  "decisions": [
+   {
+    "tick": 3525,
+    "actor": "sentinel",
+    "phase": "s1",
+    "pick": "None",
+    "reason": "PlayerAttackStart(R-08-11, EXP-BOSS-05)",
+    "playerAttackInstanceId": 64,
+    "distance": 1.778,
+    "guardAcc": 0.5,
+    "evadeAcc": 0
+   },
+   {
+    "tick": 3565,
+    "actor": "sentinel",
+    "phase": "s1",
+    "pick": "Guard",
+    "reason": "PlayerAttackStart(R-08-11, EXP-BOSS-05)",
+    "playerAttackInstanceId": 65,
+    "distance": 1.752,
+    "guardAcc": 0,
+    "evadeAcc": 0
+   },
+   {
+    "tick": 3605,
+    "actor": "sentinel",
+    "phase": "s1",
+    "pick": "None",
+    "reason": "PlayerAttackStart(R-08-11, EXP-BOSS-05)",
+    "playerAttackInstanceId": 66,
+    "distance": 1.752,
+    "guardAcc": 0.5,
+    "evadeAcc": 0
+   },
+   {
+    "tick": 3645,
+    "actor": "sentinel",
+    "phase": "s1",
+    "pick": "Guard",
+    "reason": "PlayerAttackStart(R-08-11, EXP-BOSS-05)",
+    "playerAttackInstanceId": 67,
+    "distance": 1.776,
+    "guardAcc": 0,
+    "evadeAcc": 0
+   },
+   {
+    "tick": 3725,
+    "actor": "sentinel",
+    "phase": "s1",
+    "pick": "None",
+    "reason": "PlayerAttackStart(R-08-11, EXP-BOSS-05)",
+    "playerAttackInstanceId": 68,
+    "distance": 1.776,
+    "guardAcc": 0.5,
+    "evadeAcc": 0
+   },
+   {
+    "tick": 3850,
+    "actor": "sentinel",
+    "phase": "s2",
+    "pick": "Evade",
+    "reason": "PlayerAttackStart(R-08-11, EXP-BOSS-05)",
+    "playerAttackInstanceId": 69,
+    "distance": 1.8,
+    "guardAcc": 0,
+    "evadeAcc": 0
+   },
+   {
+    "tick": 4030,
+    "actor": "sentinel",
+    "phase": "s2",
+    "pick": "Evade",
+    "reason": "PlayerAttackStart(R-08-11, EXP-BOSS-05)",
+    "playerAttackInstanceId": 72,
+    "distance": 0.158,
+    "guardAcc": 0,
+    "evadeAcc": 0
+   },
+   {
+    "tick": 4090,
+    "actor": "sentinel",
+    "phase": "s2",
+    "pick": "Evade",
+    "reason": "PlayerAttackStart(R-08-11, EXP-BOSS-05)",
+    "playerAttackInstanceId": 73,
+    "distance": 0.662,
+    "guardAcc": 0,
+    "evadeAcc": 0
+   }
+  ],
+  "skips": [
+   {
+    "tick": 3970,
+    "actor": "sentinel",
+    "state": "Idle",
+    "reason": "Busy:Idle:Airborne(EXP-BOSS-05)",
+    "playerAttackInstanceId": 71,
+    "distance": 0.398,
+    "facing": -1
+   }
+  ]
+ },
+ "selftest": [
+  {
+   "case": "original",
+   "all_complete": true,
+   "all_no_action_before_end": true,
+   "pass": true
+  },
+  {
+   "case": "remove every end/cancel",
+   "statuses": [
+    "incomplete",
+    "superseded"
+   ],
+   "no_action_values": [
+    "None"
+   ],
+   "pass": true
+  },
+  {
+   "case": "attack start inserted before the end",
+   "no_action_before_end": false,
+   "pass": true
+  },
+  {
+   "case": "own end carries another phase",
+   "status": "superseded",
+   "unmatched": 1,
+   "pass": true
+  },
+  {
+   "case": "duplicated end",
+   "unmatched": 1,
+   "pass": true
+  },
+  {
+   "case": "same-tick chain links to its own later end",
+   "examples": [
+    [
+     "p1",
+     "p2",
+     3200,
+     3250
+    ]
+   ],
+   "pass": true
+  }
+ ],
+ "selftest_all_pass": true
+}

@@ -1,0 +1,4 @@
+{"file": "Evidence/WP-04-R4/runs/RUN-20261110-193306.manifest.yaml", "result": "valid", "kind": "run_manifest", "entries": 300, "total_bytes": 1087672, "git_rows_matched": 300, "git_blob_mismatch": 0, "expected": "valid", "pass": true}
+{"file": "Evidence/WP-04-R4/runs/RUN-20261110-193707.manifest.yaml", "result": "valid", "kind": "run_manifest", "entries": 300, "total_bytes": 1087672, "git_rows_matched": 300, "git_blob_mismatch": 0, "expected": "valid", "pass": true}
+{"file": "Evidence/WP-04-R4/runs/RUN-20261110-193935.manifest.yaml", "result": "valid", "kind": "run_manifest", "entries": 300, "total_bytes": 1087672, "git_rows_matched": 300, "git_blob_mismatch": 0, "expected": "valid", "pass": true}
+{"pyyaml": "6.0.3", "repo": ".", "worktree": false, "all_pass": true}

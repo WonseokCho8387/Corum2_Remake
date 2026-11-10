@@ -1,0 +1,292 @@
+{
+ "log": "Evidence/WP-04-R4/runs/RUN-20261110-193707.ndjson",
+ "video_start_tick": null,
+ "transitions": [
+  {
+   "actor": "boss",
+   "from": "p1",
+   "to": "p2",
+   "judged": [
+    2701,
+    2757,
+    "ended"
+   ],
+   "presentation": "shown",
+   "shownTick": 2701,
+   "displayDelayTicks": 0,
+   "stop": [
+    "presentation.end",
+    2757,
+    2757
+   ],
+   "cues": {
+    "animation": [
+     "warden.roar",
+     "found",
+     "Pulse"
+    ],
+    "vfx": [
+     "vfx.armorGlow",
+     "found",
+     "Aura"
+    ],
+    "camera": [
+     "cam.shakeSmall",
+     "found",
+     "Shake"
+    ]
+   },
+   "frames": null,
+   "problems": [],
+   "pass": true
+  },
+  {
+   "actor": "boss",
+   "from": "p2",
+   "to": "p3",
+   "judged": [
+    2914,
+    2964,
+    "ended"
+   ],
+   "presentation": "shown",
+   "shownTick": 2914,
+   "displayDelayTicks": 0,
+   "stop": [
+    "presentation.end",
+    2964,
+    2964
+   ],
+   "cues": {
+    "animation": [
+     "warden.rage",
+     "found",
+     "Shake"
+    ],
+    "vfx": [
+     "vfx.redAura",
+     "found",
+     "Burst"
+    ],
+    "camera": [
+     "cam.zoomIn",
+     "found",
+     "Zoom"
+    ]
+   },
+   "frames": null,
+   "problems": [],
+   "pass": true
+  },
+  {
+   "actor": "boss",
+   "from": "p3",
+   "to": "p1",
+   "judged": [
+    3208,
+    3209,
+    "ended"
+   ],
+   "presentation": "shown",
+   "shownTick": 3208,
+   "displayDelayTicks": 0,
+   "stop": [
+    "presentation.end",
+    3209,
+    3209
+   ],
+   "cues": {
+    "animation": [
+     "",
+     "none",
+     ""
+    ],
+    "vfx": [
+     "",
+     "none",
+     ""
+    ],
+    "camera": [
+     "",
+     "none",
+     ""
+    ]
+   },
+   "frames": null,
+   "problems": [],
+   "pass": true
+  },
+  {
+   "actor": "boss",
+   "from": "p1",
+   "to": "p2",
+   "judged": [
+    3209,
+    3259,
+    "ended"
+   ],
+   "presentation": "shown",
+   "shownTick": 3209,
+   "displayDelayTicks": 0,
+   "stop": [
+    "presentation.end",
+    3259,
+    3259
+   ],
+   "cues": {
+    "animation": [
+     "warden.roar",
+     "found",
+     "Pulse"
+    ],
+    "vfx": [
+     "vfx.armorGlow",
+     "found",
+     "Aura"
+    ],
+    "camera": [
+     "cam.shakeSmall",
+     "found",
+     "Shake"
+    ]
+   },
+   "frames": null,
+   "problems": [],
+   "pass": true
+  },
+  {
+   "actor": "boss",
+   "from": "p2",
+   "to": "p3",
+   "judged": [
+    3358,
+    3408,
+    "ended"
+   ],
+   "presentation": "shown",
+   "shownTick": 3358,
+   "displayDelayTicks": 0,
+   "stop": [
+    "presentation.end",
+    3408,
+    3408
+   ],
+   "cues": {
+    "animation": [
+     "warden.rage",
+     "found",
+     "Shake"
+    ],
+    "vfx": [
+     "vfx.redAura",
+     "found",
+     "Burst"
+    ],
+    "camera": [
+     "cam.zoomIn",
+     "found",
+     "Zoom"
+    ]
+   },
+   "frames": null,
+   "problems": [],
+   "pass": true
+  },
+  {
+   "actor": "sentinel",
+   "from": "s1",
+   "to": "s2",
+   "judged": [
+    3782,
+    3832,
+    "ended"
+   ],
+   "presentation": "shown",
+   "shownTick": 3782,
+   "displayDelayTicks": 0,
+   "stop": [
+    "presentation.end",
+    3832,
+    3832
+   ],
+   "cues": {
+    "animation": [
+     "sentinel.shift",
+     "found",
+     "Flicker"
+    ],
+    "vfx": [
+     "vfx.blink",
+     "found",
+     "Burst"
+    ],
+    "camera": [
+     "cam.none",
+     "found",
+     "None"
+    ]
+   },
+   "frames": null,
+   "problems": [],
+   "pass": true
+  }
+ ],
+ "orphan_presentation_records": [],
+ "orphan_or_dropped_events": [],
+ "unmatched_transition_end_events": [],
+ "skipped_count": 0,
+ "vfx_clock": {
+  "frames_checked": 343,
+  "hitstop_frames": 6,
+  "issues": []
+ },
+ "all_pass": true,
+ "selftest": [
+  {
+   "case": "original",
+   "all_pass": true,
+   "pass": true
+  },
+  {
+   "case": "duplicated presentation.end",
+   "all_pass": false,
+   "pass": true
+  },
+  {
+   "case": "all presentation.end removed",
+   "all_pass": false,
+   "pass": true
+  },
+  {
+   "case": "judgedEndTick shifted by 1",
+   "all_pass": false,
+   "pass": true
+  },
+  {
+   "case": "presentation.skipped added",
+   "all_pass": false,
+   "pass": true
+  },
+  {
+   "case": "a transition only skipped (never shown)",
+   "all_pass": false,
+   "pass": true
+  },
+  {
+   "case": "animationCue missing",
+   "all_pass": false,
+   "pass": true
+  },
+  {
+   "case": "presentation.start with no judged transition",
+   "all_pass": false,
+   "pass": true
+  },
+  {
+   "case": "vfx advanced during boss hitstop",
+   "all_pass": false,
+   "pass": true
+  }
+ ],
+ "selftest_all_pass": true
+}

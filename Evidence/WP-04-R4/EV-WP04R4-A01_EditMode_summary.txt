@@ -1,0 +1,12 @@
+EditMode on the 292284c source (run just before that commit with identical files): test-case 240, results {'Passed': 240}; root result=Passed start=2026-11-10 10:32:15Z
+New in WP-04-R4 (10 test cases, AiR4PresentationTests):
+  Corum2.Tests.AiR4PresentationTests.F04_DeathBetweenRenders_CancelKeepsJudgedTick
+  Corum2.Tests.AiR4PresentationTests.F04_RenderCadence_KeepsJudgedTicks_RecordsShownSeparately(1)
+  Corum2.Tests.AiR4PresentationTests.F04_RenderCadence_KeepsJudgedTicks_RecordsShownSeparately(2)
+  Corum2.Tests.AiR4PresentationTests.F04_RenderCadence_KeepsJudgedTicks_RecordsShownSeparately(3)
+  Corum2.Tests.AiR4PresentationTests.F04_RenderCadence_KeepsJudgedTicks_RecordsShownSeparately(5)
+  Corum2.Tests.AiR4PresentationTests.F04_SameTickChain_WithSlowRender
+  Corum2.Tests.AiR4PresentationTests.F04_TransitionEndingBetweenRenders_IsSkippedWithJudgedTicks
+  Corum2.Tests.AiR4PresentationTests.F05_TailStep
+  Corum2.Tests.AiR4PresentationTests.F05_VfxClock_FollowsTransitionTime_StopsInBossHitstop
+  Corum2.Tests.AiR4PresentationTests.M04_ColourAndTintValidation
