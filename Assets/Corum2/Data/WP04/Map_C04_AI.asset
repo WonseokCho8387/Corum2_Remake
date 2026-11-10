@@ -55,6 +55,12 @@ MonoBehaviour:
   - id: Z6Ranged
     position: {x: 167, y: 0}
     facing: 1
+  - id: Z6Mid
+    position: {x: 173, y: 0}
+    facing: 1
+  - id: Z6In
+    position: {x: 175.5, y: 0}
+    facing: 1
   - id: Z7Boss
     position: {x: 204, y: 0}
     facing: 1

@@ -77,7 +77,7 @@ namespace Corum2.EditorTools
             map.spawns = new List<SpawnData>
             {
                 Sp("Start", 4), Sp("Z1Ten", 12), Sp("Z2Chaser", 49), Sp("Z3Fleer", 79), Sp("Z4Hold", 109), Sp("Z5Jumper", 139),
-                Sp("Z6Ranged", 167), Sp("Z7Boss", 204), Sp("Z7Near", 214.5f),
+                Sp("Z6Ranged", 167), Sp("Z6Mid", 173), Sp("Z6In", 175.5f), Sp("Z7Boss", 204), Sp("Z7Near", 214.5f),
             };
             map.left = new EdgeData { policy = EdgePolicy.Blocked };
             map.right = new EdgeData { policy = EdgePolicy.Blocked };
@@ -125,11 +125,11 @@ namespace Corum2.EditorTools
             b.firstAttackDelay = 0.5f;
             var p1 = new BossPhaseData
             {
-                id = "p1", attackInterval = 1.2f, approachSpeed = 2f, retreatSpeed = 2f, preferredMinDistance = 1f, preferredMaxDistance = 2.5f,
+                id = "p1", attackInterval = 1.2f, approachSpeed = 2f, retreatSpeed = 2f, preferredMinDistance = 0.8f, preferredMaxDistance = 1.6f,
                 staggerResistance = 0f, launch = LaunchResponse.Immune, attackSpeed = 1f, transitionTime = 0f,
                 patterns = new List<BossPatternData>
                 {
-                    Pat("slam", 0f, 2.2f, PlayerAirCondition.Grounded, 0, Atk("warden.slam", 10f, 0.35f, 1.6f, 1.6f)),
+                    Pat("slam", 0f, 2.2f, PlayerAirCondition.Grounded, 0, Atk("warden.slam", 10f, 0.35f, 1.6f, 1.6f, 0.9f, 1.1f)),
                     Pat("shot", 3f, 9f, PlayerAirCondition.Any, 0, Atk("warden.shot", 8f, 0.3f), new ProjectileData { speed = 9f, maxDistance = 10f, spawnOffsetY = 1.4f }),
                     Pat("antiair", 0f, 3f, PlayerAirCondition.Airborne, 2, Atk("warden.antiair", 9f, 0.15f, 1.2f, 2.4f, 1.2f)),
                 },
@@ -137,24 +137,24 @@ namespace Corum2.EditorTools
             };
             var p2 = new BossPhaseData
             {
-                id = "p2", attackInterval = 0.9f, approachSpeed = 3f, retreatSpeed = 2f, preferredMinDistance = 1f, preferredMaxDistance = 2.5f,
+                id = "p2", attackInterval = 0.9f, approachSpeed = 3f, retreatSpeed = 2f, preferredMinDistance = 0.8f, preferredMaxDistance = 1.6f,
                 superArmor = true, staggerResistance = 0.5f, launch = LaunchResponse.Immune, attackSpeed = 1.5f, transitionTime = 1f,
                 transitionAnimation = "warden.roar", transitionVfx = "vfx.armorGlow", transitionCamera = "cam.shakeSmall",
                 patterns = new List<BossPatternData>
                 {
-                    Pat("crush", 0f, 2.2f, PlayerAirCondition.Any, 0, Atk("warden.crush", 12f, 0.35f, 1.6f, 1.6f)),
+                    Pat("crush", 0f, 2.2f, PlayerAirCondition.Any, 0, Atk("warden.crush", 12f, 0.35f, 1.6f, 1.6f, 0.9f, 1.1f)),
                     Pat("shot2", 3f, 9f, PlayerAirCondition.Any, 0, Atk("warden.shot2", 8f, 0.3f), new ProjectileData { speed = 11f, maxDistance = 10f, spawnOffsetY = 1.4f }),
                 },
                 transitions = new List<PhaseTransitionData> { new PhaseTransitionData { kind = TransitionKind.PatternUsed, patternId = "crush", count = 2, targetPhase = "p3" } },
             };
             var p3 = new BossPhaseData
             {
-                id = "p3", attackInterval = 0.6f, approachSpeed = 3.5f, retreatSpeed = 2f, preferredMinDistance = 1f, preferredMaxDistance = 2.5f,
+                id = "p3", attackInterval = 0.6f, approachSpeed = 3.5f, retreatSpeed = 2f, preferredMinDistance = 0.8f, preferredMaxDistance = 1.6f,
                 jumpInterval = 2f, jumpSpeedX = 5f, jumpVelocityY = 8f, superArmor = false, staggerResistance = 0f, launch = LaunchResponse.Immune,
                 attackSpeed = 2f, transitionTime = 1f, transitionAnimation = "warden.rage", transitionVfx = "vfx.redAura", transitionCamera = "cam.zoomIn",
                 patterns = new List<BossPatternData>
                 {
-                    new BossPatternData { id = "rush", attack = Atk("warden.rush", 14f, 0.3f, 1.8f, 1.6f), minDistance = 0f, maxDistance = 2.4f, special = true },
+                    new BossPatternData { id = "rush", attack = Atk("warden.rush", 14f, 0.3f, 1.8f, 1.6f, 0.9f, 1.1f), minDistance = 0f, maxDistance = 2.4f, special = true },
                 },
                 transitions = new List<PhaseTransitionData> { new PhaseTransitionData { kind = TransitionKind.Event, eventName = "calm", targetPhase = "p1" } },
             };
@@ -165,10 +165,10 @@ namespace Corum2.EditorTools
         static BossPatternData Pat(string id, float min, float max, PlayerAirCondition air, int prio, AttackData a, ProjectileData proj = null) =>
             new BossPatternData { id = id, attack = a, minDistance = min, maxDistance = max, playerState = air, priority = prio, hasProjectile = proj != null, projectile = proj ?? new ProjectileData() };
 
-        static AttackData Atk(string id, float d, float startup, float w = 1.2f, float h = 1.2f, float oy = 0.9f) => new AttackData
+        static AttackData Atk(string id, float d, float startup, float w = 1.2f, float h = 1.2f, float oy = 0.9f, float ox = 0.8f) => new AttackData
         {
             id = id, kind = AttackKind.EnemyMelee, testDamage = d, startup = startup, active = 0.1f, recovery = 0.3f,
-            offsetX = 0.8f, offsetY = oy, width = w, height = h, knockback = 4f,
+            offsetX = ox, offsetY = oy, width = w, height = h, knockback = 4f,
         };
 
         static EnemyDefinitionAsset Enemy(string asset, string id, float hp, Color c, AiType type)
