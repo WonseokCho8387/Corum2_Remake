@@ -83,8 +83,9 @@ namespace Corum2.Unity
         {
             Sim.Log.Emit("marker", "", "", "", "", "VirtualDevicesAdded", ("keyboard", VirtualDevices.KeyboardName), ("gamepad", VirtualDevices.GamepadName));
             var v = new VirtualDevices();
-            AnnotateManifest("input_devices", DescribeDevices() + "; scripted input goes through " + VirtualDevices.KeyboardName + "/" +
-                VirtualDevices.GamepadName + " (Input System bindings), no physical device or Steam Deck");
+            AnnotateManifest("input_devices", DescribeDevices());
+            AnnotateManifest("input_devices_note", "scripted input goes through " + VirtualDevices.KeyboardName + "/" +
+                VirtualDevices.GamepadName + " (Input System bindings); no physical device or Steam Deck was used by the script");
             return v;
         }
 
@@ -123,7 +124,10 @@ namespace Corum2.Unity
                 return;
             }
 
-            RunId = "RUN-" + DateTime.Now.ToString("yyyyMMdd-HHmmss", CultureInfo.InvariantCulture);
+            // M01-R1-B: one clock read gives both the run id and started_at; rewrites never change them.
+            var startedAt = DateTimeOffset.Now;
+            RunId = "RUN-" + startedAt.ToString("yyyyMMdd-HHmmss", CultureInfo.InvariantCulture);
+            _manifest = new RunManifest(RunId, startedAt);
             var dir = RunFiles.RunDirectory();
             LogPath = Path.Combine(dir, RunId + ".ndjson");
             _sink = new NdjsonFileSink(LogPath);
@@ -297,28 +301,32 @@ namespace Corum2.Unity
             File.WriteAllText(cmdPath, "# GameHost.RunInputScript input (game seconds:command), started at game time " +
                 _scriptStart.ToString("R", CultureInfo.InvariantCulture) + "\n" + string.Join("\n", script.Split(';')) + "\n", new UTF8Encoding(false));
             _tester = "Claude Code (automated: GameHost.RunInputScript)";
-            _commands = Path.GetFileName(cmdPath) + " sha256 " + RunFiles.FileSha256(cmdPath);
+            _commands = Path.GetFileName(cmdPath);
+            _commandsHash = RunFiles.FileSha256(cmdPath);
             AnnotateManifest("input_devices", DescribeDevices());
         }
 
         string _tester = "manual (Editor Play mode)";
         string _commands = "manual play; every input is in the log (input.* events)";
-        readonly List<(string key, string value)> _manifestExtra = new List<(string, string)>();
+        string _commandsHash;
+        RunManifest _manifest;
+        readonly List<(string key, object value)> _manifestExtra = new List<(string, object)>();
 
-        /// <summary>Adds or replaces a manifest field and rewrites the manifest (evidence recorder, script start).</summary>
-        public void AnnotateManifest(string key, string value)
+        /// <summary>Adds or replaces a manifest field and rewrites the manifest (evidence recorder, script start).
+        /// Values are typed: string, bool, number, null, a list or a <see cref="YamlMap"/>.</summary>
+        public void AnnotateManifest(string key, object value)
         {
             _manifestExtra.RemoveAll(x => x.key == key);
             _manifestExtra.Add((key, value));
             if (ManifestPath != null) WriteManifest(Path.GetDirectoryName(ManifestPath));
         }
 
-        static string DescribeDevices()
+        static List<YamlMap> DescribeDevices()
         {
-            var names = new List<string>();
+            var list = new List<YamlMap>();
             foreach (var d in UnityEngine.InputSystem.InputSystem.devices)
-                names.Add(d.name + (d.native ? "" : "(virtual)"));
-            return "[" + string.Join(", ", names) + "]";
+                list.Add(new YamlMap().Add("name", d.name).Add("layout", d.layout).Add("virtual", !d.native));
+            return list;
         }
 
         string _awaitEnemy;
@@ -544,40 +552,59 @@ namespace Corum2.Unity
         string WriteManifest(string dir)
         {
             var path = Path.Combine(dir, RunId + ".manifest.yaml");
-            var dataHash = RunFiles.FileSha256(DataSnapshotPath);
-            var sb = new StringBuilder();
-            sb.AppendLine("# Run manifest (spec 13.3). Rewritten when the input script or the recorder starts (WP02-M01).");
-            sb.AppendLine("run_id: " + RunId);
-            sb.AppendLine("spec_id: CORUM2-P0-MASTER");
-            sb.AppendLine("spec_version: 1.2.0");
-            sb.AppendLine("engine_appendix_version: 1.0.0");
-            sb.AppendLine("spec_sha256: " + SpecHash(SpecFile));
-            sb.AppendLine("engine_appendix_sha256: " + SpecHash(AppendixFile));
-            sb.AppendLine("build_id: " + (Application.isEditor ? "editor-playmode" : Application.version));
-            sb.AppendLine("source_revision: " + _git.rev);
-            sb.AppendLine("source_dirty: " + _git.dirty);
-            sb.AppendLine("source_capture_mode: git");
-            sb.AppendLine("engine: Unity");
-            sb.AppendLine("engine_version: " + Application.unityVersion);
-            sb.AppendLine("platform_os: " + SystemInfo.operatingSystem);
-            sb.AppendLine("device_input: InputProfile " + inputProfile.meta.dataVersion + " (EXP-INPUT-01/02/03)");
-            sb.AppendLine("display: " + Screen.width + "x" + Screen.height + " @" + Screen.currentResolution.refreshRateRatio.value.ToString("0.##", CultureInfo.InvariantCulture) + "Hz");
-            sb.AppendLine("render_fps_observed: see HUD / tick log");
-            sb.AppendLine("simulation_tick: " + Time.fixedDeltaTime.ToString("R", CultureInfo.InvariantCulture) + " s (" + (1f / Time.fixedDeltaTime).ToString("0.##", CultureInfo.InvariantCulture) + " Hz game time)");
-            sb.AppendLine("time_policy_version: none-approved (U-06); input double tap on raw time EXP-TIME-01");
-            sb.AppendLine("data_snapshot: " + Path.GetFileName(DataSnapshotPath) + " sha256 " + dataHash);
-            sb.AppendLine("data_version: \"" + Sim.Log.DataVersion + "\"");
-            sb.AppendLine("experimental_policies:");
-            foreach (var e in Simulation.ExperimentalPolicies) sb.AppendLine("  - \"" + e + "\"");
-            sb.AppendLine("scene_map: " + UnityEngine.SceneManagement.SceneManager.GetActiveScene().path + " start " + world.startMapId + "/" + world.startSpawnId);
-            sb.AppendLine("save_fixture: none");
-            sb.AppendLine("random_seed: not used");
-            sb.AppendLine("started_at: " + DateTimeOffset.Now.ToString("yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture));
-            sb.AppendLine("tester: " + _tester);
-            sb.AppendLine("commands_or_steps: " + _commands);
-            foreach (var (k, v) in _manifestExtra) sb.AppendLine(k + ": " + v);
-            sb.AppendLine("log: " + Path.GetFileName(LogPath));
-            File.WriteAllText(path, sb.ToString(), new UTF8Encoding(false));
+            var m = _manifest;
+            if (m.Revision == 0)
+            {
+                m.Comment("Run manifest, master spec 13.3 field names. Typed YAML (WP02-M01-R1-A); run_id/started_at fixed at run creation,");
+                m.Comment("updated_at/manifest_revision change on each rewrite (input script, recorder, device changes) (WP02-M01-R1-B).");
+            }
+            var git = _git;
+            var spec = SpecHash(SpecFile);
+            var appendix = SpecHash(AppendixFile);
+            m.Set("spec_id", "CORUM2-P0-MASTER");
+            m.Set("spec_version", "1.2.0");
+            m.Set("spec_file", SpecFile);
+            m.Set("spec_sha256", spec.hash);
+            m.Set("engine_appendix_version", "1.0.0");
+            m.Set("engine_appendix_file", AppendixFile);
+            m.Set("engine_appendix_sha256", appendix.hash);
+            if (spec.hash == null || appendix.hash == null) m.Set("spec_hash_note", ((spec.note ?? "") + " " + (appendix.note ?? "")).Trim());
+            m.Set("build_id", Application.isEditor ? "editor-playmode" : Application.version);
+            m.Set("source_revision", git.rev);
+            m.Set("source_capture_mode", "git");
+            m.Set("working_tree_dirty", git.dirty);
+            m.Set("dirty_diff_artifact", git.dirty == true ? (object)git.paths : null);
+            m.Set("source_snapshot_artifact", null);
+            m.Set("source_file_hash_manifest", git.tree == null ? null : new YamlMap().Add("mode", "git-tree").Add("tree", git.tree)
+                .Add("note", "file hashes are the git tree of source_revision; uncommitted paths are listed in dirty_diff_artifact"));
+            if (git.note != null) m.Set("source_note", git.note);
+            m.Set("engine", "Unity");
+            m.Set("engine_version", Application.unityVersion);
+            m.Set("platform_os", SystemInfo.operatingSystem);
+            m.Set("device_input", "InputProfile " + inputProfile.meta.dataVersion + " (EXP-INPUT-01/02/03)");
+            m.Set("display", new YamlMap().Add("width", Screen.width).Add("height", Screen.height)
+                .Add("refresh_hz", Math.Round(Screen.currentResolution.refreshRateRatio.value, 2)));
+            m.Set("render_fps_observed", null);
+            m.Set("render_fps_note", "not measured by the manifest; recorder runs lock frame time to game time (see capture)");
+            m.Set("simulation_tick", new YamlMap().Add("seconds", (double)Time.fixedDeltaTime).Add("hz", Math.Round(1.0 / Time.fixedDeltaTime, 3))
+                .Add("clock", "game time"));
+            m.Set("time_policy_version", "none-approved (U-06); input double tap on raw time EXP-TIME-01");
+            m.Set("data_snapshot", Path.GetFileName(DataSnapshotPath));
+            m.Set("data_snapshot_sha256", RunFiles.FileSha256(DataSnapshotPath));
+            m.Set("data_version", Sim.Log.DataVersion);
+            m.Set("experimental_policies", Simulation.ExperimentalPolicies);
+            m.Set("scene_map", new YamlMap().Add("scene", UnityEngine.SceneManagement.SceneManager.GetActiveScene().path)
+                .Add("start_map", world.startMapId).Add("start_spawn", world.startSpawnId));
+            m.Set("save_fixture", null);
+            m.Set("save_fixture_note", "no save data; every run starts from the scene's initial state");
+            m.Set("random_seed", null);
+            m.Set("random_seed_note", "no random numbers are used");
+            m.Set("tester", _tester);
+            m.Set("commands_or_steps", _commands);
+            m.Set("commands_sha256", _commandsHash);
+            foreach (var (k, v) in _manifestExtra) m.Set(k, v);
+            m.Set("log", Path.GetFileName(LogPath));
+            File.WriteAllText(path, m.Render(DateTimeOffset.Now), new UTF8Encoding(false));
             return path;
         }
 
@@ -585,32 +612,33 @@ namespace Corum2.Unity
         const string AppendixFile = "CORUM2_Unity_Implementation_Appendix_v1.0.md";
 
         /// <summary>Spec documents live in the sibling analysis folder (D:\ProjectR\Corum2\docs\GPT).</summary>
-        static string SpecHash(string file)
+        static (string hash, string note) SpecHash(string file)
         {
             var p = Path.GetFullPath(Path.Combine(Application.dataPath, "..", "..", "Corum2", "docs", "GPT", file));
-            return File.Exists(p) ? RunFiles.FileSha256(p) + " (" + file + ")" : "unavailable (" + p.Replace('\\', '/') + " not found)";
+            return File.Exists(p) ? (RunFiles.FileSha256(p), null) : (null, p.Replace('\\', '/') + " not found");
         }
 
-        (string rev, string dirty) _gitCache;
-        (string rev, string dirty) _git
+        (string rev, bool? dirty, List<string> paths, string tree, string note)? _gitCache;
+        (string rev, bool? dirty, List<string> paths, string tree, string note) _git
         {
             get
             {
-                if (_gitCache.rev == null) _gitCache = ReadGit();
-                return _gitCache;
+                if (_gitCache == null) _gitCache = ReadGit();
+                return _gitCache.Value;
             }
         }
 
-        static (string rev, string dirty) ReadGit()
+        /// <summary>Read once per run (at the first manifest write, i.e. run start).</summary>
+        static (string rev, bool? dirty, List<string> paths, string tree, string note) ReadGit()
         {
             var root = Path.GetFullPath(Path.Combine(Application.dataPath, ".."));
             var rev = Git(root, "rev-parse HEAD");
+            if (rev == null) return (null, null, null, null, "git not available; repository state unknown");
+            var tree = Git(root, "rev-parse HEAD^{tree}");
             var status = Git(root, "status --porcelain");
-            if (rev == null) return ("unavailable (git not found)", "unknown");
-            var lines = status == null ? new string[0] : status.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
-            if (lines.Length == 0) return (rev.Trim(), "false (clean)");
-            var shown = string.Join(", ", lines.Take(8).Select(l => l.Trim()));
-            return (rev.Trim(), "true (" + lines.Length + " paths: " + shown + (lines.Length > 8 ? ", ..." : "") + ")");
+            if (status == null) return (rev.Trim(), null, null, tree?.Trim(), "git status failed; dirty state unknown");
+            var lines = status.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries).Select(l => l.TrimEnd('\r')).Where(l => l.Length > 0).ToList();
+            return (rev.Trim(), lines.Count > 0, lines, tree?.Trim(), null);
         }
 
         static string Git(string root, string args)
