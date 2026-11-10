@@ -25,6 +25,11 @@ namespace Corum2.Unity
             public bool Started;
             public long LastTick;
             public float TailLeft;
+            public float TailElapsed;
+            public int ParticlesAtEnd;
+            public int MaxBornAfterEnd;
+            public int Serial;
+            public bool BeginLogged;
             public EnemyActor Enemy;
         }
 
@@ -49,6 +54,9 @@ namespace Corum2.Unity
         static void Advance(Vfx v, float dt)
         {
             if (dt < 0f) dt = 0f;
+            // The first call must cover a positive interval: a restart with 0 s leaves the time-0 burst unfired and the
+            // next call starts after it (found by the R5 Burst test).
+            if (!v.Started && dt <= 0f) return;
             v.Ps.Simulate(dt, true, !v.Started, false);
             v.Started = true;
             v.SimulatedTime += dt;
@@ -82,7 +90,14 @@ namespace Corum2.Unity
                     Advance(v, p.Elapsed - v.LastElapsed);
                     v.LastElapsed = p.Elapsed;
                     v.LastTick = sim.Tick;
-                    vfxTime = v.SimulatedTime;
+                    vfxTime = v.Started ? v.SimulatedTime : 0f;
+                    if (v.Started && !v.BeginLogged)
+                    {
+                        v.BeginLogged = true;
+                        sim.Log.Emit("presentation.vfxBegin", en.Id, "", "", p.VfxId, "FirstVfxStep(EXP-PRES-01)", ("transitionSerial", p.Serial),
+                            ("vfxKind", p.Vfx.kind.ToString()), ("burstCount", p.Vfx.kind == VfxCueKind.Burst ? p.Vfx.burstCount : 0),
+                            ("particles", v.Ps.particleCount), ("vfxTime", v.SimulatedTime), ("lifetime", p.Vfx.lifetime));
+                    }
                 }
                 if (p.Camera != null && (camPick == null || p.StartTick >= camPick.StartTick)) camPick = p; // EXP-PRES-02
                 sim.Log.Emit("presentation.frame", en.Id, "", "", p.Phase, "Render(EXP-PRES-01)", ("transitionSerial", p.Serial),
@@ -108,16 +123,23 @@ namespace Corum2.Unity
                 Kill(v.Ps.gameObject);
                 return;
             }
-            // play up to the judged end, then turn emission off and let the tail run on game time
-            var em = v.Ps.emission;
-            em.rateOverTimeMultiplier = 0f;
+            // WP04-F05-R1: play up to the judged end (the system is non-looping with duration = transition length, so the
+            // start burst never repeats), then switch the whole emission module off - continuous rate and bursts - and let
+            // only the particles alive at the end fade on game time.
             Advance(v, p.Elapsed - v.LastElapsed);
             v.LastElapsed = p.Elapsed;
+            var em = v.Ps.emission;
+            em.rateOverTimeMultiplier = 0f;
+            em.SetBursts(new ParticleSystem.Burst[0]);
+            em.enabled = false;
             v.LastTick = p.EndTick;
             v.TailLeft = p.Vfx.lifetime;
+            v.ParticlesAtEnd = v.Ps.particleCount;
+            v.Serial = p.Serial;
             _tails.Add(v);
-            sim.Log.Emit("presentation.vfxTail", p.Enemy.Id, "", "", "", "EmissionStoppedAtJudgedEnd(EXP-PRES-01)", ("transitionSerial", p.Serial),
-                ("vfxTimeAtEnd", v.SimulatedTime), ("elapsedGame", p.Elapsed), ("tailSeconds", v.TailLeft));
+            sim.Log.Emit("presentation.vfxTail", p.Enemy.Id, "", "", "", "EmissionOffAtJudgedEnd:RateAndBursts(EXP-PRES-01)", ("transitionSerial", p.Serial),
+                ("vfxTimeAtEnd", v.SimulatedTime), ("elapsedGame", p.Elapsed), ("duration", p.Duration), ("tailSeconds", v.TailLeft),
+                ("particlesAtEnd", v.ParticlesAtEnd), ("emissionEnabled", v.Ps.emission.enabled), ("loop", v.Ps.main.loop));
         }
 
         void StepTails(Simulation sim, float fixedDt)
@@ -127,14 +149,35 @@ namespace Corum2.Unity
                 var v = _tails[i];
                 var dt = PresentationMath.TailStep(sim.Tick - v.LastTick, fixedDt, v.Enemy.HitstopPausedLastStep);
                 v.LastTick = sim.Tick;
-                if (dt > 0f) Advance(v, Mathf.Min(dt, v.TailLeft));
+                if (dt > 0f)
+                {
+                    var step = Mathf.Min(dt, v.TailLeft);
+                    Advance(v, step);
+                    v.TailElapsed += step;
+                    v.MaxBornAfterEnd = Mathf.Max(v.MaxBornAfterEnd, BornAfter(v.Ps, v.TailElapsed));
+                }
                 v.TailLeft -= dt;
                 if (v.TailLeft <= 0f)
                 {
+                    sim.Log.Emit("presentation.vfxTailEnd", v.Enemy.Id, "", "", "", "TailDone(EXP-PRES-01)", ("transitionSerial", v.Serial),
+                        ("particlesAtEnd", v.ParticlesAtEnd), ("bornAfterEnd", v.MaxBornAfterEnd), ("tailSimulated", v.TailElapsed),
+                        ("particlesLeft", v.Ps.particleCount));
                     Kill(v.Ps.gameObject);
                     _tails.RemoveAt(i);
                 }
             }
+        }
+
+        readonly ParticleSystem.Particle[] _buf = new ParticleSystem.Particle[600];
+
+        /// <summary>Particles whose age is below the tail time, i.e. emitted after the judged end (expected 0).</summary>
+        int BornAfter(ParticleSystem ps, float tailElapsed)
+        {
+            var n = ps.GetParticles(_buf);
+            var born = 0;
+            for (var i = 0; i < n; i++)
+                if (_buf[i].startLifetime - _buf[i].remainingLifetime < tailElapsed - 1e-4f) born++;
+            return born;
         }
 
         static void Kill(GameObject go)
@@ -163,8 +206,8 @@ namespace Corum2.Unity
             main.playOnAwake = false;
             ps.useAutoRandomSeed = false;
             ps.randomSeed = (uint)(p.Serial * 7919 + p.Enemy.Id.GetHashCode());
-            main.duration = Mathf.Max(0.1f, p.Duration);
-            main.loop = true;
+            main.duration = Mathf.Max(0.05f, p.Duration); // one cycle = the transition; the start burst fires once (F05-R1)
+            main.loop = false;
             main.startLifetime = c.lifetime;
             main.startSpeed = c.speed;
             main.startSize = c.size;
