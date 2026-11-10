@@ -485,6 +485,22 @@ namespace Corum2.Unity
                     Sim.Combat.Unlocks.DiveArea = cf[1] == "1";
                     Sim.Log.Emit("marker", "", "", "", "", "CombatUnlockFixtureChanged", ("combatUnlocks", arg));
                     break;
+                case "bossevent":
+                {
+                    // bossevent=<enemyInstanceId|*>:<eventName> (R-08-10 event condition, test trigger)
+                    var kv = arg.Split(':');
+                    Sim.Combat?.RaiseBossEvent(kv[0], kv[1]);
+                    break;
+                }
+                case "hp":
+                    // hp=<value>: test-only player HP set (evidence setup), logged
+                    if (Sim.Combat != null)
+                    {
+                        var before = Sim.Combat.PlayerHp;
+                        Sim.Combat.PlayerHp = float.Parse(arg, CultureInfo.InvariantCulture);
+                        Sim.Log.Emit("marker", "player", "", "", "", "TestSetPlayerHp", ("hpBefore", before), ("hpAfter", Sim.Combat.PlayerHp));
+                    }
+                    break;
                 case "spawn":
                     // spawn=<spawnId> on the current map (test setup)
                     var s = Sim.CurrentMap.FindSpawn(arg);

@@ -17,6 +17,19 @@ namespace Corum2.Core
         DodgeReact,
         Dead,
         Gone,
+        /// <summary>Boss phase transition in progress (R-08-11 transition presentation; CF-09 details EXP-BOSS-03).</summary>
+        PhaseTransition,
+    }
+
+    /// <summary>Timed AI action that runs while the enemy is otherwise free (WP-04).</summary>
+    public enum AiAction
+    {
+        None,
+        Flee,
+        Retreat,
+        Jump,
+        /// <summary>Fled and configured not to reapproach (R-08-04).</summary>
+        Hold,
     }
 
     /// <summary>Training dummy (test fixture). Its attack timer is NOT the P0-08 AI.</summary>
@@ -41,6 +54,32 @@ namespace Corum2.Core
         public bool Vanishing;
         internal bool InvulnLogged;
 
+        // WP-04 AI runtime
+        public readonly EnemyAIProfile Ai;
+        public readonly BossDefinition Boss;
+        public AttackDefinition CurAttack;
+        public ProjectileDefinition CurProjectile;
+        public string CurPattern = "";
+        public string StartReason = "";
+        /// <summary>Walking / fleeing / jump speed, separate from knockback velocity (which decays).</summary>
+        public float MoveVelX;
+        public AiAction Action;
+        public float ActionTimer;
+        public float JumpTimer;
+        public bool AirAttackUsed;
+        public string LastDecision = "";
+        public string LastBlocked = "";
+        public float AttackRange;
+        // values a boss phase may override (R-08-11); copied from the definition otherwise
+        public float StaggerResistance;
+        public LaunchResponse Launch;
+        public float AttackSpeed = 1f;
+        public bool PhaseSuperArmor;
+        public BossPhase Phase;
+        public string PhaseId = "";
+        public readonly Dictionary<string, int> PatternUses = new Dictionary<string, int>();
+        public readonly HashSet<string> BossEvents = new HashSet<string>();
+
         public EnemyActor(EnemyDefinition def, string id, Vec2 pos, int facing)
         {
             Def = def;
@@ -49,6 +88,12 @@ namespace Corum2.Core
             Facing = facing;
             Hp = def.MaxHp;
             Cooldown = def.FirstAttackDelay;
+            Ai = def.Ai != null && def.Ai.Type != AiType.Fixture ? def.Ai : null;
+            Boss = Ai != null && Ai.Type == AiType.Boss ? def.Boss : null;
+            CurAttack = def.Attack;
+            AttackRange = def.AttackRange;
+            StaggerResistance = def.StaggerResistance;
+            Launch = def.Launch;
         }
 
         public Aabb Body => Aabb.FromFeet(Position, Def.BodyWidth, Def.BodyHeight);
@@ -77,7 +122,7 @@ namespace Corum2.Core
     /// Order per tick: hitstop -> (motor) -> motor-driven attacks -> attack timeline -> chain window/reservation ->
     /// player locks/guard -> enemies -> collect hit candidates -> resolve (Dodge pairs first) -> apply.
     /// </summary>
-    public sealed class CombatSystem
+    public sealed partial class CombatSystem
     {
         readonly Simulation _sim;
         readonly CombatProfile _p;
@@ -146,13 +191,15 @@ namespace Corum2.Core
             _buffered = false;
             _landingReservation = false;
             Enemies.Clear();
+            Projectiles.Clear();
             foreach (var s in map.Enemies)
             {
                 if (!_defs.TryGetValue(s.EnemyId, out var def)) continue;
                 var e = new EnemyActor(def, s.InstanceId, Collision.SnapToGround(map, s.Position, def.BodyWidth), s.Facing);
                 Enemies.Add(e);
                 Log.Emit("enemy.spawn", e.Id, "", "", e.State.ToString(), reason, ("enemyId", def.Id), ("position", e.Position), ("hp", e.Hp),
-                    ("fixture", def.Attack == null ? "punching bag" : "timed attack (test fixture, not P0-08 AI)"));
+                    ("fixture", e.Ai != null ? "AI:" + e.Ai.Type + " (P0-08)" : def.Attack == null ? "punching bag" : "timed attack (test fixture, not P0-08 AI)"));
+                if (e.Boss != null) EnterPhase(e, e.Boss.Find(e.Boss.StartPhase), "StartPhase(R-08-09)", "start");
             }
         }
 
@@ -453,6 +500,7 @@ namespace Corum2.Core
             }
 
             foreach (var en in Enemies) UpdateEnemy(map, en, dt);
+            StepProjectiles(map, dt);
             ResolveHits(map, playerFrozen);
         }
 
@@ -523,6 +571,11 @@ namespace Corum2.Core
             switch (en.State)
             {
                 case EnemyState.Idle:
+                    if (en.Ai != null)
+                    {
+                        AiIdle(map, en, dt);
+                        break;
+                    }
                     if (en.Def.Attack != null && P.State != MotorState.Dead)
                     {
                         en.Cooldown -= dt;
@@ -531,6 +584,8 @@ namespace Corum2.Core
                         {
                             en.Facing = dx >= 0 ? 1 : -1;
                             en.State = EnemyState.AttackStartup;
+                            en.CurAttack = en.Def.Attack;
+                            en.StartReason = "FixtureAttackStart";
                             en.Timer = en.Def.Attack.Startup;
                             en.AttackInstanceId = _nextAttackId++;
                             en.AttackSpent = false;
@@ -543,14 +598,15 @@ namespace Corum2.Core
                     if ((en.Timer -= dt) <= TimerEps)
                     {
                         en.State = EnemyState.AttackActive;
-                        en.Timer = en.Def.Attack.Active;
+                        en.Timer = en.CurAttack.Active / en.AttackSpeed;
+                        AiAttackActive(en);
                     }
                     break;
                 case EnemyState.AttackActive:
                     if ((en.Timer -= dt) <= TimerEps)
                     {
                         en.State = EnemyState.AttackRecovery;
-                        en.Timer = en.Def.Attack.Recovery;
+                        en.Timer = en.CurAttack.Recovery / en.AttackSpeed;
                     }
                     break;
                 case EnemyState.AttackRecovery:
@@ -558,11 +614,23 @@ namespace Corum2.Core
                     {
                         en.State = EnemyState.Idle;
                         en.Cooldown = en.Def.AttackInterval;
+                        AiAfterAttack(en);
                     }
                     break;
                 case EnemyState.Stagger:
                 case EnemyState.DodgeReact:
-                    if ((en.Timer -= dt) <= TimerEps && en.Grounded) en.State = EnemyState.Idle;
+                    if ((en.Timer -= dt) <= TimerEps && en.Grounded)
+                    {
+                        en.State = EnemyState.Idle;
+                        AiAfterReaction(en);
+                    }
+                    break;
+                case EnemyState.PhaseTransition:
+                    if ((en.Timer -= dt) <= TimerEps)
+                    {
+                        en.State = EnemyState.Idle;
+                        Log.Emit("boss.transitionEnd", en.Id, "", "PhaseTransition", "Idle", "TransitionDone(EXP-BOSS-03)", ("phase", en.PhaseId));
+                    }
                     break;
                 case EnemyState.Down:
                     if ((en.Timer -= dt) <= TimerEps)
@@ -576,6 +644,7 @@ namespace Corum2.Core
                     {
                         en.State = EnemyState.Idle;
                         en.Cooldown = en.Def.AttackInterval;
+                        AiAfterReaction(en);
                     }
                     break;
             }
@@ -591,13 +660,23 @@ namespace Corum2.Core
                 }
             }
             en.VelX = MathUtil.MoveTowards(en.VelX, 0f, _p.KnockbackDecel * dt);
-            var r = Collision.Move(map, en.Position, en.Def.BodyWidth, en.Def.BodyHeight, en.VelX * dt, en.Grounded ? 0f : en.VelY * dt);
+            // AI movement only while free to move, or carried through a jump (WP-04); hit reactions stop it.
+            var jumping = en.Action == AiAction.Jump && !en.Grounded;
+            if (!(en.State == EnemyState.Idle || jumping || (en.InAttack && !en.Grounded && en.Action == AiAction.Jump))) en.MoveVelX = 0f;
+            var r = Collision.Move(map, en.Position, en.Def.BodyWidth, en.Def.BodyHeight, (en.VelX + en.MoveVelX) * dt, en.Grounded ? 0f : en.VelY * dt);
             en.Position = r.Position;
             if (r.Landed)
             {
                 en.Grounded = true;
                 en.VelY = 0f;
                 en.JuggleTimer = 0f;
+                if (en.Action == AiAction.Jump)
+                {
+                    en.Action = AiAction.None;
+                    en.MoveVelX = 0f;
+                    en.LastDecision = "";
+                    Log.Emit("ai.land", en.Id, "", "Air", en.State.ToString(), "JumpLanded", ("position", en.Position));
+                }
                 if (en.State == EnemyState.Launched)
                 {
                     en.State = EnemyState.Down; // EXP-DOWN-01: a launched enemy that lands goes down (CF-10)
@@ -607,7 +686,8 @@ namespace Corum2.Core
             else if (en.Grounded && !Collision.HasGround(map, en.Position, en.Def.BodyWidth)) en.Grounded = false;
 
             if (en.State != before)
-                Log.Emit("enemy.state", en.Id, "", before.ToString(), en.State.ToString(), StateReason(before, en.State),
+                Log.Emit("enemy.state", en.Id, "", before.ToString(), en.State.ToString(),
+                    en.State == EnemyState.AttackStartup ? en.StartReason : StateReason(before, en.State),
                     ("position", en.Position), ("hp", en.Hp), ("attackInstanceId", en.AttackInstanceId));
         }
 
@@ -643,7 +723,7 @@ namespace Corum2.Core
 
         static Aabb EnemyHitbox(EnemyActor en)
         {
-            var d = en.Def.Attack;
+            var d = en.CurAttack;
             return Aabb.FromCenterSize(en.Position.X + en.Facing * d.HitboxOffsetX, en.Position.Y + d.HitboxOffsetY, d.HitboxWidth, d.HitboxHeight);
         }
 
@@ -739,7 +819,7 @@ namespace Corum2.Core
                     P.EndDash("DashStoppedAtFirstTarget(R-04-06)");
             }
 
-            foreach (var en in _ec) ApplyHitToPlayer(en);
+            foreach (var en in _ec) ApplyAttackToPlayer(en.Id, en.CurAttack, en.AttackInstanceId, en.Position.X, en, "Melee");
         }
 
         /// <summary>R-06-03: the attacker stops once per hit event, however many targets it reaches and on whichever ticks
@@ -779,7 +859,7 @@ namespace Corum2.Core
             Log.Emit("dodge", Pl, en.Id, P.State.ToString(), "DodgeReact", "SimultaneousHit(R-06-15)",
                 ("playerAttackInstanceId", Attack?.InstanceId ?? 0), ("enemyAttackInstanceId", en.AttackInstanceId),
                 ("playerHp", PlayerHp), ("enemyHp", en.Hp), ("damage", 0), ("comboBefore", ComboHits),
-                ("window", "same tick (EXP-DODGE-01, CF-05)"), ("enemyArmor", en.Def.Attack.SuperArmor));
+                ("window", "same tick (EXP-DODGE-01, CF-05)"), ("enemyArmor", en.CurAttack.SuperArmor || en.PhaseSuperArmor));
             if (Attack != null) CancelAttack("Dodge");
             EndChain("Dodge");
             P.EnterLocked(MotorState.DodgeReact, "Dodge");
@@ -804,7 +884,7 @@ namespace Corum2.Core
             if (ChainAlive) ComboHits++;
             var away = Math.Sign(en.Position.X - P.Position.X);
             if (away == 0) away = P.Facing;
-            var armor = en.InAttack && en.Def.Attack != null && en.Def.Attack.SuperArmor && !en.ArmorBrokenThisAttack;
+            var armor = en.InAttack && en.CurAttack != null && (en.CurAttack.SuperArmor || en.PhaseSuperArmor) && !en.ArmorBrokenThisAttack;
             string reaction;
             float kb = 0f;
 
@@ -836,19 +916,19 @@ namespace Corum2.Core
             }
             else if (d.Kind == AttackKind.Launcher && en.Grounded)
             {
-                var v = en.Def.Launch == LaunchResponse.Immune ? 0f : d.LaunchVelocity * (en.Def.Launch == LaunchResponse.Resist ? en.Def.LaunchResistScale : 1f);
+                var v = en.Launch == LaunchResponse.Immune ? 0f : d.LaunchVelocity * (en.Launch == LaunchResponse.Resist ? en.Def.LaunchResistScale : 1f);
                 if (v > 0f)
                 {
                     en.State = EnemyState.Launched;
                     en.Grounded = false;
                     en.VelY = v;
                     en.AttackSpent = true;
-                    reaction = "Launched:" + en.Def.Launch + "(R-06-08)";
+                    reaction = "Launched:" + en.Launch + "(R-06-08)";
                 }
                 else
                 {
                     en.State = EnemyState.Stagger;
-                    en.Timer = en.Def.StaggerTime * (1f - en.Def.StaggerResistance);
+                    en.Timer = en.Def.StaggerTime * (1f - en.StaggerResistance);
                     en.AttackSpent = true;
                     reaction = "LaunchImmune:DamageAndCount(R-04-04)";
                 }
@@ -861,10 +941,10 @@ namespace Corum2.Core
             }
             else
             {
-                if (en.Def.StaggerResistance < 1f)
+                if (en.StaggerResistance < 1f)
                 {
                     en.State = EnemyState.Stagger;
-                    en.Timer = en.Def.StaggerTime * (1f - en.Def.StaggerResistance); // refreshed each hit (R-06-04)
+                    en.Timer = en.Def.StaggerTime * (1f - en.StaggerResistance); // refreshed each hit (R-06-04)
                     en.AttackSpent = true;
                     reaction = "Stagger(R-06-04)";
                 }
@@ -884,15 +964,19 @@ namespace Corum2.Core
                 Log.Emit("combo.linkEnd", Pl, en.Id, "", "", "TargetDeath(R-04-10: this target only)", ("chainId", ChainId), ("chainAlive", ChainAlive));
         }
 
-        void ApplyHitToPlayer(EnemyActor en)
+        /// <summary>
+        /// An enemy attack reaches the player: melee (parryTarget = the attacker) or a projectile (parryTarget = null:
+        /// guard rule only, no parry, EXP-AI-05). srcX = where the hit comes from (front/back and knockback direction).
+        /// </summary>
+        void ApplyAttackToPlayer(string ownerId, AttackDefinition d, long attackInstanceId, float srcX, EnemyActor parryTarget, string via)
         {
-            var d = en.Def.Attack;
-            en.AttackSpent = true;
+            var en = parryTarget;
+            if (en != null) en.AttackSpent = true;
             var dmg = TestDamageResolver.Resolve(d);
             var hpBefore = PlayerHp;
-            var front = (en.Position.X - P.Position.X) * P.Facing >= 0f; // equal X counts as front (EXP-GUARD-04, U-09)
+            var front = (srcX - P.Position.X) * P.Facing >= 0f; // equal X counts as front (EXP-GUARD-04, U-09)
             var stateBefore = P.State;
-            var away = Math.Sign(P.Position.X - en.Position.X);
+            var away = Math.Sign(P.Position.X - srcX);
             if (away == 0) away = -P.Facing;
 
             if (P.State == MotorState.Guard && front && !d.Unblockable)
@@ -900,7 +984,7 @@ namespace Corum2.Core
                 var sinceRb = _sim.GameTime - _guardPressGameTime;
                 var g = GuardRule.Apply(dmg);
                 PlayerHp = Math.Max(0f, PlayerHp - g);
-                if (sinceRb <= _p.ParryWindow + 1e-6)
+                if (en != null && sinceRb <= _p.ParryWindow + 1e-6)
                 {
                     // R-07-05: enemy attack stopped, knockback, vulnerable; player free to act. Damage on parry: U-09 (EXP-PARRY-02 guard rule).
                     en.State = EnemyState.Stagger;
@@ -912,8 +996,8 @@ namespace Corum2.Core
                         ("damagePolicy", "EXP-PARRY-02 guard rule"), ("hpBefore", hpBefore), ("hpAfter", PlayerHp), ("enemyStun", _p.ParryStunTime));
                     return;
                 }
-                Log.Emit("guard.block", Pl, en.Id, "Guard", d.GuardBreak ? "released" : "Guard", d.GuardBreak ? "GuardBreak(R-07-06)" : "FrontGuard(R-07-01/02)",
-                    ("enemyAttackInstanceId", en.AttackInstanceId), ("rbToHit", sinceRb), ("damageD", dmg), ("damageTaken", g),
+                Log.Emit("guard.block", Pl, ownerId, "Guard", d.GuardBreak ? "released" : "Guard", d.GuardBreak ? "GuardBreak(R-07-06)" : "FrontGuard(R-07-01/02)",
+                    ("enemyAttackInstanceId", attackInstanceId), ("via", via), ("parry", en == null ? "not for projectiles (EXP-AI-05)" : "outside window"), ("rbToHit", sinceRb), ("damageD", dmg), ("damageTaken", g),
                     ("guardRule", "D*0.1, <1 -> 0; " + GuardRule.RoundingPolicy), ("damagePolicy", TestDamageResolver.PolicyId),
                     ("hpBefore", hpBefore), ("hpAfter", PlayerHp));
                 if (d.GuardBreak) P.ReleaseLocked("GuardBreak(R-07-06, extra stun undecided U-09)");
@@ -928,7 +1012,7 @@ namespace Corum2.Core
             if (PlayerHp <= 0f)
             {
                 P.EnterLocked(MotorState.Dead, "PlayerDeath");
-                Log.Emit("player.death", Pl, en.Id, stateBefore.ToString(), "Dead", "HP0(death flow R-06-19 not in WP-02)");
+                Log.Emit("player.death", Pl, ownerId, stateBefore.ToString(), "Dead", "HP0(death flow R-06-19 not in WP-02)");
             }
             else
             {
@@ -936,8 +1020,8 @@ namespace Corum2.Core
                 P.VelX = away * d.Knockback;
                 _playerLockTimer = _p.PlayerHitstun;
             }
-            Log.Emit("hit.player", en.Id, Pl, stateBefore.ToString(), P.State.ToString(), why,
-                ("enemyAttackInstanceId", en.AttackInstanceId), ("damageD", dmg), ("damagePolicy", TestDamageResolver.PolicyId),
+            Log.Emit("hit.player", ownerId, Pl, stateBefore.ToString(), P.State.ToString(), why,
+                ("enemyAttackInstanceId", attackInstanceId), ("via", via), ("attackId", d.Id), ("damageD", dmg), ("damagePolicy", TestDamageResolver.PolicyId),
                 ("hpBefore", hpBefore), ("hpAfter", PlayerHp), ("front", front), ("knockbackVel", P.VelX), ("hitstun", _p.PlayerHitstun),
                 ("extraInvulnerability", "none (R-06-13/14)"));
         }
@@ -968,6 +1052,7 @@ namespace Corum2.Core
                 if (sb.Length > 0) sb.Append('|');
                 sb.Append(en.Id).Append(':').Append(en.State).Append('@').Append(en.Position.X.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture))
                   .Append(',').Append(en.Position.Y.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)).Append(" hp").Append(en.Hp.ToString("0", System.Globalization.CultureInfo.InvariantCulture));
+                if (en.Boss != null) sb.Append(" ph:").Append(en.PhaseId);
             }
             return sb.ToString();
         }

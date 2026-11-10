@@ -113,6 +113,20 @@ namespace Corum2.Core
             "EXP-RING-12 the ring is centred on the player but clamped to stay fully on screen (U-03/U-11 layout); test UI is placeholder",
             "EXP-INPUT-04 temporary keyboard keys for B (E), LT (Z), RT (C)",
             "TEST-ITEM-01 test items, heal amounts and magic numbers are fixtures, not content",
+            // WP-04 enemy AI / bosses (only active for enemies with AI data)
+            "EXP-AI-01 beyond TrackRange the enemy waits (U-10 tracking range)",
+            "EXP-AI-02 walking stops at walls; ledges and blocked paths are not checked (U-10)",
+            "EXP-AI-03 fleeing lasts FleeTime, then reapproach or hold per monster (U-10 after-retreat behaviour)",
+            "EXP-AI-04 ranged enemies retreat for RetreatTime after each attack, then wait",
+            "EXP-AI-05 projectiles: front guard rule applies; no parry and no Dodge (CF-04/CF-06 projectile scope)",
+            "EXP-AI-06 projectiles fly straight, vanish after MaxDistance, keep flying after the player dies but cannot hit a dead player (U-10)",
+            "EXP-AI-07 no randomness: flee, jump and pattern choices are deterministic",
+            "EXP-AI-08 enemies face the player when an attack or move starts and do not turn while attacking",
+            "EXP-BOSS-01 pattern choice: distance band and player grounded/airborne filter, highest priority, ties to the least used, then list order",
+            "EXP-BOSS-02 death wins over a phase transition (CF-09)",
+            "EXP-BOSS-03 no invulnerability during a phase transition; hits react normally; no new attack until it ends (CF-09)",
+            "EXP-BOSS-04 transitions are checked when the boss is free to decide; first satisfied in list order; one per check (CF-09)",
+            "TEST-AI-01 enemy/boss speeds, ranges, intervals and patterns in the WP-04 scene are test data",
         };
 
         /// <summary>Null when the run has no combat data (WP-01 scenes).</summary>

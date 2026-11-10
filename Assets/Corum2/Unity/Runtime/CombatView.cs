@@ -15,6 +15,8 @@ namespace Corum2.Unity
         readonly List<Transform> _enemyBoxes = new List<Transform>();
         readonly Material _playerBoxMat;
         readonly Material _enemyBoxMat;
+        readonly Material _projectileMat;
+        readonly List<Transform> _projectiles = new List<Transform>();
 
         public CombatView(Transform parent, WorldView world, IEnumerable<EnemyDefinitionAsset> defs)
         {
@@ -25,6 +27,7 @@ namespace Corum2.Unity
             _playerBoxMat = world.MakeMaterial(new Color(1f, 0.15f, 0.15f));
             _enemyBoxMat = world.MakeMaterial(new Color(1f, 0.6f, 0.1f));
             _playerBox = Box("PlayerHitbox", _playerBoxMat);
+            _projectileMat = world.MakeMaterial(new Color(1f, 0.3f, 0.9f));
         }
 
         Transform Box(string name, Material m)
@@ -76,14 +79,25 @@ namespace Corum2.Unity
                 var stateCol = StateTint(e.State, baseCol);
                 if (v.mat.HasProperty("_BaseColor")) v.mat.SetColor("_BaseColor", stateCol);
 
-                if (e.State == EnemyState.AttackActive && e.Def.Attack != null)
+                if (e.State == EnemyState.AttackActive && e.CurAttack != null && !e.AttackSpent)
                 {
                     while (_enemyBoxes.Count <= boxIndex) _enemyBoxes.Add(Box("EnemyHitbox", _enemyBoxMat));
-                    var a = e.Def.Attack;
+                    var a = e.CurAttack;
                     Place(_enemyBoxes[boxIndex++], Aabb.FromCenterSize(e.Position.X + e.Facing * a.HitboxOffsetX, e.Position.Y + a.HitboxOffsetY, a.HitboxWidth, a.HitboxHeight), z);
                 }
             }
             for (var i = boxIndex; i < _enemyBoxes.Count; i++) _enemyBoxes[i].gameObject.SetActive(false);
+
+            var pi = 0;
+            foreach (var pr in c.Projectiles)
+            {
+                while (_projectiles.Count <= pi) _projectiles.Add(Box("Projectile", _projectileMat));
+                var t = _projectiles[pi++];
+                t.gameObject.SetActive(true);
+                t.position = new Vector3(pr.Position.X, pr.Position.Y, z);
+                t.localScale = new Vector3(pr.Def.Width, pr.Def.Height, pr.Def.Width);
+            }
+            for (var i = pi; i < _projectiles.Count; i++) _projectiles[i].gameObject.SetActive(false);
 
             var pb = c.ActivePlayerHitbox();
             if (pb.HasValue) Place(_playerBox, pb.Value, z);
@@ -102,6 +116,7 @@ namespace Corum2.Unity
                 case EnemyState.Wakeup: return Color.Lerp(b, Color.magenta, 0.6f);
                 case EnemyState.DodgeReact: return Color.green;
                 case EnemyState.Dead: return Color.gray;
+                case EnemyState.PhaseTransition: return Color.Lerp(b, new Color(0.6f, 0.2f, 1f), 0.7f);
                 default: return b;
             }
         }

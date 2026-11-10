@@ -117,8 +117,12 @@ namespace Corum2.Core
         public float WakeupTime = 0.6f;         // fully invincible (R-06-10)
         public float DeathTime = 0.8f;          // death motion
         public float VanishTime = 0.4f;         // vanish effect, then removal (R-06-17)
-        /// <summary>Test fixture attack (not AI, P0-08). Null = never attacks.</summary>
+        /// <summary>Default attack. Fixture enemies use it on a timer; AI enemies (WP-04) use it when in range. Null = never attacks.</summary>
         public AttackDefinition Attack;
+        /// <summary>P0-08 behaviour (WP-04). Null or Fixture = WP-02 timed training dummy.</summary>
+        public EnemyAIProfile Ai;
+        /// <summary>Phases and patterns when Ai.Type is Boss (R-08-09).</summary>
+        public BossDefinition Boss;
         public float AttackRange = 1.6f;
         public float AttackInterval = 1.5f;
         public float FirstAttackDelay = 1.0f;

@@ -116,6 +116,7 @@ namespace Corum2.Core
                     if (Finite(issues, src, "FirstAttackDelay", e.FirstAttackDelay) && e.FirstAttackDelay < 0f)
                         issues.Add(new ValidationIssue(src, "FirstAttackDelay must be >= 0."));
                 }
+                AiValidator.Validate(issues, e, ValidateAttack);
             }
             if (world != null)
                 foreach (var m in world.Maps)
