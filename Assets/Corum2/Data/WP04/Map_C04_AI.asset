@@ -15,7 +15,7 @@ MonoBehaviour:
   meta:
     domainId: map.C04
     schemaVersion: 1
-    dataVersion: wp04-1
+    dataVersion: wp04-2
     status: experimental
     policyIds: []
     relatedRIds:
@@ -52,6 +52,12 @@ MonoBehaviour:
   - id: Z5Jumper
     position: {x: 139, y: 0}
     facing: 1
+  - id: Z5Quick
+    position: {x: 153, y: 0}
+    facing: 1
+  - id: Z5QuickB
+    position: {x: 151.2, y: 0}
+    facing: 1
   - id: Z6Ranged
     position: {x: 167, y: 0}
     facing: 1
@@ -72,6 +78,9 @@ MonoBehaviour:
     facing: 1
   - id: Z7Near
     position: {x: 214.5, y: 0}
+    facing: 1
+  - id: Z8Sentinel
+    position: {x: 244, y: 0}
     facing: 1
   left:
     policy: 0
@@ -141,6 +150,10 @@ MonoBehaviour:
     enemyId: jumper
     position: {x: 143, y: 0}
     facing: -1
+  - instanceId: jq
+    enemyId: jumperQuick
+    position: {x: 157, y: 0}
+    facing: -1
   - instanceId: rg
     enemyId: ranged
     position: {x: 180, y: 0}
@@ -148,6 +161,10 @@ MonoBehaviour:
   - instanceId: boss
     enemyId: warden
     position: {x: 216, y: 0}
+    facing: -1
+  - instanceId: sentinel
+    enemyId: sentinel
+    position: {x: 251, y: 0}
     facing: -1
   cameraMinX: 9
   cameraMaxX: 251

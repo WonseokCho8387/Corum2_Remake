@@ -35,10 +35,15 @@ namespace Corum2.Core
     ///   EXP-BOSS-01 pattern choice: filter by distance band and player grounded/airborne, highest priority, ties to the
     ///               least used, then list order
     ///   EXP-BOSS-02 death wins over a phase transition
-    ///   EXP-BOSS-03 no invulnerability during a transition; hits react normally; no new attack until it ends (CF-09)
+    ///   EXP-AI-09 a hit reaction stops AI propulsion and ends a jump action (WP04-F01); gravity and knockback stay
+    ///   EXP-BOSS-03 no invulnerability during a transition; hits react normally; the transition time (TransitionTimer,
+    ///               separate from the reaction Timer) keeps running and the boss returns to the transition after the
+    ///               reaction; no new attack / guard / evade until it ends; death cancels it (CF-09, WP04-F03)
     ///   EXP-BOSS-04 transitions are checked when the boss is free to decide (not mid-attack, not in hit reaction);
     ///               the first satisfied transition in list order wins; one transition per check (CF-09)
-    /// Not implemented in WP-04: boss guard / evade frequencies (R-08-11), real presentation assets.
+    ///   EXP-BOSS-05..07 per-phase guard / evade frequency (R-08-11): deterministic accumulator per eligible player
+    ///               attack start; guard = guard rule on front physical hits; evade = back step, no invulnerability
+    /// Not implemented: real presentation assets (transition animation / VFX / camera are ids only).
     /// </summary>
     public sealed partial class CombatSystem
     {
@@ -57,6 +62,72 @@ namespace Corum2.Core
         }
 
         static string F(float v) => v.ToString("0.###", CultureInfo.InvariantCulture);
+
+        /// <summary>WP04-F01 / EXP-AI-09: a hit reaction stops AI propulsion and ends a jump action. Gravity and knockback
+        /// (VelX) are not touched.</summary>
+        void CutAiPropulsion(EnemyActor en, string why)
+        {
+            if (en.Ai == null) return;
+            var wasJump = en.Action == AiAction.Jump && !en.Grounded;
+            var v = en.MoveVelX;
+            en.MoveVelX = 0f;
+            if (en.Action == AiAction.Jump) en.Action = AiAction.None;
+            if (wasJump || v != 0f)
+                Log.Emit("ai.propulsionCut", en.Id, "", wasJump ? "Jump" : "Move", en.State.ToString(), "HitReaction:" + why + "(EXP-AI-09)",
+                    ("moveVelBefore", v), ("airborne", !en.Grounded));
+        }
+
+        /// <summary>WP04-F03: the transition runs on its own timer, also through hit reactions (EXP-BOSS-03).</summary>
+        void StepTransition(EnemyActor en, float dt)
+        {
+            en.TransitionTimer -= dt;
+            if (en.TransitionTimer > TimerEps) return;
+            en.TransitionTimer = 0f;
+            var st = en.State;
+            if (st == EnemyState.PhaseTransition) en.State = EnemyState.Idle;
+            Log.Emit("boss.transitionEnd", en.Id, "", "PhaseTransition", en.State.ToString(),
+                st == EnemyState.PhaseTransition ? "TransitionDone(EXP-BOSS-03)" : "TransitionDoneDuringReaction(EXP-BOSS-03)",
+                ("phase", en.PhaseId), ("stateAtEnd", st));
+        }
+
+        /// <summary>A reaction ended: back to the transition if it is still running (EXP-BOSS-03), else free.</summary>
+        static EnemyState AfterReactionState(EnemyActor en) => en.TransitionTimer > 0f ? EnemyState.PhaseTransition : EnemyState.Idle;
+
+        /// <summary>R-08-11 guard / evade frequency (EXP-BOSS-05..07). Called from BossIdle for a free, grounded boss.</summary>
+        bool BossDefense(EnemyActor en, float dist, int dir)
+        {
+            var ph = en.Phase;
+            if (!en.NewPlayerAttack) return false;
+            en.NewPlayerAttack = false;
+            if (ph.GuardFrequency <= 0f && ph.EvadeFrequency <= 0f) return false;
+            if (dist > ph.DefenseRange) return false;
+            en.Facing = dir; // EXP-AI-08: faces the player when an action starts
+            en.GuardAcc += ph.GuardFrequency;
+            en.EvadeAcc += ph.EvadeFrequency;
+            string pick = "None";
+            if (en.EvadeAcc >= 1f - 1e-4f)
+            {
+                en.EvadeAcc -= 1f;
+                pick = "Evade";
+                en.State = EnemyState.Evade;
+                en.Timer = ph.EvadeTime;
+                en.MoveVelX = -dir * ph.EvadeSpeed;
+            }
+            else if (en.GuardAcc >= 1f - 1e-4f)
+            {
+                en.GuardAcc -= 1f;
+                pick = "Guard";
+                en.State = EnemyState.Guard;
+                en.Timer = ph.GuardTime;
+                en.MoveVelX = 0f;
+            }
+            Log.Emit("boss.defense", en.Id, Pl, ph.Id, pick, "PlayerAttackStart(R-08-11, EXP-BOSS-05)", ("playerAttackInstanceId", en.SeenPlayerAttackId),
+                ("distance", dist), ("guardFrequency", ph.GuardFrequency), ("evadeFrequency", ph.EvadeFrequency),
+                ("guardAcc", en.GuardAcc), ("evadeAcc", en.EvadeAcc), ("phase", ph.Id));
+            if (pick == "None") return false;
+            Decide(en, pick, "PlayerAttackStart:" + pick + "(R-08-11)", dist);
+            return true;
+        }
 
         void Decide(EnemyActor en, string decision, string reason, float dist)
         {
@@ -144,6 +215,13 @@ namespace Corum2.Core
                 if (ai.Type == AiType.Jumper && ai.AirAttack != null && en.Action == AiAction.Jump && !en.AirAttackUsed &&
                     dist <= ai.AirAttackRange)
                 {
+                    // WP04-F02: the air attack is a new attack and waits for this enemy's re-attack interval (R-08-02/07).
+                    if (en.Cooldown > 0f)
+                    {
+                        NoteBlocked(en, "Cooldown:ReattackInterval:Air(R-08-07)");
+                        return;
+                    }
+                    NoteBlocked(en, "");
                     en.AirAttackUsed = true;
                     Decide(en, "AirAttack", "InAirAttackRange(R-08-05)", dist);
                     StartEnemyAttack(en, ai.AirAttack, null, "AirAttack(R-08-05)", "");
@@ -340,8 +418,10 @@ namespace Corum2.Core
                 if (t.Kind == TransitionKind.Event) en.BossEvents.Remove(t.EventName);
                 EnterPhase(en, target, "Transition(R-08-09/10, EXP-BOSS-04)", why);
                 en.State = EnemyState.PhaseTransition;
-                en.Timer = target.TransitionTime;
+                en.TransitionTimer = Math.Max(target.TransitionTime, 1e-6f); // own timer; hits do not overwrite it (WP04-F03)
+                en.Timer = 0f;
                 en.MoveVelX = 0f;
+                en.NewPlayerAttack = false;
                 return true;
             }
             return false;
@@ -363,6 +443,7 @@ namespace Corum2.Core
                 Decide(en, "Wait", "BeyondTrackRange(EXP-AI-01)", dist);
                 return;
             }
+            if (BossDefense(en, dist, dir)) return;
             var ph = en.Phase;
             if (en.Cooldown <= 0f)
             {

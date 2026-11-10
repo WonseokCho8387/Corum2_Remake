@@ -19,6 +19,10 @@ namespace Corum2.Core
         Gone,
         /// <summary>Boss phase transition in progress (R-08-11 transition presentation; CF-09 details EXP-BOSS-03).</summary>
         PhaseTransition,
+        /// <summary>Boss guard stance (R-08-11 guard frequency, EXP-BOSS-05/06).</summary>
+        Guard,
+        /// <summary>Boss back step (R-08-11 evade frequency, EXP-BOSS-05/07).</summary>
+        Evade,
     }
 
     /// <summary>Timed AI action that runs while the enemy is otherwise free (WP-04).</summary>
@@ -79,6 +83,13 @@ namespace Corum2.Core
         public string PhaseId = "";
         public readonly Dictionary<string, int> PatternUses = new Dictionary<string, int>();
         public readonly HashSet<string> BossEvents = new HashSet<string>();
+        /// <summary>Remaining phase transition time, separate from the reaction Timer (WP04-F03, EXP-BOSS-03). 0 = none.</summary>
+        public float TransitionTimer;
+        /// <summary>Last player attack instance this boss has seen start (guard / evade trigger, EXP-BOSS-05).</summary>
+        public long SeenPlayerAttackId;
+        public bool NewPlayerAttack;
+        public float GuardAcc;
+        public float EvadeAcc;
 
         public EnemyActor(EnemyDefinition def, string id, Vec2 pos, int facing)
         {
@@ -568,6 +579,12 @@ namespace Corum2.Core
             }
 
             var before = en.State;
+            if (en.TransitionTimer > 0f) StepTransition(en, dt);
+            if (en.Boss != null && Attack != null && Attack.InstanceId != en.SeenPlayerAttackId)
+            {
+                en.SeenPlayerAttackId = Attack.InstanceId;
+                en.NewPlayerAttack = true;
+            }
             switch (en.State)
             {
                 case EnemyState.Idle:
@@ -621,15 +638,19 @@ namespace Corum2.Core
                 case EnemyState.DodgeReact:
                     if ((en.Timer -= dt) <= TimerEps && en.Grounded)
                     {
-                        en.State = EnemyState.Idle;
+                        en.State = AfterReactionState(en);
                         AiAfterReaction(en);
                     }
                     break;
                 case EnemyState.PhaseTransition:
+                    break; // ends in StepTransition (TransitionTimer), not via the reaction Timer (WP04-F03)
+                case EnemyState.Guard:
+                case EnemyState.Evade:
                     if ((en.Timer -= dt) <= TimerEps)
                     {
                         en.State = EnemyState.Idle;
-                        Log.Emit("boss.transitionEnd", en.Id, "", "PhaseTransition", "Idle", "TransitionDone(EXP-BOSS-03)", ("phase", en.PhaseId));
+                        en.MoveVelX = 0f;
+                        en.LastDecision = "";
                     }
                     break;
                 case EnemyState.Down:
@@ -642,12 +663,14 @@ namespace Corum2.Core
                 case EnemyState.Wakeup:
                     if ((en.Timer -= dt) <= TimerEps)
                     {
-                        en.State = EnemyState.Idle;
+                        en.State = AfterReactionState(en);
                         en.Cooldown = en.Def.AttackInterval;
                         AiAfterReaction(en);
                     }
                     break;
             }
+
+            en.NewPlayerAttack = false; // only a free boss reacts to an attack start, on the tick it is seen (EXP-BOSS-05)
 
             // physics
             if (!en.Grounded)
@@ -660,9 +683,11 @@ namespace Corum2.Core
                 }
             }
             en.VelX = MathUtil.MoveTowards(en.VelX, 0f, _p.KnockbackDecel * dt);
-            // AI movement only while free to move, or carried through a jump (WP-04); hit reactions stop it.
-            var jumping = en.Action == AiAction.Jump && !en.Grounded;
-            if (!(en.State == EnemyState.Idle || jumping || (en.InAttack && !en.Grounded && en.Action == AiAction.Jump))) en.MoveVelX = 0f;
+            // AI movement only while free to move (Idle), during a boss back step, or carried through a jump attack (WP-04).
+            // Every hit reaction state stops it; gravity and knockback (VelX) are separate and stay (WP04-F01, EXP-AI-09).
+            var keepMove = en.State == EnemyState.Idle || en.State == EnemyState.Evade ||
+                           (en.InAttack && !en.Grounded && en.Action == AiAction.Jump);
+            if (!keepMove) en.MoveVelX = 0f;
             var r = Collision.Move(map, en.Position, en.Def.BodyWidth, en.Def.BodyHeight, (en.VelX + en.MoveVelX) * dt, en.Grounded ? 0f : en.VelY * dt);
             en.Position = r.Position;
             if (r.Landed)
@@ -697,6 +722,11 @@ namespace Corum2.Core
             if (from == EnemyState.Wakeup) return "WakeupEnd(invincibility off, R-06-10)";
             if (to == EnemyState.Down) return "LandedFromLaunch->Down(EXP-DOWN-01)";
             if (to == EnemyState.AttackStartup) return "FixtureAttackStart";
+            if (to == EnemyState.PhaseTransition)
+                return from == EnemyState.Idle ? "TransitionStart(R-08-09/10, EXP-BOSS-04)" : from + "End->TransitionResumes(EXP-BOSS-03)";
+            if (to == EnemyState.Guard) return "BossGuard(R-08-11, EXP-BOSS-05/06)";
+            if (to == EnemyState.Evade) return "BossEvade(R-08-11, EXP-BOSS-05/07)";
+            if (from == EnemyState.PhaseTransition && to == EnemyState.Idle) return "TransitionDone(EXP-BOSS-03)";
             return from + "End";
         }
 
@@ -865,6 +895,7 @@ namespace Corum2.Core
             P.EnterLocked(MotorState.DodgeReact, "Dodge");
             P.VelX = away * _p.DodgeKnockback;
             _playerLockTimer = _p.DodgeReactionTime;
+            CutAiPropulsion(en, "Dodge");
             en.AttackSpent = true;
             en.State = EnemyState.DodgeReact;
             en.Timer = _p.DodgeReactionTime;
@@ -877,7 +908,11 @@ namespace Corum2.Core
             var dmg = TestDamageResolver.Resolve(d);
             var hpBefore = en.Hp;
             var stateBefore = en.State;
-            en.Hp = Math.Max(0f, en.Hp - dmg);
+            // R-08-11 boss guard (EXP-BOSS-06): front physical hits only; magic / unblockable / back hits are not guarded.
+            var guarded = en.State == EnemyState.Guard && d.DamageType != DamageType.Magic && !d.Unblockable &&
+                          (P.Position.X - en.Position.X) * en.Facing >= 0f;
+            var taken = guarded ? GuardRule.Apply(dmg) : dmg;
+            en.Hp = Math.Max(0f, en.Hp - taken);
             a.Hits++;
             a.HitByEvent[ev].Add(en.Id);
             var comboBefore = ComboHits;
@@ -895,6 +930,15 @@ namespace Corum2.Core
                 en.VelX = 0f;
                 reaction = "Death(R-06-17)";
                 _endedLinks.Add(en.Id);
+                if (en.TransitionTimer > 0f)
+                {
+                    en.TransitionTimer = 0f;
+                    Log.Emit("boss.transitionCancel", en.Id, "", stateBefore.ToString(), "Dead", "Death(EXP-BOSS-02)", ("phase", en.PhaseId));
+                }
+            }
+            else if (guarded)
+            {
+                reaction = "BossGuard:GuardRule(R-08-11, EXP-BOSS-06)";
             }
             else if (d.DamageType == DamageType.Magic)
             {
@@ -953,11 +997,12 @@ namespace Corum2.Core
                 en.VelX = kb;
             }
             en.Hitstop = d.Hitstop;
+            if (!guarded && !reaction.StartsWith("SuperArmor")) CutAiPropulsion(en, reaction);
 
             Log.Emit("hit", Pl, en.Id, stateBefore.ToString(), en.State.ToString(), reaction,
                 ("attackInstanceId", a.InstanceId), ("hitEventId", a.InstanceId + ":" + ev), ("attackId", d.Id), ("attackKind", d.Kind),
                 ("damageType", d.DamageType), ("how", how), ("damageD", dmg), ("damagePolicy", TestDamageResolver.PolicyId),
-                ("hpBefore", hpBefore), ("hpAfter", en.Hp), ("knockbackVel", kb), ("superArmor", armor),
+                ("hpBefore", hpBefore), ("hpAfter", en.Hp), ("knockbackVel", kb), ("superArmor", armor), ("guarded", guarded), ("damageTaken", taken),
                 ("chainId", ChainId), ("attackChainStep", a.ChainStep), ("comboBefore", comboBefore), ("comboAfter", ComboHits),
                 ("motionProgress", a.MotorDriven ? -1f : a.Elapsed / d.Total));
             if (en.State == EnemyState.Dead)
@@ -990,6 +1035,7 @@ namespace Corum2.Core
                     en.State = EnemyState.Stagger;
                     en.Timer = _p.ParryStunTime;
                     en.VelX = -away * _p.ParryKnockback;
+                    CutAiPropulsion(en, "Parry");
                     Log.Emit("guard.parry", Pl, en.Id, "Guard", "Guard", "Parry(R-07-04/05)",
                         ("enemyAttackInstanceId", en.AttackInstanceId), ("rbToHit", sinceRb), ("parryWindow", _p.ParryWindow),
                         ("windowMeaning", "last W s before the hit, game time (EXP-PARRY-01, CF-04)"), ("damageD", dmg), ("damageTaken", g),

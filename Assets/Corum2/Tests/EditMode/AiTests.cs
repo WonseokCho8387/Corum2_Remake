@@ -410,7 +410,7 @@ namespace Corum2.Tests
             Assert.AreEqual("anim.roar", ph.Get("animation"));
             Assert.AreEqual("vfx.aura", ph.Get("vfx"));
             Assert.AreEqual("cam.shake", ph.Get("camera"));
-            Assert.AreEqual(0.6f, s.Timer, 0.03f);
+            Assert.AreEqual(0.6f, s.TransitionTimer, 0.03f);
             h.StepUntil(() => s.State == EnemyState.AttackStartup, 100);
             Assert.AreEqual(0.15f, s.Timer, 0.03f, "phase 2 attack speed x2");
             Hit(h, "s", 1f);

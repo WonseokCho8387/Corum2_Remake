@@ -117,6 +117,8 @@ namespace Corum2.Unity
                 case EnemyState.DodgeReact: return Color.green;
                 case EnemyState.Dead: return Color.gray;
                 case EnemyState.PhaseTransition: return Color.Lerp(b, new Color(0.6f, 0.2f, 1f), 0.7f);
+                case EnemyState.Guard: return Color.Lerp(b, new Color(0.2f, 0.4f, 1f), 0.7f);
+                case EnemyState.Evade: return Color.Lerp(b, new Color(0.3f, 1f, 0.8f), 0.6f);
                 default: return b;
             }
         }

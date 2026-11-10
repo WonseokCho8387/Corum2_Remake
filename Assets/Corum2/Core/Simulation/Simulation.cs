@@ -122,10 +122,14 @@ namespace Corum2.Core
             "EXP-AI-06 projectiles fly straight, vanish after MaxDistance, keep flying after the player dies but cannot hit a dead player (U-10)",
             "EXP-AI-07 no randomness: flee, jump and pattern choices are deterministic",
             "EXP-AI-08 enemies face the player when an attack or move starts and do not turn while attacking",
+            "EXP-AI-09 a hit reaction (anything but armor damage-only or a boss guard) stops AI propulsion and ends a jump action; gravity and knockback stay",
             "EXP-BOSS-01 pattern choice: distance band and player grounded/airborne filter, highest priority, ties to the least used, then list order",
             "EXP-BOSS-02 death wins over a phase transition (CF-09)",
-            "EXP-BOSS-03 no invulnerability during a phase transition; hits react normally; no new attack until it ends (CF-09)",
+            "EXP-BOSS-03 no invulnerability during a phase transition; hits react normally; the transition time keeps running through the reaction (game time, paused by hitstop) and the boss returns to the transition after it; no new attack, guard or evade until it ends; death cancels it (CF-09)",
             "EXP-BOSS-04 transitions are checked when the boss is free to decide; first satisfied in list order; one per check (CF-09)",
+            "EXP-BOSS-05 boss guard/evade frequency: each player attack start within DefenseRange in front of a free boss adds the phase frequency to an accumulator; at 1 it fires and 1 is subtracted (no randomness); evade is checked before guard",
+            "EXP-BOSS-06 boss guard: front physical hits deal guard-rule damage (D x 0.1, EXP-GUARD-01) with no stagger or knockback; magic, unblockable and back hits are not guarded (R-08-12)",
+            "EXP-BOSS-07 boss evade: a back step away from the player for EvadeTime at EvadeSpeed; no invulnerability",
             "TEST-AI-01 enemy/boss speeds, ranges, intervals and patterns in the WP-04 scene are test data",
         };
 

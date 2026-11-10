@@ -21,7 +21,7 @@ namespace Corum2.EditorTools
         const string Wp01 = "Assets/Corum2/Data/WP01";
         const string Wp03 = "Assets/Corum2/Data/WP03";
         public const string ScenePath = "Assets/Corum2/Scenes/WP04_AI.unity";
-        const string Version = "wp04-1";
+        const string Version = "wp04-2";
 
         [MenuItem("Corum2/WP-04/Build Test Content")]
         public static void Build()
@@ -45,6 +45,17 @@ namespace Corum2.EditorTools
             jumper.ai.hasAirAttack = true;
             jumper.ai.airAttack = Atk("jumper.air", 8f, 0.06f);
             jumper.ai.airAttackRange = 2.2f;
+            // WP-04-R1 (WP04-F02): jump cooldown much shorter than the re-attack interval.
+            var quick = Enemy("Enemy_JumperQuick", "jumperQuick", 60f, new Color(0.55f, 0.9f, 0.4f), AiType.Jumper);
+            quick.attackInterval = 3f;
+            quick.ai.jumpMinDistance = 3f;
+            quick.ai.jumpMaxDistance = 5f;
+            quick.ai.jumpSpeedX = 5f;
+            quick.ai.jumpVelocityY = 9f;
+            quick.ai.jumpCooldown = 0.3f;
+            quick.ai.hasAirAttack = true;
+            quick.ai.airAttack = Atk("jumperQuick.air", 8f, 0.06f);
+            quick.ai.airAttackRange = 2.2f;
             var ranged = Enemy("Enemy_Ranged", "ranged", 60f, new Color(0.85f, 0.75f, 0.2f), AiType.Ranged);
             ranged.attack = Atk("ranged.shot", 6f, 0.25f);
             ranged.attackRange = 6f;
@@ -54,8 +65,9 @@ namespace Corum2.EditorTools
             ranged.ai.retreatSpeed = 3f;
             ranged.ai.retreatTime = 0.7f;
             var boss = Boss();
+            var sentinel = Sentinel();
 
-            var all = new List<EnemyDefinitionAsset> { chaser, fleer, holder, jumper, ranged, boss };
+            var all = new List<EnemyDefinitionAsset> { chaser, fleer, holder, jumper, quick, ranged, boss, sentinel };
             var map = AssetDatabase.LoadAssetAtPath<MapDefinition>(Dir + "/Map_C04_AI.asset");
             if (map == null)
             {
@@ -76,8 +88,9 @@ namespace Corum2.EditorTools
             // Zones 30+ m apart (track range 8, boss 12) so only the zone the player is in reacts.
             map.spawns = new List<SpawnData>
             {
-                Sp("Start", 4), Sp("Z1Ten", 12), Sp("Z2Chaser", 49), Sp("Z3Fleer", 79), Sp("Z4Hold", 109), Sp("Z5Jumper", 139),
+                Sp("Start", 4), Sp("Z1Ten", 12), Sp("Z2Chaser", 49), Sp("Z3Fleer", 79), Sp("Z4Hold", 109), Sp("Z5Jumper", 139), Sp("Z5Quick", 153), Sp("Z5QuickB", 151.2f),
                 Sp("Z6Ranged", 167), Sp("Z6Mid", 173), Sp("Z6In", 175.5f), Sp("Z6Close", 177.5f), Sp("Z7Left", 200), Sp("Z7Boss", 207), Sp("Z7Near", 214.5f),
+                Sp("Z8Sentinel", 244),
             };
             map.left = new EdgeData { policy = EdgePolicy.Blocked };
             map.right = new EdgeData { policy = EdgePolicy.Blocked };
@@ -88,8 +101,10 @@ namespace Corum2.EditorTools
             map.enemies.Add(En("fl", "fleer", 85f));
             map.enemies.Add(En("fh", "fleerHold", 115f));
             map.enemies.Add(En("jp", "jumper", 143f));
+            map.enemies.Add(En("jq", "jumperQuick", 157f));
             map.enemies.Add(En("rg", "ranged", 180f));
             map.enemies.Add(En("boss", "warden", 216f));
+            map.enemies.Add(En("sentinel", "sentinel", 251f));
             EditorUtility.SetDirty(map);
 
             var world = AssetDatabase.LoadAssetAtPath<WorldDefinition>(Dir + "/World_WP04.asset");
@@ -159,6 +174,45 @@ namespace Corum2.EditorTools
                 transitions = new List<PhaseTransitionData> { new PhaseTransitionData { kind = TransitionKind.Event, eventName = "calm", targetPhase = "p1" } },
             };
             b.boss = new BossData { startPhase = "p1", phases = new List<BossPhaseData> { p1, p2, p3 } };
+            return b;
+        }
+
+        /// <summary>WP-04-R1 (WP04-M01): a second boss whose phases differ only in guard / evade frequency and jumping
+        /// (R-08-11). Patterns are ranged only, so a player standing next to it is answered by guard / evade, not attacks.</summary>
+        static EnemyDefinitionAsset Sentinel()
+        {
+            var b = Enemy("Enemy_Sentinel", "sentinel", 300f, new Color(0.25f, 0.35f, 0.55f), AiType.Boss);
+            b.hasAttack = false;
+            b.bodyWidth = 1.2f;
+            b.bodyHeight = 2.4f;
+            b.launch = LaunchResponse.Immune;
+            b.ai.trackRange = 12f;
+            b.attackRange = 2f;
+            b.firstAttackDelay = 0.5f;
+            var s1 = new BossPhaseData
+            {
+                id = "s1", attackInterval = 2f, approachSpeed = 2.5f, retreatSpeed = 2f, preferredMinDistance = 0f, preferredMaxDistance = 1.8f,
+                staggerResistance = 0f, launch = LaunchResponse.Immune, attackSpeed = 1f, transitionTime = 0f,
+                guardFrequency = 0.5f, guardTime = 0.6f, evadeFrequency = 0f, defenseRange = 3f,
+                patterns = new List<BossPatternData>
+                {
+                    Pat("bolt", 4f, 9f, PlayerAirCondition.Any, 0, Atk("sentinel.bolt", 6f, 0.3f), new ProjectileData { speed = 9f, maxDistance = 10f, spawnOffsetY = 1.3f }),
+                },
+                transitions = new List<PhaseTransitionData> { new PhaseTransitionData { kind = TransitionKind.Event, eventName = "shift", targetPhase = "s2" } },
+            };
+            var s2 = new BossPhaseData
+            {
+                id = "s2", attackInterval = 2f, approachSpeed = 2.5f, retreatSpeed = 2f, preferredMinDistance = 0f, preferredMaxDistance = 1.8f,
+                jumpInterval = 1.5f, jumpSpeedX = 4f, jumpVelocityY = 8f,
+                staggerResistance = 0f, launch = LaunchResponse.Immune, attackSpeed = 1f, transitionTime = 1f,
+                transitionAnimation = "sentinel.shift", transitionVfx = "vfx.blink", transitionCamera = "cam.none",
+                guardFrequency = 0f, evadeFrequency = 1f, evadeTime = 0.3f, evadeSpeed = 8f, defenseRange = 3f,
+                patterns = new List<BossPatternData>
+                {
+                    Pat("bolt2", 4f, 9f, PlayerAirCondition.Any, 0, Atk("sentinel.bolt2", 6f, 0.3f), new ProjectileData { speed = 11f, maxDistance = 10f, spawnOffsetY = 1.3f }),
+                },
+            };
+            b.boss = new BossData { startPhase = "s1", phases = new List<BossPhaseData> { s1, s2 } };
             return b;
         }
 

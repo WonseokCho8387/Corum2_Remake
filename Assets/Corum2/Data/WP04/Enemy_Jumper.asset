@@ -15,7 +15,7 @@ MonoBehaviour:
   meta:
     domainId: enemy.jumper
     schemaVersion: 1
-    dataVersion: wp04-1
+    dataVersion: wp04-2
     status: experimental
     policyIds:
     - TEST-AI-01

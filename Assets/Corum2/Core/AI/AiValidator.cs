@@ -103,6 +103,17 @@ namespace Corum2.Core
                     issues.Add(new ValidationIssue(ps, "StaggerResistance must be in [0,1]"));
                 Pos(issues, ps, "AttackSpeed", ph.AttackSpeed);
                 NonNeg(issues, ps, "TransitionTime", ph.TransitionTime);
+                if (!Finite(ph.GuardFrequency) || ph.GuardFrequency < 0f || ph.GuardFrequency > 1f)
+                    issues.Add(new ValidationIssue(ps, "GuardFrequency must be in [0,1] (R-08-11)"));
+                if (!Finite(ph.EvadeFrequency) || ph.EvadeFrequency < 0f || ph.EvadeFrequency > 1f)
+                    issues.Add(new ValidationIssue(ps, "EvadeFrequency must be in [0,1] (R-08-11)"));
+                if (ph.GuardFrequency > 0f) Pos(issues, ps, "GuardTime", ph.GuardTime);
+                if (ph.EvadeFrequency > 0f)
+                {
+                    Pos(issues, ps, "EvadeTime", ph.EvadeTime);
+                    Pos(issues, ps, "EvadeSpeed", ph.EvadeSpeed);
+                }
+                if (ph.GuardFrequency > 0f || ph.EvadeFrequency > 0f) Pos(issues, ps, "DefenseRange", ph.DefenseRange);
                 var pids = new HashSet<string>();
                 foreach (var pt in ph.Patterns)
                 {

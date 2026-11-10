@@ -108,6 +108,12 @@ namespace Corum2.Unity
         [Range(0f, 1f)] public float staggerResistance;
         public LaunchResponse launch = LaunchResponse.Immune;
         public float attackSpeed = 1f;
+        [Header("Guard / evade frequency (R-08-11, EXP-BOSS-05..07)")] [Range(0f, 1f)] public float guardFrequency;
+        public float guardTime = 0.6f;
+        [Range(0f, 1f)] public float evadeFrequency;
+        public float evadeTime = 0.3f;
+        public float evadeSpeed = 8f;
+        public float defenseRange = 3f;
         public float transitionTime = 0.8f;
         [Header("Presentation ids (logged; no assets in WP-04)")] public string transitionAnimation = "";
         public string transitionVfx = "";
@@ -122,6 +128,8 @@ namespace Corum2.Unity
                 JumpSpeedX = jumpSpeedX, JumpVelocityY = jumpVelocityY, SuperArmor = superArmor, StaggerResistance = staggerResistance,
                 Launch = launch, AttackSpeed = attackSpeed, TransitionTime = transitionTime, TransitionAnimation = transitionAnimation,
                 TransitionVfx = transitionVfx, TransitionCamera = transitionCamera,
+                GuardFrequency = guardFrequency, GuardTime = guardTime, EvadeFrequency = evadeFrequency, EvadeTime = evadeTime,
+                EvadeSpeed = evadeSpeed, DefenseRange = defenseRange,
             };
             foreach (var x in patterns) p.Patterns.Add(x.ToCore());
             foreach (var t in transitions) p.Transitions.Add(t.ToCore());

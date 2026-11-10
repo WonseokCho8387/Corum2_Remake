@@ -15,7 +15,7 @@ MonoBehaviour:
   meta:
     domainId: enemy.warden
     schemaVersion: 1
-    dataVersion: wp04-1
+    dataVersion: wp04-2
     status: experimental
     policyIds:
     - TEST-AI-01
@@ -244,6 +244,12 @@ MonoBehaviour:
       staggerResistance: 0
       launch: 2
       attackSpeed: 1
+      guardFrequency: 0
+      guardTime: 0.6
+      evadeFrequency: 0
+      evadeTime: 0.3
+      evadeSpeed: 8
+      defenseRange: 3
       transitionTime: 0
       transitionAnimation: 
       transitionVfx: 
@@ -337,6 +343,12 @@ MonoBehaviour:
       staggerResistance: 0.5
       launch: 2
       attackSpeed: 1.5
+      guardFrequency: 0
+      guardTime: 0.6
+      evadeFrequency: 0
+      evadeTime: 0.3
+      evadeSpeed: 8
+      defenseRange: 3
       transitionTime: 1
       transitionAnimation: warden.roar
       transitionVfx: vfx.armorGlow
@@ -396,6 +408,12 @@ MonoBehaviour:
       staggerResistance: 0
       launch: 2
       attackSpeed: 2
+      guardFrequency: 0
+      guardTime: 0.6
+      evadeFrequency: 0
+      evadeTime: 0.3
+      evadeSpeed: 8
+      defenseRange: 3
       transitionTime: 1
       transitionAnimation: warden.rage
       transitionVfx: vfx.redAura

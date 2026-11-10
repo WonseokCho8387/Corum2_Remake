@@ -127,6 +127,17 @@ namespace Corum2.Core
         public LaunchResponse Launch = LaunchResponse.Immune;
         /// <summary>Multiplies attack speed: 2 = twice as fast (startup/active/recovery halved).</summary>
         public float AttackSpeed = 1f;
+        /// <summary>R-08-11 guard frequency: share of eligible player attack starts the boss answers with a guard (0..1,
+        /// deterministic accumulator, EXP-BOSS-05). Guarding uses the guard rule on front physical hits (EXP-BOSS-06).</summary>
+        public float GuardFrequency;
+        public float GuardTime = 0.6f;
+        /// <summary>R-08-11 evade frequency: share of eligible player attack starts answered with a back step (0..1,
+        /// EXP-BOSS-05). The step moves away at EvadeSpeed for EvadeTime; no invulnerability (EXP-BOSS-07).</summary>
+        public float EvadeFrequency;
+        public float EvadeTime = 0.3f;
+        public float EvadeSpeed = 8f;
+        /// <summary>A player attack starting within this distance (in front of the boss) is eligible for guard / evade.</summary>
+        public float DefenseRange = 3f;
         /// <summary>Length of the transition into this phase; no new attacks meanwhile (CF-09 details EXP-BOSS-03).</summary>
         public float TransitionTime = 0.8f;
         /// <summary>Presentation ids for the transition (animation / VFX / camera), logged; no real assets in WP-04.</summary>
