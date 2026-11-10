@@ -1,0 +1,5 @@
+EditMode on the 82175c6 source (run just before that commit with identical files): test-case 243, results {'Passed': 243}; root result=Passed start=2026-11-10 14:51:20Z
+New in WP-04-R5 (3 test cases, AiR5PresentationTests):
+  Corum2.Tests.AiR5PresentationTests.F05R1_BirthDetector_Control_SeesNewParticlesWhenEmissionIsOn
+  Corum2.Tests.AiR5PresentationTests.F05R1_BurstTail_NoEmissionAfterJudgedEnd(0.5f)
+  Corum2.Tests.AiR5PresentationTests.F05R1_BurstTail_NoEmissionAfterJudgedEnd(1.0f)

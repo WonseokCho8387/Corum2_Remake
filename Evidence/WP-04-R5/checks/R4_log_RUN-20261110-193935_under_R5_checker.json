@@ -1,0 +1,317 @@
+{
+ "log": "Evidence/WP-04-R4/runs/RUN-20261110-193935.ndjson",
+ "video_start_tick": null,
+ "transitions": [
+  {
+   "actor": "boss",
+   "from": "p1",
+   "to": "p2",
+   "judged": [
+    2740,
+    2799,
+    "ended"
+   ],
+   "serial": 1,
+   "presentation": "shown",
+   "shownTick": 2743,
+   "displayDelayTicks": 3,
+   "stop": [
+    "presentation.end",
+    2799,
+    2801
+   ],
+   "cues": {
+    "animation": [
+     "warden.roar",
+     "found",
+     "Pulse"
+    ],
+    "vfx": [
+     "vfx.armorGlow",
+     "found",
+     "Aura"
+    ],
+    "camera": [
+     "cam.shakeSmall",
+     "found",
+     "Shake"
+    ]
+   },
+   "vfx": {
+    "frames": 20,
+    "begin_particles": null,
+    "tail": [
+     1,
+     null
+    ],
+    "bornAfterEnd": null
+   },
+   "frames": null,
+   "problems": [
+    "vfxBegin count 0 (expected 1)",
+    "emission still enabled or looping after the judged end",
+    "vfxTailEnd count 0 (expected 1)"
+   ],
+   "pass": false
+  },
+  {
+   "actor": "boss",
+   "from": "p2",
+   "to": "p3",
+   "judged": [
+    2963,
+    3013,
+    "ended"
+   ],
+   "serial": 2,
+   "presentation": "shown",
+   "shownTick": 2965,
+   "displayDelayTicks": 2,
+   "stop": [
+    "presentation.end",
+    3013,
+    3015
+   ],
+   "cues": {
+    "animation": [
+     "warden.rage",
+     "found",
+     "Shake"
+    ],
+    "vfx": [
+     "vfx.redAura",
+     "found",
+     "Burst"
+    ],
+    "camera": [
+     "cam.zoomIn",
+     "found",
+     "Zoom"
+    ]
+   },
+   "vfx": {
+    "frames": 17,
+    "begin_particles": null,
+    "tail": [
+     1,
+     null
+    ],
+    "bornAfterEnd": null
+   },
+   "frames": null,
+   "problems": [
+    "vfxBegin count 0 (expected 1)",
+    "emission still enabled or looping after the judged end",
+    "vfxTailEnd count 0 (expected 1)"
+   ],
+   "pass": false
+  },
+  {
+   "actor": "boss",
+   "from": "p3",
+   "to": "p1",
+   "judged": [
+    3233,
+    3234,
+    "ended"
+   ],
+   "serial": 3,
+   "presentation": "shown",
+   "shownTick": 3233,
+   "displayDelayTicks": 0,
+   "stop": [
+    "presentation.end",
+    3234,
+    3236
+   ],
+   "cues": {
+    "animation": [
+     "",
+     "none",
+     ""
+    ],
+    "vfx": [
+     "",
+     "none",
+     ""
+    ],
+    "camera": [
+     "",
+     "none",
+     ""
+    ]
+   },
+   "vfx": null,
+   "frames": null,
+   "problems": [],
+   "pass": true
+  },
+  {
+   "actor": "boss",
+   "from": "p1",
+   "to": "p2",
+   "judged": [
+    3234,
+    3284,
+    "ended"
+   ],
+   "serial": 4,
+   "presentation": "shown",
+   "shownTick": 3236,
+   "displayDelayTicks": 2,
+   "stop": [
+    "presentation.end",
+    3284,
+    3286
+   ],
+   "cues": {
+    "animation": [
+     "warden.roar",
+     "found",
+     "Pulse"
+    ],
+    "vfx": [
+     "vfx.armorGlow",
+     "found",
+     "Aura"
+    ],
+    "camera": [
+     "cam.shakeSmall",
+     "found",
+     "Shake"
+    ]
+   },
+   "vfx": {
+    "frames": 17,
+    "begin_particles": null,
+    "tail": [
+     1,
+     null
+    ],
+    "bornAfterEnd": null
+   },
+   "frames": null,
+   "problems": [
+    "vfxBegin count 0 (expected 1)",
+    "emission still enabled or looping after the judged end",
+    "vfxTailEnd count 0 (expected 1)"
+   ],
+   "pass": false
+  },
+  {
+   "actor": "boss",
+   "from": "p2",
+   "to": "p3",
+   "judged": [
+    3383,
+    3433,
+    "ended"
+   ],
+   "serial": 5,
+   "presentation": "shown",
+   "shownTick": 3383,
+   "displayDelayTicks": 0,
+   "stop": [
+    "presentation.end",
+    3433,
+    3433
+   ],
+   "cues": {
+    "animation": [
+     "warden.rage",
+     "found",
+     "Shake"
+    ],
+    "vfx": [
+     "vfx.redAura",
+     "found",
+     "Burst"
+    ],
+    "camera": [
+     "cam.zoomIn",
+     "found",
+     "Zoom"
+    ]
+   },
+   "vfx": {
+    "frames": 17,
+    "begin_particles": null,
+    "tail": [
+     1,
+     null
+    ],
+    "bornAfterEnd": null
+   },
+   "frames": null,
+   "problems": [
+    "vfxBegin count 0 (expected 1)",
+    "emission still enabled or looping after the judged end",
+    "vfxTailEnd count 0 (expected 1)"
+   ],
+   "pass": false
+  },
+  {
+   "actor": "sentinel",
+   "from": "s1",
+   "to": "s2",
+   "judged": [
+    3795,
+    3845,
+    "ended"
+   ],
+   "serial": 1,
+   "presentation": "shown",
+   "shownTick": 3797,
+   "displayDelayTicks": 2,
+   "stop": [
+    "presentation.end",
+    3845,
+    3845
+   ],
+   "cues": {
+    "animation": [
+     "sentinel.shift",
+     "found",
+     "Flicker"
+    ],
+    "vfx": [
+     "vfx.blink",
+     "found",
+     "Burst"
+    ],
+    "camera": [
+     "cam.none",
+     "found",
+     "None"
+    ]
+   },
+   "vfx": {
+    "frames": 16,
+    "begin_particles": null,
+    "tail": [
+     1,
+     null
+    ],
+    "bornAfterEnd": null
+   },
+   "frames": null,
+   "problems": [
+    "vfxBegin count 0 (expected 1)",
+    "emission still enabled or looping after the judged end",
+    "vfxTailEnd count 0 (expected 1)"
+   ],
+   "pass": false
+  }
+ ],
+ "orphan_presentation_records": [],
+ "orphan_or_dropped_events": [],
+ "unmatched_transition_end_events": [],
+ "skipped_count": 0,
+ "vfx_clock": {
+  "frames_total": 88,
+  "vfx_frames": 87,
+  "single_tick_hitstop_frames": 0,
+  "issues": []
+ },
+ "all_pass": false
+}
