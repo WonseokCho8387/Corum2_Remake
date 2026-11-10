@@ -1,0 +1,15 @@
+{"run": "r3", "case": "unchanged (control)", "expected": "valid", "result": "valid", "error": null, "pass": true}
+{"run": "r3", "case": "M03-A: untracked copy bytes replaced", "expected": "invalid", "result": "invalid", "error": "untracked copy bytes differ from its list row: Tools/r3_dirty_probe.txt", "pass": true}
+{"run": "r3", "case": "M03-B: copy removed, moved to untracked_skipped", "expected": "invalid", "result": "invalid", "error": "in-scope untracked files skipped: ['Tools/r3_dirty_probe.txt']", "pass": true}
+{"run": "r3", "case": "M03-B variant: copy removed and dropped from untracked_files (no skipped entry)", "expected": "invalid", "result": "invalid", "error": "required untracked files not copied: ['Tools/r3_dirty_probe.txt']", "pass": true}
+{"run": "r3", "case": "M03-C: patch emptied, patch_sha256 updated", "expected": "invalid", "result": "invalid", "error": "tracked changes in status not in the patch: ['Tools/wp01_log_report.py']", "pass": true}
+{"run": "r4", "case": "unchanged (control)", "expected": "valid", "result": "valid", "error": null, "pass": true}
+{"run": "r4", "case": "copy inside an untracked folder removed (lists updated)", "expected": "invalid", "result": "invalid", "error": "required untracked files not copied: ['Tools/r4_probe_dir/sub/b.bin']", "pass": true}
+{"run": "r4", "case": "binary copy bytes replaced", "expected": "invalid", "result": "invalid", "error": "untracked copy bytes differ from its list row: Tools/r4_probe_dir/sub/b.bin", "pass": true}
+{"run": "r4", "case": "out-of-scope copy removed (not required)", "expected": "valid", "result": "valid", "error": null, "pass": true}
+{"run": "r4", "case": "patch keeps only the first file diff", "expected": "invalid", "result": "invalid", "error": "tracked changes in status not in the patch: ['Tools/wp02_log_report.py']", "pass": true}
+{"run": "r4", "case": "first file diff and its status line removed", "expected": "invalid", "result": "invalid", "error": "dirty rows ['Tools/r4_probe.txt', 'Tools/r4_probe_dir/a.txt', 'Tools/r4_probe_dir/sub/b.bin', 'Tools/wp01_log_report.py', 'Tools/wp02_log_report.py'] differ from git status ['Tools/r4_probe.txt', 'Tools/r4_probe_dir/a.txt', 'Tools/r4_probe_dir/sub/b.bin', 'Tools/wp02_log_report.py']", "pass": true}
+{"run": "r4", "case": "patch text changed (sha256 updated)", "expected": "invalid", "result": "invalid", "error": "commit + patch + copies do not reproduce the list: ['Tools/wp02_log_report.py']", "pass": true}
+{"run": "r4", "case": "capture marked incomplete", "expected": "invalid", "result": "invalid", "error": "capture marked incomplete: ['untracked file in scope not copied: Tools/r4_probe.txt']", "pass": true}
+{"run": "r4", "case": "in-scope file listed in untracked_skipped", "expected": "invalid", "result": "invalid", "error": "in-scope untracked files skipped: ['Tools/r4_probe.txt']", "pass": true}
+{"all_pass": true}

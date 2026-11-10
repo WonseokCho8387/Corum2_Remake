@@ -1,0 +1,7 @@
+EditMode, C# source identical to 8c7015e (run before that commit; a370bda changed only Tools/validate_manifest.py): test-case 150, results {'Passed': 150}; root result=Passed total=150 passed=150 failed=0
+New in R4 (DirtyCaptureTests, 5):
+  Corum2.Tests.DirtyCaptureTests.IncompleteReasons_EmptyWhenComplete
+  Corum2.Tests.DirtyCaptureTests.IncompleteReasons_PatchCopyAndBytes
+  Corum2.Tests.DirtyCaptureTests.InScope_MatchesFolderPrefixOnly
+  Corum2.Tests.DirtyCaptureTests.RequiredUntracked_ExpandsCollapsedFolders_InScopeOnly
+  Corum2.Tests.DirtyCaptureTests.StatusPath_HandlesRenameAndQuotes
