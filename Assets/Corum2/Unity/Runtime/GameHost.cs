@@ -627,7 +627,9 @@ namespace Corum2.Unity
         struct SourceCapture
         {
             public static readonly string[] Scope = { "Assets", "Packages", "ProjectSettings", "Tools" };
-            const long UntrackedCopyLimit = 16L * 1024 * 1024;
+            /// <summary>Untracked files outside the scope above this size are not copied (recorded as skipped).
+            /// Files inside the scope are always copied (WP02-M03).</summary>
+            const long OutOfScopeCopyLimit = 16L * 1024 * 1024;
 
             public string rev, tree, note;
             public bool? dirty;
@@ -638,7 +640,7 @@ namespace Corum2.Unity
             public List<string> missing;
             public string patchFile, patchSha;
             public string untrackedDir;
-            public List<string> untrackedCopied, untrackedSkipped;
+            public List<string> untrackedCopied, untrackedSkipped, requiredUntracked, incomplete;
 
             public static SourceCapture Take(string runDir, string runId)
             {
@@ -694,24 +696,38 @@ namespace Corum2.Unity
                 if (c.dirty == true)
                 {
                     c.patchFile = runId + ".dirty.patch";
-                    var patch = Git(root, "diff HEAD --binary") ?? "";
+                    var patch = GitBytes(root, "diff HEAD --binary");
                     var patchPath = Path.Combine(runDir, c.patchFile);
-                    File.WriteAllText(patchPath, patch, new UTF8Encoding(false));
+                    File.WriteAllBytes(patchPath, patch ?? new byte[0]);
                     c.patchSha = RunFiles.FileSha256(patchPath);
                     c.untrackedDir = runId + ".untracked";
                     c.untrackedCopied = new List<string>();
                     c.untrackedSkipped = new List<string>();
-                    var untracked = Git(root, "ls-files -z -o --exclude-standard") ?? "";
-                    foreach (var rel in untracked.Split('\0').Where(x => x.Length > 0))
+                    var rows = files.ToDictionary(f => f.Path, StringComparer.Ordinal);
+                    var copyMatches = new Dictionary<string, bool>(StringComparer.Ordinal);
+                    var untracked = Git(root, "ls-files -z -o --exclude-standard");
+                    foreach (var rel in (untracked ?? "").Split('\0').Where(x => x.Length > 0))
                     {
                         var src = Path.Combine(root, rel);
                         if (!File.Exists(src)) continue;
-                        if (new FileInfo(src).Length > UntrackedCopyLimit) { c.untrackedSkipped.Add(rel); continue; }
+                        var inScope = DirtyCapture.InScope(rel, Scope);
+                        if (!inScope && new FileInfo(src).Length > OutOfScopeCopyLimit) { c.untrackedSkipped.Add(rel); continue; }
                         var dst = Path.Combine(runDir, c.untrackedDir, rel);
                         Directory.CreateDirectory(Path.GetDirectoryName(dst));
                         File.Copy(src, dst, true);
                         c.untrackedCopied.Add(rel);
+                        if (inScope)
+                        {
+                            // The copy must hold the bytes the list recorded (the file could change between the two reads).
+                            var bytes = File.ReadAllBytes(dst);
+                            copyMatches[rel] = rows.TryGetValue(rel, out var row) && row.Size == bytes.LongLength &&
+                                row.Sha256 == SourceFileList.Sha256Hex(bytes);
+                        }
                     }
+                    c.requiredUntracked = DirtyCapture.RequiredUntracked(c.status, files.Select(f => f.Path), Scope);
+                    c.incomplete = DirtyCapture.IncompleteReasons(patch != null, c.requiredUntracked,
+                        c.untrackedCopied, copyMatches);
+                    if (untracked == null) c.incomplete.Add("git ls-files for untracked files failed");
                 }
                 return c;
             }
@@ -732,7 +748,35 @@ namespace Corum2.Unity
                     .Add("patch_basis", "git diff HEAD --binary at run start (tracked changes)")
                     .Add("untracked_dir", untrackedDir).Add("untracked_files", untrackedCopied)
                     .Add("untracked_skipped", untrackedSkipped)
-                    .Add("note", "untracked files are copied as they were at run start; their hashes are also in source_file_hash_manifest when inside its scope");
+                    .Add("untracked_skipped_note", "only untracked files outside the source scope larger than 16 MiB are skipped")
+                    .Add("required_untracked", requiredUntracked)
+                    .Add("capture_complete", incomplete.Count == 0)
+                    .Add("incomplete_reasons", incomplete)
+                    .Add("note", "untracked files are copied as they were at run start; copies inside the scope are checked against their list rows");
+            }
+        }
+
+        /// <summary>Raw git output bytes (patches may hold non-UTF-8 text); null on failure.</summary>
+        static byte[] GitBytes(string root, string args)
+        {
+            try
+            {
+                var psi = new System.Diagnostics.ProcessStartInfo("git", "-c core.quotepath=off -C \"" + root + "\" " + args)
+                {
+                    UseShellExecute = false, RedirectStandardOutput = true, RedirectStandardError = true, CreateNoWindow = true,
+                };
+                using (var p = System.Diagnostics.Process.Start(psi))
+                using (var ms = new MemoryStream())
+                {
+                    var errTask = p.StandardError.ReadToEndAsync();
+                    p.StandardOutput.BaseStream.CopyTo(ms);
+                    p.WaitForExit(20000);
+                    return p.HasExited && p.ExitCode == 0 ? ms.ToArray() : null;
+                }
+            }
+            catch (Exception)
+            {
+                return null;
             }
         }
 

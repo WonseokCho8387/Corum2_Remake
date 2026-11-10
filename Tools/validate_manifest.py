@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Parse and check run manifests, supplement packets and correction records (WP02-M01-R1-A/B, WP02-M02).
+"""Parse and check run manifests, supplement packets and correction records (WP02-M01-R1-A/B, WP02-M02, WP02-M03).
 
 Usage:
   python Tools/validate_manifest.py [--repo DIR] [--worktree] FILE... [--expect-fail FILE...]
@@ -11,6 +11,8 @@ bytes, ordering and uniqueness are checked.
   --repo DIR   also compare every row with the commit `source_revision` in that git repository: the path set must
                equal the commit's files in the list scope (clean runs), and each row's git_blob must equal the
                commit's blob. Lists whose bytes_basis is git blob content are re-hashed from the blobs.
+               Dirty runs are rebuilt in a temporary git worktree (commit + patch + untracked copies) and must
+               reproduce every list row's git_blob.
   --worktree   (with --repo) also re-hash the files in the repository working tree for working-tree-basis lists;
                use only when the working tree is at source_revision with the same line-ending settings.
 Files after --expect-fail must fail to parse or validate.
@@ -20,8 +22,10 @@ import hashlib
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
+import tempfile
 
 import yaml
 
@@ -149,7 +153,7 @@ def check_against_git(rows, sfm, doc):
     blob_mismatch = [r[0] for r in rows if r[0] in tree and r[3] != tree[r[0]]]
     if clean:
         need(not blob_mismatch, f"git_blob differs from commit for {blob_mismatch[:5]}")
-    if doc.get("working_tree_dirty") is True:
+    if doc.get("working_tree_dirty") is True and isinstance(doc.get("dirty_diff_artifact"), dict):
         # Rows that differ from the commit (changed, untracked) and commit files without a row (deleted) must be
         # exactly the scope paths that git status reported at run start.
         status_paths = set()
@@ -175,19 +179,98 @@ def check_against_git(rows, sfm, doc):
     return res
 
 
-def check_dirty_artifact(doc, base_dir):
+def in_scope(path, scope):
+    return any(path == s or path.startswith(s + "/") for s in scope)
+
+
+def status_path(line):
+    p = line[3:].split(" -> ")[-1]
+    return p[1:-1] if len(p) >= 2 and p[0] == p[-1] == '"' else p
+
+
+def required_untracked(status, row_paths, scope):
+    """Same rule as Core DirtyCapture.RequiredUntracked: '?? file' or '?? dir/' (every listed path under it), in scope."""
+    req = set()
+    for line in status:
+        if not line.startswith("?? "):
+            continue
+        p = status_path(line)
+        if p.endswith("/"):
+            req |= {r for r in row_paths if r.startswith(p) and in_scope(r, scope)}
+        elif in_scope(p, scope):
+            req.add(p)
+    return sorted(req)
+
+
+def check_dirty_artifact(doc, base_dir, rows, scope):
+    """WP02-M03: the saved dirty capture must be complete and agree with the per-file list."""
     dirty = doc["working_tree_dirty"]
     art = doc["dirty_diff_artifact"]
-    if dirty is True:
-        need(isinstance(art, dict), "dirty run needs a dirty_diff_artifact mapping")
-        need(isinstance(art.get("status"), list) and art["status"], "dirty_diff_artifact.status")
-        need(is_str(art.get("patch")) and HEX64.match(art.get("patch_sha256") or ""), "dirty_diff_artifact patch/sha256")
-        need(sha_file(os.path.join(base_dir, art["patch"])) == art["patch_sha256"], "patch sha256 differs")
-        need(isinstance(art.get("untracked_files"), list), "untracked_files list")
-        for rel in art["untracked_files"]:
-            need(os.path.isfile(os.path.join(base_dir, art["untracked_dir"], rel)), f"untracked copy missing: {rel}")
     if dirty is False:
         need(art is None, "clean tree must have dirty_diff_artifact null")
+        return {}
+    if dirty is not True:
+        return {}
+    need(isinstance(art, dict), "dirty run needs a dirty_diff_artifact mapping")
+    need(isinstance(art.get("status"), list) and art["status"], "dirty_diff_artifact.status")
+    need(is_str(art.get("patch")) and HEX64.match(art.get("patch_sha256") or ""), "dirty_diff_artifact patch/sha256")
+    patch_path = os.path.join(base_dir, art["patch"])
+    need(os.path.isfile(patch_path) and sha_file(patch_path) == art["patch_sha256"], "patch missing or sha256 differs")
+    need(isinstance(art.get("untracked_files"), list), "untracked_files list")
+    if "capture_complete" in art:
+        need(art["capture_complete"] is True, f"capture marked incomplete: {art.get('incomplete_reasons')}")
+        need(art.get("incomplete_reasons") in ([], None), "capture_complete true but incomplete_reasons present")
+    skipped = [p for p in (art.get("untracked_skipped") or []) if in_scope(p, scope)]
+    need(not skipped, f"in-scope untracked files skipped: {skipped}")
+    by_path = {r[0]: r for r in rows}
+    copied = set(art["untracked_files"])
+    # every in-scope untracked file in status must be copied, with the bytes its list row records
+    req = required_untracked(art["status"], list(by_path), scope)
+    not_copied = [p for p in req if p not in copied]
+    need(not not_copied, f"required untracked files not copied: {not_copied}")
+    for rel in art["untracked_files"]:
+        cp = os.path.join(base_dir, art["untracked_dir"], rel)
+        need(os.path.isfile(cp), f"untracked copy missing: {rel}")
+        if in_scope(rel, scope):
+            need(rel in by_path, f"in-scope untracked copy has no list row: {rel}")
+            need(os.path.getsize(cp) == by_path[rel][1] and sha_file(cp) == by_path[rel][2],
+                 f"untracked copy bytes differ from its list row: {rel}")
+    # tracked changes in status must appear in the patch
+    with open(patch_path, "rb") as f:
+        patch = f.read().decode("utf-8", errors="replace")
+    tracked = [status_path(l) for l in art["status"] if not l.startswith("?? ")]
+    absent = [p for p in tracked if f"diff --git a/{p} " not in patch and f" b/{p}\n" not in patch]
+    need(not absent, f"tracked changes in status not in the patch: {absent}")
+    return {"required_untracked": len(req), "untracked_copies_checked": len([r for r in copied if in_scope(r, scope)])}
+
+
+def rebuild_dirty(doc, base_dir, rows, scope):
+    """--repo: commit + patch + untracked copies in a temporary worktree must reproduce every list row's git_blob."""
+    art = doc["dirty_diff_artifact"]
+    tmp = tempfile.mkdtemp(prefix="corum2-validate-")
+    wt = os.path.join(tmp, "wt")
+    try:
+        git("worktree", "add", "--detach", wt, doc["source_revision"])
+        r = subprocess.run(["git", "-C", wt, "apply", "--binary", os.path.abspath(os.path.join(base_dir, art["patch"]))],
+                           capture_output=True)
+        need(r.returncode == 0, "patch does not apply to source_revision: " + r.stderr.decode("utf-8", "replace").strip()[:200])
+        for rel in art["untracked_files"]:
+            dst = os.path.join(wt, rel)
+            os.makedirs(os.path.dirname(dst), exist_ok=True)
+            shutil.copyfile(os.path.join(base_dir, art["untracked_dir"], rel), dst)
+        out = subprocess.run(["git", "-c", "core.quotepath=off", "-C", wt, "ls-files", "-z", "-c", "-o", "--exclude-standard",
+                              "--", *scope], capture_output=True, check=True).stdout.decode("utf-8")
+        files = sorted(p for p in out.split("\0") if p and os.path.isfile(os.path.join(wt, p)))
+        blobs = subprocess.run(["git", "-C", wt, "hash-object", "--stdin-paths"], input=("\n".join(files) + "\n").encode(),
+                               capture_output=True, check=True).stdout.decode().split()
+        rebuilt = dict(zip(files, blobs))
+    finally:
+        subprocess.run(["git", "-C", OPTS["repo"], "worktree", "remove", "--force", wt], capture_output=True)
+        shutil.rmtree(tmp, ignore_errors=True)
+    listed = {r[0]: r[3] for r in rows}
+    diff = sorted(p for p in set(rebuilt) | set(listed) if rebuilt.get(p) != listed.get(p))
+    need(not diff, f"commit + patch + copies do not reproduce the list: {diff[:5]}")
+    return {"rebuild_rows_matched": len(rebuilt)}
 
 
 def check_run_manifest(doc, base_dir):
@@ -206,8 +289,13 @@ def check_run_manifest(doc, base_dir):
         need(dirty is None or isinstance(dirty, bool), f"working_tree_dirty must be bool or null, got {dirty!r}")
         if dirty is None:
             need(is_str(doc.get("source_note")) or is_str(doc.get("working_tree_dirty_note")), "unknown dirty state needs a note")
-        check_dirty_artifact(doc, base_dir)
     stats = check_file_list(doc["source_file_hash_manifest"], base_dir, doc)
+    if doc["source_capture_mode"] == "git":
+        rows = read_list(os.path.join(base_dir, doc["source_file_hash_manifest"]["file"]))[1]
+        scope = doc["source_file_hash_manifest"]["scope"]
+        stats.update(check_dirty_artifact(doc, base_dir, rows, scope))
+        if OPTS["repo"] and doc["working_tree_dirty"] is True:
+            stats.update(rebuild_dirty(doc, base_dir, rows, scope))
     need(isinstance(doc["experimental_policies"], list) and all(is_str(x) for x in doc["experimental_policies"]),
          "experimental_policies must be a list of strings")
     need(is_str(doc["data_snapshot"]), "data_snapshot")
