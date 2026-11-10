@@ -149,6 +149,16 @@ def check_against_git(rows, sfm, doc):
     blob_mismatch = [r[0] for r in rows if r[0] in tree and r[3] != tree[r[0]]]
     if clean:
         need(not blob_mismatch, f"git_blob differs from commit for {blob_mismatch[:5]}")
+    if doc.get("working_tree_dirty") is True:
+        # Rows that differ from the commit (changed, untracked) and commit files without a row (deleted) must be
+        # exactly the scope paths that git status reported at run start.
+        status_paths = set()
+        for line in doc["dirty_diff_artifact"]["status"]:
+            p = line[3:].split(" -> ")[-1].strip('"')
+            if any(p == s or p.startswith(s + "/") for s in sfm["scope"]):
+                status_paths.add(p)
+        differing = set(blob_mismatch) | (row_paths - set(tree)) | (set(tree) - row_paths)
+        need(differing == status_paths, f"dirty rows {sorted(differing)} differ from git status {sorted(status_paths)}")
     res = {"git_rows_matched": sum(1 for r in rows if r[0] in tree and r[3] == tree[r[0]]), "git_blob_mismatch": len(blob_mismatch)}
     basis = sfm["bytes_basis"]
     if basis.startswith("git blob content"):
