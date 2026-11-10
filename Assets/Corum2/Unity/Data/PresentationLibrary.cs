@@ -88,6 +88,15 @@ namespace Corum2.Unity
 
         static bool Finite(float v) => !float.IsNaN(v) && !float.IsInfinity(v);
 
+        /// <summary>WP04-M04: every colour channel the view consumes must be finite and not negative. No upper bound is
+        /// set for RGB (HDR range is undecided, U-11); alpha must be in [0,1].</summary>
+        static void ColorOk(List<string> issues, string src, string field, Color c)
+        {
+            if (!Finite(c.r) || !Finite(c.g) || !Finite(c.b) || !Finite(c.a) || c.r < 0f || c.g < 0f || c.b < 0f)
+                issues.Add(src + ": " + field + " channels must be finite and >= 0");
+            else if (c.a < 0f || c.a > 1f) issues.Add(src + ": " + field + " alpha must be in [0,1]");
+        }
+
         /// <summary>Library checks plus every boss phase id must resolve; ids need a transition time above 0.</summary>
         public static List<string> Validate(PresentationLibrary lib, IEnumerable<BossDefinition> bosses, string libName = "PresentationLibrary")
         {
@@ -101,6 +110,8 @@ namespace Corum2.Unity
                 {
                     if (!Finite(a.amplitude) || a.amplitude < 0f) issues.Add(libName + " animation " + a.id + ": amplitude must be finite and >= 0");
                     if (!Finite(a.frequency) || a.frequency < 0f) issues.Add(libName + " animation " + a.id + ": frequency must be finite and >= 0");
+                    if (!Finite(a.tintAmount) || a.tintAmount < 0f || a.tintAmount > 1f) issues.Add(libName + " animation " + a.id + ": tintAmount must be finite and in [0,1]");
+                    ColorOk(issues, libName + " animation " + a.id, "tint", a.tint);
                 }
                 foreach (var v in lib.vfx)
                 {
@@ -109,7 +120,8 @@ namespace Corum2.Unity
                     if (!Finite(v.lifetime) || v.lifetime <= 0f) issues.Add(libName + " vfx " + v.id + ": lifetime must be finite and > 0");
                     if (!Finite(v.radius) || v.radius < 0f) issues.Add(libName + " vfx " + v.id + ": radius must be finite and >= 0");
                     if (!Finite(v.speed) || v.speed < 0f) issues.Add(libName + " vfx " + v.id + ": speed must be finite and >= 0");
-                    if (v.burstCount < 0) issues.Add(libName + " vfx " + v.id + ": burstCount must be >= 0");
+                    if (v.burstCount < 0 || v.burstCount > short.MaxValue) issues.Add(libName + " vfx " + v.id + ": burstCount must be in [0, 32767]");
+                    ColorOk(issues, libName + " vfx " + v.id, "color", v.color);
                 }
                 foreach (var c in lib.cameras)
                 {
@@ -156,6 +168,10 @@ namespace Corum2.Unity
     public static class PresentationMath
     {
         public static float Envelope(float progress) => Mathf.Sin(Mathf.PI * Mathf.Clamp01(progress));
+
+        /// <summary>VFX tail after the judged end (WP04-F05): game time from simulation ticks; no advance while the boss is
+        /// in hitstop at the rendered update.</summary>
+        public static float TailStep(long ticks, float fixedDt, bool bossInHitstop) => bossInHitstop || ticks <= 0 ? 0f : ticks * fixedDt;
 
         /// <summary>Body offset, scale multiplier and tint weight for an animation cue at game time t into the transition.</summary>
         public static (Vector2 offset, float scale, float tint) Body(AnimationCue a, float t, float progress)

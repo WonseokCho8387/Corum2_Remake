@@ -6,10 +6,15 @@ namespace Corum2.Unity
     /// <summary>
     /// Follows the judged boss transitions and decides presentation playback (EXP-PRES-01). Plain C#, no scene objects,
     /// so it runs in EditMode tests on the simulation alone.
-    ///   start  : the tick a transition starts (EnemyActor.TransitionSerial changed)
-    ///   progress: (TransitionDuration - TransitionTimer) / TransitionDuration, game time (pauses with the boss's hitstop)
-    ///   end    : the tick TransitionTimer reaches 0 (= boss.transitionEnd)
-    ///   cancel : the boss dies (= boss.transitionCancel, EXP-BOSS-02)
+    ///
+    /// WP04-F04: the lifecycle comes from the Core transition event queue (CombatSystem.DrainTransitionEvents), in
+    /// simulation order, so the judged start / end / cancel ticks are kept as they were. What the screen did is recorded
+    /// separately: the tick of the first rendered update that shows a playback (ShownTick) and the update that observed
+    /// its end (ObservedEndTick). A transition that started and ended between two rendered updates is never shown and is
+    /// logged as presentation.skipped with its judged ticks.
+    ///
+    ///   progress: (duration - TransitionTimer) / duration at the rendered update, game time (pauses with the boss's
+    ///             hitstop); 1 once the judged end is consumed.
     /// Hit reactions during the transition do not stop it (EXP-BOSS-03).
     /// </summary>
     public sealed class TransitionPresentationTracker
@@ -24,88 +29,97 @@ namespace Corum2.Unity
             public AnimationCue Animation;
             public VfxCue Vfx;
             public CameraCue Camera;
+            /// <summary>Judged transition start tick (Core event).</summary>
             public long StartTick;
+            /// <summary>Judged end / cancel tick (Core event); -1 while running.</summary>
             public long EndTick = -1;
+            /// <summary>Simulation tick of the first rendered update that showed it; -1 = never shown.</summary>
+            public long ShownTick = -1;
+            /// <summary>Simulation tick of the rendered update that consumed the end.</summary>
+            public long ObservedEndTick = -1;
             public float Elapsed;
             public float Progress;
             public bool Finished;
+            /// <summary>Ended / Cancelled / Skipped (never rendered).</summary>
             public string EndKind = "";
         }
 
         readonly PresentationLibrary _lib;
-        readonly Dictionary<EnemyActor, int> _seen = new Dictionary<EnemyActor, int>();
+        readonly List<TransitionEvent> _events = new List<TransitionEvent>();
         public readonly List<Playback> Active = new List<Playback>();
-        /// <summary>Every playback ever started, in start order (tests and evidence).</summary>
+        /// <summary>Every playback, in judged start order (tests and evidence).</summary>
         public readonly List<Playback> History = new List<Playback>();
         readonly List<Playback> _finished = new List<Playback>();
+        int _dropped;
 
         public TransitionPresentationTracker(PresentationLibrary lib) => _lib = lib;
 
         static string Kind(object cue, string id) => string.IsNullOrEmpty(id) ? "none" : cue == null ? "missing" : "found";
 
-        /// <summary>Call once per rendered frame after the simulation steps. Returns playbacks that finished in this call.</summary>
+        /// <summary>Call once per rendered update after the simulation steps. Returns playbacks finished in this call
+        /// (ended, cancelled or skipped).</summary>
         public List<Playback> Update(Simulation sim)
         {
             _finished.Clear();
             if (sim.Combat == null) return _finished;
-            foreach (var en in sim.Combat.Enemies)
+            if (sim.Combat.DroppedTransitionEvents != _dropped)
             {
-                if (en.Boss == null) continue;
-                _seen.TryGetValue(en, out var seen);
-                if (en.TransitionSerial == seen) continue;
-                _seen[en] = en.TransitionSerial;
-                // A new transition can only start after the previous one ended (TryTransition runs on a free boss), so an
-                // open playback of this boss ended on this tick at the latest.
-                var old = Active.Find(x => x.Enemy == en);
-                if (old != null)
+                sim.Log.Emit("presentation.dropped", "", "", "", "", "TransitionEventQueueOverflow(EXP-PRES-01)",
+                    ("count", sim.Combat.DroppedTransitionEvents - _dropped));
+                _dropped = sim.Combat.DroppedTransitionEvents;
+            }
+            _events.Clear();
+            sim.Combat.DrainTransitionEvents(_events);
+            foreach (var ev in _events)
+            {
+                if (ev.Kind == TransitionEventKind.Start)
                 {
-                    old.Elapsed = old.Duration;
-                    old.Progress = 1f;
-                    Finish(sim, old, "Ended", "presentation.end", "TransitionEnd:NextTransitionSameTick(EXP-PRES-01)");
+                    var ph = ev.Enemy.Boss?.Find(ev.Phase);
+                    var p = new Playback
+                    {
+                        Enemy = ev.Enemy, Serial = ev.Serial, Phase = ev.Phase, Duration = ev.Duration, StartTick = ev.Tick,
+                        AnimationId = ph?.TransitionAnimation ?? "", VfxId = ph?.TransitionVfx ?? "", CameraId = ph?.TransitionCamera ?? "",
+                    };
+                    if (_lib != null)
+                    {
+                        p.Animation = _lib.Animation(p.AnimationId);
+                        p.Vfx = _lib.Vfx(p.VfxId);
+                        p.Camera = _lib.Camera(p.CameraId);
+                    }
+                    Active.Add(p);
+                    History.Add(p);
+                    continue;
                 }
-                if (en.TransitionSerial - seen > 1)
-                    sim.Log.Emit("presentation.skipped", en.Id, "", "", "", "TransitionsWithoutRenderedFrame(EXP-PRES-01)",
-                        ("count", en.TransitionSerial - seen - 1));
-                var ph = en.Phase;
-                var p = new Playback
+                var q = Active.Find(x => x.Enemy == ev.Enemy && x.Serial == ev.Serial);
+                if (q == null)
                 {
-                    Enemy = en, Serial = en.TransitionSerial, Phase = en.PhaseId, Duration = en.TransitionDuration,
-                    AnimationId = ph.TransitionAnimation ?? "", VfxId = ph.TransitionVfx ?? "", CameraId = ph.TransitionCamera ?? "",
-                    StartTick = sim.Tick,
-                };
-                if (_lib != null)
-                {
-                    p.Animation = _lib.Animation(p.AnimationId);
-                    p.Vfx = _lib.Vfx(p.VfxId);
-                    p.Camera = _lib.Camera(p.CameraId);
+                    sim.Log.Emit("presentation.orphanEnd", ev.Enemy.Id, "", "", ev.Kind.ToString(), "NoPlaybackForSerial(EXP-PRES-01)",
+                        ("transitionSerial", ev.Serial), ("judgedTick", ev.Tick));
+                    continue;
                 }
-                Active.Add(p);
-                History.Add(p);
-                sim.Log.Emit("presentation.start", en.Id, "", "", p.Phase, "TransitionPresentationStart(R-08-11, EXP-PRES-01)",
+                q.EndTick = ev.Tick;
+                q.ObservedEndTick = sim.Tick;
+                q.Elapsed = ev.Kind == TransitionEventKind.End ? q.Duration : q.Elapsed;
+                q.Progress = ev.Kind == TransitionEventKind.End ? 1f : q.Progress;
+                if (q.ShownTick < 0) Finish(sim, q, "Skipped", "presentation.skipped", "EndedBeforeAnyRenderedUpdate(EXP-PRES-01)");
+                else if (ev.Kind == TransitionEventKind.End) Finish(sim, q, "Ended", "presentation.end", "TransitionEnd(EXP-PRES-01)");
+                else Finish(sim, q, "Cancelled", "presentation.cancel", "TransitionCancel:Death(EXP-BOSS-02, EXP-PRES-01)");
+            }
+            foreach (var p in Active)
+            {
+                var en = p.Enemy;
+                p.Elapsed = p.Duration - en.TransitionTimer;
+                if (p.Elapsed < 0f) p.Elapsed = 0f;
+                p.Progress = p.Duration > 0f ? UnityEngine.Mathf.Clamp01(p.Elapsed / p.Duration) : 1f;
+                if (p.ShownTick >= 0) continue;
+                p.ShownTick = sim.Tick;
+                sim.Log.Emit("presentation.start", en.Id, "", "", p.Phase, "TransitionPresentationShown(R-08-11, EXP-PRES-01)",
                     ("transitionSerial", p.Serial), ("phase", p.Phase), ("duration", p.Duration),
+                    ("judgedStartTick", p.StartTick), ("shownTick", p.ShownTick), ("displayDelayTicks", p.ShownTick - p.StartTick),
+                    ("progressAtShow", p.Progress),
                     ("animation", p.AnimationId), ("animationCue", Kind(p.Animation, p.AnimationId)), ("animationKind", p.Animation != null ? p.Animation.kind.ToString() : ""),
                     ("vfx", p.VfxId), ("vfxCue", Kind(p.Vfx, p.VfxId)), ("vfxKind", p.Vfx != null ? p.Vfx.kind.ToString() : ""),
-                    ("camera", p.CameraId), ("cameraCue", Kind(p.Camera, p.CameraId)), ("cameraKind", p.Camera != null ? p.Camera.kind.ToString() : ""),
-                    ("transitionTimer", en.TransitionTimer));
-            }
-            for (var i = Active.Count - 1; i >= 0; i--)
-            {
-                var p = Active[i];
-                var en = p.Enemy;
-                if (en.State == EnemyState.Dead || en.State == EnemyState.Gone)
-                {
-                    Finish(sim, p, "Cancelled", "presentation.cancel", "TransitionCancel:Death(EXP-BOSS-02, EXP-PRES-01)");
-                    continue;
-                }
-                if (en.TransitionTimer <= 0f)
-                {
-                    p.Elapsed = p.Duration;
-                    p.Progress = 1f;
-                    Finish(sim, p, "Ended", "presentation.end", "TransitionEnd(EXP-PRES-01)");
-                    continue;
-                }
-                p.Elapsed = p.Duration - en.TransitionTimer;
-                p.Progress = p.Duration > 0f ? UnityEngine.Mathf.Clamp01(p.Elapsed / p.Duration) : 1f;
+                    ("camera", p.CameraId), ("cameraCue", Kind(p.Camera, p.CameraId)), ("cameraKind", p.Camera != null ? p.Camera.kind.ToString() : ""));
             }
             return _finished;
         }
@@ -114,12 +128,12 @@ namespace Corum2.Unity
         {
             p.Finished = true;
             p.EndKind = kind;
-            p.EndTick = sim.Tick;
             Active.Remove(p);
             _finished.Add(p);
             sim.Log.Emit(type, p.Enemy.Id, "", p.Phase, kind, reason, ("transitionSerial", p.Serial), ("phase", p.Phase),
-                ("duration", p.Duration), ("elapsedGame", p.Elapsed), ("progress", p.Progress), ("startTick", p.StartTick),
-                ("bossState", p.Enemy.State.ToString()));
+                ("duration", p.Duration), ("judgedStartTick", p.StartTick), ("judgedEndTick", p.EndTick),
+                ("shownTick", p.ShownTick), ("observedTick", p.ObservedEndTick), ("observeDelayTicks", p.ObservedEndTick - p.EndTick),
+                ("elapsedGame", p.Elapsed), ("progress", p.Progress), ("bossState", p.Enemy.State.ToString()));
         }
     }
 }

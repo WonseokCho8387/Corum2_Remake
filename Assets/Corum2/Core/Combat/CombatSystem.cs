@@ -940,6 +940,7 @@ namespace Corum2.Core
                 if (en.TransitionTimer > 0f)
                 {
                     en.TransitionTimer = 0f;
+                    PushTransitionEvent(TransitionEventKind.Cancel, en);
                     Log.Emit("boss.transitionCancel", en.Id, "", stateBefore.ToString(), "Dead", "Death(EXP-BOSS-02)", ("phase", en.PhaseId));
                 }
             }

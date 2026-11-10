@@ -48,7 +48,8 @@ namespace Corum2.Unity
         {
             var go = GameObject.CreatePrimitive(PrimitiveType.Cube);
             go.name = name;
-            Object.Destroy(go.GetComponent<Collider>());
+            if (Application.isPlaying) Object.Destroy(go.GetComponent<Collider>());
+            else Object.DestroyImmediate(go.GetComponent<Collider>()); // EditMode tests
             go.transform.SetParent(_parent, false);
             go.GetComponent<MeshRenderer>().sharedMaterial = m;
             go.SetActive(false);

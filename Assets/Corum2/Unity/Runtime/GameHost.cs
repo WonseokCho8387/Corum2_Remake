@@ -252,7 +252,7 @@ namespace Corum2.Unity
             _playerView.Apply(new Vector3(p.x, p.y, z), Sim.Player.Height, Sim.Player.Facing, Sim.Player.State);
             // TC-01-01 / TC-UNITY-02: the rendered player must stay on the combat plane.
             if (_combatView != null) _combatView.Sync(Sim.Combat, z);
-            if (_presentationView != null) _presentationView.Sync(Sim, z);
+            if (_presentationView != null) _presentationView.Sync(Sim, z, Time.fixedDeltaTime);
             _viewFrames++;
             _maxViewZError = Mathf.Max(_maxViewZError, Mathf.Abs(_playerView.Root.position.z - z));
             if (_camera != null)

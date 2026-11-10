@@ -45,9 +45,61 @@ namespace Corum2.Core
     ///               attack start; guard = guard rule on front physical hits; evade = back step, no invulnerability
     /// Not implemented: real presentation assets (transition animation / VFX / camera are ids only).
     /// </summary>
+    public enum TransitionEventKind
+    {
+        Start,
+        End,
+        Cancel,
+    }
+
+    /// <summary>A judged boss transition lifecycle event, in simulation order (WP04-F04). The presentation layer drains
+    /// these instead of sampling the boss state at render time, so judged ticks are never replaced by render ticks.</summary>
+    public readonly struct TransitionEvent
+    {
+        public readonly TransitionEventKind Kind;
+        public readonly EnemyActor Enemy;
+        public readonly int Serial;
+        public readonly long Tick;
+        public readonly string Phase;
+        public readonly float Duration;
+
+        public TransitionEvent(TransitionEventKind kind, EnemyActor enemy, int serial, long tick, string phase, float duration)
+        {
+            Kind = kind;
+            Enemy = enemy;
+            Serial = serial;
+            Tick = tick;
+            Phase = phase;
+            Duration = duration;
+        }
+    }
+
     public sealed partial class CombatSystem
     {
         public readonly List<Projectile> Projectiles = new List<Projectile>();
+
+        /// <summary>Judged transition events not yet consumed by a presentation layer. Bounded: when nobody drains them
+        /// (headless runs) the oldest are dropped and counted in DroppedTransitionEvents.</summary>
+        readonly List<TransitionEvent> _transitionEvents = new List<TransitionEvent>();
+        public int DroppedTransitionEvents { get; private set; }
+        const int MaxTransitionEvents = 1024;
+
+        void PushTransitionEvent(TransitionEventKind kind, EnemyActor en)
+        {
+            if (_transitionEvents.Count >= MaxTransitionEvents)
+            {
+                _transitionEvents.RemoveAt(0);
+                DroppedTransitionEvents++;
+            }
+            _transitionEvents.Add(new TransitionEvent(kind, en, en.TransitionSerial, Log.Tick, en.PhaseId, en.TransitionDuration));
+        }
+
+        /// <summary>Moves every queued transition event into <paramref name="into"/> (oldest first) and clears the queue.</summary>
+        public void DrainTransitionEvents(List<TransitionEvent> into)
+        {
+            into.AddRange(_transitionEvents);
+            _transitionEvents.Clear();
+        }
         long _nextProjectileId = 1;
 
         /// <summary>Raise a named event for a boss (R-08-10). "*" = every boss on the map.</summary>
@@ -85,6 +137,7 @@ namespace Corum2.Core
             en.TransitionTimer = 0f;
             var st = en.State;
             if (st == EnemyState.PhaseTransition) en.State = EnemyState.Idle;
+            PushTransitionEvent(TransitionEventKind.End, en);
             Log.Emit("boss.transitionEnd", en.Id, "", "PhaseTransition", en.State.ToString(),
                 st == EnemyState.PhaseTransition ? "TransitionDone(EXP-BOSS-03)" : "TransitionDoneDuringReaction(EXP-BOSS-03)",
                 ("phase", en.PhaseId), ("stateAtEnd", st));
@@ -451,6 +504,7 @@ namespace Corum2.Core
                 en.TransitionTimer = Math.Max(target.TransitionTime, 1e-6f); // own timer; hits do not overwrite it (WP04-F03)
                 en.TransitionDuration = target.TransitionTime;
                 en.TransitionSerial++;
+                PushTransitionEvent(TransitionEventKind.Start, en);
                 en.Timer = 0f;
                 en.MoveVelX = 0f;
                 if (en.NewPlayerAttack) DefenseSkip(en, "Busy:TransitionStart");
