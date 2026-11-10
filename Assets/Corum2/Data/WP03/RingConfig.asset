@@ -1,0 +1,150 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1b64f8911849ea49bf7774af28987e9, type: 3}
+  m_Name: RingConfig
+  m_EditorClassIdentifier: Corum2.Unity::Corum2.Unity.RingConfig
+  meta:
+    domainId: ring.config
+    schemaVersion: 1
+    dataVersion: wp03-1
+    status: experimental
+    policyIds:
+    - EXP-RING-01
+    - EXP-RING-02
+    - EXP-ITEM-02
+    - TEST-ITEM-01
+    relatedRIds:
+    - R-02-03
+    - R-02-04
+    - R-02-05
+    - R-02-06
+    - R-02-07
+    - R-02-08
+    - R-02-09
+    - R-02-10
+    - R-02-11
+    - R-05-05
+    changeRequestId: 
+  slowScale: 0.2
+  slotsPerPage: 8
+  cursorDeadzone: 0.35
+  magics:
+  - id: fire
+    power: 30
+    castTime: 0.2
+  items:
+  - id: potion
+    displayName: Potion
+    description: Restores 20 HP.
+    kind: 0
+    effect: 1
+    amount: 20
+    magicId: 
+    cooldown: 1
+  - id: hipotion
+    displayName: Hi-Potion
+    description: Restores 50 HP.
+    kind: 0
+    effect: 1
+    amount: 50
+    magicId: 
+    cooldown: 1
+  - id: herb
+    displayName: Herb
+    description: Restores 5 HP.
+    kind: 0
+    effect: 1
+    amount: 5
+    magicId: 
+    cooldown: 0.5
+  - id: scroll
+    displayName: Fire Scroll
+    description: Casts the test magic 'fire' once (same data as the command).
+    kind: 1
+    effect: 2
+    amount: 0
+    magicId: fire
+    cooldown: 1
+  - id: key
+    displayName: Old Key
+    description: Quest item. Cannot be discarded.
+    kind: 2
+    effect: 0
+    amount: 0
+    magicId: 
+    cooldown: 0
+  - id: bread
+    displayName: Bread
+    description: Restores 10 HP.
+    kind: 0
+    effect: 1
+    amount: 10
+    magicId: 
+    cooldown: 1
+  - id: water
+    displayName: Water
+    description: Restores 8 HP.
+    kind: 0
+    effect: 1
+    amount: 8
+    magicId: 
+    cooldown: 0.5
+  - id: apple
+    displayName: Apple
+    description: Restores 3 HP.
+    kind: 0
+    effect: 1
+    amount: 3
+    magicId: 
+    cooldown: 0.5
+  - id: elixir
+    displayName: Elixir
+    description: Restores 100 HP.
+    kind: 0
+    effect: 1
+    amount: 100
+    magicId: 
+    cooldown: 2
+  - id: meat
+    displayName: Meat
+    description: Restores 30 HP.
+    kind: 0
+    effect: 1
+    amount: 30
+    magicId: 
+    cooldown: 1
+  startInventory:
+  - itemId: potion
+    count: 3
+  - itemId: hipotion
+    count: 1
+  - itemId: herb
+    count: 2
+  - itemId: scroll
+    count: 2
+  - itemId: key
+    count: 1
+  - itemId: bread
+    count: 2
+  - itemId: water
+    count: 1
+  - itemId: apple
+    count: 3
+  - itemId: elixir
+    count: 1
+  - itemId: meat
+    count: 1
+  startQuickslots:
+  - 
+  - 
+  - 
+  - 

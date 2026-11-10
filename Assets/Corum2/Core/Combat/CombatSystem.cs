@@ -86,6 +86,7 @@ namespace Corum2.Core
         public readonly List<EnemyActor> Enemies = new List<EnemyActor>();
 
         public float PlayerHp;
+        public float PlayerMaxHp => _p.PlayerMaxHp;
         public PlayerAttack Attack { get; private set; }
 
         public long ChainId { get; private set; }

@@ -57,6 +57,8 @@ namespace Corum2.Unity
         }
 
         public Dir8 CurrentDir => _dir.Current;
+        public Vector2 Stick => _stick;
+        public string LastDevice => _lastDevice;
 
         void OnMove(InputAction.CallbackContext ctx)
         {

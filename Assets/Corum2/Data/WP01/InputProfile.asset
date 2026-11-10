@@ -15,13 +15,14 @@ MonoBehaviour:
   meta:
     domainId: input.profile
     schemaVersion: 1
-    dataVersion: wp01-r1
+    dataVersion: wp03-1
     status: experimental
     policyIds:
     - EXP-INPUT-01
     - EXP-INPUT-02
     - EXP-INPUT-03
     - EXP-TIME-01
+    - EXP-INPUT-04
     relatedRIds:
     - R-02-01
     - R-03-01
@@ -79,3 +80,18 @@ MonoBehaviour:
     - <Gamepad>/dpad/left
     - <Keyboard>/4
     policy: EXP-INPUT-02
+  - action: 13
+    paths:
+    - <Gamepad>/buttonEast
+    - <Keyboard>/e
+    policy: EXP-INPUT-04
+  - action: 14
+    paths:
+    - <Gamepad>/leftTrigger
+    - <Keyboard>/z
+    policy: EXP-INPUT-04
+  - action: 15
+    paths:
+    - <Gamepad>/rightTrigger
+    - <Keyboard>/c
+    policy: EXP-INPUT-04

@@ -91,13 +91,42 @@ namespace Corum2.Core
             "EXP-DOWN-02 down-diagonal + special without a downed enemy in range becomes the launcher (CF-10)",
             "EXP-BODY-01 bodies pass through each other (no push)",
             "FIXTURE-ENEMY-01 training dummies attack on a timer when in range (test fixture, not P0-08 AI)",
+            // WP-03 ring / items (only active when ring data is present)
+            "EXP-RING-01 ring slow motion = Unity Time.timeScale 0.2 while open (spec proposal value); simulation stays 50 Hz game time; ring UI runs at real time (U-06)",
+            "EXP-RING-02 8 ring slots per page, one per 8-way stick sector, slot 0 = up, clockwise (U-03)",
+            "EXP-RING-03 opening the ring releases held movement for the game; closing re-presses the still-held direction; button releases still reach the game",
+            "EXP-RING-04 LT/RT wrap around the ring pages (U-03)",
+            "EXP-RING-05 B in registration cancels registration; X or B closes the description; the ring stays (U-03)",
+            "EXP-RING-06 being hit keeps the ring open; death closes it (U-03)",
+            "EXP-RING-07 discard removes one unit (U-03)",
+            "EXP-RING-08 registering onto a used quickslot replaces it; one item may sit in several slots (spec proposal, U-03)",
+            "EXP-RING-09 the D-pad assigns in registration whether or not the stick is back at neutral",
+            "EXP-RING-10 D-pad outside registration is ignored while the ring is open (U-03, TC-UI-12)",
+            "EXP-RING-11 a rejected use keeps the ring open with feedback (U-03)",
+            "EXP-ITEM-01 an accepted item use runs at the start of the next simulation tick",
+            "EXP-ITEM-02 one shared item cooldown after a use, length from the used item, game seconds (U-03)",
+            "EXP-ITEM-03 a use requested during an attack, dash or dive waits until that motion ends (CF-07)",
+            "EXP-ITEM-04 the item is consumed when the effect runs; gone by then = cancelled, nothing consumed (CF-08)",
+            "EXP-ITEM-05 one pending use at a time; more requests are rejected and consume nothing (CF-08)",
+            "EXP-ITEM-06 death cancels a pending use without consuming it (CF-08)",
+            "EXP-QS-01 a quickslot press during hit reaction is rejected, not reserved (CF-08)",
+            "EXP-QS-02 a quickslot whose item runs out is cleared (U-03)",
+            "EXP-RING-12 the ring is centred on the player but clamped to stay fully on screen (U-03/U-11 layout); test UI is placeholder",
+            "EXP-INPUT-04 temporary keyboard keys for B (E), LT (Z), RT (C)",
+            "TEST-ITEM-01 test items, heal amounts and magic numbers are fixtures, not content",
         };
 
         /// <summary>Null when the run has no combat data (WP-01 scenes).</summary>
         public readonly CombatSystem Combat;
+        /// <summary>Null when the run has no ring data (WP-01/02 scenes).</summary>
+        public readonly ItemUseSystem Items;
+        public readonly RingController Ring;
+        public readonly RingInputRouter Router;
+        long _syntheticEventId = 1000000000;
 
         public Simulation(WorldData world, MovementProfile movement, InputProfile input, AirUnlocks unlocks, DiagLogger log,
-            CombatProfile combat = null, CombatUnlocks combatUnlocks = null, IEnumerable<EnemyDefinition> enemies = null)
+            CombatProfile combat = null, CombatUnlocks combatUnlocks = null, IEnumerable<EnemyDefinition> enemies = null,
+            RingProfile ring = null)
         {
             World = world;
             Movement = movement;
@@ -105,10 +134,33 @@ namespace Corum2.Core
             Unlocks = unlocks;
             Log = log;
             Log.DataVersion = movement.Meta.Tag + ";" + input.Meta.Tag + ";" + unlocks.Meta.Tag + ";world:" + WorldVersion(world) +
-                              (combat != null ? ";" + combat.Meta.Tag + ";" + (combatUnlocks?.Meta.Tag ?? "") : "");
+                              (combat != null ? ";" + combat.Meta.Tag + ";" + (combatUnlocks?.Meta.Tag ?? "") : "") +
+                              (ring != null ? ";" + ring.Meta.Tag : "");
             Player = new PlayerMotor(movement, input, unlocks, log);
             if (combat != null)
                 Combat = new CombatSystem(this, combat, combatUnlocks ?? new CombatUnlocks(), enemies ?? new EnemyDefinition[0]);
+            if (ring != null)
+            {
+                Items = new ItemUseSystem(this, ring);
+                Ring = new RingController(ring, Items, log, () => Tick);
+                Router = new RingInputRouter(Ring, Items, log, () => Player.State, () => _syntheticEventId++);
+            }
+        }
+
+        /// <summary>
+        /// Routes raw input between ticks (ring / quickslot / game). Without ring data every event goes to the game.
+        /// The Unity host calls this from Update; tests call it before Step.
+        /// </summary>
+        public void RouteInput(in InputEvent e, List<InputEvent> toGame)
+        {
+            if (Router == null) { toGame.Add(e); return; }
+            Router.Handle(e, toGame);
+        }
+
+        /// <summary>Real-time ring housekeeping between ticks (death closes the ring, EXP-RING-06).</summary>
+        public void UiUpdate(double realTime)
+        {
+            if (Ring != null && Ring.IsOpen && Player.State == MotorState.Dead) Ring.Close("PlayerDead(EXP-RING-06)", realTime);
         }
 
         static string WorldVersion(WorldData w)
@@ -140,6 +192,8 @@ namespace Corum2.Core
             Log.Tick = Tick;
             Log.GameTime = GameTime;
             Log.RealTime = input.RealTime;
+
+            Items?.BeginTick();
 
             foreach (var e in input.Events)
             {

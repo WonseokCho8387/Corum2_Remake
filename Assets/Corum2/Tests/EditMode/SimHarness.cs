@@ -17,14 +17,17 @@ namespace Corum2.Tests
         readonly DirectionEdgeTracker _dir = new DirectionEdgeTracker();
         readonly TickInput _tick = new TickInput();
         readonly List<InputEvent> _scratch = new List<InputEvent>();
+        readonly List<InputEvent> _routed = new List<InputEvent>();
+        readonly List<InputEvent> _preRouted = new List<InputEvent>();
         double _now;
 
         public SimHarness(string testCaseId, AirUnlocks unlocks = null, WorldData world = null, MovementProfile move = null,
-            CombatProfile combat = null, CombatUnlocks combatUnlocks = null, List<EnemyDefinition> enemies = null)
+            CombatProfile combat = null, CombatUnlocks combatUnlocks = null, List<EnemyDefinition> enemies = null,
+            RingProfile ring = null)
         {
             var log = new DiagLogger(Sink) { RunId = "editmode", TestCaseId = testCaseId, TickSamples = true };
             Sim = new Simulation(world ?? Fixtures.World(), move ?? Fixtures.Movement(), Fixtures.Input(), unlocks ?? Fixtures.Unlocks(false, false, false), log,
-                combat, combatUnlocks, enemies);
+                combat, combatUnlocks, enemies, ring);
             Sim.Start(0);
         }
 
@@ -67,6 +70,24 @@ namespace Corum2.Tests
             return this;
         }
 
+        /// <summary>Ring cursor stick sample at the current time (the Unity host sends one per frame).</summary>
+        public SimHarness Cursor(float x, float y)
+        {
+            Sim.Ring.Cursor(x, y, _now);
+            return this;
+        }
+
+        /// <summary>Press and release, routed at once (between ticks, like the host's Update).</summary>
+        public SimHarness Ui(LogicalAction a)
+        {
+            Tap(a);
+            Transport.Drain(_tick);
+            _routed.Clear();
+            foreach (var e in _tick.Events) Sim.RouteInput(e, _routed);
+            _preRouted.AddRange(_routed);
+            return this;
+        }
+
         public SimHarness Tap(LogicalAction a)
         {
             Press(a);
@@ -82,6 +103,18 @@ namespace Corum2.Tests
                 Transport.Drain(_tick);
                 _tick.RealTime = _now;
                 _tick.Dir = _dir.Current;
+                if (Sim.Router != null)
+                {
+                    // Same order as the Unity host: route between ticks, then the game gets what the router forwards.
+                    _routed.Clear();
+                    foreach (var e in _tick.Events) Sim.RouteInput(e, _routed);
+                    _tick.Events.Clear();
+                    _tick.Events.AddRange(_preRouted);
+                    _tick.Events.AddRange(_routed);
+                    _preRouted.Clear();
+                    _tick.Dir = Sim.Router.GameDir;
+                    Sim.UiUpdate(_now);
+                }
                 _tick.Device = "test";
                 Sim.Step(_tick, Dt);
             }

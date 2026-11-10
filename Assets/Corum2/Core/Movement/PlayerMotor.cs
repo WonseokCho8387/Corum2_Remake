@@ -188,9 +188,13 @@ namespace Corum2.Core
                 case LogicalAction.Guard:
                     return NotImplemented(e, "Guard/parry is P0-07 (WP-02). Air RB guard (R-03-06) not implemented in WP-01.");
                 case LogicalAction.RingToggle:
-                    return NotImplemented(e, "Ring inventory is P0-02 ring UI (WP-03).");
+                    return NotImplemented(e, "Ring is handled by the ring router (WP-03); this scene has no ring data.");
+                case LogicalAction.ButtonB:
+                case LogicalAction.PagePrev:
+                case LogicalAction.PageNext:
+                    return NotImplemented(e, "B/LT/RT outside the ring are undecided (spec 4.1).");
                 default:
-                    return NotImplemented(e, "Quickslots are P0-02 (WP-03).");
+                    return NotImplemented(e, "Quickslots are handled by the ring router (WP-03); this scene has no ring data.");
             }
         }
 

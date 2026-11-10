@@ -30,6 +30,9 @@ namespace Corum2.Unity
         public CombatUnlockFixture combatUnlocks;
         public List<EnemyDefinitionAsset> enemies = new List<EnemyDefinitionAsset>();
 
+        [Header("Ring / quickslots (WP-03; leave empty for scenes without items)")]
+        public RingConfig ring;
+
         [Header("Run")]
         public string testCaseId = "manual";
         [Tooltip("Write a 'tick' log line every fixed step (trajectory logs).")]
@@ -50,6 +53,13 @@ namespace Corum2.Unity
         public readonly List<string> ValidationErrors = new List<string>();
 
         InputTransport _transport;
+        /// <summary>Events the ring router forwarded to the game (ring scenes only); drained by FixedUpdate.</summary>
+        InputTransport _gameTransport;
+        readonly TickInput _uiTick = new TickInput();
+        readonly List<InputEvent> _routed = new List<InputEvent>();
+        RingProfile _ringProfile;
+        RingView _ringView;
+        float _appliedTimeScale = 1f;
         InputCollector _collector;
         NdjsonFileSink _sink;
         readonly TickInput _tick = new TickInput();
@@ -115,6 +125,12 @@ namespace Corum2.Unity
                 foreach (var issue in DataValidator.ValidateCombat(combatProfile, combatUnlock, enemyDefs, worldData))
                     ValidationErrors.Add(issue.ToString());
             }
+            if (ring != null)
+            {
+                _ringProfile = ring.ToCore();
+                foreach (var issue in RingValidator.Validate(_ringProfile)) ValidationErrors.Add(issue.ToString());
+                if (combat == null) ValidationErrors.Add("RingConfig: ring scenes need combat data (player HP for heal items)");
+            }
             BuildHud();
             if (ValidationErrors.Count > 0)
             {
@@ -136,17 +152,24 @@ namespace Corum2.Unity
             if (combatUnlocks != null) extra.Add(combatUnlocks);
             foreach (var e in enemies)
                 if (e != null) extra.Add(e);
+            if (ring != null) extra.Add(ring);
             DataSnapshotPath = RunFiles.WriteDataSnapshot(dir, RunId, world, movement, inputProfile, unlocks, extra);
 
             var log = new DiagLogger(new SinkTee(_sink, this)) { RunId = RunId, TestCaseId = testCaseId, TickSamples = tickSamples };
-            Sim = new Simulation(worldData, move, input, unlock, log, combatProfile, combatUnlock, enemyDefs);
+            Sim = new Simulation(worldData, move, input, unlock, log, combatProfile, combatUnlock, enemyDefs, _ringProfile);
             _transport = new InputTransport();
+            if (Sim.Router != null) _gameTransport = new InputTransport();
             _collector = new InputCollector(inputProfile, _transport);
 
             _worldView = new WorldView(transform);
             _worldView.Build(worldData, world.maps);
             _playerView = new PlayerView(transform, _worldView, move.BodyWidth);
             if (Sim.Combat != null) _combatView = new CombatView(transform, _worldView, enemies);
+            if (Sim.Ring != null)
+            {
+                if (_hudCanvas == null) BuildCanvas();
+                _ringView = new RingView(_hudCanvas.transform);
+            }
             _camera = Camera.main;
             if (_camera != null)
             {
@@ -169,7 +192,18 @@ namespace Corum2.Unity
             _prevCamX = _currCamX;
             var mapBefore = Sim.CurrentMap.Id;
 
-            _collector.Fill(_tick);
+            if (_gameTransport == null) _collector.Fill(_tick);
+            else
+            {
+                // Ring scenes: the game only sees what the router forwarded; the stick is the ring cursor while open.
+                _gameTransport.Drain(_tick);
+                _tick.Dir = Sim.Router.GameDir;
+                var open = Sim.Ring.IsOpen;
+                _tick.StickX = open ? 0f : _collector.Stick.x;
+                _tick.StickY = open ? 0f : _collector.Stick.y;
+                _tick.Device = _collector.LastDevice;
+                _tick.RealTime = Time.realtimeSinceStartupAsDouble;
+            }
             Sim.Step(_tick, Time.fixedDeltaTime);
 
             _currPos = ToV(Sim.Player.Position);
@@ -190,6 +224,7 @@ namespace Corum2.Unity
                 return;
             }
             RunScript();
+            RouteUi();
 
             var alpha = Mathf.Clamp01((float)((Time.timeAsDouble - Time.fixedTimeAsDouble) / Time.fixedDeltaTime));
             var map = Sim.CurrentMap;
@@ -209,6 +244,12 @@ namespace Corum2.Unity
             {
                 var cx = Mathf.Lerp(_prevCamX, _currCamX, alpha);
                 _camera.transform.position = new Vector3(cx, Sim.Camera.Y, z - cameraDistance);
+            }
+
+            if (_ringView != null && _camera != null)
+            {
+                var vp = _camera.WorldToViewportPoint(new Vector3(p.x, p.y + Sim.Player.Height * 0.5f, z));
+                _ringView.Apply(Sim, _ringProfile, new Vector2(vp.x, vp.y), Time.timeScale);
             }
 
             var dt = Time.unscaledDeltaTime;
@@ -256,8 +297,36 @@ namespace Corum2.Unity
             FrameSink(_captureTex);
         }
 
+        /// <summary>
+        /// Ring scenes: routes this frame's input at real time (ring / quickslot / game), feeds the ring cursor and sets
+        /// the world time scale (R-02-03, EXP-RING-01). Runs every rendered frame, so the ring keeps normal speed.
+        /// </summary>
+        void RouteUi()
+        {
+            if (_gameTransport == null) return;
+            var now = Time.realtimeSinceStartupAsDouble;
+            _transport.Drain(_uiTick);
+            _routed.Clear();
+            foreach (var e in _uiTick.Events) Sim.RouteInput(e, _routed);
+            foreach (var e in _routed) _gameTransport.Enqueue(e);
+            if (Sim.Ring.IsOpen) Sim.Ring.Cursor(_collector.Stick.x, _collector.Stick.y, now);
+            Sim.UiUpdate(now);
+            var want = Sim.Ring.IsOpen ? _ringProfile.SlowScale : 1f;
+            if (!Mathf.Approximately(want, _appliedTimeScale))
+            {
+                Time.timeScale = want;
+                Sim.Log.RealTime = now;
+                Sim.Log.Emit("time.scale", "", "", _appliedTimeScale.ToString("0.###", CultureInfo.InvariantCulture),
+                    want.ToString("0.###", CultureInfo.InvariantCulture), Sim.Ring.IsOpen ? "RingOpen(R-02-03, EXP-RING-01)" : "RingClosed(R-02-03)",
+                    ("timeScale", want), ("fixedDeltaTime", Time.fixedDeltaTime), ("unscaledTime", Time.unscaledTimeAsDouble),
+                    ("gameTime", Sim.GameTime), ("ringOpenCount", Sim.Ring.OpenCount));
+                _appliedTimeScale = want;
+            }
+        }
+
         void OnDestroy()
         {
+            if (_gameTransport != null) Time.timeScale = 1f;
             _collector?.Dispose();
             _virtual?.Dispose();
             if (Sim != null)
@@ -493,6 +562,12 @@ namespace Corum2.Unity
         void BuildHud()
         {
             if (!showHud) return;
+            BuildCanvas();
+            BuildHudText();
+        }
+
+        void BuildCanvas()
+        {
             var canvasGo = new GameObject("DebugHud", typeof(Canvas), typeof(CanvasScaler));
             canvasGo.transform.SetParent(transform, false);
             var canvas = canvasGo.GetComponent<Canvas>();
@@ -501,8 +576,12 @@ namespace Corum2.Unity
             var scaler = canvasGo.GetComponent<CanvasScaler>();
             scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
             scaler.referenceResolution = new Vector2(1280, 800);
+        }
+
+        void BuildHudText()
+        {
             var textGo = new GameObject("Text", typeof(RectTransform), typeof(Text));
-            textGo.transform.SetParent(canvasGo.transform, false);
+            textGo.transform.SetParent(_hudCanvas.transform, false);
             var rt = (RectTransform)textGo.transform;
             rt.anchorMin = new Vector2(0, 1);
             rt.anchorMax = new Vector2(0, 1);

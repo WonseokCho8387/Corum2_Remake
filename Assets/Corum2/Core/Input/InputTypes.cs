@@ -23,6 +23,9 @@ namespace Corum2.Core
         QuickDown,
         QuickLeft,
         QuickRight,
+        ButtonB,        // B: discard / cancel inside the ring (R-02-05). Outside the ring B is undecided (spec 4.1).
+        PagePrev,       // LT: previous ring page (R-02-05). Unassigned outside the ring.
+        PageNext,       // RT: next ring page
     }
 
     public enum InputEdge
