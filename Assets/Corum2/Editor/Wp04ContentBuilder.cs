@@ -77,7 +77,7 @@ namespace Corum2.EditorTools
             map.spawns = new List<SpawnData>
             {
                 Sp("Start", 4), Sp("Z1Ten", 12), Sp("Z2Chaser", 49), Sp("Z3Fleer", 79), Sp("Z4Hold", 109), Sp("Z5Jumper", 139),
-                Sp("Z6Ranged", 167), Sp("Z6Mid", 173), Sp("Z6In", 175.5f), Sp("Z7Boss", 204), Sp("Z7Near", 214.5f),
+                Sp("Z6Ranged", 167), Sp("Z6Mid", 173), Sp("Z6In", 175.5f), Sp("Z7Boss", 207), Sp("Z7Near", 214.5f),
             };
             map.left = new EdgeData { policy = EdgePolicy.Blocked };
             map.right = new EdgeData { policy = EdgePolicy.Blocked };
