@@ -57,6 +57,7 @@ namespace Corum2.Unity
         InputTransport _gameTransport;
         readonly TickInput _uiTick = new TickInput();
         readonly List<InputEvent> _routed = new List<InputEvent>();
+        readonly List<StickSample> _samples = new List<StickSample>();
         RingProfile _ringProfile;
         RingView _ringView;
         float _appliedTimeScale = 1f;
@@ -306,11 +307,11 @@ namespace Corum2.Unity
             if (_gameTransport == null) return;
             var now = Time.realtimeSinceStartupAsDouble;
             _transport.Drain(_uiTick);
+            _collector.DrainSamples(_samples);
             _routed.Clear();
-            foreach (var e in _uiTick.Events) Sim.RouteInput(e, _routed);
+            // WP03-F02: stick samples and presses are replayed in the order they happened.
+            Sim.RouteFrame(_uiTick.Events, _samples, _routed, now);
             foreach (var e in _routed) _gameTransport.Enqueue(e);
-            if (Sim.Ring.IsOpen) Sim.Ring.Cursor(_collector.Stick.x, _collector.Stick.y, now);
-            Sim.UiUpdate(now);
             var want = Sim.Ring.IsOpen ? _ringProfile.SlowScale : 1f;
             if (!Mathf.Approximately(want, _appliedTimeScale))
             {

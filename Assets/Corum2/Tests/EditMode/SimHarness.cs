@@ -77,6 +77,36 @@ namespace Corum2.Tests
             return this;
         }
 
+        /// <summary>
+        /// One rendered frame of input, routed through Simulation.RouteFrame exactly like the Unity host (WP03-F02).
+        /// Items happen in the given order at the same device time: a LogicalAction is a press and release, a
+        /// (x, y) tuple is a stick sample (also producing the Move edges the collector would emit).
+        /// </summary>
+        public SimHarness Frame(params object[] items)
+        {
+            var events = new List<InputEvent>();
+            var samples = new List<StickSample>();
+            foreach (var it in items)
+            {
+                if (it is LogicalAction a)
+                {
+                    events.Add(new InputEvent(Transport.NextEventId(), a, InputEdge.Press, _now, "frame", a.ToString()));
+                    events.Add(new InputEvent(Transport.NextEventId(), a, InputEdge.Release, _now, "frame", a.ToString()));
+                }
+                else if (it is System.ValueTuple<float, float> xy)
+                {
+                    samples.Add(new StickSample(_now, xy.Item1, xy.Item2, Transport.NextEventId()));
+                    _scratch.Clear();
+                    _dir.Update(Dir8Util.FromStick(xy.Item1, xy.Item2, 0.35f), _now, "frame", "stick", Transport.NextEventId, _scratch);
+                    events.AddRange(_scratch);
+                }
+            }
+            _routed.Clear();
+            Sim.RouteFrame(events, samples, _routed, _now);
+            _preRouted.AddRange(_routed);
+            return this;
+        }
+
         /// <summary>Press and release, routed at once (between ticks, like the host's Update).</summary>
         public SimHarness Ui(LogicalAction a)
         {

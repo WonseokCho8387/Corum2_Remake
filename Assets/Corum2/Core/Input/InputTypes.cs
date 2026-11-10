@@ -137,6 +137,29 @@ namespace Corum2.Core
         }
     }
 
+    /// <summary>
+    /// One analog stick reading with its device time and an arrival sequence number taken from the same counter as
+    /// InputEvent ids, so stick changes and button presses can be replayed in the order they happened (WP03-F02).
+    /// </summary>
+    public readonly struct StickSample
+    {
+        public readonly double Time;
+        public readonly float X;
+        public readonly float Y;
+        public readonly long Seq;
+
+        public StickSample(double time, float x, float y, long seq)
+        {
+            Time = time;
+            X = x;
+            Y = y;
+            Seq = seq;
+        }
+
+        /// <summary>True if this sample happened before the event (time, then arrival order).</summary>
+        public bool Before(in InputEvent e) => Time < e.RawTime || (Time == e.RawTime && Seq < e.EventId);
+    }
+
     /// <summary>Everything the simulation receives for one fixed tick.</summary>
     public sealed class TickInput
     {

@@ -100,7 +100,6 @@ namespace Corum2.Core
             "EXP-RING-06 being hit keeps the ring open; death closes it (U-03)",
             "EXP-RING-07 discard removes one unit (U-03)",
             "EXP-RING-08 registering onto a used quickslot replaces it; one item may sit in several slots (spec proposal, U-03)",
-            "EXP-RING-09 the D-pad assigns in registration whether or not the stick is back at neutral",
             "EXP-RING-10 D-pad outside registration is ignored while the ring is open (U-03, TC-UI-12)",
             "EXP-RING-11 a rejected use keeps the ring open with feedback (U-03)",
             "EXP-ITEM-01 an accepted item use runs at the start of the next simulation tick",
@@ -155,6 +154,36 @@ namespace Corum2.Core
         {
             if (Router == null) { toGame.Add(e); return; }
             Router.Handle(e, toGame);
+        }
+
+        float _stickX, _stickY;
+
+        /// <summary>
+        /// Routes one rendered frame of input (WP03-F02). Stick samples and button/direction events are replayed in the
+        /// order they happened (device time, then arrival order), so the ring cursor always reflects the stick at the
+        /// moment of each press: "stick to neutral, then A" uses nothing and "A, then stick moves" uses the item that was
+        /// selected when A was pressed. When the ring opens, the cursor takes the stick as it is at that moment.
+        /// Events must be sorted by (RawTime, EventId) and samples by (Time, Seq).
+        /// </summary>
+        public void RouteFrame(List<InputEvent> events, List<StickSample> samples, List<InputEvent> toGame, double now)
+        {
+            var si = 0;
+            foreach (var e in events)
+            {
+                while (si < samples.Count && samples[si].Before(e)) ApplyStick(samples[si++]);
+                var wasOpen = Ring != null && Ring.IsOpen;
+                RouteInput(e, toGame);
+                if (Ring != null && !wasOpen && Ring.IsOpen) Ring.Cursor(_stickX, _stickY, e.RawTime);
+            }
+            while (si < samples.Count) ApplyStick(samples[si++]);
+            UiUpdate(now);
+        }
+
+        void ApplyStick(in StickSample s)
+        {
+            _stickX = s.X;
+            _stickY = s.Y;
+            if (Ring != null && Ring.IsOpen) Ring.Cursor(s.X, s.Y, s.Time);
         }
 
         /// <summary>Real-time ring housekeeping between ticks (death closes the ring, EXP-RING-06).</summary>

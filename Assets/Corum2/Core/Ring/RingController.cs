@@ -33,7 +33,7 @@ namespace Corum2.Core
     ///   EXP-RING-06 being hit keeps the ring open; death closes it
     ///   EXP-RING-07 discard removes one unit
     ///   EXP-RING-08 registering onto a used quickslot replaces it (spec 4.2 proposal); the same item may sit in several slots
-    ///   EXP-RING-09 the D-pad press assigns whether or not the stick has returned to neutral
+    ///   (EXP-RING-09 withdrawn in WP-03-R1: R-02-07 requires the stick release before the D-pad, WP03-F01)
     ///   EXP-RING-10 D-pad outside registration is ignored while the ring is open (U-03 / TC-UI-12 open branch)
     ///   EXP-RING-11 a rejected use (cooldown, quest item, pending use) keeps the ring open with feedback
     /// </summary>
@@ -55,6 +55,8 @@ namespace Corum2.Core
         public string Feedback { get; private set; } = "";
         public int OpenCount { get; private set; }
         public string LastCloseReason { get; private set; } = "";
+        /// <summary>Registration only: the stick has been at neutral since Y fixed the target (R-02-07 step 3).</summary>
+        public bool ReleasedSinceRegister { get; private set; }
 
         Inventory Inv => _items.Inventory;
 
@@ -136,6 +138,11 @@ namespace Corum2.Core
             CursorX = x;
             CursorY = y;
             var slot = SlotOf(Dir8Util.FromStick(x, y, _p.CursorDeadzone));
+            if (Mode == RingMode.Registering && slot < 0 && !ReleasedSinceRegister)
+            {
+                ReleasedSinceRegister = true;
+                Emit("ring.release", "Held", "Released", "StickReleased(R-02-07)", realTime, ("stick", new Vec2(x, y)));
+            }
             if (slot == SelectedSlot) return;
             var before = SelectedSlot;
             SelectedSlot = slot;
@@ -236,7 +243,8 @@ namespace Corum2.Core
             var item = SelectedItem;
             if (item == null) return Ignore(LogicalAction.SpecialAttack, "NoSelection", realTime);
             TargetItem = item;
-            Feedback = "Choose a D-pad direction";
+            ReleasedSinceRegister = false;
+            Feedback = "Release the stick, then press a D-pad direction";
             SetMode(RingMode.Registering, "TargetFixed(R-02-07)", realTime);
             return "registering";
         }
@@ -248,12 +256,18 @@ namespace Corum2.Core
                 // TC-UI-12: outside registration the in-ring D-pad behaviour is undecided (U-03).
                 return Ignore(QuickSlotUtil.ToAction(q), "DpadOutsideRegistration(EXP-RING-10, U-03)", realTime);
             }
+            if (!ReleasedSinceRegister)
+            {
+                // R-02-07: select -> Y -> release the stick -> D-pad. Before the release nothing is assigned or used.
+                Feedback = "Release the stick first";
+                return Ignore(QuickSlotUtil.ToAction(q), "Registering:StickNotReleased(R-02-07)", realTime);
+            }
             var i = (int)q;
             var replaced = Inv.Quickslots[i];
             Inv.Quickslots[i] = TargetItem;
             Emit("quickslot.assign", replaced, TargetItem, "Registered(R-02-07)" + (replaced.Length > 0 ? ";Replaced(EXP-RING-08)" : ""), realTime,
-                ("slot", q), ("stickNeutral", SelectedSlot < 0), ("quickslots", Inv.DescribeQuickslots()), ("itemConsumed", false),
-                ("stickPolicy", "EXP-RING-09"));
+                ("slot", q), ("stickNeutral", SelectedSlot < 0), ("stickReleasedSinceY", ReleasedSinceRegister),
+                ("quickslots", Inv.DescribeQuickslots()), ("itemConsumed", false));
             Close("Registered(R-02-09)", realTime);
             return "registered:" + q;
         }

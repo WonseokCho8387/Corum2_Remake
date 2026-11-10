@@ -199,7 +199,7 @@ namespace Corum2.Tests
             Assert.IsTrue(h.R().IsOpen);
             Assert.AreEqual(1, h.Inv().Count("herb"), "browse: D-pad ignored (EXP-RING-10), no quickslot use");
             Assert.AreEqual(1, h.Count("ring.ignore", "DpadOutsideRegistration"));
-            h.Ui(LogicalAction.SpecialAttack).Ui(LogicalAction.QuickUp).Step(2);
+            h.Ui(LogicalAction.SpecialAttack).Point(-1).Ui(LogicalAction.QuickUp).Step(2);
             Assert.AreEqual("potion", h.Inv().Quickslots[0], "registration: D-pad assigns only, replacing herb (EXP-RING-08)");
             Assert.AreEqual(1, h.Inv().Count("herb"));
             Assert.AreEqual(0, h.Count("item.use"));
@@ -237,7 +237,7 @@ namespace Corum2.Tests
             h.Seconds(1.1);
             h.OpenAt(2).Ui(LogicalAction.SpecialAttack);
             Assert.IsTrue(h.R().IsOpen, "registration entry stays");
-            h.Ui(LogicalAction.QuickDown);
+            h.Point(-1).Ui(LogicalAction.QuickDown);
             Assert.IsFalse(h.R().IsOpen, "registration complete closes");
             h.OpenAt(-1);
             Assert.IsTrue(h.R().IsOpen, "neutral stays");

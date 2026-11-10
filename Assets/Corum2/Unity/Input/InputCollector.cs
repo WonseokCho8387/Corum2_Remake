@@ -22,6 +22,7 @@ namespace Corum2.Unity
         readonly InputAction _move;
         readonly float _deadzone;
         Vector2 _stick;
+        readonly List<StickSample> _samples = new List<StickSample>();
         string _lastDevice = "none";
 
         public InputCollector(InputProfileConfig profile, InputTransport transport)
@@ -64,6 +65,7 @@ namespace Corum2.Unity
         {
             _stick = ctx.ReadValue<Vector2>();
             _lastDevice = ctx.control != null ? ctx.control.device.name : _lastDevice;
+            _samples.Add(new StickSample(ctx.time, _stick.x, _stick.y, _transport.NextEventId()));
             var d = Dir8Util.FromStick(_stick.x, _stick.y, _deadzone);
             EmitDir(d, ctx.time, _lastDevice, ctx.control != null ? ctx.control.path : "move");
         }
@@ -87,7 +89,9 @@ namespace Corum2.Unity
         {
             _lastDevice = "script";
             _stick = new Vector2(Dir8Util.Horizontal(d), Dir8Util.Vertical(d));
-            EmitDir(d, Time.realtimeSinceStartupAsDouble, "script", "script/dir");
+            var now = Time.realtimeSinceStartupAsDouble;
+            _samples.Add(new StickSample(now, _stick.x, _stick.y, _transport.NextEventId()));
+            EmitDir(d, now, "script", "script/dir");
         }
 
         public void InjectButton(LogicalAction a, InputEdge edge)
@@ -96,9 +100,23 @@ namespace Corum2.Unity
             _transport.Enqueue(new InputEvent(_transport.NextEventId(), a, edge, Time.realtimeSinceStartupAsDouble, "script", "script/" + a));
         }
 
+        /// <summary>Stick samples since the last call, in (time, arrival) order (WP03-F02).</summary>
+        public void DrainSamples(List<StickSample> into)
+        {
+            into.Clear();
+            into.AddRange(_samples);
+            _samples.Clear();
+            into.Sort((a, b) =>
+            {
+                var c = a.Time.CompareTo(b.Time);
+                return c != 0 ? c : a.Seq.CompareTo(b.Seq);
+            });
+        }
+
         public void Fill(TickInput tick)
         {
             _transport.Drain(tick);
+            _samples.Clear();
             tick.Dir = _dir.Current;
             tick.StickX = _stick.x;
             tick.StickY = _stick.y;
