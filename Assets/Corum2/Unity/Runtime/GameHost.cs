@@ -558,7 +558,7 @@ namespace Corum2.Unity
                 m.Comment("Run manifest, master spec 13.3 field names. Typed YAML (WP02-M01-R1-A); run_id/started_at fixed at run creation,");
                 m.Comment("updated_at/manifest_revision change on each rewrite (input script, recorder, device changes) (WP02-M01-R1-B).");
             }
-            var git = _git;
+            var git = _source ?? (_source = SourceCapture.Take(dir, RunId)).Value;
             var spec = SpecHash(SpecFile);
             var appendix = SpecHash(AppendixFile);
             m.Set("spec_id", "CORUM2-P0-MASTER");
@@ -573,10 +573,9 @@ namespace Corum2.Unity
             m.Set("source_revision", git.rev);
             m.Set("source_capture_mode", "git");
             m.Set("working_tree_dirty", git.dirty);
-            m.Set("dirty_diff_artifact", git.dirty == true ? (object)git.paths : null);
+            m.Set("dirty_diff_artifact", git.DirtyArtifact());
             m.Set("source_snapshot_artifact", null);
-            m.Set("source_file_hash_manifest", git.tree == null ? null : new YamlMap().Add("mode", "git-tree").Add("tree", git.tree)
-                .Add("note", "file hashes are the git tree of source_revision; uncommitted paths are listed in dirty_diff_artifact"));
+            m.Set("source_file_hash_manifest", git.FileList());
             if (git.note != null) m.Set("source_note", git.note);
             m.Set("engine", "Unity");
             m.Set("engine_version", Application.unityVersion);
@@ -618,42 +617,146 @@ namespace Corum2.Unity
             return File.Exists(p) ? (RunFiles.FileSha256(p), null) : (null, p.Replace('\\', '/') + " not found");
         }
 
-        (string rev, bool? dirty, List<string> paths, string tree, string note)? _gitCache;
-        (string rev, bool? dirty, List<string> paths, string tree, string note) _git
+        SourceCapture? _source;
+
+        /// <summary>
+        /// Source state at run start (master 13.3, WP02-M02): git revision/tree, dirty state, the per-file
+        /// path/size/SHA-256 list of the source scope, and for a dirty tree the patch against HEAD plus copies of
+        /// untracked files. Taken once, at the first manifest write.
+        /// </summary>
+        struct SourceCapture
         {
-            get
+            public static readonly string[] Scope = { "Assets", "Packages", "ProjectSettings", "Tools" };
+            const long UntrackedCopyLimit = 16L * 1024 * 1024;
+
+            public string rev, tree, note;
+            public bool? dirty;
+            public List<string> status;
+            public string listFile, listSha;
+            public int entries;
+            public long totalBytes;
+            public List<string> missing;
+            public string patchFile, patchSha;
+            public string untrackedDir;
+            public List<string> untrackedCopied, untrackedSkipped;
+
+            public static SourceCapture Take(string runDir, string runId)
             {
-                if (_gitCache == null) _gitCache = ReadGit();
-                return _gitCache.Value;
+                var c = new SourceCapture { missing = new List<string>() };
+                var root = Path.GetFullPath(Path.Combine(Application.dataPath, ".."));
+                var rev = Git(root, "rev-parse HEAD");
+                List<string> paths;
+                if (rev == null)
+                {
+                    c.note = "git not available; repository state unknown; file list made by walking the scope folders";
+                    paths = SourceFileList.Walk(root, Scope);
+                }
+                else
+                {
+                    c.rev = rev.Trim();
+                    c.tree = Git(root, "rev-parse HEAD^{tree}")?.Trim();
+                    var status = Git(root, "status --porcelain");
+                    if (status == null) c.note = "git status failed; dirty state unknown";
+                    else
+                    {
+                        c.status = status.Split('\n').Select(l => l.TrimEnd('\r')).Where(l => l.Length > 0).ToList();
+                        c.dirty = c.status.Count > 0;
+                    }
+                    var ls = Git(root, "ls-files -z -c -o --exclude-standard -- " + string.Join(" ", Scope));
+                    paths = ls == null ? SourceFileList.Walk(root, Scope) : ls.Split('\0').Where(x => x.Length > 0).ToList();
+                }
+
+                var files = SourceFileList.Hash(root, paths, c.missing);
+                if (c.rev != null && files.Count > 0)
+                {
+                    // Git's id for the same content after its line-ending normalisation; links each row to a commit tree.
+                    var blobs = Git(root, "hash-object --stdin-paths", string.Join("\n", files.Select(f => f.Path)) + "\n");
+                    var ids = blobs?.Split('\n').Select(l => l.Trim()).Where(l => l.Length > 0).ToList();
+                    if (ids != null && ids.Count == files.Count)
+                        for (var i = 0; i < files.Count; i++) files[i].GitBlob = ids[i];
+                }
+                c.listFile = runId + ".source_files.tsv";
+                var header = new List<KeyValuePair<string, string>>
+                {
+                    new KeyValuePair<string, string>("run_id", runId),
+                    new KeyValuePair<string, string>("source_revision", c.rev ?? "unknown"),
+                    new KeyValuePair<string, string>("scope", string.Join(",", Scope) + " (git tracked + untracked not ignored)"),
+                    new KeyValuePair<string, string>("bytes_basis", "working tree file bytes read at run start"),
+                    new KeyValuePair<string, string>("git_blob", "git hash-object of the same file (after git line-ending normalisation)"),
+                    new KeyValuePair<string, string>("generated_at", RunManifest.FormatTime(DateTimeOffset.Now)),
+                };
+                var listPath = Path.Combine(runDir, c.listFile);
+                File.WriteAllText(listPath, SourceFileList.ToTsv(files, header), new UTF8Encoding(false));
+                c.listSha = RunFiles.FileSha256(listPath);
+                c.entries = files.Count;
+                c.totalBytes = SourceFileList.TotalBytes(files);
+
+                if (c.dirty == true)
+                {
+                    c.patchFile = runId + ".dirty.patch";
+                    var patch = Git(root, "diff HEAD --binary") ?? "";
+                    var patchPath = Path.Combine(runDir, c.patchFile);
+                    File.WriteAllText(patchPath, patch, new UTF8Encoding(false));
+                    c.patchSha = RunFiles.FileSha256(patchPath);
+                    c.untrackedDir = runId + ".untracked";
+                    c.untrackedCopied = new List<string>();
+                    c.untrackedSkipped = new List<string>();
+                    var untracked = Git(root, "ls-files -z -o --exclude-standard") ?? "";
+                    foreach (var rel in untracked.Split('\0').Where(x => x.Length > 0))
+                    {
+                        var src = Path.Combine(root, rel);
+                        if (!File.Exists(src)) continue;
+                        if (new FileInfo(src).Length > UntrackedCopyLimit) { c.untrackedSkipped.Add(rel); continue; }
+                        var dst = Path.Combine(runDir, c.untrackedDir, rel);
+                        Directory.CreateDirectory(Path.GetDirectoryName(dst));
+                        File.Copy(src, dst, true);
+                        c.untrackedCopied.Add(rel);
+                    }
+                }
+                return c;
+            }
+
+            public object FileList()
+            {
+                var map = new YamlMap().Add("file", listFile).Add("sha256", listSha).Add("format", "tsv: " + SourceFileList.Columns.Replace('\t', ' '))
+                    .Add("entries", entries).Add("total_bytes", totalBytes).Add("scope", Scope.ToList())
+                    .Add("bytes_basis", "working tree file bytes read at run start").Add("git_tree", tree);
+                if (missing.Count > 0) map.Add("missing_paths", missing);
+                return map;
+            }
+
+            public object DirtyArtifact()
+            {
+                if (dirty != true) return null;
+                return new YamlMap().Add("status", status).Add("patch", patchFile).Add("patch_sha256", patchSha)
+                    .Add("patch_basis", "git diff HEAD --binary at run start (tracked changes)")
+                    .Add("untracked_dir", untrackedDir).Add("untracked_files", untrackedCopied)
+                    .Add("untracked_skipped", untrackedSkipped)
+                    .Add("note", "untracked files are copied as they were at run start; their hashes are also in source_file_hash_manifest when inside its scope");
             }
         }
 
-        /// <summary>Read once per run (at the first manifest write, i.e. run start).</summary>
-        static (string rev, bool? dirty, List<string> paths, string tree, string note) ReadGit()
-        {
-            var root = Path.GetFullPath(Path.Combine(Application.dataPath, ".."));
-            var rev = Git(root, "rev-parse HEAD");
-            if (rev == null) return (null, null, null, null, "git not available; repository state unknown");
-            var tree = Git(root, "rev-parse HEAD^{tree}");
-            var status = Git(root, "status --porcelain");
-            if (status == null) return (rev.Trim(), null, null, tree?.Trim(), "git status failed; dirty state unknown");
-            var lines = status.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries).Select(l => l.TrimEnd('\r')).Where(l => l.Length > 0).ToList();
-            return (rev.Trim(), lines.Count > 0, lines, tree?.Trim(), null);
-        }
-
-        static string Git(string root, string args)
+        static string Git(string root, string args, string stdin = null)
         {
             try
             {
-                var psi = new System.Diagnostics.ProcessStartInfo("git", "-C \"" + root + "\" " + args)
+                var psi = new System.Diagnostics.ProcessStartInfo("git", "-c core.quotepath=off -C \"" + root + "\" " + args)
                 {
                     UseShellExecute = false, RedirectStandardOutput = true, RedirectStandardError = true, CreateNoWindow = true,
+                    RedirectStandardInput = stdin != null, StandardOutputEncoding = new UTF8Encoding(false),
                 };
                 using (var p = System.Diagnostics.Process.Start(psi))
                 {
-                    var o = p.StandardOutput.ReadToEnd();
-                    p.WaitForExit(5000);
-                    return p.ExitCode == 0 ? o : null;
+                    var outTask = p.StandardOutput.ReadToEndAsync();
+                    var errTask = p.StandardError.ReadToEndAsync();
+                    if (stdin != null)
+                    {
+                        p.StandardInput.Write(stdin);
+                        p.StandardInput.Close();
+                    }
+                    p.WaitForExit(20000);
+                    var o = outTask.Result;
+                    return p.HasExited && p.ExitCode == 0 ? o : null;
                 }
             }
             catch (Exception)
