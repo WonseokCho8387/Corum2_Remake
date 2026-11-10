@@ -1,0 +1,995 @@
+{
+ "log": "Evidence/WP-03-R1/runs/RUN-20261110-131240.ndjson",
+ "cases": [
+  {
+   "case": "F02-neutral-then-A",
+   "tick": 246,
+   "events": [
+    {
+     "tick": 246,
+     "type": "ring.cursor",
+     "reason": "Neutral(R-02-04)",
+     "item": "",
+     "stick": [
+      0,
+      0
+     ],
+     "stickReleasedSinceY": null,
+     "player": "Idle",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    },
+    {
+     "tick": 246,
+     "type": "ring.ignore",
+     "reason": "NoSelection(R-02-04)",
+     "item": "",
+     "stick": null,
+     "stickReleasedSinceY": null,
+     "player": "Idle",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    }
+   ]
+  },
+  {
+   "case": "F02-newitem-then-A",
+   "tick": 251,
+   "events": [
+    {
+     "tick": 251,
+     "type": "ring.cursor",
+     "reason": "Sector",
+     "item": "herb",
+     "stick": [
+      1,
+      0
+     ],
+     "stickReleasedSinceY": null,
+     "player": "Idle",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    },
+    {
+     "tick": 251,
+     "type": "item.request",
+     "reason": "Accepted:NextTick(EXP-ITEM-01)",
+     "item": "herb",
+     "stick": null,
+     "stickReleasedSinceY": null,
+     "player": "Idle",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    },
+    {
+     "tick": 251,
+     "type": "ring.use",
+     "reason": "Accepted",
+     "item": "herb",
+     "stick": null,
+     "stickReleasedSinceY": null,
+     "player": "Idle",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    },
+    {
+     "tick": 251,
+     "type": "ring.close",
+     "reason": "Used(R-02-09)",
+     "item": "",
+     "stick": null,
+     "stickReleasedSinceY": null,
+     "player": "Idle",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    },
+    {
+     "tick": 252,
+     "type": "item.use",
+     "reason": "heal+5",
+     "item": "herb",
+     "stick": null,
+     "stickReleasedSinceY": null,
+     "player": "Walk",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    },
+    {
+     "tick": 317,
+     "type": "ring.open",
+     "reason": "LB(R-02-03)",
+     "item": "",
+     "stick": null,
+     "stickReleasedSinceY": null,
+     "player": "Idle",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    },
+    {
+     "tick": 319,
+     "type": "ring.cursor",
+     "reason": "Sector",
+     "item": "potion",
+     "stick": [
+      0,
+      1
+     ],
+     "stickReleasedSinceY": null,
+     "player": "Idle",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    }
+   ]
+  },
+  {
+   "case": "F02-A-then-neutral",
+   "tick": 326,
+   "events": [
+    {
+     "tick": 326,
+     "type": "item.request",
+     "reason": "Accepted:NextTick(EXP-ITEM-01)",
+     "item": "potion",
+     "stick": null,
+     "stickReleasedSinceY": null,
+     "player": "Idle",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    },
+    {
+     "tick": 326,
+     "type": "ring.use",
+     "reason": "Accepted",
+     "item": "potion",
+     "stick": null,
+     "stickReleasedSinceY": null,
+     "player": "Idle",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    },
+    {
+     "tick": 326,
+     "type": "ring.close",
+     "reason": "Used(R-02-09)",
+     "item": "",
+     "stick": null,
+     "stickReleasedSinceY": null,
+     "player": "Idle",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    },
+    {
+     "tick": 327,
+     "type": "item.use",
+     "reason": "heal+20",
+     "item": "potion",
+     "stick": null,
+     "stickReleasedSinceY": null,
+     "player": "Idle",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    },
+    {
+     "tick": 392,
+     "type": "ring.open",
+     "reason": "LB(R-02-03)",
+     "item": "",
+     "stick": null,
+     "stickReleasedSinceY": null,
+     "player": "Idle",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    },
+    {
+     "tick": 394,
+     "type": "ring.cursor",
+     "reason": "Sector",
+     "item": "potion",
+     "stick": [
+      0,
+      1
+     ],
+     "stickReleasedSinceY": null,
+     "player": "Idle",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    }
+   ]
+  },
+  {
+   "case": "F02-A-then-newitem",
+   "tick": 401,
+   "events": [
+    {
+     "tick": 401,
+     "type": "item.request",
+     "reason": "Accepted:NextTick(EXP-ITEM-01)",
+     "item": "potion",
+     "stick": null,
+     "stickReleasedSinceY": null,
+     "player": "Idle",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    },
+    {
+     "tick": 401,
+     "type": "ring.use",
+     "reason": "Accepted",
+     "item": "potion",
+     "stick": null,
+     "stickReleasedSinceY": null,
+     "player": "Idle",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    },
+    {
+     "tick": 401,
+     "type": "ring.close",
+     "reason": "Used(R-02-09)",
+     "item": "",
+     "stick": null,
+     "stickReleasedSinceY": null,
+     "player": "Idle",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    },
+    {
+     "tick": 402,
+     "type": "item.use",
+     "reason": "heal+20",
+     "item": "potion",
+     "stick": null,
+     "stickReleasedSinceY": null,
+     "player": "Walk",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    }
+   ]
+  },
+  {
+   "case": "F02-stick-open-A-one-frame",
+   "tick": 466,
+   "events": [
+    {
+     "tick": 467,
+     "type": "ring.open",
+     "reason": "LB(R-02-03)",
+     "item": "",
+     "stick": null,
+     "stickReleasedSinceY": null,
+     "player": "Idle",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    },
+    {
+     "tick": 467,
+     "type": "ring.cursor",
+     "reason": "Sector",
+     "item": "hipotion",
+     "stick": [
+      0.707106769,
+      0.707106769
+     ],
+     "stickReleasedSinceY": null,
+     "player": "Idle",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    },
+    {
+     "tick": 467,
+     "type": "item.request",
+     "reason": "Accepted:NextTick(EXP-ITEM-01)",
+     "item": "hipotion",
+     "stick": null,
+     "stickReleasedSinceY": null,
+     "player": "Idle",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    },
+    {
+     "tick": 467,
+     "type": "ring.use",
+     "reason": "Accepted",
+     "item": "hipotion",
+     "stick": null,
+     "stickReleasedSinceY": null,
+     "player": "Idle",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    },
+    {
+     "tick": 467,
+     "type": "ring.close",
+     "reason": "Used(R-02-09)",
+     "item": "",
+     "stick": null,
+     "stickReleasedSinceY": null,
+     "player": "Idle",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    },
+    {
+     "tick": 468,
+     "type": "item.use",
+     "reason": "heal+50",
+     "item": "hipotion",
+     "stick": null,
+     "stickReleasedSinceY": null,
+     "player": "Run",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    },
+    {
+     "tick": 532,
+     "type": "ring.open",
+     "reason": "LB(R-02-03)",
+     "item": "",
+     "stick": null,
+     "stickReleasedSinceY": null,
+     "player": "Idle",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    },
+    {
+     "tick": 534,
+     "type": "ring.cursor",
+     "reason": "Sector",
+     "item": "potion",
+     "stick": [
+      0,
+      1
+     ],
+     "stickReleasedSinceY": null,
+     "player": "Idle",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    }
+   ]
+  },
+  {
+   "case": "F02-inside-deadzone-then-A",
+   "tick": 541,
+   "events": [
+    {
+     "tick": 541,
+     "type": "ring.cursor",
+     "reason": "Neutral(R-02-04)",
+     "item": "",
+     "stick": [
+      0.139514565,
+      0.139514565
+     ],
+     "stickReleasedSinceY": null,
+     "player": "Idle",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    },
+    {
+     "tick": 541,
+     "type": "ring.ignore",
+     "reason": "NoSelection(R-02-04)",
+     "item": "",
+     "stick": null,
+     "stickReleasedSinceY": null,
+     "player": "Idle",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    },
+    {
+     "tick": 546,
+     "type": "ring.close",
+     "reason": "Manual(LB)",
+     "item": "",
+     "stick": null,
+     "stickReleasedSinceY": null,
+     "player": "Idle",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    },
+    {
+     "tick": 572,
+     "type": "ring.open",
+     "reason": "LB(R-02-03)",
+     "item": "",
+     "stick": null,
+     "stickReleasedSinceY": null,
+     "player": "Idle",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    },
+    {
+     "tick": 574,
+     "type": "ring.cursor",
+     "reason": "Sector",
+     "item": "potion",
+     "stick": [
+      0,
+      1
+     ],
+     "stickReleasedSinceY": null,
+     "player": "Idle",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    },
+    {
+     "tick": 576,
+     "type": "ring.mode",
+     "reason": "TargetFixed(R-02-07)",
+     "item": "potion",
+     "stick": null,
+     "stickReleasedSinceY": null,
+     "player": "Idle",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    }
+   ]
+  },
+  {
+   "case": "F01-dpad-before-release",
+   "tick": 579,
+   "events": [
+    {
+     "tick": 579,
+     "type": "ring.ignore",
+     "reason": "Registering:StickNotReleased(R-02-07)",
+     "item": "potion",
+     "stick": null,
+     "stickReleasedSinceY": null,
+     "player": "Idle",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    },
+    {
+     "tick": 581,
+     "type": "ring.cursor",
+     "reason": "Sector",
+     "item": "scroll",
+     "stick": [
+      1,
+      0
+     ],
+     "stickReleasedSinceY": null,
+     "player": "Idle",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    },
+    {
+     "tick": 584,
+     "type": "ring.ignore",
+     "reason": "Registering:StickNotReleased(R-02-07)",
+     "item": "scroll",
+     "stick": null,
+     "stickReleasedSinceY": null,
+     "player": "Idle",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    }
+   ]
+  },
+  {
+   "case": "F01-release",
+   "tick": 586,
+   "events": [
+    {
+     "tick": 586,
+     "type": "ring.release",
+     "reason": "StickReleased(R-02-07)",
+     "item": "scroll",
+     "stick": [
+      0,
+      0
+     ],
+     "stickReleasedSinceY": null,
+     "player": "Idle",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    },
+    {
+     "tick": 586,
+     "type": "ring.cursor",
+     "reason": "Neutral(R-02-04)",
+     "item": "",
+     "stick": [
+      0,
+      0
+     ],
+     "stickReleasedSinceY": null,
+     "player": "Idle",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    },
+    {
+     "tick": 589,
+     "type": "ring.cursor",
+     "reason": "Sector",
+     "item": "apple",
+     "stick": [
+      -1,
+      0
+     ],
+     "stickReleasedSinceY": null,
+     "player": "Idle",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    }
+   ]
+  },
+  {
+   "case": "F01-dpad-after-release",
+   "tick": 591,
+   "events": [
+    {
+     "tick": 591,
+     "type": "quickslot.assign",
+     "reason": "Registered(R-02-07)",
+     "item": "apple",
+     "stick": null,
+     "stickReleasedSinceY": true,
+     "player": "Idle",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    },
+    {
+     "tick": 591,
+     "type": "ring.close",
+     "reason": "Registered(R-02-09)",
+     "item": "",
+     "stick": null,
+     "stickReleasedSinceY": null,
+     "player": "Idle",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    },
+    {
+     "tick": 612,
+     "type": "ring.open",
+     "reason": "LB(R-02-03)",
+     "item": "",
+     "stick": null,
+     "stickReleasedSinceY": null,
+     "player": "Idle",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    },
+    {
+     "tick": 614,
+     "type": "ring.cursor",
+     "reason": "Sector",
+     "item": "herb",
+     "stick": [
+      0.707106769,
+      0.707106769
+     ],
+     "stickReleasedSinceY": null,
+     "player": "Idle",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    }
+   ]
+  },
+  {
+   "case": "F01-same-frame-Y-dpad-release",
+   "tick": 616,
+   "events": [
+    {
+     "tick": 616,
+     "type": "ring.mode",
+     "reason": "TargetFixed(R-02-07)",
+     "item": "herb",
+     "stick": null,
+     "stickReleasedSinceY": null,
+     "player": "Idle",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    },
+    {
+     "tick": 616,
+     "type": "ring.ignore",
+     "reason": "Registering:StickNotReleased(R-02-07)",
+     "item": "herb",
+     "stick": null,
+     "stickReleasedSinceY": null,
+     "player": "Idle",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    },
+    {
+     "tick": 616,
+     "type": "ring.release",
+     "reason": "StickReleased(R-02-07)",
+     "item": "herb",
+     "stick": [
+      0,
+      0
+     ],
+     "stickReleasedSinceY": null,
+     "player": "Idle",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    },
+    {
+     "tick": 616,
+     "type": "ring.cursor",
+     "reason": "Neutral(R-02-04)",
+     "item": "",
+     "stick": [
+      0,
+      0
+     ],
+     "stickReleasedSinceY": null,
+     "player": "Idle",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    },
+    {
+     "tick": 621,
+     "type": "quickslot.assign",
+     "reason": "Registered(R-02-07)",
+     "item": "",
+     "stick": null,
+     "stickReleasedSinceY": true,
+     "player": "Idle",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    },
+    {
+     "tick": 621,
+     "type": "ring.close",
+     "reason": "Registered(R-02-09)",
+     "item": "",
+     "stick": null,
+     "stickReleasedSinceY": null,
+     "player": "Idle",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    },
+    {
+     "tick": 642,
+     "type": "ring.open",
+     "reason": "LB(R-02-03)",
+     "item": "",
+     "stick": null,
+     "stickReleasedSinceY": null,
+     "player": "Idle",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    },
+    {
+     "tick": 644,
+     "type": "ring.cursor",
+     "reason": "Sector",
+     "item": "scroll",
+     "stick": [
+      1,
+      0
+     ],
+     "stickReleasedSinceY": null,
+     "player": "Idle",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    }
+   ]
+  },
+  {
+   "case": "F01-same-frame-Y-release-dpad",
+   "tick": 646,
+   "events": [
+    {
+     "tick": 646,
+     "type": "ring.mode",
+     "reason": "TargetFixed(R-02-07)",
+     "item": "scroll",
+     "stick": null,
+     "stickReleasedSinceY": null,
+     "player": "Idle",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    },
+    {
+     "tick": 646,
+     "type": "ring.release",
+     "reason": "StickReleased(R-02-07)",
+     "item": "scroll",
+     "stick": [
+      0,
+      0
+     ],
+     "stickReleasedSinceY": null,
+     "player": "Idle",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    },
+    {
+     "tick": 646,
+     "type": "ring.cursor",
+     "reason": "Neutral(R-02-04)",
+     "item": "",
+     "stick": [
+      0,
+      0
+     ],
+     "stickReleasedSinceY": null,
+     "player": "Idle",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    },
+    {
+     "tick": 646,
+     "type": "quickslot.assign",
+     "reason": "Registered(R-02-07)",
+     "item": "",
+     "stick": null,
+     "stickReleasedSinceY": true,
+     "player": "Idle",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    },
+    {
+     "tick": 646,
+     "type": "ring.close",
+     "reason": "Registered(R-02-09)",
+     "item": "",
+     "stick": null,
+     "stickReleasedSinceY": null,
+     "player": "Idle",
+     "grounded": true,
+     "y": 0,
+     "hp": 100
+    },
+    {
+     "tick": 683,
+     "type": "motor.jump",
+     "reason": "Jump:Standing",
+     "item": "",
+     "stick": null,
+     "stickReleasedSinceY": null,
+     "player": "Airborne",
+     "grounded": false,
+     "y": 0.22378242,
+     "hp": 100
+    }
+   ]
+  },
+  {
+   "case": "M01-air-attack-ring",
+   "tick": 690,
+   "events": [
+    {
+     "tick": 691,
+     "type": "ring.open",
+     "reason": "LB(R-02-03)",
+     "item": "",
+     "stick": null,
+     "stickReleasedSinceY": null,
+     "player": "AirAttack",
+     "grounded": false,
+     "y": 1.58204246,
+     "hp": 100
+    },
+    {
+     "tick": 692,
+     "type": "ring.cursor",
+     "reason": "Sector",
+     "item": "potion",
+     "stick": [
+      0,
+      1
+     ],
+     "stickReleasedSinceY": null,
+     "player": "AirAttack",
+     "grounded": false,
+     "y": 1.697825,
+     "hp": 100
+    },
+    {
+     "tick": 692,
+     "type": "item.request",
+     "reason": "Reserved:Motion:AirAttack(EXP-ITEM-03, CF-07)",
+     "item": "potion",
+     "stick": null,
+     "stickReleasedSinceY": null,
+     "player": "AirAttack",
+     "grounded": false,
+     "y": 1.697825,
+     "hp": 100
+    },
+    {
+     "tick": 692,
+     "type": "ring.use",
+     "reason": "Reserved",
+     "item": "potion",
+     "stick": null,
+     "stickReleasedSinceY": null,
+     "player": "AirAttack",
+     "grounded": false,
+     "y": 1.697825,
+     "hp": 100
+    },
+    {
+     "tick": 692,
+     "type": "ring.close",
+     "reason": "UseReserved(R-05-05/R-02-09)",
+     "item": "",
+     "stick": null,
+     "stickReleasedSinceY": null,
+     "player": "AirAttack",
+     "grounded": false,
+     "y": 1.697825,
+     "hp": 100
+    },
+    {
+     "tick": 704,
+     "type": "item.use",
+     "reason": "heal+20",
+     "item": "potion",
+     "stick": null,
+     "stickReleasedSinceY": null,
+     "player": "Airborne",
+     "grounded": false,
+     "y": 2.151216,
+     "hp": 100
+    },
+    {
+     "tick": 761,
+     "type": "motor.jump",
+     "reason": "Jump:Standing",
+     "item": "",
+     "stick": null,
+     "stickReleasedSinceY": null,
+     "player": "Airborne",
+     "grounded": false,
+     "y": 0.22378242,
+     "hp": 100
+    },
+    {
+     "tick": 767,
+     "type": "hit.player",
+     "reason": "Hit",
+     "item": "player",
+     "stick": null,
+     "stickReleasedSinceY": null,
+     "player": "HitStun",
+     "grounded": false,
+     "y": 1.31447732,
+     "hp": 90
+    }
+   ]
+  },
+  {
+   "case": "M01-air-hit-ring",
+   "tick": 774,
+   "events": [
+    {
+     "tick": 775,
+     "type": "ring.open",
+     "reason": "LB(R-02-03)",
+     "item": "",
+     "stick": null,
+     "stickReleasedSinceY": null,
+     "player": "HitStun",
+     "grounded": false,
+     "y": 2.09673786,
+     "hp": 90
+    },
+    {
+     "tick": 776,
+     "type": "ring.cursor",
+     "reason": "Sector",
+     "item": "herb",
+     "stick": [
+      0,
+      1
+     ],
+     "stickReleasedSinceY": null,
+     "player": "HitStun",
+     "grounded": false,
+     "y": 2.14052033,
+     "hp": 90
+    },
+    {
+     "tick": 776,
+     "type": "item.request",
+     "reason": "Reserved:HitReaction(R-05-05)",
+     "item": "herb",
+     "stick": null,
+     "stickReleasedSinceY": null,
+     "player": "HitStun",
+     "grounded": false,
+     "y": 2.14052033,
+     "hp": 90
+    },
+    {
+     "tick": 776,
+     "type": "ring.use",
+     "reason": "Reserved",
+     "item": "herb",
+     "stick": null,
+     "stickReleasedSinceY": null,
+     "player": "HitStun",
+     "grounded": false,
+     "y": 2.14052033,
+     "hp": 90
+    },
+    {
+     "tick": 776,
+     "type": "ring.close",
+     "reason": "UseReserved(R-05-05/R-02-09)",
+     "item": "",
+     "stick": null,
+     "stickReleasedSinceY": null,
+     "player": "HitStun",
+     "grounded": false,
+     "y": 2.14052033,
+     "hp": 90
+    },
+    {
+     "tick": 789,
+     "type": "item.use",
+     "reason": "heal+5",
+     "item": "herb",
+     "stick": null,
+     "stickReleasedSinceY": null,
+     "player": "Airborne",
+     "grounded": false,
+     "y": 1.61769485,
+     "hp": 95
+    }
+   ]
+  }
+ ]
+}

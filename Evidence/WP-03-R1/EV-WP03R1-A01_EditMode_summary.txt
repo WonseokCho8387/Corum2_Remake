@@ -1,0 +1,15 @@
+EditMode, C# source identical to 0ff03b6 (run before that commit, no C# change in between): test-case 179, results {'Passed': 179}; root result=Passed total=179 passed=179 failed=0
+New in WP-03-R1 (RingR1Tests, 12):
+  Corum2.Tests.RingR1Tests.AirHit_RingUseReserved_RunsOnceAfterReaction
+  Corum2.Tests.RingR1Tests.Registration_DpadBeforeRelease_DoesNothing_AfterRelease_Assigns
+  Corum2.Tests.RingR1Tests.Registration_SameFrameOrder_ReleaseThenDpad_vs_DpadThenRelease
+  Corum2.Tests.RingR1Tests.Ring_OpensDuringAirAttack_UseWaitsForTheAttack
+  Corum2.Tests.RingR1Tests.SameFrame_AnalogInsideDeadzone_IsNeutral
+  Corum2.Tests.RingR1Tests.SameFrame_AThenNeutral_UsesItemSelectedAtThePress
+  Corum2.Tests.RingR1Tests.SameFrame_AThenNewItem_UsesItemSelectedAtThePress
+  Corum2.Tests.RingR1Tests.SameFrame_NeutralThenA_UsesNothing
+  Corum2.Tests.RingR1Tests.SameFrame_NewItemThenA_UsesNewItem
+  Corum2.Tests.RingR1Tests.SameFrame_OpenSelectUse_AllInOneFrame
+  Corum2.Tests.RingR1Tests.Validator_AcceptsBoundaries
+  Corum2.Tests.RingR1Tests.Validator_RejectsNonFinite
+Changed: RingTests.DpadInsideRing_Registration_vs_Browse and AutoClose_OnlyAfterUseRegisterDiscard now release the stick before the D-pad (R-02-07).

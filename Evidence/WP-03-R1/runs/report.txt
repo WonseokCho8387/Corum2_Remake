@@ -1,0 +1,176 @@
+===== manual
+t  198 rt   26.929 marker                      -> [VideoRecordingStarted] 
+t  221 rt   28.084 script.start                -> [InputScript] 
+===== WP03-F02
+t  227 rt   28.412 marker                      -> [TestCase] 
+t  237 rt   28.714 marker                      -> [VirtualDevicesAdded] 
+t  238 rt   28.835 ring.open                   Closed->Browse [LB(R-02-03)] slowScale=0.2 inventory=potionx3,hipotionx1,herbx2,scrollx2,keyx1,breadx2,waterx1,applex3,elixirx1,meatx1 quickslots=U=,R=,D=,L=
+t  238 rt   28.835 input.route                 -> [Open] action=RingToggle edge=Press consumer=ring ringMode=Browse playerState=Idle
+t  238 rt   28.836 input.route                 -> [ToggleRelease] action=RingToggle edge=Release consumer=ring ringMode=Browse playerState=Idle
+t  238 rt   28.896 time.scale                  1->0.2 [RingOpen(R-02-03, EXP-RING-01)] timeScale=0.2 gameTime=4.759998120367527 ringOpenCount=1
+t  239 rt   29.046 ring.cursor                 -1->0 [Sector] selectedItem=potion stick=[0, 1]
+t  239 rt   29.046 input.route                 -> [Cursor(R-02-05)] action=MoveUp edge=Press consumer=ring ringMode=Browse playerState=Idle
+t  246 rt   30.267 marker                      -> [F02-neutral-then-A] 
+t  246 rt   30.352 ring.cursor                 0->-1 [Neutral(R-02-04)] selectedItem= stick=[0, 0]
+t  246 rt   30.352 input.route                 -> [Cursor(R-02-05)] action=MoveUp edge=Release consumer=ring ringMode=Browse playerState=Idle
+t  246 rt   30.352 ring.ignore                 Browse->Browse [NoSelection(R-02-04)] action=Jump
+t  246 rt   30.352 input.route                 -> [ignored:NoSelection(R-02-04)] action=Jump edge=Press consumer=ring ringMode=Browse playerState=Idle
+t  251 rt   31.054 marker                      -> [F02-newitem-then-A] 
+t  251 rt   31.167 ring.cursor                 -1->2 [Sector] selectedItem=herb stick=[1, 0]
+t  251 rt   31.167 input.route                 -> [Cursor(R-02-05)] action=MoveRight edge=Press consumer=ring ringMode=Browse playerState=Idle
+t  251 rt   31.168 item.request     herb       Idle->Idle [Accepted:NextTick(EXP-ITEM-01)] requestId=1 source=Ring via=ring.A count=2 cooldownLeft=0
+t  251 rt   31.168 ring.use                    Browse->Closed [Accepted] item=herb requestId=1
+t  251 rt   31.168 ring.close                  Browse->Closed [Used(R-02-09)] mode=Closed
+t  251 rt   31.168 input.route                 -> [useAccepted] action=Jump edge=Press consumer=ring ringMode=Closed playerState=Idle
+t  251 rt   31.244 time.scale                  0.2->1 [RingClosed(R-02-03)] timeScale=1 gameTime=5.019998017698526 ringOpenCount=1
+t  252 rt   31.284 item.use         herb       Accepted->Executed [heal+5] requestId=1 source=Ring requestTick=251 execTick=252 waitedFor= hpBefore=100 hpAfter=100 countAfter=1 quickslotsCleared=
+t  317 rt   33.320 ring.open                   Closed->Browse [LB(R-02-03)] slowScale=0.2 inventory=potionx3,hipotionx1,herbx1,scrollx2,keyx1,breadx2,waterx1,applex3,elixirx1,meatx1 quickslots=U=,R=,D=,L=
+t  317 rt   33.320 input.route                 -> [Open] action=RingToggle edge=Press consumer=ring ringMode=Browse playerState=Idle
+t  317 rt   33.320 input.route                 -> [ToggleRelease] action=RingToggle edge=Release consumer=ring ringMode=Browse playerState=Idle
+t  317 rt   33.350 time.scale                  1->0.2 [RingOpen(R-02-03, EXP-RING-01)] timeScale=0.2 gameTime=6.339997496455908 ringOpenCount=2
+t  319 rt   33.533 ring.cursor                 -1->0 [Sector] selectedItem=potion stick=[0, 1]
+t  319 rt   33.533 input.route                 -> [Cursor(R-02-05)] action=MoveUp edge=Press consumer=ring ringMode=Browse playerState=Idle
+t  326 rt   34.646 marker                      -> [F02-A-then-neutral] 
+t  326 rt   34.727 item.request     potion     Idle->Idle [Accepted:NextTick(EXP-ITEM-01)] requestId=2 source=Ring via=ring.A count=3 cooldownLeft=0
+t  326 rt   34.727 ring.use                    Browse->Closed [Accepted] item=potion requestId=2
+t  326 rt   34.727 ring.close                  Browse->Closed [Used(R-02-09)] mode=Closed
+t  326 rt   34.727 input.route                 -> [useAccepted] action=Jump edge=Press consumer=ring ringMode=Closed playerState=Idle
+t  326 rt   34.753 time.scale                  0.2->1 [RingClosed(R-02-03)] timeScale=1 gameTime=6.519997425377369 ringOpenCount=2
+t  327 rt   34.782 item.use         potion     Accepted->Executed [heal+20] requestId=2 source=Ring requestTick=326 execTick=327 waitedFor= hpBefore=100 hpAfter=100 countAfter=2 quickslotsCleared=
+t  392 rt   36.926 ring.open                   Closed->Browse [LB(R-02-03)] slowScale=0.2 inventory=potionx2,hipotionx1,herbx1,scrollx2,keyx1,breadx2,waterx1,applex3,elixirx1,meatx1 quickslots=U=,R=,D=,L=
+t  392 rt   36.926 input.route                 -> [Open] action=RingToggle edge=Press consumer=ring ringMode=Browse playerState=Idle
+t  392 rt   36.926 input.route                 -> [ToggleRelease] action=RingToggle edge=Release consumer=ring ringMode=Browse playerState=Idle
+t  392 rt   36.956 time.scale                  1->0.2 [RingOpen(R-02-03, EXP-RING-01)] timeScale=0.2 gameTime=7.83999690413475 ringOpenCount=3
+t  394 rt   37.128 ring.cursor                 -1->0 [Sector] selectedItem=potion stick=[0, 1]
+t  394 rt   37.128 input.route                 -> [Cursor(R-02-05)] action=MoveUp edge=Press consumer=ring ringMode=Browse playerState=Idle
+t  401 rt   38.434 marker                      -> [F02-A-then-newitem] 
+t  401 rt   38.521 item.request     potion     Idle->Idle [Accepted:NextTick(EXP-ITEM-01)] requestId=3 source=Ring via=ring.A count=2 cooldownLeft=0
+t  401 rt   38.521 ring.use                    Browse->Closed [Accepted] item=potion requestId=3
+t  401 rt   38.521 ring.close                  Browse->Closed [Used(R-02-09)] mode=Closed
+t  401 rt   38.521 input.route                 -> [useAccepted] action=Jump edge=Press consumer=ring ringMode=Closed playerState=Idle
+t  401 rt   38.551 time.scale                  0.2->1 [RingClosed(R-02-03)] timeScale=1 gameTime=8.019996833056211 ringOpenCount=3
+t  402 rt   38.576 item.use         potion     Accepted->Executed [heal+20] requestId=3 source=Ring requestTick=401 execTick=402 waitedFor= hpBefore=100 hpAfter=100 countAfter=1 quickslotsCleared=
+t  466 rt   40.586 marker                      -> [F02-stick-open-A-one-frame] 
+t  467 rt   40.587 ring.open                   Closed->Browse [LB(R-02-03)] slowScale=0.2 inventory=potionx1,hipotionx1,herbx1,scrollx2,keyx1,breadx2,waterx1,applex3,elixirx1,meatx1 quickslots=U=,R=,D=,L=
+t  467 rt   40.587 input.route                 -> [Open] action=RingToggle edge=Press consumer=ring ringMode=Browse playerState=Idle
+t  467 rt   40.587 ring.cursor                 -1->1 [Sector] selectedItem=hipotion stick=[0.707106769, 0.707106769]
+t  467 rt   40.587 input.route                 -> [ToggleRelease] action=RingToggle edge=Release consumer=ring ringMode=Browse playerState=Idle
+t  467 rt   40.587 item.request     hipotion   Idle->Idle [Accepted:NextTick(EXP-ITEM-01)] requestId=4 source=Ring via=ring.A count=1 cooldownLeft=0
+t  467 rt   40.587 ring.use                    Browse->Closed [Accepted] item=hipotion requestId=4
+t  467 rt   40.587 ring.close                  Browse->Closed [Used(R-02-09)] mode=Closed
+t  467 rt   40.587 input.route                 -> [useAccepted] action=Jump edge=Press consumer=ring ringMode=Closed playerState=Idle
+t  468 rt   40.641 item.use         hipotion   Accepted->Executed [heal+50] requestId=4 source=Ring requestTick=467 execTick=468 waitedFor= hpBefore=100 hpAfter=100 countAfter=0 quickslotsCleared=
+t  532 rt   42.664 ring.open                   Closed->Browse [LB(R-02-03)] slowScale=0.2 inventory=potionx1,herbx1,scrollx2,keyx1,breadx2,waterx1,applex3,elixirx1,meatx1 quickslots=U=,R=,D=,L=
+t  532 rt   42.664 input.route                 -> [Open] action=RingToggle edge=Press consumer=ring ringMode=Browse playerState=Idle
+t  532 rt   42.664 input.route                 -> [ToggleRelease] action=RingToggle edge=Release consumer=ring ringMode=Browse playerState=Idle
+t  532 rt   42.693 time.scale                  1->0.2 [RingOpen(R-02-03, EXP-RING-01)] timeScale=0.2 gameTime=10.63999579846859 ringOpenCount=5
+t  534 rt   42.861 ring.cursor                 -1->0 [Sector] selectedItem=potion stick=[0, 1]
+t  534 rt   42.861 input.route                 -> [Cursor(R-02-05)] action=MoveUp edge=Press consumer=ring ringMode=Browse playerState=Idle
+t  541 rt   43.881 marker                      -> [F02-inside-deadzone-then-A] 
+t  541 rt   44.062 ring.cursor                 0->-1 [Neutral(R-02-04)] selectedItem= stick=[0.139514565, 0.139514565]
+t  541 rt   44.062 input.route                 -> [Cursor(R-02-05)] action=MoveUp edge=Release consumer=ring ringMode=Browse playerState=Idle
+t  541 rt   44.062 ring.ignore                 Browse->Browse [NoSelection(R-02-04)] action=Jump
+t  541 rt   44.062 input.route                 -> [ignored:NoSelection(R-02-04)] action=Jump edge=Press consumer=ring ringMode=Browse playerState=Idle
+t  546 rt   44.837 ring.close                  Browse->Closed [Manual(LB)] mode=Closed
+t  546 rt   44.837 input.route                 -> [Close] action=RingToggle edge=Press consumer=ring ringMode=Closed playerState=Idle
+t  546 rt   44.837 input.route                 -> [ToggleRelease] action=RingToggle edge=Release consumer=ring ringMode=Closed playerState=Idle
+t  546 rt   44.865 time.scale                  0.2->1 [RingClosed(R-02-03)] timeScale=1 gameTime=10.919995687901974 ringOpenCount=5
+===== WP03-F01
+t  571 rt   45.749 marker                      -> [TestCase] 
+t  572 rt   45.749 ring.open                   Closed->Browse [LB(R-02-03)] slowScale=0.2 inventory=potionx1,herbx1,scrollx2,keyx1,breadx2,waterx1,applex3,elixirx1,meatx1 quickslots=U=,R=,D=,L=
+t  572 rt   45.749 input.route                 -> [Open] action=RingToggle edge=Press consumer=ring ringMode=Browse playerState=Idle
+t  572 rt   45.749 input.route                 -> [ToggleRelease] action=RingToggle edge=Release consumer=ring ringMode=Browse playerState=Idle
+t  572 rt   45.782 time.scale                  1->0.2 [RingOpen(R-02-03, EXP-RING-01)] timeScale=0.2 gameTime=11.439995482563972 ringOpenCount=6
+t  574 rt   45.975 ring.cursor                 -1->0 [Sector] selectedItem=potion stick=[0, 1]
+t  574 rt   45.975 input.route                 -> [Cursor(R-02-05)] action=MoveUp edge=Press consumer=ring ringMode=Browse playerState=Idle
+t  576 rt   46.334 ring.mode                   Browse->Registering [TargetFixed(R-02-07)] target=potion
+t  576 rt   46.334 input.route                 -> [registering] action=SpecialAttack edge=Press consumer=ring ringMode=Registering playerState=Idle
+t  579 rt   46.678 marker                      -> [F01-dpad-before-release] 
+t  579 rt   46.678 ring.ignore                 Registering->Registering [Registering:StickNotReleased(R-02-07)] action=QuickUp
+t  579 rt   46.678 input.route                 -> [ignored:Registering:StickNotReleased(R-02-07)] action=QuickUp edge=Press consumer=ring ringMode=Registering playerState=Idle
+t  581 rt   47.044 ring.cursor                 0->2 [Sector] selectedItem=scroll stick=[1, 0]
+t  581 rt   47.044 input.route                 -> [Cursor(R-02-05)] action=MoveRight edge=Press consumer=ring ringMode=Registering playerState=Idle
+t  581 rt   47.044 input.route                 -> [Cursor(R-02-05)] action=MoveUp edge=Release consumer=ring ringMode=Registering playerState=Idle
+t  584 rt   47.500 ring.ignore                 Registering->Registering [Registering:StickNotReleased(R-02-07)] action=QuickUp
+t  584 rt   47.500 input.route                 -> [ignored:Registering:StickNotReleased(R-02-07)] action=QuickUp edge=Press consumer=ring ringMode=Registering playerState=Idle
+t  586 rt   47.841 marker                      -> [F01-release] 
+t  586 rt   47.934 ring.cursor                 2->-1 [Neutral(R-02-04)] selectedItem= stick=[0, 0]
+t  586 rt   47.934 input.route                 -> [Cursor(R-02-05)] action=MoveRight edge=Release consumer=ring ringMode=Registering playerState=Idle
+t  589 rt   48.287 ring.cursor                 -1->6 [Sector] selectedItem=apple stick=[-1, 0]
+t  589 rt   48.287 input.route                 -> [Cursor(R-02-05)] action=MoveLeft edge=Press consumer=ring ringMode=Registering playerState=Idle
+t  591 rt   48.619 marker                      -> [F01-dpad-after-release] 
+t  591 rt   48.703 quickslot.assign            ->potion [Registered(R-02-07)] slot=Up quickslots=U=potion,R=,D=,L= itemConsumed=False stickNeutral=False
+t  591 rt   48.703 ring.close                  Registering->Closed [Registered(R-02-09)] mode=Closed
+t  591 rt   48.703 input.route                 -> [registered:Up] action=QuickUp edge=Press consumer=ring ringMode=Closed playerState=Idle
+t  591 rt   48.703 input.route                 -> [Release] action=QuickUp edge=Release consumer=quickslot ringMode=Closed playerState=Idle
+t  591 rt   48.731 time.scale                  0.2->1 [RingClosed(R-02-03)] timeScale=1 gameTime=11.81999533250928 ringOpenCount=6
+t  612 rt   49.412 ring.open                   Closed->Browse [LB(R-02-03)] slowScale=0.2 inventory=potionx1,herbx1,scrollx2,keyx1,breadx2,waterx1,applex3,elixirx1,meatx1 quickslots=U=potion,R=,D=,L=
+t  612 rt   49.412 input.route                 -> [Open] action=RingToggle edge=Press consumer=ring ringMode=Browse playerState=Idle
+t  612 rt   49.412 input.route                 -> [ToggleRelease] action=RingToggle edge=Release consumer=ring ringMode=Browse playerState=Idle
+t  612 rt   49.436 time.scale                  1->0.2 [RingOpen(R-02-03, EXP-RING-01)] timeScale=0.2 gameTime=12.239995166659355 ringOpenCount=7
+t  614 rt   49.626 ring.cursor                 -1->1 [Sector] selectedItem=herb stick=[0.707106769, 0.707106769]
+t  614 rt   49.626 input.route                 -> [Cursor(R-02-05)] action=MoveRight edge=Press consumer=ring ringMode=Browse playerState=Idle
+t  614 rt   49.626 input.route                 -> [Cursor(R-02-05)] action=MoveUp edge=Press consumer=ring ringMode=Browse playerState=Idle
+t  616 rt   49.962 marker                      -> [F01-same-frame-Y-dpad-release] 
+t  616 rt   50.048 ring.mode                   Browse->Registering [TargetFixed(R-02-07)] target=herb
+t  616 rt   50.048 input.route                 -> [registering] action=SpecialAttack edge=Press consumer=ring ringMode=Registering playerState=Idle
+t  616 rt   50.048 ring.ignore                 Registering->Registering [Registering:StickNotReleased(R-02-07)] action=QuickDown
+t  616 rt   50.048 input.route                 -> [ignored:Registering:StickNotReleased(R-02-07)] action=QuickDown edge=Press consumer=ring ringMode=Registering playerState=Idle
+t  616 rt   50.048 ring.cursor                 1->-1 [Neutral(R-02-04)] selectedItem= stick=[0, 0]
+t  616 rt   50.048 input.route                 -> [Cursor(R-02-05)] action=MoveRight edge=Release consumer=ring ringMode=Registering playerState=Idle
+t  616 rt   50.048 input.route                 -> [Cursor(R-02-05)] action=MoveUp edge=Release consumer=ring ringMode=Registering playerState=Idle
+t  621 rt   50.914 quickslot.assign            ->herb [Registered(R-02-07)] slot=Down quickslots=U=potion,R=,D=herb,L= itemConsumed=False stickNeutral=True
+t  621 rt   50.914 ring.close                  Registering->Closed [Registered(R-02-09)] mode=Closed
+t  621 rt   50.914 input.route                 -> [registered:Down] action=QuickDown edge=Press consumer=ring ringMode=Closed playerState=Idle
+t  621 rt   50.914 input.route                 -> [Release] action=QuickDown edge=Release consumer=quickslot ringMode=Closed playerState=Idle
+t  621 rt   50.941 time.scale                  0.2->1 [RingClosed(R-02-03)] timeScale=1 gameTime=12.419995095580816 ringOpenCount=7
+t  642 rt   51.511 ring.open                   Closed->Browse [LB(R-02-03)] slowScale=0.2 inventory=potionx1,herbx1,scrollx2,keyx1,breadx2,waterx1,applex3,elixirx1,meatx1 quickslots=U=potion,R=,D=herb,L=
+t  642 rt   51.511 input.route                 -> [Open] action=RingToggle edge=Press consumer=ring ringMode=Browse playerState=Idle
+t  642 rt   51.511 input.route                 -> [ToggleRelease] action=RingToggle edge=Release consumer=ring ringMode=Browse playerState=Idle
+t  642 rt   51.540 time.scale                  1->0.2 [RingOpen(R-02-03, EXP-RING-01)] timeScale=0.2 gameTime=12.839994929730892 ringOpenCount=8
+t  644 rt   51.789 ring.cursor                 -1->2 [Sector] selectedItem=scroll stick=[1, 0]
+t  644 rt   51.789 input.route                 -> [Cursor(R-02-05)] action=MoveRight edge=Press consumer=ring ringMode=Browse playerState=Idle
+t  646 rt   52.169 marker                      -> [F01-same-frame-Y-release-dpad] 
+t  646 rt   52.272 ring.mode                   Browse->Registering [TargetFixed(R-02-07)] target=scroll
+t  646 rt   52.272 input.route                 -> [registering] action=SpecialAttack edge=Press consumer=ring ringMode=Registering playerState=Idle
+t  646 rt   52.272 ring.cursor                 2->-1 [Neutral(R-02-04)] selectedItem= stick=[0, 0]
+t  646 rt   52.272 input.route                 -> [Cursor(R-02-05)] action=MoveRight edge=Release consumer=ring ringMode=Registering playerState=Idle
+t  646 rt   52.272 quickslot.assign            ->scroll [Registered(R-02-07)] slot=Right quickslots=U=potion,R=scroll,D=herb,L= itemConsumed=False stickNeutral=True
+t  646 rt   52.272 ring.close                  Registering->Closed [Registered(R-02-09)] mode=Closed
+t  646 rt   52.272 input.route                 -> [registered:Right] action=QuickRight edge=Press consumer=ring ringMode=Closed playerState=Idle
+t  646 rt   52.272 input.route                 -> [Release] action=QuickRight edge=Release consumer=quickslot ringMode=Closed playerState=Idle
+t  646 rt   52.307 time.scale                  0.2->1 [RingClosed(R-02-03)] timeScale=1 gameTime=12.91999489814043 ringOpenCount=8
+===== TC-02-11
+t  681 rt   53.306 marker                      -> [TestCase] 
+t  690 rt   53.688 marker                      -> [M01-air-attack-ring] 
+t  691 rt   53.689 ring.open                   Closed->Browse [LB(R-02-03)] slowScale=0.2 inventory=potionx1,herbx1,scrollx2,keyx1,breadx2,waterx1,applex3,elixirx1,meatx1 quickslots=U=potion,R=scroll,D=herb,L=
+t  691 rt   53.689 input.route                 -> [Open] action=RingToggle edge=Press consumer=ring ringMode=Browse playerState=AirAttack
+t  691 rt   53.689 input.route                 -> [ToggleRelease] action=RingToggle edge=Release consumer=ring ringMode=Browse playerState=AirAttack
+t  691 rt   53.734 time.scale                  1->0.2 [RingOpen(R-02-03, EXP-RING-01)] timeScale=0.2 gameTime=13.819994542747736 ringOpenCount=9
+t  692 rt   53.734 ring.cursor                 -1->0 [Sector] selectedItem=potion stick=[0, 1]
+t  692 rt   53.734 input.route                 -> [Cursor(R-02-05)] action=MoveUp edge=Press consumer=ring ringMode=Browse playerState=AirAttack
+t  692 rt   53.869 item.request     potion     AirAttack->AirAttack [Reserved:Motion:AirAttack(EXP-ITEM-03, CF-07)] requestId=5 source=Ring via=ring.A count=1 cooldownLeft=0
+t  692 rt   53.869 ring.use                    Browse->Closed [Reserved] item=potion requestId=5
+t  692 rt   53.869 ring.close                  Browse->Closed [UseReserved(R-05-05/R-02-09)] mode=Closed
+t  692 rt   53.869 input.route                 -> [useReserved] action=Jump edge=Press consumer=ring ringMode=Closed playerState=AirAttack
+t  692 rt   53.899 time.scale                  0.2->1 [RingClosed(R-02-03)] timeScale=1 gameTime=13.83999453485012 ringOpenCount=9
+t  704 rt   54.274 item.use         potion     Reserved->Executed [heal+20] requestId=5 source=Ring requestTick=692 execTick=704 waitedFor=Motion:AirAttack(EXP-ITEM-03, CF-07) hpBefore=100 hpAfter=100 countAfter=0 quickslotsCleared=Up
+===== TC-INT-02
+t  751 rt   55.809 marker                      -> [TestCase] 
+t  752 rt   55.841 marker           hitter1    ->AttackStartup [AwaitMet] 
+t  774 rt   56.519 marker                      -> [M01-air-hit-ring] 
+t  775 rt   56.519 ring.open                   Closed->Browse [LB(R-02-03)] slowScale=0.2 inventory=herbx1,scrollx2,keyx1,breadx2,waterx1,applex3,elixirx1,meatx1 quickslots=U=,R=scroll,D=herb,L=
+t  775 rt   56.519 input.route                 -> [Open] action=RingToggle edge=Press consumer=ring ringMode=Browse playerState=HitStun
+t  775 rt   56.519 input.route                 -> [ToggleRelease] action=RingToggle edge=Release consumer=ring ringMode=Browse playerState=HitStun
+t  775 rt   56.544 time.scale                  1->0.2 [RingOpen(R-02-03, EXP-RING-01)] timeScale=0.2 gameTime=15.49999387934804 ringOpenCount=10
+t  776 rt   56.544 ring.cursor                 -1->0 [Sector] selectedItem=herb stick=[0, 1]
+t  776 rt   56.544 input.route                 -> [Cursor(R-02-05)] action=MoveUp edge=Press consumer=ring ringMode=Browse playerState=HitStun
+t  776 rt   56.577 item.request     herb       HitStun->HitStun [Reserved:HitReaction(R-05-05)] requestId=6 source=Ring via=ring.A count=1 cooldownLeft=0
+t  776 rt   56.577 ring.use                    Browse->Closed [Reserved] item=herb requestId=6
+t  776 rt   56.577 ring.close                  Browse->Closed [UseReserved(R-05-05/R-02-09)] mode=Closed
+t  776 rt   56.577 input.route                 -> [useReserved] action=Jump edge=Press consumer=ring ringMode=Closed playerState=HitStun
+t  776 rt   56.608 time.scale                  0.2->1 [RingClosed(R-02-03)] timeScale=1 gameTime=15.519993871450424 ringOpenCount=10
+t  789 rt   57.093 item.use         herb       Reserved->Executed [heal+5] requestId=6 source=Ring requestTick=776 execTick=789 waitedFor=HitReaction(R-05-05) hpBefore=90 hpAfter=95 countAfter=0 quickslotsCleared=Down
+t  872 rt   59.744 marker                      -> [ScriptEnd] 
+t  877 rt   59.898 script.end                  -> [InputScriptDone] 
+t  964 rt   62.661 marker                      -> [VideoRecordingStopped] 
