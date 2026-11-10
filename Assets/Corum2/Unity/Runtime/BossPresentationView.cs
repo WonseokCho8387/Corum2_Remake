@@ -87,6 +87,7 @@ namespace Corum2.Unity
                 if (p.Camera != null && (camPick == null || p.StartTick >= camPick.StartTick)) camPick = p; // EXP-PRES-02
                 sim.Log.Emit("presentation.frame", en.Id, "", "", p.Phase, "Render(EXP-PRES-01)", ("transitionSerial", p.Serial),
                     ("elapsedGame", p.Elapsed), ("progress", p.Progress), ("vfxTime", vfxTime), ("bossHitstop", en.Hitstop > 0f),
+                    ("bossPausedThisTick", en.HitstopPausedLastStep),
                     ("bossState", en.State.ToString()));
             }
             if (camPick != null)
@@ -124,7 +125,7 @@ namespace Corum2.Unity
             for (var i = _tails.Count - 1; i >= 0; i--)
             {
                 var v = _tails[i];
-                var dt = PresentationMath.TailStep(sim.Tick - v.LastTick, fixedDt, v.Enemy.Hitstop > 0f);
+                var dt = PresentationMath.TailStep(sim.Tick - v.LastTick, fixedDt, v.Enemy.HitstopPausedLastStep);
                 v.LastTick = sim.Tick;
                 if (dt > 0f) Advance(v, Mathf.Min(dt, v.TailLeft));
                 v.TailLeft -= dt;

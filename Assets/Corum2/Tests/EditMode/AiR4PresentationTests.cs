@@ -182,14 +182,14 @@ namespace Corum2.Tests
                 h.C.TestApplyHit(AiFixtures.Damage(5f), "b"); // StaggerResisted: hitstop 0.04 s, transition continues
                 for (var i = 0; i < 40; i++) Tick();
                 var frames = h.Events("presentation.frame").Where(e => e.ActorId == "b").ToList();
-                var hs = frames.Where(e => (bool)e.Get("bossHitstop")).ToList();
+                var hs = frames.Where(e => (bool)e.Get("bossPausedThisTick")).ToList();
                 Assert.Greater(hs.Count, 0, "frames during the boss hitstop");
                 for (var i = 1; i < frames.Count; i++)
                 {
                     var dv = System.Convert.ToSingle(frames[i].Get("vfxTime")) - System.Convert.ToSingle(frames[i - 1].Get("vfxTime"));
                     var de = System.Convert.ToSingle(frames[i].Get("elapsedGame")) - System.Convert.ToSingle(frames[i - 1].Get("elapsedGame"));
                     Assert.AreEqual(de, dv, 1e-4, "VFX advances exactly by the transition's game time");
-                    if ((bool)frames[i].Get("bossHitstop")) Assert.AreEqual(0f, dv, 1e-6, "VFX frozen while the boss is in hitstop");
+                    if ((bool)frames[i].Get("bossPausedThisTick")) Assert.AreEqual(0f, dv, 1e-6, "VFX frozen on ticks the boss was paused by hitstop");
                 }
                 for (var i = 0; i < 60; i++) Tick();
                 var tail = h.Events("presentation.vfxTail").Single();

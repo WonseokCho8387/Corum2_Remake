@@ -88,6 +88,9 @@ namespace Corum2.Core
         /// <summary>Increments once per transition start; with TransitionDuration it lets the presentation layer follow the
         /// judged transition (R-08-11 presentation, EXP-PRES-01).</summary>
         public int TransitionSerial;
+        /// <summary>True when the last UpdateEnemy returned early because of hitstop (nothing of this enemy advanced on
+        /// that tick, transition timer included). Read by the presentation layer (WP04-F05).</summary>
+        public bool HitstopPausedLastStep;
         public float TransitionDuration;
         /// <summary>Last player attack instance this boss has seen start (guard / evade trigger, EXP-BOSS-05).</summary>
         public long SeenPlayerAttackId;
@@ -586,9 +589,11 @@ namespace Corum2.Core
             if (en.Hitstop > 0f)
             {
                 en.Hitstop -= dt;
+                en.HitstopPausedLastStep = true;
                 if (en.NewPlayerAttack) DefenseSkip(en, "Busy:Hitstop");
                 return;
             }
+            en.HitstopPausedLastStep = false;
 
             var before = en.State;
             if (en.TransitionTimer > 0f) StepTransition(en, dt);

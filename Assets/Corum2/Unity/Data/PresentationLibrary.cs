@@ -169,8 +169,8 @@ namespace Corum2.Unity
     {
         public static float Envelope(float progress) => Mathf.Sin(Mathf.PI * Mathf.Clamp01(progress));
 
-        /// <summary>VFX tail after the judged end (WP04-F05): game time from simulation ticks; no advance while the boss is
-        /// in hitstop at the rendered update.</summary>
+        /// <summary>VFX tail after the judged end (WP04-F05): game time from simulation ticks; no advance when the boss's
+        /// last simulation step was paused by hitstop (with several ticks per rendered update this is approximate).</summary>
         public static float TailStep(long ticks, float fixedDt, bool bossInHitstop) => bossInHitstop || ticks <= 0 ? 0f : ticks * fixedDt;
 
         /// <summary>Body offset, scale multiplier and tint weight for an animation cue at game time t into the transition.</summary>
