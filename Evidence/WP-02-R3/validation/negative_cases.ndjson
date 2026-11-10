@@ -1,0 +1,13 @@
+{"run": "clean", "case": "unmutated (control)", "expected": "valid", "result": "valid", "error": null, "pass": true}
+{"run": "clean", "case": "source_file_hash_manifest null (GPT example)", "expected": "invalid", "result": "invalid", "error": "source_file_hash_manifest must be a mapping naming a per-file list, got None", "pass": true}
+{"run": "clean", "case": "git-tree-only mapping (R2 form)", "expected": "invalid", "result": "invalid", "error": "source_file_hash_manifest.file missing", "pass": true}
+{"run": "clean", "case": "list edited, manifest sha256 not updated", "expected": "invalid", "result": "invalid", "error": "list file sha256 differs from the manifest", "pass": true}
+{"run": "clean", "case": "row removed (list sha256 fixed in manifest)", "expected": "invalid", "result": "invalid", "error": "entry count mismatch", "pass": true}
+{"run": "clean", "case": "row size changed (list sha256 fixed in manifest)", "expected": "invalid", "result": "invalid", "error": "total_bytes mismatch", "pass": true}
+{"run": "clean", "case": "row git_blob changed (list sha256 fixed in manifest)", "expected": "invalid", "result": "invalid", "error": "git_blob differs from commit for ['Assets/Corum2.meta']", "pass": true}
+{"run": "clean", "case": "claims dirty without artifact", "expected": "invalid", "result": "invalid", "error": "dirty run needs a dirty_diff_artifact mapping", "pass": true}
+{"run": "dirty", "case": "unmutated (control)", "expected": "valid", "result": "valid", "error": null, "pass": true}
+{"run": "dirty", "case": "dirty_diff_artifact null", "expected": "invalid", "result": "invalid", "error": "dirty run needs a dirty_diff_artifact mapping", "pass": true}
+{"run": "dirty", "case": "status misses the untracked file", "expected": "invalid", "result": "invalid", "error": "dirty rows ['Tools/r3_dirty_probe.txt', 'Tools/wp01_log_report.py'] differ from git status ['Tools/wp01_log_report.py']", "pass": true}
+{"run": "dirty", "case": "claims clean", "expected": "invalid", "result": "invalid", "error": "clean tree must have dirty_diff_artifact null", "pass": true}
+{"all_pass": true}

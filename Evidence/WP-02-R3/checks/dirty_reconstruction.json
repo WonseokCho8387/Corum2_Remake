@@ -1,0 +1,14 @@
+{
+  "run_id": "RUN-20261110-102151",
+  "source_revision": "8a9a1a0d9864ed929eb5f484f96b9d07c79a051e",
+  "patch": "RUN-20261110-102151.dirty.patch",
+  "untracked_files": [
+    "Tools/r3_dirty_probe.txt"
+  ],
+  "runtime_entries": 215,
+  "rebuilt_entries": 215,
+  "git_blob_equal_all": true,
+  "mismatch": [],
+  "untracked_bytes_equal": true,
+  "meaning": "commit + patch + untracked copies reproduce every run-time row's git content (git_blob)"
+}

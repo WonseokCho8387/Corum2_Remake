@@ -1,0 +1,8 @@
+# GameHost.RunInputScript input (game seconds:command), started at game time 6.697225715702948
+0.2:tc=WP02-M01-R1
+0.3:kbtap=J
+0.8:kb=D:down
+1.6:kb=D:up
+1.8:kbtap=Space
+2.6:mark=ScriptEnd
+2.7:flush

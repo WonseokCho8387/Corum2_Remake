@@ -1,0 +1,10 @@
+diff --git a/Tools/wp01_log_report.py b/Tools/wp01_log_report.py
+index f5f347c..3d7eb5c 100644
+--- a/Tools/wp01_log_report.py
++++ b/Tools/wp01_log_report.py
+@@ -96,3 +96,5 @@ def main(path):
+ 
+ if __name__ == "__main__":
+     main(sys.argv[1])
++
++# WP-02-R3 dirty-run probe line (temporary, reverted after the run)

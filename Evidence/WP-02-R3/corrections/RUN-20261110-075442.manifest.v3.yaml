@@ -1,0 +1,148 @@
+# WP-02-R3 correction record (WP02-M02). The file named in 'corrects' is unchanged.
+record_kind: manifest_correction
+correction_id: WP02-M02/RUN-20261110-075442.manifest.yaml
+correction_version: 3
+corrects: Evidence/WP-02-R2/corrections/RUN-20261110-075442.manifest.v2.yaml
+corrects_sha256: bc2ab2c70c904eca80228195eff7c4e83eeb2a521d173ae78e6fc7e7b5f3d5c6
+original: Evidence/WP-02-R1/runs/RUN-20261110-075442.manifest.yaml
+original_sha256: 9881d15a12fe2e06d1e99bc3c67970458cf0ec7662bd892fafb46d7d6be471ff
+reason: 'GPT WP02-M02: 13.3 source_file_hash_manifest must be a per-file path/size/SHA-256 list; v2 held only the git tree id'
+original_kept: true
+changes:
+- source_file_hash_manifest -> mapping that names a per-file list generated after the run from source_revision (marked generated_after_run)
+- the v2 git-tree value is kept under source_file_hash_manifest.v2_value
+- all other fields are the v2 corrected values unchanged
+corrected:
+  run_id: RUN-20261110-075442
+  spec_id: CORUM2-P0-MASTER
+  spec_version: 1.2.0
+  spec_file: CORUM2_P0_Master_Spec_v1.2.md
+  spec_sha256: ed7e0a1b031d8a599c9171ece33fc77dee5637cf1d883b0c8206b3654afa3af3
+  engine_appendix_version: 1.0.0
+  engine_appendix_file: CORUM2_Unity_Implementation_Appendix_v1.0.md
+  engine_appendix_sha256: 0ffa335901dbebaf009c5df19acd4daee2578d08ab1f4875f1c38abd3a7d6c2c
+  build_id: editor-playmode
+  source_revision: 7f797767aa9d64ae7e4e4819875010a5d586f627
+  source_capture_mode: git
+  working_tree_dirty: false
+  working_tree_dirty_original: false (clean)
+  dirty_diff_artifact: null
+  source_snapshot_artifact: null
+  source_file_hash_manifest:
+    file: ../posthoc/RUN-20261110-075442.source_files.posthoc.tsv
+    sha256: 1b47751e777bf02b59c64d613102cf3ee7a8887ccc0eb3f75e8ec7684726d43c
+    format: 'tsv: path size sha256 git_blob'
+    entries: 205
+    total_bytes: 632905
+    scope:
+    - Assets
+    - Packages
+    - ProjectSettings
+    - Tools
+    bytes_basis: git blob content of source_revision (line endings as stored in git), generated after the run
+    git_tree: 4b8ce53f59be0ac9e0b29ea620df7cb71e53ecd0
+    generated_after_run: true
+    generated_at: '2026-11-10T10:40:00+09:00'
+    generated_by: Evidence/WP-02-R3/tools/make_r3_records.py
+    note: not written at run time. The run's working tree was clean at source_revision, so these are the files of that commit; working-tree bytes may differ from git blob bytes by line endings (core.autocrlf=true). See checks/posthoc_method_check.json for how this method compares with a run-time list.
+    v2_value:
+      mode: git-tree
+      tree: 4b8ce53f59be0ac9e0b29ea620df7cb71e53ecd0
+      note: added in this correction from git (tree of source_revision); not in the original manifest
+  engine: Unity
+  engine_version: 6000.3.28f1
+  platform_os: Windows 10  (10.0.19045) 64bit
+  device_input: InputProfile wp01-r1 (EXP-INPUT-01/02/03)
+  display:
+    width: 1280
+    height: 800
+    refresh_hz: 59.94
+  render_fps_observed: null
+  render_fps_note: 'original value: see HUD / tick log'
+  simulation_tick:
+    seconds: 0.0199999921
+    hz: 50.0
+    clock: game time
+  time_policy_version: none-approved (U-06); input double tap on raw time EXP-TIME-01
+  data_snapshot: RUN-20261110-075442.data.json
+  data_snapshot_sha256: 13c41835b01efe2bafca0c2485febdc0482da33985f76e731167811d876d0187
+  data_version: movement.player@wp01-r1(experimental);input.profile@wp01-r1(experimental);unlock.AirUnlocks_All@wp01-r1(experimental);world:map.C01@wp02-r1(experimental);combat.player@wp02-r1(experimental);combat.CombatUnlocks_None@wp02-r1(experimental)
+  experimental_policies:
+  - EXP-INPUT-01 SpecialAttack on pad Y (temporary)
+  - EXP-INPUT-02 temporary keyboard mapping
+  - EXP-INPUT-03 8-sector direction, radial deadzone
+  - EXP-TIME-01 double tap measured press-to-press on raw input time
+  - EXP-MOVE-01 all MovementProfile numbers are tuning values (U-04)
+  - EXP-MOVE-02 roll keeps facing; down-diagonals crouch when held without A
+  - EXP-MOVE-03 dash/dive need a horizontal input component
+  - EXP-MOVE-05 slide/roll/dash/dive cannot be cancelled by other movement input
+  - EXP-MOVE-06 roll refused under a ceiling lower than standing height (stays crouched, no movement)
+  - EXP-AIR-01 air uses consumed when the action starts (U-04)
+  - EXP-AIR-02 extra jump/dash/dive allowed after walking off a ledge (U-04)
+  - EXP-MAP-01 map transition resets velocity, run and air uses; player placed grounded at spawn (U-01)
+  - EXP-MAP-02 up/down points need a press of pure Up/Down while grounded and not locked
+  - EXP-MAP-03 edge transition when movement is blocked by a connected edge (push outward)
+  - EXP-CAM-01 camera Y fixed per map, exponential horizontal follow, snap on transition (U-01)
+  - IMPL-PHYS-01 Core AABB kinematic movement instead of Unity physics
+  - TEST-DMG-01 fixed D per attack from the test DamageResolver (not the remake formula, U-09)
+  - EXP-ATK-00 attack timings/hitboxes/knockback/hitstop are tuning values
+  - EXP-ATK-01 facing set at attack start, no turning during a motion (U-05)
+  - EXP-ATK-02 landing ends an air normal attack; chain window opens if it hit
+  - EXP-ATK-03 air normal attack caps fall speed (AirAttackFallSpeed) (U-06)
+  - EXP-ATK-04 attack input refused during slide/roll
+  - EXP-ATK-05 initial dash/dive pick the closest overlapping target (U-05)
+  - EXP-COMBO-01 one attack press during a motion is kept and executed at motion end (buffer length R-05-06 undecided)
+  - EXP-COMBO-02 chain window counts from motion end; ComboWindow editable (R-04-09)
+  - EXP-COMBO-03 after-dash reservation kept until landing; chain window paused while it waits (U-05)
+  - 'EXP-COMBO-04 R-04-01 max 10 steps: a timed attack past 10 is rejected (chain kept); a dive past 10 without a dash opens a new chain; the dive after a dash may pass 10 only as the CF-03 held branch'
+  - EXP-GUARD-01 guard damage floor for g>=1 (U-09)
+  - EXP-GUARD-02 held direction turns facing while guarding, no movement (U-09)
+  - EXP-GUARD-03 RB refused during slide/roll
+  - EXP-GUARD-04 attacker at equal X counts as front (U-09)
+  - EXP-GUARD-05 guard break releases guard without extra stun or damage change (U-09)
+  - EXP-GUARD-07 attack press from guard leaves guard and attacks
+  - EXP-PARRY-01 parry = RB pressed within ParryWindow game seconds before the hit (CF-04)
+  - EXP-PARRY-02 parry damage uses the guard rule (U-09); unblockable attacks are not parried (EXP-PARRY-03)
+  - EXP-DODGE-01 simultaneous = same 50 Hz tick (CF-05); other targets hit in that tick still apply (CF-06)
+  - EXP-HITSTOP-01 hitstop freezes the attacker and the hit targets only (U-06)
+  - EXP-HITSTOP-02 attacker hitstop once per hit event (late targets of the same event do not restart it); dive landing area is its own event (R-06-03, U-06)
+  - EXP-DOWN-01 a launched enemy that lands goes down (CF-10)
+  - EXP-DOWN-02 down-diagonal + special without a downed enemy in range becomes the launcher (CF-10)
+  - EXP-BODY-01 bodies pass through each other (no push)
+  - FIXTURE-ENEMY-01 training dummies attack on a timer when in range (test fixture, not P0-08 AI)
+  scene_map:
+    scene: Assets/Corum2/Scenes/WP02_Combat.unity
+    start_map: C01
+    start_spawn: Start
+  save_fixture: null
+  save_fixture_note: 'original value: none'
+  random_seed: null
+  random_seed_note: 'original value: not used'
+  started_at: null
+  started_at_note: not known. The original value 2026-11-10T07:54:54+09:00 is the time of the last manifest rewrite (recorder start), not the run start (GPT WP02-M01-R1-B). See run_id_clock.
+  run_id_clock:
+    local_time: '2026-11-10T07:54:42'
+    note: run_id is formatted from DateTime.Now when GameHost creates the run (source 7f79776, GameHost.Start); second precision, no time zone in the id. Shown for reference; not recorded as started_at.
+  tester: 'Claude Code (automated: GameHost.RunInputScript)'
+  commands_or_steps: RUN-20261110-075442.commands.txt
+  commands_sha256: 5d999ad3b9231e1fd73fda9b1648c043b12b06fecffa4b9284742868363565e2
+  capture:
+    path: D:/ProjectR/Corum2Remake/Diagnostics/WP02R1/final/r1-RUN-20261110-075442.mp4
+    encoder: MediaEncoder H.264
+    width: 1280
+    height: 800
+    fps: 50
+    time_mode: Time.captureFramerate=50 (game time)
+    note: game-time recording, one frame per tick; not device latency/FPS evidence
+    repository_copy: Evidence/WP-02-R1/video/r1-RUN-20261110-075442.mp4
+  input_devices:
+  - name: Keyboard
+    virtual: false
+  - name: Mouse
+    virtual: false
+  - name: Corum2VirtualKeyboard
+    virtual: true
+  - name: Corum2VirtualGamepad
+    virtual: true
+  input_devices_note: scripted input goes through Corum2VirtualKeyboard/Corum2VirtualGamepad (Input System bindings), no physical device or Steam Deck
+  log: RUN-20261110-075442.ndjson

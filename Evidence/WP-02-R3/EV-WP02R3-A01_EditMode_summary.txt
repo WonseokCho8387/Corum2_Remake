@@ -1,0 +1,7 @@
+EditMode, C# source identical to 8a9a1a0 (run before that commit; no C# change in between): test-case 145, results {'Passed': 145}; root result=Passed total=145 passed=145 failed=0
+New in R3 (SourceFileListTests, 5):
+  Corum2.Tests.SourceFileListTests.Hash_SizesHashesSortedAndMissing
+  Corum2.Tests.SourceFileListTests.Parse_RejectsBadRows
+  Corum2.Tests.SourceFileListTests.Paths_MustBeRelativeAndSingleLine
+  Corum2.Tests.SourceFileListTests.Sha256_KnownVector
+  Corum2.Tests.SourceFileListTests.Tsv_RoundTrips

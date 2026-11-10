@@ -1,0 +1,13 @@
+run RUN-20261110-102151  events 601
+dataVersion movement.player@wp01-r1(experimental);input.profile@wp01-r1(experimental);unlock.AirUnlocks_All@wp01-r1(experimental);world:map.C01@wp02-r1(experimental);combat.player@wp02-r1(experimental);combat.CombatUnlocks_None@wp02-r1(experimental)
+
+== WP02-M01-R1  ticks 341..560
+  t  341 marker                                  -> [TestCase] 
+  t  346 marker                                  -> [VirtualDevicesAdded] 
+  t  348 combo.begin            player           -> [NewChain] 
+  t  348 attack.start           player           ->GroundAttack [Attack:GroundNormal] attackId=ground1 attackInstanceId=1 attackChainStep=1 comboHits=0
+  t  360 attack.end             player           ->GroundAttack [MotionEnd] attackId=ground1 attackInstanceId=1 elapsed=0.259999931 hits=0
+  t  360 combo.end              player           -> [Miss] attackChainStep=1 comboHits=0
+  t  423 motor.jump             player           Idle->Airborne [Jump:Standing] 
+  t  461 marker                                  -> [ScriptEnd] 
+  t  507 marker                                  -> [VideoRecordingStopped] 

@@ -1,0 +1,13 @@
+{
+  "run_id": "RUN-20261110-102053",
+  "source_revision": "8a9a1a0d9864ed929eb5f484f96b9d07c79a051e",
+  "runtime_entries": 214,
+  "posthoc_entries": 214,
+  "same_path_set": true,
+  "same_git_blob": 214,
+  "same_sha256": 214,
+  "line_ending_only_differences": 0,
+  "line_ending_only_paths": [],
+  "content_differences": [],
+  "meaning": "post-hoc rows select the same files and git content as the run-time list; sha256 differs only where the working tree held the file with different line endings than git stores"
+}
