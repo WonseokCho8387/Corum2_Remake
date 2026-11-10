@@ -21,7 +21,7 @@ namespace Corum2.EditorTools
         const string Wp01 = "Assets/Corum2/Data/WP01";
         const string Wp03 = "Assets/Corum2/Data/WP03";
         public const string ScenePath = "Assets/Corum2/Scenes/WP04_AI.unity";
-        const string Version = "wp04-2";
+        const string Version = "wp04-3";
 
         [MenuItem("Corum2/WP-04/Build Test Content")]
         public static void Build()
@@ -124,8 +124,11 @@ namespace Corum2.EditorTools
             var cu = AssetDatabase.LoadAssetAtPath<CombatUnlockFixture>(Wp02 + "/CombatUnlocks_None.asset");
             var issues = DataValidator.ValidateCombat(combat.ToCore(), cu.ToCore(), all.Select(e => e.ToCore()).ToList(), world.ToCore());
             foreach (var i in issues) Debug.LogError("[Corum2] " + i);
-            BuildScene(all);
-            Debug.Log("[Corum2] WP-04 content built. Validation issues: " + issues.Count);
+            var lib = Presentation();
+            var presIssues = PresentationLibrary.Validate(lib, all.Where(e => e.ai.type == AiType.Boss).Select(e => e.ToCore().Boss).ToList());
+            foreach (var i in presIssues) Debug.LogError("[Corum2] " + i);
+            BuildScene(all, lib);
+            Debug.Log("[Corum2] WP-04 content built. Validation issues: " + (issues.Count + presIssues.Count));
         }
 
         static EnemyDefinitionAsset Boss()
@@ -254,7 +257,44 @@ namespace Corum2.EditorTools
         static SpawnData Sp(string id, float x) => new SpawnData { id = id, position = new Vector2(x, 0f), facing = 1 };
         static EnemySpawnData En(string id, string def, float x) => new EnemySpawnData { instanceId = id, enemyId = def, position = new Vector2(x, 0f), facing = -1 };
 
-        static void BuildScene(List<EnemyDefinitionAsset> enemies)
+        /// <summary>WP-04-R3 (WP04-M01 presentation): temporary procedural cues for the ids used by the boss phases (TEST-PRES-01).</summary>
+        static PresentationLibrary Presentation()
+        {
+            var path = Dir + "/PresentationLibrary.asset";
+            var lib = AssetDatabase.LoadAssetAtPath<PresentationLibrary>(path);
+            if (lib == null)
+            {
+                lib = ScriptableObject.CreateInstance<PresentationLibrary>();
+                AssetDatabase.CreateAsset(lib, path);
+            }
+            lib.meta.domainId = "presentation.wp04";
+            lib.meta.dataVersion = Version;
+            lib.meta.policyIds = new[] { "EXP-PRES-01", "EXP-PRES-02", "TEST-PRES-01" };
+            lib.meta.relatedRIds = new[] { "R-08-11" };
+            lib.animations = new List<AnimationCue>
+            {
+                new AnimationCue { id = "warden.roar", kind = AnimationCueKind.Pulse, amplitude = 0.18f, frequency = 3f, tint = new Color(1f, 0.9f, 0.45f), tintAmount = 0.6f },
+                new AnimationCue { id = "warden.rage", kind = AnimationCueKind.Shake, amplitude = 0.14f, frequency = 10f, tint = new Color(1f, 0.15f, 0.1f), tintAmount = 0.7f },
+                new AnimationCue { id = "sentinel.shift", kind = AnimationCueKind.Flicker, amplitude = 0f, frequency = 8f, tint = new Color(0.4f, 1f, 1f), tintAmount = 0.8f },
+            };
+            lib.vfx = new List<VfxCue>
+            {
+                new VfxCue { id = "vfx.armorGlow", kind = VfxCueKind.Aura, color = new Color(1f, 0.85f, 0.3f), rate = 70f, size = 0.22f, speed = 1f, radius = 1.3f, lifetime = 0.6f },
+                new VfxCue { id = "vfx.redAura", kind = VfxCueKind.Burst, color = new Color(1f, 0.2f, 0.1f), rate = 30f, burstCount = 35, size = 0.18f, speed = 2.5f, radius = 0.8f, lifetime = 0.5f },
+                new VfxCue { id = "vfx.blink", kind = VfxCueKind.Burst, color = new Color(0.4f, 1f, 1f), rate = 12f, burstCount = 30, size = 0.2f, speed = 4f, radius = 0.6f, lifetime = 0.4f },
+            };
+            lib.cameras = new List<CameraCue>
+            {
+                new CameraCue { id = "cam.shakeSmall", kind = CameraCueKind.Shake, amplitude = 0.12f, frequency = 18f },
+                new CameraCue { id = "cam.zoomIn", kind = CameraCueKind.Zoom, fovDelta = -7f },
+                new CameraCue { id = "cam.none", kind = CameraCueKind.None },
+            };
+            EditorUtility.SetDirty(lib);
+            AssetDatabase.SaveAssets();
+            return lib;
+        }
+
+        static void BuildScene(List<EnemyDefinitionAsset> enemies, PresentationLibrary lib)
         {
             var scene = EditorSceneManager.NewScene(NewSceneSetup.DefaultGameObjects, NewSceneMode.Single);
             var profile = AssetDatabase.LoadAssetAtPath<VolumeProfile>("Assets/Settings/SampleSceneProfile.asset");
@@ -279,6 +319,7 @@ namespace Corum2.EditorTools
             host.combatUnlocks = AssetDatabase.LoadAssetAtPath<CombatUnlockFixture>(Wp02 + "/CombatUnlocks_None.asset");
             host.enemies = enemies;
             host.ring = AssetDatabase.LoadAssetAtPath<RingConfig>(Wp03 + "/RingConfig.asset");
+            host.presentation = lib;
             EditorSceneManager.SaveScene(scene, ScenePath);
             var scenes = EditorBuildSettings.scenes.Where(s => s.path != ScenePath).ToList();
             scenes.Add(new EditorBuildSettingsScene(ScenePath, true));

@@ -449,6 +449,8 @@ namespace Corum2.Core
                 EnterPhase(en, target, "Transition(R-08-09/10, EXP-BOSS-04)", why);
                 en.State = EnemyState.PhaseTransition;
                 en.TransitionTimer = Math.Max(target.TransitionTime, 1e-6f); // own timer; hits do not overwrite it (WP04-F03)
+                en.TransitionDuration = target.TransitionTime;
+                en.TransitionSerial++;
                 en.Timer = 0f;
                 en.MoveVelX = 0f;
                 if (en.NewPlayerAttack) DefenseSkip(en, "Busy:TransitionStart");

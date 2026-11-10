@@ -15,7 +15,7 @@ MonoBehaviour:
   meta:
     domainId: map.C04
     schemaVersion: 1
-    dataVersion: wp04-2
+    dataVersion: wp04-3
     status: experimental
     policyIds: []
     relatedRIds:

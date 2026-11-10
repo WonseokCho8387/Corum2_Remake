@@ -1,0 +1,89 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06fb0373201428445aed5c02cf4b80bc, type: 3}
+  m_Name: PresentationLibrary
+  m_EditorClassIdentifier: Corum2.Unity::Corum2.Unity.PresentationLibrary
+  meta:
+    domainId: presentation.wp04
+    schemaVersion: 1
+    dataVersion: wp04-3
+    status: experimental
+    policyIds:
+    - EXP-PRES-01
+    - EXP-PRES-02
+    - TEST-PRES-01
+    relatedRIds:
+    - R-08-11
+    changeRequestId: 
+  animations:
+  - id: warden.roar
+    kind: 0
+    amplitude: 0.18
+    frequency: 3
+    tint: {r: 1, g: 0.9, b: 0.45, a: 1}
+    tintAmount: 0.6
+  - id: warden.rage
+    kind: 1
+    amplitude: 0.14
+    frequency: 10
+    tint: {r: 1, g: 0.15, b: 0.1, a: 1}
+    tintAmount: 0.7
+  - id: sentinel.shift
+    kind: 2
+    amplitude: 0
+    frequency: 8
+    tint: {r: 0.4, g: 1, b: 1, a: 1}
+    tintAmount: 0.8
+  vfx:
+  - id: vfx.armorGlow
+    kind: 0
+    color: {r: 1, g: 0.85, b: 0.3, a: 1}
+    rate: 70
+    burstCount: 30
+    size: 0.22
+    speed: 1
+    radius: 1.3
+    lifetime: 0.6
+  - id: vfx.redAura
+    kind: 1
+    color: {r: 1, g: 0.2, b: 0.1, a: 1}
+    rate: 30
+    burstCount: 35
+    size: 0.18
+    speed: 2.5
+    radius: 0.8
+    lifetime: 0.5
+  - id: vfx.blink
+    kind: 1
+    color: {r: 0.4, g: 1, b: 1, a: 1}
+    rate: 12
+    burstCount: 30
+    size: 0.2
+    speed: 4
+    radius: 0.6
+    lifetime: 0.4
+  cameras:
+  - id: cam.shakeSmall
+    kind: 1
+    amplitude: 0.12
+    frequency: 18
+    fovDelta: -6
+  - id: cam.zoomIn
+    kind: 2
+    amplitude: 0.12
+    frequency: 18
+    fovDelta: -7
+  - id: cam.none
+    kind: 0
+    amplitude: 0.12
+    frequency: 18
+    fovDelta: -6

@@ -33,6 +33,9 @@ namespace Corum2.Unity
         [Header("Ring / quickslots (WP-03; leave empty for scenes without items)")]
         public RingConfig ring;
 
+        [Header("Boss transition presentation (R-08-11, EXP-PRES-01; needed when a boss phase has presentation ids)")]
+        public PresentationLibrary presentation;
+
         [Header("Run")]
         public string testCaseId = "manual";
         [Tooltip("Write a 'tick' log line every fixed step (trajectory logs).")]
@@ -66,6 +69,7 @@ namespace Corum2.Unity
         readonly TickInput _tick = new TickInput();
         WorldView _worldView;
         CombatView _combatView;
+        BossPresentationView _presentationView;
         PlayerView _playerView;
         Camera _camera;
         Text _hud;
@@ -125,6 +129,10 @@ namespace Corum2.Unity
                     if (e != null) enemyDefs.Add(e.ToCore());
                 foreach (var issue in DataValidator.ValidateCombat(combatProfile, combatUnlock, enemyDefs, worldData))
                     ValidationErrors.Add(issue.ToString());
+                var bosses = new List<BossDefinition>();
+                foreach (var d in enemyDefs)
+                    if (d.Ai != null && d.Ai.Type == AiType.Boss && d.Boss != null) bosses.Add(d.Boss);
+                foreach (var issue in PresentationLibrary.Validate(presentation, bosses)) ValidationErrors.Add(issue);
             }
             if (ring != null)
             {
@@ -154,6 +162,7 @@ namespace Corum2.Unity
             foreach (var e in enemies)
                 if (e != null) extra.Add(e);
             if (ring != null) extra.Add(ring);
+            if (presentation != null) extra.Add(presentation);
             DataSnapshotPath = RunFiles.WriteDataSnapshot(dir, RunId, world, movement, inputProfile, unlocks, extra);
 
             var log = new DiagLogger(new SinkTee(_sink, this)) { RunId = RunId, TestCaseId = testCaseId, TickSamples = tickSamples };
@@ -165,7 +174,11 @@ namespace Corum2.Unity
             _worldView = new WorldView(transform);
             _worldView.Build(worldData, world.maps);
             _playerView = new PlayerView(transform, _worldView, move.BodyWidth);
-            if (Sim.Combat != null) _combatView = new CombatView(transform, _worldView, enemies);
+            if (Sim.Combat != null)
+            {
+                _combatView = new CombatView(transform, _worldView, enemies);
+                _presentationView = new BossPresentationView(transform, _combatView, presentation);
+            }
             if (Sim.Ring != null)
             {
                 if (_hudCanvas == null) BuildCanvas();
@@ -239,12 +252,16 @@ namespace Corum2.Unity
             _playerView.Apply(new Vector3(p.x, p.y, z), Sim.Player.Height, Sim.Player.Facing, Sim.Player.State);
             // TC-01-01 / TC-UNITY-02: the rendered player must stay on the combat plane.
             if (_combatView != null) _combatView.Sync(Sim.Combat, z);
+            if (_presentationView != null) _presentationView.Sync(Sim, z);
             _viewFrames++;
             _maxViewZError = Mathf.Max(_maxViewZError, Mathf.Abs(_playerView.Root.position.z - z));
             if (_camera != null)
             {
                 var cx = Mathf.Lerp(_prevCamX, _currCamX, alpha);
-                _camera.transform.position = new Vector3(cx, Sim.Camera.Y, z - cameraDistance);
+                // EXP-PRES-01: the camera cue only offsets the view; the combat plane z and judgement are unchanged.
+                var co = _presentationView != null ? _presentationView.CameraOffset : Vector2.zero;
+                _camera.transform.position = new Vector3(cx + co.x, Sim.Camera.Y + co.y, z - cameraDistance);
+                _camera.fieldOfView = cameraFov + (_presentationView != null ? _presentationView.FovDelta : 0f);
             }
 
             if (_ringView != null && _camera != null)

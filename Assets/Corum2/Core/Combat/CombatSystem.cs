@@ -85,6 +85,10 @@ namespace Corum2.Core
         public readonly HashSet<string> BossEvents = new HashSet<string>();
         /// <summary>Remaining phase transition time, separate from the reaction Timer (WP04-F03, EXP-BOSS-03). 0 = none.</summary>
         public float TransitionTimer;
+        /// <summary>Increments once per transition start; with TransitionDuration it lets the presentation layer follow the
+        /// judged transition (R-08-11 presentation, EXP-PRES-01).</summary>
+        public int TransitionSerial;
+        public float TransitionDuration;
         /// <summary>Last player attack instance this boss has seen start (guard / evade trigger, EXP-BOSS-05).</summary>
         public long SeenPlayerAttackId;
         public bool NewPlayerAttack;

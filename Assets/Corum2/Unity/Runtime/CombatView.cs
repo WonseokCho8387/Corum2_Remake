@@ -17,6 +17,20 @@ namespace Corum2.Unity
         readonly Material _enemyBoxMat;
         readonly Material _projectileMat;
         readonly List<Transform> _projectiles = new List<Transform>();
+        readonly Dictionary<EnemyActor, Color> _lastColor = new Dictionary<EnemyActor, Color>();
+
+        /// <summary>The block-out body of an enemy as placed by the last Sync (for presentation cues layered on top).</summary>
+        public bool TryGetVisual(EnemyActor e, out Transform root, out Material mat, out Color color)
+        {
+            root = null;
+            mat = null;
+            color = Color.white;
+            if (!_enemies.TryGetValue(e, out var v) || !v.root.gameObject.activeSelf) return false;
+            root = v.root;
+            mat = v.mat;
+            _lastColor.TryGetValue(e, out color);
+            return true;
+        }
 
         public CombatView(Transform parent, WorldView world, IEnumerable<EnemyDefinitionAsset> defs)
         {
@@ -78,6 +92,7 @@ namespace Corum2.Unity
                 var baseCol = _colors.TryGetValue(e.Def.Id, out var bc) ? bc : Color.red;
                 var stateCol = StateTint(e.State, baseCol);
                 if (v.mat.HasProperty("_BaseColor")) v.mat.SetColor("_BaseColor", stateCol);
+                _lastColor[e] = stateCol;
 
                 if (e.State == EnemyState.AttackActive && e.CurAttack != null && !e.AttackSpent)
                 {
