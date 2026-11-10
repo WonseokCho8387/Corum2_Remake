@@ -1,0 +1,19 @@
+EditMode, C# source identical to 37929b8 (run before that commit; no C# change in between): test-case 167, results {'Passed': 167}; root result=Passed total=167 passed=167 failed=0
+New in WP-03 (RingTests, 17):
+  Corum2.Tests.RingTests.AutoClose_OnlyAfterUseRegisterDiscard
+  Corum2.Tests.RingTests.Cursor_FollowsStick_NeutralClearsSelection_NoUse
+  Corum2.Tests.RingTests.Death_CancelsPendingUse_AndClosesRing
+  Corum2.Tests.RingTests.Discard_CancelKeeps_ConfirmRemoves_QuestBlocked
+  Corum2.Tests.RingTests.DpadInsideRing_Registration_vs_Browse
+  Corum2.Tests.RingTests.HitReaction_RingOpens_UseReservedThenRunsOnce
+  Corum2.Tests.RingTests.LB_OpensAndCloses_SimulationKeepsGameTime
+  Corum2.Tests.RingTests.Pages_LT_RT_Wrap
+  Corum2.Tests.RingTests.Quickslot_DuringCooldown_Rejected_NothingConsumed
+  Corum2.Tests.RingTests.Quickslot_DuringHitReaction_Rejected_RingRequestPendingBlocksSecond
+  Corum2.Tests.RingTests.Quickslots_UseOnlyTheirItem_EmptyAfterZero
+  Corum2.Tests.RingTests.Register_Y_Then_Dpad_AssignsWithoutUse_AndCloses
+  Corum2.Tests.RingTests.RejectedUse_KeepsRingOpen
+  Corum2.Tests.RingTests.Ring_OpensInAir_AndDuringAttack_UseWaitsForMotionEnd
+  Corum2.Tests.RingTests.Scroll_UsesSharedMagicDefinition_ConsumedAndRemoved_Cooldown
+  Corum2.Tests.RingTests.StickWhileOpen_DoesNotMovePlayer_HeldMoveReleasedAndResumed
+  Corum2.Tests.RingTests.X_ShowsDetail_RingStays_XClosesDetail

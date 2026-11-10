@@ -1,0 +1,628 @@
+{
+  "log": "Evidence/WP-03/runs/RUN-20261110-122933.ndjson",
+  "slow_motion": {
+    "recording_ticks": [
+      185,
+      1455
+    ],
+    "time_scale_changes": 34,
+    "scales_seen": [
+      0.2,
+      1
+    ],
+    "ticks_with_ring_open": 155,
+    "expected_frames": 1890.0,
+    "recorder_frames_logged": 1889,
+    "note": "Time.captureFramerate=50: each rendered frame advances 0.02 s * timeScale of game time, so 5 frames per tick while the ring is open (0.2) and 1 frame per tick otherwise"
+  },
+  "ring_open_states": [
+    {
+      "tick": 249,
+      "testCase": "TC-02-03",
+      "playerState": "Walk"
+    },
+    {
+      "tick": 339,
+      "testCase": "TC-02-07",
+      "playerState": "Idle"
+    },
+    {
+      "tick": 359,
+      "testCase": "TC-02-07",
+      "playerState": "Idle"
+    },
+    {
+      "tick": 379,
+      "testCase": "TC-02-07",
+      "playerState": "Idle"
+    },
+    {
+      "tick": 399,
+      "testCase": "TC-02-07",
+      "playerState": "Idle"
+    },
+    {
+      "tick": 419,
+      "testCase": "TC-02-09",
+      "playerState": "Idle"
+    },
+    {
+      "tick": 679,
+      "testCase": "TC-02-08",
+      "playerState": "Idle"
+    },
+    {
+      "tick": 719,
+      "testCase": "TC-02-10",
+      "playerState": "Idle"
+    },
+    {
+      "tick": 789,
+      "testCase": "TC-02-10",
+      "playerState": "Idle"
+    },
+    {
+      "tick": 847,
+      "testCase": "TC-02-11",
+      "playerState": "Airborne"
+    },
+    {
+      "tick": 890,
+      "testCase": "TC-02-11",
+      "playerState": "GroundAttack"
+    },
+    {
+      "tick": 949,
+      "testCase": "TC-02-11",
+      "playerState": "AirDash"
+    },
+    {
+      "tick": 1019,
+      "testCase": "TC-02-11",
+      "playerState": "Dive"
+    },
+    {
+      "tick": 1105,
+      "testCase": "TC-05-05",
+      "playerState": "HitStun"
+    },
+    {
+      "tick": 1276,
+      "testCase": "TC-CF-08a",
+      "playerState": "HitStun"
+    },
+    {
+      "tick": 1279,
+      "testCase": "TC-CF-08a",
+      "playerState": "HitStun"
+    },
+    {
+      "tick": 1346,
+      "testCase": "TC-02-01",
+      "playerState": "Idle"
+    }
+  ],
+  "closes": {
+    "Manual(LB)": 6,
+    "Registered(R-02-09)": 4,
+    "Discarded(R-02-09)": 1,
+    "Used(R-02-09)": 3,
+    "UseReserved(R-05-05/R-02-09)": 3
+  },
+  "uses": [
+    {
+      "tick": 450,
+      "tc": "TC-02-06",
+      "item": "potion",
+      "source": "Quickslot",
+      "requestTick": 449,
+      "execTick": 450,
+      "waitedFor": "",
+      "hp": [
+        100,
+        100
+      ],
+      "countAfter": 2,
+      "quickslotsCleared": ""
+    },
+    {
+      "tick": 510,
+      "tc": "TC-02-06",
+      "item": "hipotion",
+      "source": "Quickslot",
+      "requestTick": 509,
+      "execTick": 510,
+      "waitedFor": "",
+      "hp": [
+        100,
+        100
+      ],
+      "countAfter": 0,
+      "quickslotsCleared": "Right"
+    },
+    {
+      "tick": 575,
+      "tc": "TC-02-06",
+      "item": "herb",
+      "source": "Quickslot",
+      "requestTick": 574,
+      "execTick": 575,
+      "waitedFor": "",
+      "hp": [
+        100,
+        100
+      ],
+      "countAfter": 1,
+      "quickslotsCleared": ""
+    },
+    {
+      "tick": 610,
+      "tc": "TC-02-06",
+      "item": "bread",
+      "source": "Quickslot",
+      "requestTick": 609,
+      "execTick": 610,
+      "waitedFor": "",
+      "hp": [
+        100,
+        100
+      ],
+      "countAfter": 1,
+      "quickslotsCleared": ""
+    },
+    {
+      "tick": 724,
+      "tc": "TC-02-10",
+      "item": "scroll",
+      "source": "Ring",
+      "requestTick": 723,
+      "execTick": 724,
+      "waitedFor": "",
+      "hp": [
+        100,
+        100
+      ],
+      "countAfter": 1,
+      "quickslotsCleared": ""
+    },
+    {
+      "tick": 794,
+      "tc": "TC-02-10",
+      "item": "scroll",
+      "source": "Ring",
+      "requestTick": 793,
+      "execTick": 794,
+      "waitedFor": "",
+      "hp": [
+        100,
+        100
+      ],
+      "countAfter": 0,
+      "quickslotsCleared": ""
+    },
+    {
+      "tick": 903,
+      "tc": "TC-02-11",
+      "item": "apple",
+      "source": "Ring",
+      "requestTick": 891,
+      "execTick": 903,
+      "waitedFor": "Motion:GroundAttack(EXP-ITEM-03, CF-07)",
+      "hp": [
+        100,
+        100
+      ],
+      "countAfter": 2,
+      "quickslotsCleared": ""
+    },
+    {
+      "tick": 1121,
+      "tc": "TC-05-05",
+      "item": "potion",
+      "source": "Ring",
+      "requestTick": 1106,
+      "execTick": 1121,
+      "waitedFor": "HitReaction(R-05-05)",
+      "hp": [
+        90,
+        100
+      ],
+      "countAfter": 1,
+      "quickslotsCleared": ""
+    },
+    {
+      "tick": 1293,
+      "tc": "TC-CF-08a",
+      "item": "potion",
+      "source": "Ring",
+      "requestTick": 1277,
+      "execTick": 1293,
+      "waitedFor": "HitReaction(R-05-05)",
+      "hp": [
+        80,
+        100
+      ],
+      "countAfter": 0,
+      "quickslotsCleared": "Up"
+    },
+    {
+      "tick": 1363,
+      "tc": "TC-02-01",
+      "item": "herb",
+      "source": "Ring",
+      "requestTick": 1362,
+      "execTick": 1363,
+      "waitedFor": "",
+      "hp": [
+        100,
+        100
+      ],
+      "countAfter": 0,
+      "quickslotsCleared": "Down"
+    }
+  ],
+  "rejects": {
+    "Rejected:Cooldown(EXP-ITEM-02)": 1,
+    "Rejected:QuickslotDuringHitReaction(EXP-QS-01, CF-08)": 1,
+    "Rejected:PendingExists(EXP-ITEM-05, CF-08)": 1
+  },
+  "quickslot_assignments": [
+    {
+      "tick": 350,
+      "slot": "Up",
+      "item": "potion",
+      "itemConsumed": false,
+      "stickNeutral": true
+    },
+    {
+      "tick": 368,
+      "slot": "Right",
+      "item": "hipotion",
+      "itemConsumed": false,
+      "stickNeutral": true
+    },
+    {
+      "tick": 388,
+      "slot": "Down",
+      "item": "herb",
+      "itemConsumed": false,
+      "stickNeutral": true
+    },
+    {
+      "tick": 408,
+      "slot": "Left",
+      "item": "bread",
+      "itemConsumed": false,
+      "stickNeutral": true
+    }
+  ],
+  "discards": [
+    {
+      "tick": 685,
+      "reason": "Cancel(R-02-08)",
+      "item": "potion",
+      "count": [
+        null,
+        null
+      ]
+    },
+    {
+      "tick": 690,
+      "reason": "Blocked:Quest(R-02-08)",
+      "item": "key",
+      "count": [
+        null,
+        null
+      ]
+    },
+    {
+      "tick": 698,
+      "reason": "Confirmed(R-02-08)",
+      "item": "water",
+      "count": [
+        1,
+        0
+      ]
+    },
+    {
+      "tick": 1360,
+      "reason": "Cancel(R-02-08)",
+      "item": "herb",
+      "count": [
+        null,
+        null
+      ]
+    }
+  ],
+  "ignored": {
+    "NoSelection(R-02-04)": 1,
+    "DpadOutsideRegistration(EXP-RING-10, U-03)": 1
+  },
+  "magic_requests": [
+    {
+      "tick": 724,
+      "magicId": "fire",
+      "power": 30,
+      "castTime": 0.2
+    },
+    {
+      "tick": 794,
+      "magicId": "fire",
+      "power": 30,
+      "castTime": 0.2
+    }
+  ],
+  "pages": [
+    [
+      275,
+      "0",
+      "1",
+      "Next(RT)"
+    ],
+    [
+      278,
+      "1",
+      "0",
+      "Next(RT)"
+    ],
+    [
+      280,
+      "0",
+      "1",
+      "Prev(LT)"
+    ],
+    [
+      283,
+      "1",
+      "0",
+      "Next(RT)"
+    ],
+    [
+      1350,
+      "0",
+      "0",
+      "Next(RT)"
+    ]
+  ],
+  "game_inputs_while_open": 0,
+  "player_motion_while_open": [
+    {
+      "open": 249,
+      "close": 295,
+      "tc": "TC-02-03",
+      "state": "Walk",
+      "x_open": 14.7499924,
+      "x_close": 14.7499924,
+      "vx_open": 3.5,
+      "vx_close": 0,
+      "cursorChanges": 5,
+      "gameHeldDirWhileOpen": [
+        "None"
+      ]
+    },
+    {
+      "open": 339,
+      "close": 350,
+      "tc": "TC-02-07",
+      "state": "Idle",
+      "x_open": 16.7799835,
+      "x_close": 16.7799835,
+      "vx_open": 0,
+      "vx_close": 0,
+      "cursorChanges": 2,
+      "gameHeldDirWhileOpen": [
+        "None"
+      ]
+    },
+    {
+      "open": 359,
+      "close": 368,
+      "tc": "TC-02-07",
+      "state": "Idle",
+      "x_open": 16.7799835,
+      "x_close": 16.7799835,
+      "vx_open": 0,
+      "vx_close": 0,
+      "cursorChanges": 2,
+      "gameHeldDirWhileOpen": [
+        "None"
+      ]
+    },
+    {
+      "open": 379,
+      "close": 388,
+      "tc": "TC-02-07",
+      "state": "Idle",
+      "x_open": 16.7799835,
+      "x_close": 16.7799835,
+      "vx_open": 0,
+      "vx_close": 0,
+      "cursorChanges": 2,
+      "gameHeldDirWhileOpen": [
+        "None"
+      ]
+    },
+    {
+      "open": 399,
+      "close": 408,
+      "tc": "TC-02-07",
+      "state": "Idle",
+      "x_open": 16.7799835,
+      "x_close": 16.7799835,
+      "vx_open": 0,
+      "vx_close": 0,
+      "cursorChanges": 2,
+      "gameHeldDirWhileOpen": [
+        "None"
+      ]
+    },
+    {
+      "open": 419,
+      "close": 430,
+      "tc": "TC-02-09",
+      "state": "Idle",
+      "x_open": 16.7799835,
+      "x_close": 16.7799835,
+      "vx_open": 0,
+      "vx_close": 0,
+      "cursorChanges": 2,
+      "gameHeldDirWhileOpen": [
+        "None"
+      ]
+    },
+    {
+      "open": 679,
+      "close": 698,
+      "tc": "TC-02-08",
+      "state": "Idle",
+      "x_open": 16.7799835,
+      "x_close": 16.7799835,
+      "vx_open": 0,
+      "vx_close": 0,
+      "cursorChanges": 3,
+      "gameHeldDirWhileOpen": [
+        "None"
+      ]
+    },
+    {
+      "open": 719,
+      "close": 723,
+      "tc": "TC-02-10",
+      "state": "Idle",
+      "x_open": 16.7799835,
+      "x_close": 16.7799835,
+      "vx_open": 0,
+      "vx_close": 0,
+      "cursorChanges": 1,
+      "gameHeldDirWhileOpen": [
+        "None"
+      ]
+    },
+    {
+      "open": 789,
+      "close": 793,
+      "tc": "TC-02-10",
+      "state": "Idle",
+      "x_open": 16.9199829,
+      "x_close": 16.9199829,
+      "vx_open": 0,
+      "vx_close": 0,
+      "cursorChanges": 1,
+      "gameHeldDirWhileOpen": [
+        "None"
+      ]
+    },
+    {
+      "open": 847,
+      "close": 850,
+      "tc": "TC-02-11",
+      "state": "Airborne",
+      "x_open": 17.0599823,
+      "x_close": 17.0599823,
+      "vx_open": 0,
+      "vx_close": 0,
+      "cursorChanges": 0,
+      "gameHeldDirWhileOpen": [
+        "None"
+      ]
+    },
+    {
+      "open": 890,
+      "close": 891,
+      "tc": "TC-02-11",
+      "state": "GroundAttack",
+      "x_open": 17.0599823,
+      "x_close": 17.0599823,
+      "vx_open": 0,
+      "vx_close": 0,
+      "cursorChanges": 1,
+      "gameHeldDirWhileOpen": [
+        "None"
+      ]
+    },
+    {
+      "open": 949,
+      "close": 953,
+      "tc": "TC-02-11",
+      "state": "AirDash",
+      "x_open": 17.5399818,
+      "x_close": 18.49998,
+      "vx_open": 12,
+      "vx_close": 12,
+      "cursorChanges": 1,
+      "gameHeldDirWhileOpen": [
+        "None"
+      ]
+    },
+    {
+      "open": 1019,
+      "close": 1023,
+      "tc": "TC-02-11",
+      "state": "Dive",
+      "x_open": 21.6959553,
+      "x_close": 22.4879169,
+      "vx_open": 9.899495,
+      "vx_close": 9.899495,
+      "cursorChanges": 1,
+      "gameHeldDirWhileOpen": [
+        "None"
+      ]
+    },
+    {
+      "open": 1105,
+      "close": 1106,
+      "tc": "TC-05-05",
+      "state": "HitStun",
+      "x_open": 28.272,
+      "x_close": 28.272,
+      "vx_open": -0.40000093,
+      "vx_close": 0,
+      "cursorChanges": 1,
+      "gameHeldDirWhileOpen": [
+        "None"
+      ]
+    },
+    {
+      "open": 1276,
+      "close": 1277,
+      "tc": "TC-CF-08a",
+      "state": "HitStun",
+      "x_open": 28.2799988,
+      "x_close": 28.272,
+      "vx_open": -1.00000072,
+      "vx_close": -0.40000093,
+      "cursorChanges": 1,
+      "gameHeldDirWhileOpen": [
+        "None"
+      ]
+    },
+    {
+      "open": 1279,
+      "close": 1282,
+      "tc": "TC-CF-08a",
+      "state": "HitStun",
+      "x_open": 28.272,
+      "x_close": 28.272,
+      "vx_open": 0,
+      "vx_close": 0,
+      "cursorChanges": 3,
+      "gameHeldDirWhileOpen": [
+        "None"
+      ]
+    },
+    {
+      "open": 1346,
+      "close": 1362,
+      "tc": "TC-02-01",
+      "state": "Idle",
+      "x_open": 13,
+      "x_close": 13,
+      "vx_open": 0,
+      "vx_close": 0,
+      "cursorChanges": 1,
+      "gameHeldDirWhileOpen": [
+        "None"
+      ]
+    }
+  ]
+}
