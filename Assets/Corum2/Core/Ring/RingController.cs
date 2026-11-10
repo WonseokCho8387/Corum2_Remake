@@ -329,7 +329,8 @@ namespace Corum2.Core
         {
             _log.RealTime = e.RawTime;
             _log.Emit("input.route", PlayerMotor.Actor, "", "", "", outcome, ("inputEventId", e.EventId), ("action", e.Action),
-                ("edge", e.Edge), ("device", e.Device), ("consumer", consumer), ("ringMode", _ring.Mode), ("requestTime", e.RawTime));
+                ("edge", e.Edge), ("device", e.Device), ("consumer", consumer), ("ringMode", _ring.Mode), ("requestTime", e.RawTime),
+                ("playerState", _playerState()));
         }
 
         void TrackDir(in InputEvent e)

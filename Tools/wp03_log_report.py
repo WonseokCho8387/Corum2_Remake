@@ -29,7 +29,7 @@ def main(path, all_routes):
             if t not in TYPES and not route:
                 continue
             keys = {
-                "input.route": ["action", "edge", "consumer", "ringMode"],
+                "input.route": ["action", "edge", "consumer", "ringMode", "playerState"],
                 "ring.open": ["slowScale", "inventory", "quickslots"],
                 "ring.close": ["mode"],
                 "ring.cursor": ["selectedItem", "stick"],
