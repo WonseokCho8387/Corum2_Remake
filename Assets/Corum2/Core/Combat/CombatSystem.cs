@@ -572,19 +572,22 @@ namespace Corum2.Core
                 }
                 return;
             }
-            if (en.Hitstop > 0f)
-            {
-                en.Hitstop -= dt;
-                return;
-            }
-
-            var before = en.State;
-            if (en.TransitionTimer > 0f) StepTransition(en, dt);
+            // WP04-M02-B: a player attack start is observed on its start tick, also during hitstop, so a busy boss never
+            // answers it later (EXP-BOSS-05).
             if (en.Boss != null && Attack != null && Attack.InstanceId != en.SeenPlayerAttackId)
             {
                 en.SeenPlayerAttackId = Attack.InstanceId;
                 en.NewPlayerAttack = true;
             }
+            if (en.Hitstop > 0f)
+            {
+                en.Hitstop -= dt;
+                if (en.NewPlayerAttack) DefenseSkip(en, "Busy:Hitstop");
+                return;
+            }
+
+            var before = en.State;
+            if (en.TransitionTimer > 0f) StepTransition(en, dt);
             switch (en.State)
             {
                 case EnemyState.Idle:
@@ -670,7 +673,7 @@ namespace Corum2.Core
                     break;
             }
 
-            en.NewPlayerAttack = false; // only a free boss reacts to an attack start, on the tick it is seen (EXP-BOSS-05)
+            if (en.NewPlayerAttack) DefenseSkip(en, "Busy:" + before + (en.Grounded ? "" : ":Airborne")); // not free on the start tick
 
             // physics
             if (!en.Grounded)

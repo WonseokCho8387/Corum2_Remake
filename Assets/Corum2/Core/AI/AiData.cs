@@ -136,7 +136,8 @@ namespace Corum2.Core
         public float EvadeFrequency;
         public float EvadeTime = 0.3f;
         public float EvadeSpeed = 8f;
-        /// <summary>A player attack starting within this distance (in front of the boss) is eligible for guard / evade.</summary>
+        /// <summary>A player attack starting within this distance, in front of the boss's facing on that tick, is eligible for
+        /// guard / evade (EXP-BOSS-05).</summary>
         public float DefenseRange = 3f;
         /// <summary>Length of the transition into this phase; no new attacks meanwhile (CF-09 details EXP-BOSS-03).</summary>
         public float TransitionTime = 0.8f;

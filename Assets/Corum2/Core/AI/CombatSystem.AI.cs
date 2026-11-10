@@ -93,15 +93,43 @@ namespace Corum2.Core
         /// <summary>A reaction ended: back to the transition if it is still running (EXP-BOSS-03), else free.</summary>
         static EnemyState AfterReactionState(EnemyActor en) => en.TransitionTimer > 0f ? EnemyState.PhaseTransition : EnemyState.Idle;
 
-        /// <summary>R-08-11 guard / evade frequency (EXP-BOSS-05..07). Called from BossIdle for a free, grounded boss.</summary>
+        /// <summary>A player attack start this boss does not answer (EXP-BOSS-05). Logged only when the boss has guard / evade
+        /// settings and the attacker is within DefenseRange, so the counts stay untouched and the reason is traceable.</summary>
+        void DefenseSkip(EnemyActor en, string why)
+        {
+            en.NewPlayerAttack = false;
+            var ph = en.Phase;
+            if (ph == null || (ph.GuardFrequency <= 0f && ph.EvadeFrequency <= 0f)) return;
+            var dist = Math.Abs(P.Position.X - en.Position.X);
+            if (dist > ph.DefenseRange) return;
+            Log.Emit("boss.defenseSkip", en.Id, Pl, en.State.ToString(), en.State.ToString(), why + "(EXP-BOSS-05)",
+                ("playerAttackInstanceId", en.SeenPlayerAttackId), ("distance", dist), ("facing", en.Facing), ("phase", ph.Id),
+                ("guardAcc", en.GuardAcc), ("evadeAcc", en.EvadeAcc));
+        }
+
+        /// <summary>R-08-11 guard / evade frequency (EXP-BOSS-05..07). Called from BossIdle for a free, grounded boss.
+        /// Eligible: observed on the attack's start tick, attacker within DefenseRange and in front of the boss's facing at
+        /// that moment (equal X counts as front). The boss does not turn before this check (WP04-M02-A).</summary>
         bool BossDefense(EnemyActor en, float dist, int dir)
         {
             var ph = en.Phase;
             if (!en.NewPlayerAttack) return false;
+            if (ph.GuardFrequency <= 0f && ph.EvadeFrequency <= 0f)
+            {
+                en.NewPlayerAttack = false;
+                return false;
+            }
+            if (dist > ph.DefenseRange)
+            {
+                en.NewPlayerAttack = false;
+                return false;
+            }
+            if ((P.Position.X - en.Position.X) * en.Facing < 0f)
+            {
+                DefenseSkip(en, "Behind");
+                return false;
+            }
             en.NewPlayerAttack = false;
-            if (ph.GuardFrequency <= 0f && ph.EvadeFrequency <= 0f) return false;
-            if (dist > ph.DefenseRange) return false;
-            en.Facing = dir; // EXP-AI-08: faces the player when an action starts
             en.GuardAcc += ph.GuardFrequency;
             en.EvadeAcc += ph.EvadeFrequency;
             string pick = "None";
@@ -423,7 +451,7 @@ namespace Corum2.Core
                 en.TransitionTimer = Math.Max(target.TransitionTime, 1e-6f); // own timer; hits do not overwrite it (WP04-F03)
                 en.Timer = 0f;
                 en.MoveVelX = 0f;
-                en.NewPlayerAttack = false;
+                if (en.NewPlayerAttack) DefenseSkip(en, "Busy:TransitionStart");
                 return true;
             }
             return false;
@@ -432,6 +460,7 @@ namespace Corum2.Core
         void BossIdle(MapData map, EnemyActor en, float dt, float dx, float dist, int dir)
         {
             if (TryTransition(en)) return;
+            if (en.NewPlayerAttack && !en.Grounded) DefenseSkip(en, "Busy:Idle:Airborne");
             if (P.State == MotorState.Dead)
             {
                 en.MoveVelX = 0f;
