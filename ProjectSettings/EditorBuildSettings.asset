@@ -14,6 +14,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Corum2/Scenes/WP02_Combat.unity
     guid: 56407b728cc66984ca81f05031d29261
+  - enabled: 1
+    path: Assets/Corum2/Scenes/WP03_Ring.unity
+    guid: 4b1451f2ec33502489c465e746af29b3
+  - enabled: 1
+    path: Assets/Corum2/Scenes/WP04_AI.unity
+    guid: 17d62ced5258b5940b4ab45852c91974
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
