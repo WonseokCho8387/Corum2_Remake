@@ -1,0 +1,1489 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="198" result="Passed" total="198" passed="198" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-10 05:10:53Z" end-time="2026-11-10 05:10:57Z" duration="4.0695199">
+  <test-suite type="TestSuite" id="1247" name="Corum2Remake" fullname="Corum2Remake" runstate="Runnable" testcasecount="198" result="Passed" start-time="2026-11-10 05:10:53Z" end-time="2026-11-10 05:10:57Z" duration="4.069520" total="198" passed="198" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="1235" name="Corum2.Tests.EditMode.dll" fullname="D:/ProjectR/Corum2Remake/Library/ScriptAssemblies/Corum2.Tests.EditMode.dll" runstate="Runnable" testcasecount="198" result="Passed" start-time="2026-11-10 05:10:53Z" end-time="2026-11-10 05:10:57Z" duration="3.934864" total="198" passed="198" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="6296" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestSuite" id="1236" name="Corum2" fullname="Corum2" runstate="Runnable" testcasecount="198" result="Passed" start-time="2026-11-10 05:10:53Z" end-time="2026-11-10 05:10:57Z" duration="3.880838" total="198" passed="198" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1237" name="Tests" fullname="Corum2.Tests" runstate="Runnable" testcasecount="198" result="Passed" start-time="2026-11-10 05:10:53Z" end-time="2026-11-10 05:10:57Z" duration="3.779506" total="198" passed="198" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestFixture" id="1020" name="AiValidatorTests" fullname="Corum2.Tests.AiValidatorTests" classname="Corum2.Tests.AiValidatorTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-11-10 05:10:53Z" end-time="2026-11-10 05:10:54Z" duration="0.180273" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1022" name="BadData_Rejected_WithSourceAndField" fullname="Corum2.Tests.AiValidatorTests.BadData_Rejected_WithSourceAndField" methodname="BadData_Rejected_WithSourceAndField" classname="Corum2.Tests.AiValidatorTests" runstate="Runnable" seed="832636288" result="Passed" start-time="2026-11-10 05:10:54Z" end-time="2026-11-10 05:10:54Z" duration="0.058715" asserts="0">
+              <properties>
+                <property name="Category" value="DATA" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1021" name="ValidData_Passes" fullname="Corum2.Tests.AiValidatorTests.ValidData_Passes" methodname="ValidData_Passes" classname="Corum2.Tests.AiValidatorTests" runstate="Runnable" seed="159657411" result="Passed" start-time="2026-11-10 05:10:54Z" end-time="2026-11-10 05:10:54Z" duration="0.000939" asserts="0">
+              <properties>
+                <property name="Category" value="DATA" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1010" name="BossTests" fullname="Corum2.Tests.BossTests" classname="Corum2.Tests.BossTests" runstate="Runnable" testcasecount="9" result="Passed" start-time="2026-11-10 05:10:54Z" end-time="2026-11-10 05:10:54Z" duration="0.180137" total="9" passed="9" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1013" name="Boss_BeyondTrackRange_Waits" fullname="Corum2.Tests.BossTests.Boss_BeyondTrackRange_Waits" methodname="Boss_BeyondTrackRange_Waits" classname="Corum2.Tests.BossTests" runstate="Runnable" seed="1458208089" result="Passed" start-time="2026-11-10 05:10:54Z" end-time="2026-11-10 05:10:54Z" duration="0.099062" asserts="0">
+              <properties>
+                <property name="Category" value="TC_08_08" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1019" name="Boss_CanBeParried" fullname="Corum2.Tests.BossTests.Boss_CanBeParried" methodname="Boss_CanBeParried" classname="Corum2.Tests.BossTests" runstate="Runnable" seed="1941546921" result="Passed" start-time="2026-11-10 05:10:54Z" end-time="2026-11-10 05:10:54Z" duration="0.014034" asserts="0">
+              <properties>
+                <property name="Category" value="TC_08_12" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1018" name="Boss_UsesNormalHitRules_StaggerLaunchImmuneMagicArmorBreak" fullname="Corum2.Tests.BossTests.Boss_UsesNormalHitRules_StaggerLaunchImmuneMagicArmorBreak" methodname="Boss_UsesNormalHitRules_StaggerLaunchImmuneMagicArmorBreak" classname="Corum2.Tests.BossTests" runstate="Runnable" seed="1703730581" result="Passed" start-time="2026-11-10 05:10:54Z" end-time="2026-11-10 05:10:54Z" duration="0.009926" asserts="0">
+              <properties>
+                <property name="Category" value="TC_08_12" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1012" name="NoPatternFits_MovesToPreferredBand" fullname="Corum2.Tests.BossTests.NoPatternFits_MovesToPreferredBand" methodname="NoPatternFits_MovesToPreferredBand" classname="Corum2.Tests.BossTests" runstate="Runnable" seed="254595048" result="Passed" start-time="2026-11-10 05:10:54Z" end-time="2026-11-10 05:10:54Z" duration="0.000816" asserts="0">
+              <properties>
+                <property name="Category" value="TC_08_08" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1011" name="Pattern_ByDistanceAndPlayerAirState" fullname="Corum2.Tests.BossTests.Pattern_ByDistanceAndPlayerAirState" methodname="Pattern_ByDistanceAndPlayerAirState" classname="Corum2.Tests.BossTests" runstate="Runnable" seed="825607202" result="Passed" start-time="2026-11-10 05:10:54Z" end-time="2026-11-10 05:10:54Z" duration="0.009907" asserts="0">
+              <properties>
+                <property name="Category" value="TC_08_08" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1014" name="PhaseCountsPerBoss_NoSharedHardcode" fullname="Corum2.Tests.BossTests.PhaseCountsPerBoss_NoSharedHardcode" methodname="PhaseCountsPerBoss_NoSharedHardcode" classname="Corum2.Tests.BossTests" runstate="Runnable" seed="1248426771" result="Passed" start-time="2026-11-10 05:10:54Z" end-time="2026-11-10 05:10:54Z" duration="0.003887" asserts="0">
+              <properties>
+                <property name="Category" value="TC_08_09" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1017" name="PhaseSettings_ApplyOnlyToThatPhase" fullname="Corum2.Tests.BossTests.PhaseSettings_ApplyOnlyToThatPhase" methodname="PhaseSettings_ApplyOnlyToThatPhase" classname="Corum2.Tests.BossTests" runstate="Runnable" seed="2022774562" result="Passed" start-time="2026-11-10 05:10:54Z" end-time="2026-11-10 05:10:54Z" duration="0.010760" asserts="0">
+              <properties>
+                <property name="Category" value="TC_08_11" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1015" name="Transition_ByPatternUse_ByEvent_ByHp" fullname="Corum2.Tests.BossTests.Transition_ByPatternUse_ByEvent_ByHp" methodname="Transition_ByPatternUse_ByEvent_ByHp" classname="Corum2.Tests.BossTests" runstate="Runnable" seed="342458585" result="Passed" start-time="2026-11-10 05:10:54Z" end-time="2026-11-10 05:10:54Z" duration="0.006774" asserts="0">
+              <properties>
+                <property name="Category" value="TC_08_10" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1016" name="TwoThresholdsAtOnce_OnePerCheck_DeathWins" fullname="Corum2.Tests.BossTests.TwoThresholdsAtOnce_OnePerCheck_DeathWins" methodname="TwoThresholdsAtOnce_OnePerCheck_DeathWins" classname="Corum2.Tests.BossTests" runstate="Runnable" seed="2017516475" result="Passed" start-time="2026-11-10 05:10:54Z" end-time="2026-11-10 05:10:54Z" duration="0.007251" asserts="0">
+              <properties>
+                <property name="Category" value="TC_08_10" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1023" name="ChainComboTests" fullname="Corum2.Tests.ChainComboTests" classname="Corum2.Tests.ChainComboTests" runstate="Runnable" testcasecount="15" result="Passed" start-time="2026-11-10 05:10:54Z" end-time="2026-11-10 05:10:54Z" duration="0.408038" total="15" passed="15" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1025" name="AfterLauncher_StayOnGround_AndFightAnotherEnemy" fullname="Corum2.Tests.ChainComboTests.AfterLauncher_StayOnGround_AndFightAnotherEnemy" methodname="AfterLauncher_StayOnGround_AndFightAnotherEnemy" classname="Corum2.Tests.ChainComboTests" runstate="Runnable" seed="484329441" result="Passed" start-time="2026-11-10 05:10:54Z" end-time="2026-11-10 05:10:54Z" duration="0.023476" asserts="0">
+              <properties>
+                <property name="Category" value="TC_04_02" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1035" name="AirAttack_Dash_Attack_ExecutesOnLandingAsGroundAttack" fullname="Corum2.Tests.ChainComboTests.AirAttack_Dash_Attack_ExecutesOnLandingAsGroundAttack" methodname="AirAttack_Dash_Attack_ExecutesOnLandingAsGroundAttack" classname="Corum2.Tests.ChainComboTests" runstate="Runnable" seed="389311834" result="Passed" start-time="2026-11-10 05:10:54Z" end-time="2026-11-10 05:10:54Z" duration="0.006868" asserts="0">
+              <properties>
+                <property name="Category" value="TC_04_07" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1026" name="ChainEnds_Miss_Timeout_GuardCancel" fullname="Corum2.Tests.ChainComboTests.ChainEnds_Miss_Timeout_GuardCancel" methodname="ChainEnds_Miss_Timeout_GuardCancel" classname="Corum2.Tests.ChainComboTests" runstate="Runnable" seed="1491407458" result="Passed" start-time="2026-11-10 05:10:54Z" end-time="2026-11-10 05:10:54Z" duration="0.003570" asserts="0">
+              <properties>
+                <property name="Category" value="TC_04_03" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-suite type="ParameterizedMethod" id="1041" name="ComboWindow_IsData_BoundaryRespected" fullname="Corum2.Tests.ChainComboTests.ComboWindow_IsData_BoundaryRespected" classname="Corum2.Tests.ChainComboTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-11-10 05:10:54Z" end-time="2026-11-10 05:10:54Z" duration="0.067320" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties>
+                <property name="Category" value="TC_04_09" />
+              </properties>
+              <test-case id="1039" name="ComboWindow_IsData_BoundaryRespected(0.2f)" fullname="Corum2.Tests.ChainComboTests.ComboWindow_IsData_BoundaryRespected(0.2f)" methodname="ComboWindow_IsData_BoundaryRespected" classname="Corum2.Tests.ChainComboTests" runstate="Runnable" seed="758500242" result="Passed" start-time="2026-11-10 05:10:54Z" end-time="2026-11-10 05:10:54Z" duration="0.001759" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1040" name="ComboWindow_IsData_BoundaryRespected(0.6f)" fullname="Corum2.Tests.ChainComboTests.ComboWindow_IsData_BoundaryRespected(0.6f)" methodname="ComboWindow_IsData_BoundaryRespected" classname="Corum2.Tests.ChainComboTests" runstate="Runnable" seed="303885746" result="Passed" start-time="2026-11-10 05:10:54Z" end-time="2026-11-10 05:10:54Z" duration="0.000950" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="ParameterizedMethod" id="1034" name="Dash_InitialStopsAtFirst_PierceHitsAll" fullname="Corum2.Tests.ChainComboTests.Dash_InitialStopsAtFirst_PierceHitsAll" classname="Corum2.Tests.ChainComboTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-11-10 05:10:54Z" end-time="2026-11-10 05:10:54Z" duration="0.100359" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties>
+                <property name="Category" value="TC_04_06" />
+              </properties>
+              <test-case id="1032" name="Dash_InitialStopsAtFirst_PierceHitsAll(False)" fullname="Corum2.Tests.ChainComboTests.Dash_InitialStopsAtFirst_PierceHitsAll(False)" methodname="Dash_InitialStopsAtFirst_PierceHitsAll" classname="Corum2.Tests.ChainComboTests" runstate="Runnable" seed="1580498919" result="Passed" start-time="2026-11-10 05:10:54Z" end-time="2026-11-10 05:10:54Z" duration="0.002684" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1033" name="Dash_InitialStopsAtFirst_PierceHitsAll(True)" fullname="Corum2.Tests.ChainComboTests.Dash_InitialStopsAtFirst_PierceHitsAll(True)" methodname="Dash_InitialStopsAtFirst_PierceHitsAll" classname="Corum2.Tests.ChainComboTests" runstate="Runnable" seed="597679956" result="Passed" start-time="2026-11-10 05:10:54Z" end-time="2026-11-10 05:10:54Z" duration="0.000888" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-case id="1042" name="DeadTarget_EndsOnlyItsLink" fullname="Corum2.Tests.ChainComboTests.DeadTarget_EndsOnlyItsLink" methodname="DeadTarget_EndsOnlyItsLink" classname="Corum2.Tests.ChainComboTests" runstate="Runnable" seed="1057639888" result="Passed" start-time="2026-11-10 05:10:54Z" end-time="2026-11-10 05:10:54Z" duration="0.002089" asserts="0">
+              <properties>
+                <property name="Category" value="TC_04_10" />
+                <property name="Category" value="TC_06_18" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-suite type="ParameterizedMethod" id="1038" name="Dive_InitialSingleTarget_AreaHitsCluster" fullname="Corum2.Tests.ChainComboTests.Dive_InitialSingleTarget_AreaHitsCluster" classname="Corum2.Tests.ChainComboTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-11-10 05:10:54Z" end-time="2026-11-10 05:10:54Z" duration="0.097302" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties>
+                <property name="Category" value="TC_04_08" />
+              </properties>
+              <test-case id="1036" name="Dive_InitialSingleTarget_AreaHitsCluster(False)" fullname="Corum2.Tests.ChainComboTests.Dive_InitialSingleTarget_AreaHitsCluster(False)" methodname="Dive_InitialSingleTarget_AreaHitsCluster" classname="Corum2.Tests.ChainComboTests" runstate="Runnable" seed="1646488681" result="Passed" start-time="2026-11-10 05:10:54Z" end-time="2026-11-10 05:10:54Z" duration="0.002601" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1037" name="Dive_InitialSingleTarget_AreaHitsCluster(True)" fullname="Corum2.Tests.ChainComboTests.Dive_InitialSingleTarget_AreaHitsCluster(True)" methodname="Dive_InitialSingleTarget_AreaHitsCluster" classname="Corum2.Tests.ChainComboTests" runstate="Runnable" seed="266593591" result="Passed" start-time="2026-11-10 05:10:54Z" end-time="2026-11-10 05:10:54Z" duration="0.001474" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-case id="1031" name="LaunchImmune_TakesDamageAndCount_DoesNotRise" fullname="Corum2.Tests.ChainComboTests.LaunchImmune_TakesDamageAndCount_DoesNotRise" methodname="LaunchImmune_TakesDamageAndCount_DoesNotRise" classname="Corum2.Tests.ChainComboTests" runstate="Runnable" seed="1791709638" result="Passed" start-time="2026-11-10 05:10:54Z" end-time="2026-11-10 05:10:54Z" duration="0.000981" asserts="0">
+              <properties>
+                <property name="Category" value="TC_04_05" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-suite type="ParameterizedMethod" id="1030" name="OneAttack_CountsEveryTargetOnce" fullname="Corum2.Tests.ChainComboTests.OneAttack_CountsEveryTargetOnce" classname="Corum2.Tests.ChainComboTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-11-10 05:10:54Z" end-time="2026-11-10 05:10:54Z" duration="0.097461" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties>
+                <property name="Category" value="TC_04_04" />
+              </properties>
+              <test-case id="1027" name="OneAttack_CountsEveryTargetOnce(1)" fullname="Corum2.Tests.ChainComboTests.OneAttack_CountsEveryTargetOnce(1)" methodname="OneAttack_CountsEveryTargetOnce" classname="Corum2.Tests.ChainComboTests" runstate="Runnable" seed="2112048330" result="Passed" start-time="2026-11-10 05:10:54Z" end-time="2026-11-10 05:10:54Z" duration="0.001430" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1028" name="OneAttack_CountsEveryTargetOnce(5)" fullname="Corum2.Tests.ChainComboTests.OneAttack_CountsEveryTargetOnce(5)" methodname="OneAttack_CountsEveryTargetOnce" classname="Corum2.Tests.ChainComboTests" runstate="Runnable" seed="1007358290" result="Passed" start-time="2026-11-10 05:10:54Z" end-time="2026-11-10 05:10:54Z" duration="0.000774" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1029" name="OneAttack_CountsEveryTargetOnce(10)" fullname="Corum2.Tests.ChainComboTests.OneAttack_CountsEveryTargetOnce(10)" methodname="OneAttack_CountsEveryTargetOnce" classname="Corum2.Tests.ChainComboTests" runstate="Runnable" seed="445739866" result="Passed" start-time="2026-11-10 05:10:54Z" end-time="2026-11-10 05:10:54Z" duration="0.001095" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-case id="1024" name="StandardChain_4_1_4_1_IsTenAttacks_JumpNotCounted_NoAutoChase" fullname="Corum2.Tests.ChainComboTests.StandardChain_4_1_4_1_IsTenAttacks_JumpNotCounted_NoAutoChase" methodname="StandardChain_4_1_4_1_IsTenAttacks_JumpNotCounted_NoAutoChase" classname="Corum2.Tests.ChainComboTests" runstate="Runnable" seed="1195007605" result="Passed" start-time="2026-11-10 05:10:54Z" end-time="2026-11-10 05:10:54Z" duration="0.004130" asserts="0">
+              <properties>
+                <property name="Category" value="TC_04_01" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1123" name="DataValidationTests" fullname="Corum2.Tests.DataValidationTests" classname="Corum2.Tests.DataValidationTests" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-11-10 05:10:54Z" end-time="2026-11-10 05:10:54Z" duration="0.105096" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1124" name="Fixture_IsValid" fullname="Corum2.Tests.DataValidationTests.Fixture_IsValid" methodname="Fixture_IsValid" classname="Corum2.Tests.DataValidationTests" runstate="Runnable" seed="1300272228" result="Passed" start-time="2026-11-10 05:10:54Z" end-time="2026-11-10 05:10:54Z" duration="0.007209" asserts="0">
+              <properties>
+                <property name="Category" value="TC_UNITY_03" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1128" name="JsonLine_IsEscapedAndInvariant" fullname="Corum2.Tests.DataValidationTests.JsonLine_IsEscapedAndInvariant" methodname="JsonLine_IsEscapedAndInvariant" classname="Corum2.Tests.DataValidationTests" runstate="Runnable" seed="58727179" result="Passed" start-time="2026-11-10 05:10:54Z" end-time="2026-11-10 05:10:54Z" duration="0.003157" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1125" name="MissingTargets_AreReported_NotDefaulted" fullname="Corum2.Tests.DataValidationTests.MissingTargets_AreReported_NotDefaulted" methodname="MissingTargets_AreReported_NotDefaulted" classname="Corum2.Tests.DataValidationTests" runstate="Runnable" seed="1677193" result="Passed" start-time="2026-11-10 05:10:54Z" end-time="2026-11-10 05:10:54Z" duration="0.000465" asserts="0">
+              <properties>
+                <property name="Category" value="TC_UNITY_03" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1127" name="SpawnInsideSolid_IsReported" fullname="Corum2.Tests.DataValidationTests.SpawnInsideSolid_IsReported" methodname="SpawnInsideSolid_IsReported" classname="Corum2.Tests.DataValidationTests" runstate="Runnable" seed="2110155834" result="Passed" start-time="2026-11-10 05:10:54Z" end-time="2026-11-10 05:10:54Z" duration="0.001198" asserts="0">
+              <properties>
+                <property name="Category" value="TC_UNITY_03" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1126" name="WalkNotSlowerThanRun_IsReported" fullname="Corum2.Tests.DataValidationTests.WalkNotSlowerThanRun_IsReported" methodname="WalkNotSlowerThanRun_IsReported" classname="Corum2.Tests.DataValidationTests" runstate="Runnable" seed="378977638" result="Passed" start-time="2026-11-10 05:10:54Z" end-time="2026-11-10 05:10:54Z" duration="0.000965" asserts="0">
+              <properties>
+                <property name="Category" value="TC_UNITY_03" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1095" name="DirtyCaptureTests" fullname="Corum2.Tests.DirtyCaptureTests" classname="Corum2.Tests.DirtyCaptureTests" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-11-10 05:10:54Z" end-time="2026-11-10 05:10:54Z" duration="0.123744" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1100" name="IncompleteReasons_EmptyWhenComplete" fullname="Corum2.Tests.DirtyCaptureTests.IncompleteReasons_EmptyWhenComplete" methodname="IncompleteReasons_EmptyWhenComplete" classname="Corum2.Tests.DirtyCaptureTests" runstate="Runnable" seed="1383710771" result="Passed" start-time="2026-11-10 05:10:54Z" end-time="2026-11-10 05:10:54Z" duration="0.031076" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1099" name="IncompleteReasons_PatchCopyAndBytes" fullname="Corum2.Tests.DirtyCaptureTests.IncompleteReasons_PatchCopyAndBytes" methodname="IncompleteReasons_PatchCopyAndBytes" classname="Corum2.Tests.DirtyCaptureTests" runstate="Runnable" seed="255117080" result="Passed" start-time="2026-11-10 05:10:54Z" end-time="2026-11-10 05:10:54Z" duration="0.000912" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1096" name="InScope_MatchesFolderPrefixOnly" fullname="Corum2.Tests.DirtyCaptureTests.InScope_MatchesFolderPrefixOnly" methodname="InScope_MatchesFolderPrefixOnly" classname="Corum2.Tests.DirtyCaptureTests" runstate="Runnable" seed="522907232" result="Passed" start-time="2026-11-10 05:10:54Z" end-time="2026-11-10 05:10:54Z" duration="0.000662" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1098" name="RequiredUntracked_ExpandsCollapsedFolders_InScopeOnly" fullname="Corum2.Tests.DirtyCaptureTests.RequiredUntracked_ExpandsCollapsedFolders_InScopeOnly" methodname="RequiredUntracked_ExpandsCollapsedFolders_InScopeOnly" classname="Corum2.Tests.DirtyCaptureTests" runstate="Runnable" seed="147711583" result="Passed" start-time="2026-11-10 05:10:54Z" end-time="2026-11-10 05:10:54Z" duration="0.004021" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1097" name="StatusPath_HandlesRenameAndQuotes" fullname="Corum2.Tests.DirtyCaptureTests.StatusPath_HandlesRenameAndQuotes" methodname="StatusPath_HandlesRenameAndQuotes" classname="Corum2.Tests.DirtyCaptureTests" runstate="Runnable" seed="822530395" result="Passed" start-time="2026-11-10 05:10:54Z" end-time="2026-11-10 05:10:54Z" duration="0.000360" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1001" name="EnemyAiTests" fullname="Corum2.Tests.EnemyAiTests" classname="Corum2.Tests.EnemyAiTests" runstate="Runnable" testcasecount="8" result="Passed" start-time="2026-11-10 05:10:54Z" end-time="2026-11-10 05:10:55Z" duration="0.111605" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1004" name="Chaser_ApproachesAttacks_ResumesChaseAfterStagger" fullname="Corum2.Tests.EnemyAiTests.Chaser_ApproachesAttacks_ResumesChaseAfterStagger" methodname="Chaser_ApproachesAttacks_ResumesChaseAfterStagger" classname="Corum2.Tests.EnemyAiTests" runstate="Runnable" seed="1484603047" result="Passed" start-time="2026-11-10 05:10:54Z" end-time="2026-11-10 05:10:55Z" duration="0.004280" asserts="0">
+              <properties>
+                <property name="Category" value="TC_08_03" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1005" name="Fleer_FleesAfterHit_ThenReapproachesPerSetting" fullname="Corum2.Tests.EnemyAiTests.Fleer_FleesAfterHit_ThenReapproachesPerSetting" methodname="Fleer_FleesAfterHit_ThenReapproachesPerSetting" classname="Corum2.Tests.EnemyAiTests" runstate="Runnable" seed="2002344437" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.008216" asserts="0">
+              <properties>
+                <property name="Category" value="TC_08_04" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1003" name="InRange_ReadyAttacksAtOnce_BlockedStatesWaitThenAttack" fullname="Corum2.Tests.EnemyAiTests.InRange_ReadyAttacksAtOnce_BlockedStatesWaitThenAttack" methodname="InRange_ReadyAttacksAtOnce_BlockedStatesWaitThenAttack" classname="Corum2.Tests.EnemyAiTests" runstate="Runnable" seed="1205634405" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.005526" asserts="0">
+              <properties>
+                <property name="Category" value="TC_08_02" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1006" name="Jumper_JumpsOnlyInsideTheWindow_AndAttacksFromTheAir" fullname="Corum2.Tests.EnemyAiTests.Jumper_JumpsOnlyInsideTheWindow_AndAttacksFromTheAir" methodname="Jumper_JumpsOnlyInsideTheWindow_AndAttacksFromTheAir" classname="Corum2.Tests.EnemyAiTests" runstate="Runnable" seed="1007062479" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.003761" asserts="0">
+              <properties>
+                <property name="Category" value="TC_08_05" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1009" name="PerEnemyIntervals_AndNoNewAttackAfterPlayerDeath" fullname="Corum2.Tests.EnemyAiTests.PerEnemyIntervals_AndNoNewAttackAfterPlayerDeath" methodname="PerEnemyIntervals_AndNoNewAttackAfterPlayerDeath" classname="Corum2.Tests.EnemyAiTests" runstate="Runnable" seed="2064106880" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.012134" asserts="0">
+              <properties>
+                <property name="Category" value="TC_08_07" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1008" name="Projectile_FrontGuardBlocks_NoParry" fullname="Corum2.Tests.EnemyAiTests.Projectile_FrontGuardBlocks_NoParry" methodname="Projectile_FrontGuardBlocks_NoParry" classname="Corum2.Tests.EnemyAiTests" runstate="Runnable" seed="1620251329" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.002182" asserts="0">
+              <properties>
+                <property name="Category" value="TC_08_06" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1007" name="Ranged_WaitsOutside_ShootsInside_RetreatsAfter" fullname="Corum2.Tests.EnemyAiTests.Ranged_WaitsOutside_ShootsInside_RetreatsAfter" methodname="Ranged_WaitsOutside_ShootsInside_RetreatsAfter" classname="Corum2.Tests.EnemyAiTests" runstate="Runnable" seed="54450814" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.003565" asserts="0">
+              <properties>
+                <property name="Category" value="TC_08_06" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1002" name="TenReadyChasers_AllStartAttack_SameTick_NoGlobalLimit" fullname="Corum2.Tests.EnemyAiTests.TenReadyChasers_AllStartAttack_SameTick_NoGlobalLimit" methodname="TenReadyChasers_AllStartAttack_SameTick_NoGlobalLimit" classname="Corum2.Tests.EnemyAiTests" runstate="Runnable" seed="1475316167" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.008533" asserts="0">
+              <properties>
+                <property name="Category" value="TC_08_01" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1080" name="GuardParryTests" fullname="Corum2.Tests.GuardParryTests" classname="Corum2.Tests.GuardParryTests" runstate="Runnable" testcasecount="13" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.157935" total="13" passed="13" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1093" name="AfterLanding_AttackAndGuardImmediately" fullname="Corum2.Tests.GuardParryTests.AfterLanding_AttackAndGuardImmediately" methodname="AfterLanding_AttackAndGuardImmediately" classname="Corum2.Tests.GuardParryTests" runstate="Runnable" seed="35927363" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.002970" asserts="0">
+              <properties>
+                <property name="Category" value="TC_03_09" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1094" name="CombatFixture_IsValid" fullname="Corum2.Tests.GuardParryTests.CombatFixture_IsValid" methodname="CombatFixture_IsValid" classname="Corum2.Tests.GuardParryTests" runstate="Runnable" seed="2065633698" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.001273" asserts="0">
+              <properties>
+                <property name="Category" value="TC_UNITY_03" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1083" name="ContinuousGuard_AndAirGuard" fullname="Corum2.Tests.GuardParryTests.ContinuousGuard_AndAirGuard" methodname="ContinuousGuard_AndAirGuard" classname="Corum2.Tests.GuardParryTests" runstate="Runnable" seed="771605698" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.006450" asserts="0">
+              <properties>
+                <property name="Category" value="TC_07_03" />
+                <property name="Category" value="TC_03_06" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1081" name="Guard_FrontOnly_TurnToFace" fullname="Corum2.Tests.GuardParryTests.Guard_FrontOnly_TurnToFace" methodname="Guard_FrontOnly_TurnToFace" classname="Corum2.Tests.GuardParryTests" runstate="Runnable" seed="1544215889" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.003322" asserts="0">
+              <properties>
+                <property name="Category" value="TC_07_01" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1082" name="GuardDamage_9_10_50" fullname="Corum2.Tests.GuardParryTests.GuardDamage_9_10_50" methodname="GuardDamage_9_10_50" classname="Corum2.Tests.GuardParryTests" runstate="Runnable" seed="975319950" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.001340" asserts="0">
+              <properties>
+                <property name="Category" value="TC_07_02" />
+                <property name="Category" value="TC_OPS_02" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1091" name="Parry_StopsEnemy_PlayerAttacksAtOnce" fullname="Corum2.Tests.GuardParryTests.Parry_StopsEnemy_PlayerAttacksAtOnce" methodname="Parry_StopsEnemy_PlayerAttacksAtOnce" classname="Corum2.Tests.GuardParryTests" runstate="Runnable" seed="482018120" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.001112" asserts="0">
+              <properties>
+                <property name="Category" value="TC_07_05" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-suite type="ParameterizedMethod" id="1090" name="ParryWindow_Boundary" fullname="Corum2.Tests.GuardParryTests.ParryWindow_Boundary" classname="Corum2.Tests.GuardParryTests" runstate="Runnable" testcasecount="6" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.088278" total="6" passed="6" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties>
+                <property name="Category" value="TC_07_04" />
+              </properties>
+              <test-case id="1084" name="ParryWindow_Boundary(0.1f,-1)" fullname="Corum2.Tests.GuardParryTests.ParryWindow_Boundary(0.1f,-1)" methodname="ParryWindow_Boundary" classname="Corum2.Tests.GuardParryTests" runstate="Runnable" seed="605681975" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.002122" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1085" name="ParryWindow_Boundary(0.1f,1)" fullname="Corum2.Tests.GuardParryTests.ParryWindow_Boundary(0.1f,1)" methodname="ParryWindow_Boundary" classname="Corum2.Tests.GuardParryTests" runstate="Runnable" seed="1694489623" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.000662" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1086" name="ParryWindow_Boundary(0.15f,-1)" fullname="Corum2.Tests.GuardParryTests.ParryWindow_Boundary(0.15f,-1)" methodname="ParryWindow_Boundary" classname="Corum2.Tests.GuardParryTests" runstate="Runnable" seed="1437172028" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.000574" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1087" name="ParryWindow_Boundary(0.15f,1)" fullname="Corum2.Tests.GuardParryTests.ParryWindow_Boundary(0.15f,1)" methodname="ParryWindow_Boundary" classname="Corum2.Tests.GuardParryTests" runstate="Runnable" seed="2003690189" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.000551" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1088" name="ParryWindow_Boundary(0.2f,-1)" fullname="Corum2.Tests.GuardParryTests.ParryWindow_Boundary(0.2f,-1)" methodname="ParryWindow_Boundary" classname="Corum2.Tests.GuardParryTests" runstate="Runnable" seed="1113583659" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.000552" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1089" name="ParryWindow_Boundary(0.2f,1)" fullname="Corum2.Tests.GuardParryTests.ParryWindow_Boundary(0.2f,1)" methodname="ParryWindow_Boundary" classname="Corum2.Tests.GuardParryTests" runstate="Runnable" seed="474108562" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.000543" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-case id="1092" name="Unblockable_And_GuardBreak" fullname="Corum2.Tests.GuardParryTests.Unblockable_And_GuardBreak" methodname="Unblockable_And_GuardBreak" classname="Corum2.Tests.GuardParryTests" runstate="Runnable" seed="728562725" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.002249" asserts="0">
+              <properties>
+                <property name="Category" value="TC_07_06" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1053" name="HitReactionTests" fullname="Corum2.Tests.HitReactionTests" classname="Corum2.Tests.HitReactionTests" runstate="Runnable" testcasecount="22" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.499904" total="22" passed="22" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1064" name="AirHits_SlowTheFall_NormalAfterStopping" fullname="Corum2.Tests.HitReactionTests.AirHits_SlowTheFall_NormalAfterStopping" methodname="AirHits_SlowTheFall_NormalAfterStopping" classname="Corum2.Tests.HitReactionTests" runstate="Runnable" seed="1632114329" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.002210" asserts="0">
+              <properties>
+                <property name="Category" value="TC_06_07" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1075" name="ContinuousHits_ObservedLockOnly" fullname="Corum2.Tests.HitReactionTests.ContinuousHits_ObservedLockOnly" methodname="ContinuousHits_ObservedLockOnly" classname="Corum2.Tests.HitReactionTests" runstate="Runnable" seed="1979042091" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.005348" asserts="0">
+              <properties>
+                <property name="Category" value="TC_06_14" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1079" name="Death_ExcludesTarget_ThenVanishAndRemoval" fullname="Corum2.Tests.HitReactionTests.Death_ExcludesTarget_ThenVanishAndRemoval" methodname="Death_ExcludesTarget_ThenVanishAndRemoval" classname="Corum2.Tests.HitReactionTests" runstate="Runnable" seed="354487293" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.003393" asserts="0">
+              <properties>
+                <property name="Category" value="TC_06_17" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1072" name="Down_OnlyDesignatedHits_WakeupInvincible_ThenHittable" fullname="Corum2.Tests.HitReactionTests.Down_OnlyDesignatedHits_WakeupInvincible_ThenHittable" methodname="Down_OnlyDesignatedHits_WakeupInvincible_ThenHittable" classname="Corum2.Tests.HitReactionTests" runstate="Runnable" seed="1773092224" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.005334" asserts="0">
+              <properties>
+                <property name="Category" value="TC_06_10" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-suite type="ParameterizedMethod" id="1071" name="DownAttack_OnDownedEnemy_BothSides" fullname="Corum2.Tests.HitReactionTests.DownAttack_OnDownedEnemy_BothSides" classname="Corum2.Tests.HitReactionTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.088097" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties>
+                <property name="Category" value="TC_06_09" />
+              </properties>
+              <test-case id="1069" name="DownAttack_OnDownedEnemy_BothSides(1)" fullname="Corum2.Tests.HitReactionTests.DownAttack_OnDownedEnemy_BothSides(1)" methodname="DownAttack_OnDownedEnemy_BothSides" classname="Corum2.Tests.HitReactionTests" runstate="Runnable" seed="938781135" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.003814" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1070" name="DownAttack_OnDownedEnemy_BothSides(-1)" fullname="Corum2.Tests.HitReactionTests.DownAttack_OnDownedEnemy_BothSides(-1)" methodname="DownAttack_OnDownedEnemy_BothSides" classname="Corum2.Tests.HitReactionTests" runstate="Runnable" seed="1895429530" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.001324" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="ParameterizedMethod" id="1060" name="Hitstop_DoesNotStackWithTargets_AndFollowsData" fullname="Corum2.Tests.HitReactionTests.Hitstop_DoesNotStackWithTargets_AndFollowsData" classname="Corum2.Tests.HitReactionTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.097572" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties>
+                <property name="Category" value="TC_06_03" />
+              </properties>
+              <test-case id="1056" name="Hitstop_DoesNotStackWithTargets_AndFollowsData(1,0.04f)" fullname="Corum2.Tests.HitReactionTests.Hitstop_DoesNotStackWithTargets_AndFollowsData(1,0.04f)" methodname="Hitstop_DoesNotStackWithTargets_AndFollowsData" classname="Corum2.Tests.HitReactionTests" runstate="Runnable" seed="1587662728" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.001419" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1057" name="Hitstop_DoesNotStackWithTargets_AndFollowsData(1,0.1f)" fullname="Corum2.Tests.HitReactionTests.Hitstop_DoesNotStackWithTargets_AndFollowsData(1,0.1f)" methodname="Hitstop_DoesNotStackWithTargets_AndFollowsData" classname="Corum2.Tests.HitReactionTests" runstate="Runnable" seed="798690916" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.000264" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1058" name="Hitstop_DoesNotStackWithTargets_AndFollowsData(10,0.04f)" fullname="Corum2.Tests.HitReactionTests.Hitstop_DoesNotStackWithTargets_AndFollowsData(10,0.04f)" methodname="Hitstop_DoesNotStackWithTargets_AndFollowsData" classname="Corum2.Tests.HitReactionTests" runstate="Runnable" seed="148302047" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.000457" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1059" name="Hitstop_DoesNotStackWithTargets_AndFollowsData(10,0.1f)" fullname="Corum2.Tests.HitReactionTests.Hitstop_DoesNotStackWithTargets_AndFollowsData(10,0.1f)" methodname="Hitstop_DoesNotStackWithTargets_AndFollowsData" classname="Corum2.Tests.HitReactionTests" runstate="Runnable" seed="2119926139" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.000441" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-case id="1062" name="Knockback_SmallForLight_ZeroWhenScaleZero" fullname="Corum2.Tests.HitReactionTests.Knockback_SmallForLight_ZeroWhenScaleZero" methodname="Knockback_SmallForLight_ZeroWhenScaleZero" classname="Corum2.Tests.HitReactionTests" runstate="Runnable" seed="1415732097" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.002414" asserts="0">
+              <properties>
+                <property name="Category" value="TC_06_05" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-suite type="ParameterizedMethod" id="1068" name="LaunchResponses_Differ" fullname="Corum2.Tests.HitReactionTests.LaunchResponses_Differ" classname="Corum2.Tests.HitReactionTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.097688" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties>
+                <property name="Category" value="TC_06_08" />
+              </properties>
+              <test-case id="1065" name="LaunchResponses_Differ(Launchable)" fullname="Corum2.Tests.HitReactionTests.LaunchResponses_Differ(Launchable)" methodname="LaunchResponses_Differ" classname="Corum2.Tests.HitReactionTests" runstate="Runnable" seed="781039644" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.001283" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1066" name="LaunchResponses_Differ(Resist)" fullname="Corum2.Tests.HitReactionTests.LaunchResponses_Differ(Resist)" methodname="LaunchResponses_Differ" classname="Corum2.Tests.HitReactionTests" runstate="Runnable" seed="1562245537" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.000316" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1067" name="LaunchResponses_Differ(Immune)" fullname="Corum2.Tests.HitReactionTests.LaunchResponses_Differ(Immune)" methodname="LaunchResponses_Differ" classname="Corum2.Tests.HitReactionTests" runstate="Runnable" seed="1045834553" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.000555" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-case id="1063" name="Magic_AlwaysKnocksBack_EvenPhysicalImmune_AndZeroIsInvalid" fullname="Corum2.Tests.HitReactionTests.Magic_AlwaysKnocksBack_EvenPhysicalImmune_AndZeroIsInvalid" methodname="Magic_AlwaysKnocksBack_EvenPhysicalImmune_AndZeroIsInvalid" classname="Corum2.Tests.HitReactionTests" runstate="Runnable" seed="210282362" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.002506" asserts="0">
+              <properties>
+                <property name="Category" value="TC_06_06" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1055" name="MultiHitEvents_EachEventOncePerTarget" fullname="Corum2.Tests.HitReactionTests.MultiHitEvents_EachEventOncePerTarget" methodname="MultiHitEvents_EachEventOncePerTarget" classname="Corum2.Tests.HitReactionTests" runstate="Runnable" seed="1632884662" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.002078" asserts="0">
+              <properties>
+                <property name="Category" value="TC_06_02" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1054" name="OneMotion_OneHitPerTarget_NextMotionHitsAgain" fullname="Corum2.Tests.HitReactionTests.OneMotion_OneHitPerTarget_NextMotionHitsAgain" methodname="OneMotion_OneHitPerTarget_NextMotionHitsAgain" classname="Corum2.Tests.HitReactionTests" runstate="Runnable" seed="1678454299" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.001062" asserts="0">
+              <properties>
+                <property name="Category" value="TC_06_01" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1074" name="RollInvulnerability_OnlyInsideWindow_NoPostHitInvulnerability" fullname="Corum2.Tests.HitReactionTests.RollInvulnerability_OnlyInsideWindow_NoPostHitInvulnerability" methodname="RollInvulnerability_OnlyInsideWindow_NoPostHitInvulnerability" classname="Corum2.Tests.HitReactionTests" runstate="Runnable" seed="49861968" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.006051" asserts="0">
+              <properties>
+                <property name="Category" value="TC_06_13" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-suite type="ParameterizedMethod" id="1078" name="SimultaneousHit_IsDodge_ForBoth" fullname="Corum2.Tests.HitReactionTests.SimultaneousHit_IsDodge_ForBoth" classname="Corum2.Tests.HitReactionTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.088022" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties>
+                <property name="Category" value="TC_06_15" />
+                <property name="Category" value="TC_06_16" />
+              </properties>
+              <test-case id="1076" name="SimultaneousHit_IsDodge_ForBoth(False)" fullname="Corum2.Tests.HitReactionTests.SimultaneousHit_IsDodge_ForBoth(False)" methodname="SimultaneousHit_IsDodge_ForBoth" classname="Corum2.Tests.HitReactionTests" runstate="Runnable" seed="1884873695" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.003587" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1077" name="SimultaneousHit_IsDodge_ForBoth(True)" fullname="Corum2.Tests.HitReactionTests.SimultaneousHit_IsDodge_ForBoth(True)" methodname="SimultaneousHit_IsDodge_ForBoth" classname="Corum2.Tests.HitReactionTests" runstate="Runnable" seed="1004097272" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.000704" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-case id="1061" name="Stagger_RefreshedEachHit_ResistantDoesNot" fullname="Corum2.Tests.HitReactionTests.Stagger_RefreshedEachHit_ResistantDoesNot" methodname="Stagger_RefreshedEachHit_ResistantDoesNot" classname="Corum2.Tests.HitReactionTests" runstate="Runnable" seed="815463759" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.001961" asserts="0">
+              <properties>
+                <property name="Category" value="TC_06_04" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1073" name="SuperArmor_PhysicalDamagesOnly_MagicBreaksThisAction" fullname="Corum2.Tests.HitReactionTests.SuperArmor_PhysicalDamagesOnly_MagicBreaksThisAction" methodname="SuperArmor_PhysicalDamagesOnly_MagicBreaksThisAction" classname="Corum2.Tests.HitReactionTests" runstate="Runnable" seed="1756440399" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.002472" asserts="0">
+              <properties>
+                <property name="Category" value="TC_06_11" />
+                <property name="Category" value="TC_06_12" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1117" name="InputTransportTests" fullname="Corum2.Tests.InputTransportTests" classname="Corum2.Tests.InputTransportTests" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.097921" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1122" name="DirectionTracker_EmitsEdgesPerComponent" fullname="Corum2.Tests.InputTransportTests.DirectionTracker_EmitsEdgesPerComponent" methodname="DirectionTracker_EmitsEdgesPerComponent" classname="Corum2.Tests.InputTransportTests" runstate="Runnable" seed="1949317213" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.001751" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1119" name="DuplicateEnqueue_IsDropped" fullname="Corum2.Tests.InputTransportTests.DuplicateEnqueue_IsDropped" methodname="DuplicateEnqueue_IsDropped" classname="Corum2.Tests.InputTransportTests" runstate="Runnable" seed="1903445706" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.002069" asserts="0">
+              <properties>
+                <property name="Category" value="TC_UNITY_06" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1120" name="EventsAreOrderedByRawTime" fullname="Corum2.Tests.InputTransportTests.EventsAreOrderedByRawTime" methodname="EventsAreOrderedByRawTime" classname="Corum2.Tests.InputTransportTests" runstate="Runnable" seed="1264608813" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.001049" asserts="0">
+              <properties>
+                <property name="Category" value="TC_UNITY_06" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1118" name="PressAndReleaseInsideOneFrame_BothReachTheNextTick_Once" fullname="Corum2.Tests.InputTransportTests.PressAndReleaseInsideOneFrame_BothReachTheNextTick_Once" methodname="PressAndReleaseInsideOneFrame_BothReachTheNextTick_Once" classname="Corum2.Tests.InputTransportTests" runstate="Runnable" seed="401629952" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.000891" asserts="0">
+              <properties>
+                <property name="Category" value="TC_UNITY_06" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1121" name="StickSectors" fullname="Corum2.Tests.InputTransportTests.StickSectors" methodname="StickSectors" classname="Corum2.Tests.InputTransportTests" runstate="Runnable" seed="1893989519" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.000697" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1147" name="LowCeilingRegressionTests" fullname="Corum2.Tests.LowCeilingRegressionTests" classname="Corum2.Tests.LowCeilingRegressionTests" runstate="Runnable" testcasecount="6" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:56Z" duration="0.194306" total="6" passed="6" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1154" name="CollisionMove_StartingInsideSolid_DoesNotPushBackwards" fullname="Corum2.Tests.LowCeilingRegressionTests.CollisionMove_StartingInsideSolid_DoesNotPushBackwards" methodname="CollisionMove_StartingInsideSolid_DoesNotPushBackwards" classname="Corum2.Tests.LowCeilingRegressionTests" runstate="Runnable" seed="1868321618" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.000793" asserts="0">
+              <properties>
+                <property name="Category" value="TC_UNITY_02" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1151" name="ReleasingDownUnderCeiling_StaysCrouched_JumpRefused" fullname="Corum2.Tests.LowCeilingRegressionTests.ReleasingDownUnderCeiling_StaysCrouched_JumpRefused" methodname="ReleasingDownUnderCeiling_StaysCrouched_JumpRefused" classname="Corum2.Tests.LowCeilingRegressionTests" runstate="Runnable" seed="2123221167" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.001997" asserts="0">
+              <properties>
+                <property name="Category" value="TC_03_04" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1153" name="RollRightAtPassageEntrance_IsBlockedNotReversed" fullname="Corum2.Tests.LowCeilingRegressionTests.RollRightAtPassageEntrance_IsBlockedNotReversed" methodname="RollRightAtPassageEntrance_IsBlockedNotReversed" classname="Corum2.Tests.LowCeilingRegressionTests" runstate="Runnable" seed="133365308" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.000823" asserts="0">
+              <properties>
+                <property name="Category" value="TC_03_05" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-suite type="ParameterizedMethod" id="1150" name="RollUnderLowCeiling_IsRefused_PositionContinuous" fullname="Corum2.Tests.LowCeilingRegressionTests.RollUnderLowCeiling_IsRefused_PositionContinuous" classname="Corum2.Tests.LowCeilingRegressionTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.096923" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties>
+                <property name="Category" value="TC_03_05" />
+                <property name="Category" value="TC_UNITY_02" />
+              </properties>
+              <test-case id="1148" name="RollUnderLowCeiling_IsRefused_PositionContinuous(DownRight)" fullname="Corum2.Tests.LowCeilingRegressionTests.RollUnderLowCeiling_IsRefused_PositionContinuous(DownRight)" methodname="RollUnderLowCeiling_IsRefused_PositionContinuous" classname="Corum2.Tests.LowCeilingRegressionTests" runstate="Runnable" seed="85389969" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.001363" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1149" name="RollUnderLowCeiling_IsRefused_PositionContinuous(DownLeft)" fullname="Corum2.Tests.LowCeilingRegressionTests.RollUnderLowCeiling_IsRefused_PositionContinuous(DownLeft)" methodname="RollUnderLowCeiling_IsRefused_PositionContinuous" classname="Corum2.Tests.LowCeilingRegressionTests" runstate="Runnable" seed="1704121388" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:55Z" duration="0.000546" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-case id="1152" name="SlideAgain_ExitsPassage_AndStands" fullname="Corum2.Tests.LowCeilingRegressionTests.SlideAgain_ExitsPassage_AndStands" methodname="SlideAgain_ExitsPassage_AndStands" classname="Corum2.Tests.LowCeilingRegressionTests" runstate="Runnable" seed="209199390" result="Passed" start-time="2026-11-10 05:10:55Z" end-time="2026-11-10 05:10:56Z" duration="0.001070" asserts="0">
+              <properties>
+                <property name="Category" value="TC_03_04" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1101" name="ManifestYamlTests" fullname="Corum2.Tests.ManifestYamlTests" classname="Corum2.Tests.ManifestYamlTests" runstate="Runnable" testcasecount="8" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.118409" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1105" name="Keys_MustBePlain" fullname="Corum2.Tests.ManifestYamlTests.Keys_MustBePlain" methodname="Keys_MustBePlain" classname="Corum2.Tests.ManifestYamlTests" runstate="Runnable" seed="1177473236" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.004374" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1104" name="Lists_Maps_AndEmptyCollections" fullname="Corum2.Tests.ManifestYamlTests.Lists_Maps_AndEmptyCollections" methodname="Lists_Maps_AndEmptyCollections" classname="Corum2.Tests.ManifestYamlTests" runstate="Runnable" seed="751575445" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.002543" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1102" name="Quote_RoundTrips_TrickyStrings" fullname="Corum2.Tests.ManifestYamlTests.Quote_RoundTrips_TrickyStrings" methodname="Quote_RoundTrips_TrickyStrings" classname="Corum2.Tests.ManifestYamlTests" runstate="Runnable" seed="767863720" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.001474" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1109" name="Rendered_Values_AreTyped" fullname="Corum2.Tests.ManifestYamlTests.Rendered_Values_AreTyped" methodname="Rendered_Values_AreTyped" classname="Corum2.Tests.ManifestYamlTests" runstate="Runnable" seed="218425259" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.004027" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1107" name="ReservedKeys_CannotBeReplaced" fullname="Corum2.Tests.ManifestYamlTests.ReservedKeys_CannotBeReplaced" methodname="ReservedKeys_CannotBeReplaced" classname="Corum2.Tests.ManifestYamlTests" runstate="Runnable" seed="94269753" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.000554" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1106" name="Rewrites_KeepRunIdAndStartedAt" fullname="Corum2.Tests.ManifestYamlTests.Rewrites_KeepRunIdAndStartedAt" methodname="Rewrites_KeepRunIdAndStartedAt" classname="Corum2.Tests.ManifestYamlTests" runstate="Runnable" seed="810597634" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.004458" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1103" name="Scalars_AreTyped" fullname="Corum2.Tests.ManifestYamlTests.Scalars_AreTyped" methodname="Scalars_AreTyped" classname="Corum2.Tests.ManifestYamlTests" runstate="Runnable" seed="620655492" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.001418" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1108" name="Set_ReplacesInPlace_FieldOrderStable" fullname="Corum2.Tests.ManifestYamlTests.Set_ReplacesInPlace_FieldOrderStable" methodname="Set_ReplacesInPlace_FieldOrderStable" classname="Corum2.Tests.ManifestYamlTests" runstate="Runnable" seed="1966215631" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.000978" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1110" name="MapTests" fullname="Corum2.Tests.MapTests" classname="Corum2.Tests.MapTests" runstate="Runnable" testcasecount="6" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.087826" total="6" passed="6" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1113" name="BlockedEdge_DoesNotSwitch" fullname="Corum2.Tests.MapTests.BlockedEdge_DoesNotSwitch" methodname="BlockedEdge_DoesNotSwitch" classname="Corum2.Tests.MapTests" runstate="Runnable" seed="134750219" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.001329" asserts="0">
+              <properties>
+                <property name="Category" value="TC_01_03" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1111" name="CameraFollowsHorizontally_InsideCameraRange" fullname="Corum2.Tests.MapTests.CameraFollowsHorizontally_InsideCameraRange" methodname="CameraFollowsHorizontally_InsideCameraRange" classname="Corum2.Tests.MapTests" runstate="Runnable" seed="1422242846" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.002620" asserts="0">
+              <properties>
+                <property name="Category" value="TC_01_02" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1112" name="PushingPastConnectedEdge_SwitchesMap_ToTargetSpawn" fullname="Corum2.Tests.MapTests.PushingPastConnectedEdge_SwitchesMap_ToTargetSpawn" methodname="PushingPastConnectedEdge_SwitchesMap_ToTargetSpawn" classname="Corum2.Tests.MapTests" runstate="Runnable" seed="323284324" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.002785" asserts="0">
+              <properties>
+                <property name="Category" value="TC_01_03" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1116" name="Transition_ResetsAirUsesAndRun" fullname="Corum2.Tests.MapTests.Transition_ResetsAirUsesAndRun" methodname="Transition_ResetsAirUsesAndRun" classname="Corum2.Tests.MapTests" runstate="Runnable" seed="1236474243" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.001374" asserts="0">
+              <properties>
+                <property name="Category" value="EXP_MAP_01" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1114" name="UpDown_OnlyAtPoints" fullname="Corum2.Tests.MapTests.UpDown_OnlyAtPoints" methodname="UpDown_OnlyAtPoints" classname="Corum2.Tests.MapTests" runstate="Runnable" seed="946462503" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.001275" asserts="0">
+              <properties>
+                <property name="Category" value="TC_01_04" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1115" name="UpPoint_IgnoresDiagonalAndAirborne" fullname="Corum2.Tests.MapTests.UpPoint_IgnoresDiagonalAndAirborne" methodname="UpPoint_IgnoresDiagonalAndAirborne" classname="Corum2.Tests.MapTests" runstate="Runnable" seed="1951911763" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.000628" asserts="0">
+              <properties>
+                <property name="Category" value="TC_01_04" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1129" name="MovementTests" fullname="Corum2.Tests.MovementTests" classname="Corum2.Tests.MovementTests" runstate="Runnable" testcasecount="17" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.113355" total="17" passed="17" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1140" name="AirGuard_IsReportedNotImplemented" fullname="Corum2.Tests.MovementTests.AirGuard_IsReportedNotImplemented" methodname="AirGuard_IsReportedNotImplemented" classname="Corum2.Tests.MovementTests" runstate="Runnable" seed="529322866" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.000906" asserts="0">
+              <properties>
+                <property name="Category" value="TC_03_06" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1139" name="AirInputs_AreDistinct_AndAirDoubleTapIsNotADash" fullname="Corum2.Tests.MovementTests.AirInputs_AreDistinct_AndAirDoubleTapIsNotADash" methodname="AirInputs_AreDistinct_AndAirDoubleTapIsNotADash" classname="Corum2.Tests.MovementTests" runstate="Runnable" seed="1883364898" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.002341" asserts="0">
+              <properties>
+                <property name="Category" value="TC_03_06" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1144" name="DiveFirst_EndsRemainingJumpAndDash" fullname="Corum2.Tests.MovementTests.DiveFirst_EndsRemainingJumpAndDash" methodname="DiveFirst_EndsRemainingJumpAndDash" classname="Corum2.Tests.MovementTests" runstate="Runnable" seed="1451400944" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.000942" asserts="0">
+              <properties>
+                <property name="Category" value="TC_03_08" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1146" name="DiveLanding_ReportsCf02NotApplied" fullname="Corum2.Tests.MovementTests.DiveLanding_ReportsCf02NotApplied" methodname="DiveLanding_ReportsCf02NotApplied" classname="Corum2.Tests.MovementTests" runstate="Runnable" seed="2089605769" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.000705" asserts="0">
+              <properties>
+                <property name="Category" value="TC_03_09" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1131" name="DoubleTapThenHold_Runs_AndReleasingStops" fullname="Corum2.Tests.MovementTests.DoubleTapThenHold_Runs_AndReleasingStops" methodname="DoubleTapThenHold_Runs_AndReleasingStops" classname="Corum2.Tests.MovementTests" runstate="Runnable" seed="1804368151" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.001023" asserts="0">
+              <properties>
+                <property name="Category" value="TC_03_01" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1136" name="DownPlusA_SlidesTowardFacing_BothSides" fullname="Corum2.Tests.MovementTests.DownPlusA_SlidesTowardFacing_BothSides" methodname="DownPlusA_SlidesTowardFacing_BothSides" classname="Corum2.Tests.MovementTests" runstate="Runnable" seed="122436882" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.001151" asserts="0">
+              <properties>
+                <property name="Category" value="TC_03_04" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1135" name="EachUnlockIsIndependent" fullname="Corum2.Tests.MovementTests.EachUnlockIsIndependent" methodname="EachUnlockIsIndependent" classname="Corum2.Tests.MovementTests" runstate="Runnable" seed="1734959696" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.000761" asserts="0">
+              <properties>
+                <property name="Category" value="TC_03_03" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1130" name="HoldingDirectionWalks_EvenAtFullTilt" fullname="Corum2.Tests.MovementTests.HoldingDirectionWalks_EvenAtFullTilt" methodname="HoldingDirectionWalks_EvenAtFullTilt" classname="Corum2.Tests.MovementTests" runstate="Runnable" seed="1311510977" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.000771" asserts="0">
+              <properties>
+                <property name="Category" value="TC_03_01" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1142" name="JumpDuringDash_IsRejected" fullname="Corum2.Tests.MovementTests.JumpDuringDash_IsRejected" methodname="JumpDuringDash_IsRejected" classname="Corum2.Tests.MovementTests" runstate="Runnable" seed="917773874" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.000523" asserts="0">
+              <properties>
+                <property name="Category" value="TC_03_07" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1133" name="JumpHeightsEqual_DistancesStandingZero_WalkLessThanRun" fullname="Corum2.Tests.MovementTests.JumpHeightsEqual_DistancesStandingZero_WalkLessThanRun" methodname="JumpHeightsEqual_DistancesStandingZero_WalkLessThanRun" classname="Corum2.Tests.MovementTests" runstate="Runnable" seed="276982667" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.003184" asserts="0">
+              <properties>
+                <property name="Category" value="TC_03_02" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[peak standing=2.2 walk=2.2 run=2.2; distance walk=2.73 run=5.46
+]]></output>
+            </test-case>
+            <test-case id="1141" name="JumpThenDash_AndDashThenJump_EachOnce" fullname="Corum2.Tests.MovementTests.JumpThenDash_AndDashThenJump_EachOnce" methodname="JumpThenDash_AndDashThenJump_EachOnce" classname="Corum2.Tests.MovementTests" runstate="Runnable" seed="2047531065" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.001401" asserts="0">
+              <properties>
+                <property name="Category" value="TC_03_07" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1145" name="Landing_ResetsCounters_AndAllowsImmediateMovement" fullname="Corum2.Tests.MovementTests.Landing_ResetsCounters_AndAllowsImmediateMovement" methodname="Landing_ResetsCounters_AndAllowsImmediateMovement" classname="Corum2.Tests.MovementTests" runstate="Runnable" seed="1436338294" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.001369" asserts="0">
+              <properties>
+                <property name="Category" value="TC_03_09" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1134" name="LockedAbilities_AreRejected" fullname="Corum2.Tests.MovementTests.LockedAbilities_AreRejected" methodname="LockedAbilities_AreRejected" classname="Corum2.Tests.MovementTests" runstate="Runnable" seed="734671271" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.000893" asserts="0">
+              <properties>
+                <property name="Category" value="TC_03_03" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1143" name="NeutralAirAttack_DoesNotConsumeCounters" fullname="Corum2.Tests.MovementTests.NeutralAirAttack_DoesNotConsumeCounters" methodname="NeutralAirAttack_DoesNotConsumeCounters" classname="Corum2.Tests.MovementTests" runstate="Runnable" seed="1071907788" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.001019" asserts="0">
+              <properties>
+                <property name="Category" value="TC_03_07" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1138" name="Roll_FollowsInputDirection_InAllFourCombinations" fullname="Corum2.Tests.MovementTests.Roll_FollowsInputDirection_InAllFourCombinations" methodname="Roll_FollowsInputDirection_InAllFourCombinations" classname="Corum2.Tests.MovementTests" runstate="Runnable" seed="107693917" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.003404" asserts="0">
+              <properties>
+                <property name="Category" value="TC_03_05" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1137" name="Slide_PassesLowPassage_WalkingDoesNot" fullname="Corum2.Tests.MovementTests.Slide_PassesLowPassage_WalkingDoesNot" methodname="Slide_PassesLowPassage_WalkingDoesNot" classname="Corum2.Tests.MovementTests" runstate="Runnable" seed="370560211" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.001822" asserts="0">
+              <properties>
+                <property name="Category" value="TC_03_04" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1132" name="SlowSecondTap_Walks" fullname="Corum2.Tests.MovementTests.SlowSecondTap_Walks" methodname="SlowSecondTap_Walks" classname="Corum2.Tests.MovementTests" runstate="Runnable" seed="125379854" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.000454" asserts="0">
+              <properties>
+                <property name="Category" value="TC_03_01" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1155" name="NonFiniteValidationTests" fullname="Corum2.Tests.NonFiniteValidationTests" classname="Corum2.Tests.NonFiniteValidationTests" runstate="Runnable" testcasecount="8" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.277159" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="ParameterizedMethod" id="1159" name="InputNonFinite_IsRejected" fullname="Corum2.Tests.NonFiniteValidationTests.InputNonFinite_IsRejected" classname="Corum2.Tests.NonFiniteValidationTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.101876" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties>
+                <property name="Category" value="TC_UNITY_03" />
+              </properties>
+              <test-case id="1157" name="InputNonFinite_IsRejected(float.NaN)" fullname="Corum2.Tests.NonFiniteValidationTests.InputNonFinite_IsRejected(float.NaN)" methodname="InputNonFinite_IsRejected" classname="Corum2.Tests.NonFiniteValidationTests" runstate="Runnable" seed="778946846" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.001651" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1158" name="InputNonFinite_IsRejected(float.PositiveInfinity)" fullname="Corum2.Tests.NonFiniteValidationTests.InputNonFinite_IsRejected(float.PositiveInfinity)" methodname="InputNonFinite_IsRejected" classname="Corum2.Tests.NonFiniteValidationTests" runstate="Runnable" seed="562473752" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.000229" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-case id="1164" name="MapNonFinite_IsRejected" fullname="Corum2.Tests.NonFiniteValidationTests.MapNonFinite_IsRejected" methodname="MapNonFinite_IsRejected" classname="Corum2.Tests.NonFiniteValidationTests" runstate="Runnable" seed="893406012" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.003000" asserts="0">
+              <properties>
+                <property name="Category" value="TC_UNITY_03" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-suite type="ParameterizedMethod" id="1163" name="MovementNonFinite_IsRejected" fullname="Corum2.Tests.NonFiniteValidationTests.MovementNonFinite_IsRejected" classname="Corum2.Tests.NonFiniteValidationTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.095234" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties>
+                <property name="Category" value="TC_UNITY_03" />
+              </properties>
+              <test-case id="1160" name="MovementNonFinite_IsRejected(float.NaN)" fullname="Corum2.Tests.NonFiniteValidationTests.MovementNonFinite_IsRejected(float.NaN)" methodname="MovementNonFinite_IsRejected" classname="Corum2.Tests.NonFiniteValidationTests" runstate="Runnable" seed="608543735" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.001216" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1161" name="MovementNonFinite_IsRejected(float.PositiveInfinity)" fullname="Corum2.Tests.NonFiniteValidationTests.MovementNonFinite_IsRejected(float.PositiveInfinity)" methodname="MovementNonFinite_IsRejected" classname="Corum2.Tests.NonFiniteValidationTests" runstate="Runnable" seed="1256254700" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.000355" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1162" name="MovementNonFinite_IsRejected(float.NegativeInfinity)" fullname="Corum2.Tests.NonFiniteValidationTests.MovementNonFinite_IsRejected(float.NegativeInfinity)" methodname="MovementNonFinite_IsRejected" classname="Corum2.Tests.NonFiniteValidationTests" runstate="Runnable" seed="200023820" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.000272" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-case id="1165" name="ScriptableObjectPath_RejectsNaN" fullname="Corum2.Tests.NonFiniteValidationTests.ScriptableObjectPath_RejectsNaN" methodname="ScriptableObjectPath_RejectsNaN" classname="Corum2.Tests.NonFiniteValidationTests" runstate="Runnable" seed="2124195650" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.001808" asserts="0">
+              <properties>
+                <property name="Category" value="TC_UNITY_03" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1156" name="ValidFixture_StillPasses" fullname="Corum2.Tests.NonFiniteValidationTests.ValidFixture_StillPasses" methodname="ValidFixture_StillPasses" classname="Corum2.Tests.NonFiniteValidationTests" runstate="Runnable" seed="1844844217" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.000484" asserts="0">
+              <properties>
+                <property name="Category" value="TC_UNITY_03" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1166" name="RingR1Tests" fullname="Corum2.Tests.RingR1Tests" classname="Corum2.Tests.RingR1Tests" runstate="Runnable" testcasecount="12" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.145115" total="12" passed="12" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1178" name="AirHit_RingUseReserved_RunsOnceAfterReaction" fullname="Corum2.Tests.RingR1Tests.AirHit_RingUseReserved_RunsOnceAfterReaction" methodname="AirHit_RingUseReserved_RunsOnceAfterReaction" classname="Corum2.Tests.RingR1Tests" runstate="Runnable" seed="1317698230" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.023241" asserts="0">
+              <properties>
+                <property name="Category" value="TC_INT_02" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1167" name="Registration_DpadBeforeRelease_DoesNothing_AfterRelease_Assigns" fullname="Corum2.Tests.RingR1Tests.Registration_DpadBeforeRelease_DoesNothing_AfterRelease_Assigns" methodname="Registration_DpadBeforeRelease_DoesNothing_AfterRelease_Assigns" classname="Corum2.Tests.RingR1Tests" runstate="Runnable" seed="1035098847" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.002392" asserts="0">
+              <properties>
+                <property name="Category" value="TC_02_07" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1168" name="Registration_SameFrameOrder_ReleaseThenDpad_vs_DpadThenRelease" fullname="Corum2.Tests.RingR1Tests.Registration_SameFrameOrder_ReleaseThenDpad_vs_DpadThenRelease" methodname="Registration_SameFrameOrder_ReleaseThenDpad_vs_DpadThenRelease" classname="Corum2.Tests.RingR1Tests" runstate="Runnable" seed="1963016751" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.003421" asserts="0">
+              <properties>
+                <property name="Category" value="TC_02_07" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1177" name="Ring_OpensDuringAirAttack_UseWaitsForTheAttack" fullname="Corum2.Tests.RingR1Tests.Ring_OpensDuringAirAttack_UseWaitsForTheAttack" methodname="Ring_OpensDuringAirAttack_UseWaitsForTheAttack" classname="Corum2.Tests.RingR1Tests" runstate="Runnable" seed="621242925" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.001061" asserts="0">
+              <properties>
+                <property name="Category" value="TC_02_11" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1174" name="SameFrame_AnalogInsideDeadzone_IsNeutral" fullname="Corum2.Tests.RingR1Tests.SameFrame_AnalogInsideDeadzone_IsNeutral" methodname="SameFrame_AnalogInsideDeadzone_IsNeutral" classname="Corum2.Tests.RingR1Tests" runstate="Runnable" seed="1168037716" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.001628" asserts="0">
+              <properties>
+                <property name="Category" value="TC_02_04" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1171" name="SameFrame_AThenNeutral_UsesItemSelectedAtThePress" fullname="Corum2.Tests.RingR1Tests.SameFrame_AThenNeutral_UsesItemSelectedAtThePress" methodname="SameFrame_AThenNeutral_UsesItemSelectedAtThePress" classname="Corum2.Tests.RingR1Tests" runstate="Runnable" seed="339664312" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.000899" asserts="0">
+              <properties>
+                <property name="Category" value="TC_02_05" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1172" name="SameFrame_AThenNewItem_UsesItemSelectedAtThePress" fullname="Corum2.Tests.RingR1Tests.SameFrame_AThenNewItem_UsesItemSelectedAtThePress" methodname="SameFrame_AThenNewItem_UsesItemSelectedAtThePress" classname="Corum2.Tests.RingR1Tests" runstate="Runnable" seed="2048931903" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.001045" asserts="0">
+              <properties>
+                <property name="Category" value="TC_02_05" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1169" name="SameFrame_NeutralThenA_UsesNothing" fullname="Corum2.Tests.RingR1Tests.SameFrame_NeutralThenA_UsesNothing" methodname="SameFrame_NeutralThenA_UsesNothing" classname="Corum2.Tests.RingR1Tests" runstate="Runnable" seed="753377409" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.000990" asserts="0">
+              <properties>
+                <property name="Category" value="TC_02_04" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1170" name="SameFrame_NewItemThenA_UsesNewItem" fullname="Corum2.Tests.RingR1Tests.SameFrame_NewItemThenA_UsesNewItem" methodname="SameFrame_NewItemThenA_UsesNewItem" classname="Corum2.Tests.RingR1Tests" runstate="Runnable" seed="641716323" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.001259" asserts="0">
+              <properties>
+                <property name="Category" value="TC_02_05" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1173" name="SameFrame_OpenSelectUse_AllInOneFrame" fullname="Corum2.Tests.RingR1Tests.SameFrame_OpenSelectUse_AllInOneFrame" methodname="SameFrame_OpenSelectUse_AllInOneFrame" classname="Corum2.Tests.RingR1Tests" runstate="Runnable" seed="1552805397" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.003011" asserts="0">
+              <properties>
+                <property name="Category" value="TC_02_05" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1176" name="Validator_AcceptsBoundaries" fullname="Corum2.Tests.RingR1Tests.Validator_AcceptsBoundaries" methodname="Validator_AcceptsBoundaries" classname="Corum2.Tests.RingR1Tests" runstate="Runnable" seed="1703826568" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.006720" asserts="0">
+              <properties>
+                <property name="Category" value="DATA" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1175" name="Validator_RejectsNonFinite" fullname="Corum2.Tests.RingR1Tests.Validator_RejectsNonFinite" methodname="Validator_RejectsNonFinite" classname="Corum2.Tests.RingR1Tests" runstate="Runnable" seed="112164819" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.002955" asserts="0">
+              <properties>
+                <property name="Category" value="DATA" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1179" name="RingTests" fullname="Corum2.Tests.RingTests" classname="Corum2.Tests.RingTests" runstate="Runnable" testcasecount="17" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.080619" total="17" passed="17" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1190" name="AutoClose_OnlyAfterUseRegisterDiscard" fullname="Corum2.Tests.RingTests.AutoClose_OnlyAfterUseRegisterDiscard" methodname="AutoClose_OnlyAfterUseRegisterDiscard" classname="Corum2.Tests.RingTests" runstate="Runnable" seed="1696059218" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.004223" asserts="0">
+              <properties>
+                <property name="Category" value="TC_02_09" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1181" name="Cursor_FollowsStick_NeutralClearsSelection_NoUse" fullname="Corum2.Tests.RingTests.Cursor_FollowsStick_NeutralClearsSelection_NoUse" methodname="Cursor_FollowsStick_NeutralClearsSelection_NoUse" classname="Corum2.Tests.RingTests" runstate="Runnable" seed="998903303" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.001572" asserts="0">
+              <properties>
+                <property name="Category" value="TC_02_04" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1196" name="Death_CancelsPendingUse_AndClosesRing" fullname="Corum2.Tests.RingTests.Death_CancelsPendingUse_AndClosesRing" methodname="Death_CancelsPendingUse_AndClosesRing" classname="Corum2.Tests.RingTests" runstate="Runnable" seed="1719816176" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.001340" asserts="0">
+              <properties>
+                <property name="Category" value="TC_CF_08a" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1189" name="Discard_CancelKeeps_ConfirmRemoves_QuestBlocked" fullname="Corum2.Tests.RingTests.Discard_CancelKeeps_ConfirmRemoves_QuestBlocked" methodname="Discard_CancelKeeps_ConfirmRemoves_QuestBlocked" classname="Corum2.Tests.RingTests" runstate="Runnable" seed="423012296" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.001117" asserts="0">
+              <properties>
+                <property name="Category" value="TC_02_08" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1188" name="DpadInsideRing_Registration_vs_Browse" fullname="Corum2.Tests.RingTests.DpadInsideRing_Registration_vs_Browse" methodname="DpadInsideRing_Registration_vs_Browse" classname="Corum2.Tests.RingTests" runstate="Runnable" seed="952608095" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.000758" asserts="0">
+              <properties>
+                <property name="Category" value="TC_UI_12" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1194" name="HitReaction_RingOpens_UseReservedThenRunsOnce" fullname="Corum2.Tests.RingTests.HitReaction_RingOpens_UseReservedThenRunsOnce" methodname="HitReaction_RingOpens_UseReservedThenRunsOnce" classname="Corum2.Tests.RingTests" runstate="Runnable" seed="1115473966" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.003341" asserts="0">
+              <properties>
+                <property name="Category" value="TC_05_05" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1180" name="LB_OpensAndCloses_SimulationKeepsGameTime" fullname="Corum2.Tests.RingTests.LB_OpensAndCloses_SimulationKeepsGameTime" methodname="LB_OpensAndCloses_SimulationKeepsGameTime" classname="Corum2.Tests.RingTests" runstate="Runnable" seed="894210404" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.000637" asserts="0">
+              <properties>
+                <property name="Category" value="TC_02_03" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1183" name="Pages_LT_RT_Wrap" fullname="Corum2.Tests.RingTests.Pages_LT_RT_Wrap" methodname="Pages_LT_RT_Wrap" classname="Corum2.Tests.RingTests" runstate="Runnable" seed="1114813501" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.001708" asserts="0">
+              <properties>
+                <property name="Category" value="TC_02_05" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1186" name="Quickslot_DuringCooldown_Rejected_NothingConsumed" fullname="Corum2.Tests.RingTests.Quickslot_DuringCooldown_Rejected_NothingConsumed" methodname="Quickslot_DuringCooldown_Rejected_NothingConsumed" classname="Corum2.Tests.RingTests" runstate="Runnable" seed="1816162335" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.000533" asserts="0">
+              <properties>
+                <property name="Category" value="TC_02_06" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1195" name="Quickslot_DuringHitReaction_Rejected_RingRequestPendingBlocksSecond" fullname="Corum2.Tests.RingTests.Quickslot_DuringHitReaction_Rejected_RingRequestPendingBlocksSecond" methodname="Quickslot_DuringHitReaction_Rejected_RingRequestPendingBlocksSecond" classname="Corum2.Tests.RingTests" runstate="Runnable" seed="402975725" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.001279" asserts="0">
+              <properties>
+                <property name="Category" value="TC_CF_08a" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1185" name="Quickslots_UseOnlyTheirItem_EmptyAfterZero" fullname="Corum2.Tests.RingTests.Quickslots_UseOnlyTheirItem_EmptyAfterZero" methodname="Quickslots_UseOnlyTheirItem_EmptyAfterZero" classname="Corum2.Tests.RingTests" runstate="Runnable" seed="1137879575" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.001696" asserts="0">
+              <properties>
+                <property name="Category" value="TC_02_06" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1187" name="Register_Y_Then_Dpad_AssignsWithoutUse_AndCloses" fullname="Corum2.Tests.RingTests.Register_Y_Then_Dpad_AssignsWithoutUse_AndCloses" methodname="Register_Y_Then_Dpad_AssignsWithoutUse_AndCloses" classname="Corum2.Tests.RingTests" runstate="Runnable" seed="1220359801" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.000865" asserts="0">
+              <properties>
+                <property name="Category" value="TC_02_07" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1191" name="RejectedUse_KeepsRingOpen" fullname="Corum2.Tests.RingTests.RejectedUse_KeepsRingOpen" methodname="RejectedUse_KeepsRingOpen" classname="Corum2.Tests.RingTests" runstate="Runnable" seed="63732017" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.001198" asserts="0">
+              <properties>
+                <property name="Category" value="TC_02_09" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1193" name="Ring_OpensInAir_AndDuringAttack_UseWaitsForMotionEnd" fullname="Corum2.Tests.RingTests.Ring_OpensInAir_AndDuringAttack_UseWaitsForMotionEnd" methodname="Ring_OpensInAir_AndDuringAttack_UseWaitsForMotionEnd" classname="Corum2.Tests.RingTests" runstate="Runnable" seed="1026134245" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.003991" asserts="0">
+              <properties>
+                <property name="Category" value="TC_02_11" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1192" name="Scroll_UsesSharedMagicDefinition_ConsumedAndRemoved_Cooldown" fullname="Corum2.Tests.RingTests.Scroll_UsesSharedMagicDefinition_ConsumedAndRemoved_Cooldown" methodname="Scroll_UsesSharedMagicDefinition_ConsumedAndRemoved_Cooldown" classname="Corum2.Tests.RingTests" runstate="Runnable" seed="1107283732" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.001268" asserts="0">
+              <properties>
+                <property name="Category" value="TC_02_10" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1182" name="StickWhileOpen_DoesNotMovePlayer_HeldMoveReleasedAndResumed" fullname="Corum2.Tests.RingTests.StickWhileOpen_DoesNotMovePlayer_HeldMoveReleasedAndResumed" methodname="StickWhileOpen_DoesNotMovePlayer_HeldMoveReleasedAndResumed" classname="Corum2.Tests.RingTests" runstate="Runnable" seed="1369026255" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.002040" asserts="0">
+              <properties>
+                <property name="Category" value="TC_02_05" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1184" name="X_ShowsDetail_RingStays_XClosesDetail" fullname="Corum2.Tests.RingTests.X_ShowsDetail_RingStays_XClosesDetail" methodname="X_ShowsDetail_RingStays_XClosesDetail" classname="Corum2.Tests.RingTests" runstate="Runnable" seed="1205449402" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.001220" asserts="0">
+              <properties>
+                <property name="Category" value="TC_02_05" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1197" name="SourceFileListTests" fullname="Corum2.Tests.SourceFileListTests" classname="Corum2.Tests.SourceFileListTests" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.143528" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1199" name="Hash_SizesHashesSortedAndMissing" fullname="Corum2.Tests.SourceFileListTests.Hash_SizesHashesSortedAndMissing" methodname="Hash_SizesHashesSortedAndMissing" classname="Corum2.Tests.SourceFileListTests" runstate="Runnable" seed="1242813358" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.035711" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1202" name="Parse_RejectsBadRows" fullname="Corum2.Tests.SourceFileListTests.Parse_RejectsBadRows" methodname="Parse_RejectsBadRows" classname="Corum2.Tests.SourceFileListTests" runstate="Runnable" seed="130735898" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.008781" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1201" name="Paths_MustBeRelativeAndSingleLine" fullname="Corum2.Tests.SourceFileListTests.Paths_MustBeRelativeAndSingleLine" methodname="Paths_MustBeRelativeAndSingleLine" classname="Corum2.Tests.SourceFileListTests" runstate="Runnable" seed="720281079" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.006987" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1198" name="Sha256_KnownVector" fullname="Corum2.Tests.SourceFileListTests.Sha256_KnownVector" methodname="Sha256_KnownVector" classname="Corum2.Tests.SourceFileListTests" runstate="Runnable" seed="344764251" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.007467" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1200" name="Tsv_RoundTrips" fullname="Corum2.Tests.SourceFileListTests.Tsv_RoundTrips" methodname="Tsv_RoundTrips" classname="Corum2.Tests.SourceFileListTests" runstate="Runnable" seed="720304678" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.017462" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1043" name="StateCancelTests" fullname="Corum2.Tests.StateCancelTests" classname="Corum2.Tests.StateCancelTests" runstate="Runnable" testcasecount="7" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:57Z" duration="0.224577" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1052" name="HitStun_LocksAllCombatActions_ThenReleases" fullname="Corum2.Tests.StateCancelTests.HitStun_LocksAllCombatActions_ThenReleases" methodname="HitStun_LocksAllCombatActions_ThenReleases" classname="Corum2.Tests.StateCancelTests" runstate="Runnable" seed="644825215" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.002116" asserts="0">
+              <properties>
+                <property name="Category" value="TC_05_04" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1044" name="MoveAndJump_LockedUntilMotionEnds" fullname="Corum2.Tests.StateCancelTests.MoveAndJump_LockedUntilMotionEnds" methodname="MoveAndJump_LockedUntilMotionEnds" classname="Corum2.Tests.StateCancelTests" runstate="Runnable" seed="767232148" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:56Z" duration="0.001055" asserts="0">
+              <properties>
+                <property name="Category" value="TC_05_01" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-suite type="ParameterizedMethod" id="1051" name="Rb_RefusedDuringDashAndDive" fullname="Corum2.Tests.StateCancelTests.Rb_RefusedDuringDashAndDive" classname="Corum2.Tests.StateCancelTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-11-10 05:10:56Z" end-time="2026-11-10 05:10:57Z" duration="0.097897" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties>
+                <property name="Category" value="TC_05_03" />
+              </properties>
+              <test-case id="1049" name="Rb_RefusedDuringDashAndDive(Attack)" fullname="Corum2.Tests.StateCancelTests.Rb_RefusedDuringDashAndDive(Attack)" methodname="Rb_RefusedDuringDashAndDive" classname="Corum2.Tests.StateCancelTests" runstate="Runnable" seed="368091312" result="Passed" start-time="2026-11-10 05:10:57Z" end-time="2026-11-10 05:10:57Z" duration="0.001414" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1050" name="Rb_RefusedDuringDashAndDive(SpecialAttack)" fullname="Corum2.Tests.StateCancelTests.Rb_RefusedDuringDashAndDive(SpecialAttack)" methodname="Rb_RefusedDuringDashAndDive" classname="Corum2.Tests.StateCancelTests" runstate="Runnable" seed="552153994" result="Passed" start-time="2026-11-10 05:10:57Z" end-time="2026-11-10 05:10:57Z" duration="0.000573" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="ParameterizedMethod" id="1048" name="RbCancels_GroundNormal_Launcher_AirNormal" fullname="Corum2.Tests.StateCancelTests.RbCancels_GroundNormal_Launcher_AirNormal" classname="Corum2.Tests.StateCancelTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-11-10 05:10:57Z" end-time="2026-11-10 05:10:57Z" duration="0.100218" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties>
+                <property name="Category" value="TC_05_02" />
+              </properties>
+              <test-case id="1045" name="RbCancels_GroundNormal_Launcher_AirNormal(0)" fullname="Corum2.Tests.StateCancelTests.RbCancels_GroundNormal_Launcher_AirNormal(0)" methodname="RbCancels_GroundNormal_Launcher_AirNormal" classname="Corum2.Tests.StateCancelTests" runstate="Runnable" seed="345986984" result="Passed" start-time="2026-11-10 05:10:57Z" end-time="2026-11-10 05:10:57Z" duration="0.001290" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1046" name="RbCancels_GroundNormal_Launcher_AirNormal(1)" fullname="Corum2.Tests.StateCancelTests.RbCancels_GroundNormal_Launcher_AirNormal(1)" methodname="RbCancels_GroundNormal_Launcher_AirNormal" classname="Corum2.Tests.StateCancelTests" runstate="Runnable" seed="2096563577" result="Passed" start-time="2026-11-10 05:10:57Z" end-time="2026-11-10 05:10:57Z" duration="0.000442" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1047" name="RbCancels_GroundNormal_Launcher_AirNormal(2)" fullname="Corum2.Tests.StateCancelTests.RbCancels_GroundNormal_Launcher_AirNormal(2)" methodname="RbCancels_GroundNormal_Launcher_AirNormal" classname="Corum2.Tests.StateCancelTests" runstate="Runnable" seed="1200123932" result="Passed" start-time="2026-11-10 05:10:57Z" end-time="2026-11-10 05:10:57Z" duration="0.000493" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+          </test-suite>
+          <test-suite type="TestFixture" id="1203" name="Wp02R1RegressionTests" fullname="Corum2.Tests.Wp02R1RegressionTests" classname="Corum2.Tests.Wp02R1RegressionTests" runstate="Runnable" testcasecount="28" result="Passed" start-time="2026-11-10 05:10:57Z" end-time="2026-11-10 05:10:57Z" duration="0.422842" total="28" passed="28" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1233" name="DashBranch_Cf03Held_OnlyDiveAfterDashPassesTen" fullname="Corum2.Tests.Wp02R1RegressionTests.DashBranch_Cf03Held_OnlyDiveAfterDashPassesTen" methodname="DashBranch_Cf03Held_OnlyDiveAfterDashPassesTen" classname="Corum2.Tests.Wp02R1RegressionTests" runstate="Runnable" seed="1219444311" result="Passed" start-time="2026-11-10 05:10:57Z" end-time="2026-11-10 05:10:57Z" duration="0.004617" asserts="0">
+              <properties>
+                <property name="Category" value="TC_04_01" />
+                <property name="Category" value="WP02_F03" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1226" name="ExplicitMultiHitEvents_EachStopOnce" fullname="Corum2.Tests.Wp02R1RegressionTests.ExplicitMultiHitEvents_EachStopOnce" methodname="ExplicitMultiHitEvents_EachStopOnce" classname="Corum2.Tests.Wp02R1RegressionTests" runstate="Runnable" seed="1696535844" result="Passed" start-time="2026-11-10 05:10:57Z" end-time="2026-11-10 05:10:57Z" duration="0.001413" asserts="0">
+              <properties>
+                <property name="Category" value="TC_06_03" />
+                <property name="Category" value="WP02_F02" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1234" name="HundredHits_TenTargetsTenSteps_NotCapped" fullname="Corum2.Tests.Wp02R1RegressionTests.HundredHits_TenTargetsTenSteps_NotCapped" methodname="HundredHits_TenTargetsTenSteps_NotCapped" classname="Corum2.Tests.Wp02R1RegressionTests" runstate="Runnable" seed="730441833" result="Passed" start-time="2026-11-10 05:10:57Z" end-time="2026-11-10 05:10:57Z" duration="0.009334" asserts="0">
+              <properties>
+                <property name="Category" value="TC_04_01" />
+                <property name="Category" value="WP02_F03" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-suite type="ParameterizedMethod" id="1229" name="NextAttack_StopsAgain_AndFollowsData" fullname="Corum2.Tests.Wp02R1RegressionTests.NextAttack_StopsAgain_AndFollowsData" classname="Corum2.Tests.Wp02R1RegressionTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-11-10 05:10:57Z" end-time="2026-11-10 05:10:57Z" duration="0.086569" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties>
+                <property name="Category" value="TC_06_03" />
+                <property name="Category" value="WP02_F02" />
+              </properties>
+              <test-case id="1227" name="NextAttack_StopsAgain_AndFollowsData(0.04f)" fullname="Corum2.Tests.Wp02R1RegressionTests.NextAttack_StopsAgain_AndFollowsData(0.04f)" methodname="NextAttack_StopsAgain_AndFollowsData" classname="Corum2.Tests.Wp02R1RegressionTests" runstate="Runnable" seed="714356811" result="Passed" start-time="2026-11-10 05:10:57Z" end-time="2026-11-10 05:10:57Z" duration="0.001710" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1228" name="NextAttack_StopsAgain_AndFollowsData(0.1f)" fullname="Corum2.Tests.Wp02R1RegressionTests.NextAttack_StopsAgain_AndFollowsData(0.1f)" methodname="NextAttack_StopsAgain_AndFollowsData" classname="Corum2.Tests.Wp02R1RegressionTests" runstate="Runnable" seed="23870405" result="Passed" start-time="2026-11-10 05:10:57Z" end-time="2026-11-10 05:10:57Z" duration="0.000851" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-case id="1232" name="NonDash_DiveAtCap_OpensNewChain" fullname="Corum2.Tests.Wp02R1RegressionTests.NonDash_DiveAtCap_OpensNewChain" methodname="NonDash_DiveAtCap_OpensNewChain" classname="Corum2.Tests.Wp02R1RegressionTests" runstate="Runnable" seed="1410403797" result="Passed" start-time="2026-11-10 05:10:57Z" end-time="2026-11-10 05:10:57Z" duration="0.003939" asserts="0">
+              <properties>
+                <property name="Category" value="TC_04_01" />
+                <property name="Category" value="WP02_F03" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1231" name="NonDash_MixedPath_CappedAtTen" fullname="Corum2.Tests.Wp02R1RegressionTests.NonDash_MixedPath_CappedAtTen" methodname="NonDash_MixedPath_CappedAtTen" classname="Corum2.Tests.Wp02R1RegressionTests" runstate="Runnable" seed="2014131815" result="Passed" start-time="2026-11-10 05:10:57Z" end-time="2026-11-10 05:10:57Z" duration="0.003524" asserts="0">
+              <properties>
+                <property name="Category" value="TC_04_01" />
+                <property name="Category" value="WP02_F03" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1230" name="NonDash_RepeatedLauncher_CappedAtTen" fullname="Corum2.Tests.Wp02R1RegressionTests.NonDash_RepeatedLauncher_CappedAtTen" methodname="NonDash_RepeatedLauncher_CappedAtTen" classname="Corum2.Tests.Wp02R1RegressionTests" runstate="Runnable" seed="924198672" result="Passed" start-time="2026-11-10 05:10:57Z" end-time="2026-11-10 05:10:57Z" duration="0.004268" asserts="0">
+              <properties>
+                <property name="Category" value="TC_04_01" />
+                <property name="Category" value="WP02_F03" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-suite type="ParameterizedMethod" id="1225" name="SameEvent_LateTargets_DoNotRestartAttackerHitstop" fullname="Corum2.Tests.Wp02R1RegressionTests.SameEvent_LateTargets_DoNotRestartAttackerHitstop" classname="Corum2.Tests.Wp02R1RegressionTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-11-10 05:10:57Z" end-time="2026-11-10 05:10:57Z" duration="0.091243" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties>
+                <property name="Category" value="TC_06_03" />
+                <property name="Category" value="WP02_F02" />
+              </properties>
+              <test-case id="1223" name="SameEvent_LateTargets_DoNotRestartAttackerHitstop(1)" fullname="Corum2.Tests.Wp02R1RegressionTests.SameEvent_LateTargets_DoNotRestartAttackerHitstop(1)" methodname="SameEvent_LateTargets_DoNotRestartAttackerHitstop" classname="Corum2.Tests.Wp02R1RegressionTests" runstate="Runnable" seed="1448560972" result="Passed" start-time="2026-11-10 05:10:57Z" end-time="2026-11-10 05:10:57Z" duration="0.003798" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1224" name="SameEvent_LateTargets_DoNotRestartAttackerHitstop(9)" fullname="Corum2.Tests.Wp02R1RegressionTests.SameEvent_LateTargets_DoNotRestartAttackerHitstop(9)" methodname="SameEvent_LateTargets_DoNotRestartAttackerHitstop" classname="Corum2.Tests.Wp02R1RegressionTests" runstate="Runnable" seed="213311918" result="Passed" start-time="2026-11-10 05:10:57Z" end-time="2026-11-10 05:10:57Z" duration="0.002048" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="ParameterizedMethod" id="1222" name="TwoAttackers_Dodge_ResidualTargets_NoException" fullname="Corum2.Tests.Wp02R1RegressionTests.TwoAttackers_Dodge_ResidualTargets_NoException" classname="Corum2.Tests.Wp02R1RegressionTests" runstate="Runnable" testcasecount="18" result="Passed" start-time="2026-11-10 05:10:57Z" end-time="2026-11-10 05:10:57Z" duration="0.120477" total="18" passed="18" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties>
+                <property name="Category" value="TC_06_15" />
+                <property name="Category" value="TC_06_16" />
+                <property name="Category" value="WP02_F01" />
+              </properties>
+              <test-case id="1204" name="TwoAttackers_Dodge_ResidualTargets_NoException(0,0,False)" fullname="Corum2.Tests.Wp02R1RegressionTests.TwoAttackers_Dodge_ResidualTargets_NoException(0,0,False)" methodname="TwoAttackers_Dodge_ResidualTargets_NoException" classname="Corum2.Tests.Wp02R1RegressionTests" runstate="Runnable" seed="1131290218" result="Passed" start-time="2026-11-10 05:10:57Z" end-time="2026-11-10 05:10:57Z" duration="0.006273" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1205" name="TwoAttackers_Dodge_ResidualTargets_NoException(0,0,True)" fullname="Corum2.Tests.Wp02R1RegressionTests.TwoAttackers_Dodge_ResidualTargets_NoException(0,0,True)" methodname="TwoAttackers_Dodge_ResidualTargets_NoException" classname="Corum2.Tests.Wp02R1RegressionTests" runstate="Runnable" seed="1593513582" result="Passed" start-time="2026-11-10 05:10:57Z" end-time="2026-11-10 05:10:57Z" duration="0.000975" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1206" name="TwoAttackers_Dodge_ResidualTargets_NoException(0,1,False)" fullname="Corum2.Tests.Wp02R1RegressionTests.TwoAttackers_Dodge_ResidualTargets_NoException(0,1,False)" methodname="TwoAttackers_Dodge_ResidualTargets_NoException" classname="Corum2.Tests.Wp02R1RegressionTests" runstate="Runnable" seed="29124907" result="Passed" start-time="2026-11-10 05:10:57Z" end-time="2026-11-10 05:10:57Z" duration="0.000878" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1207" name="TwoAttackers_Dodge_ResidualTargets_NoException(0,1,True)" fullname="Corum2.Tests.Wp02R1RegressionTests.TwoAttackers_Dodge_ResidualTargets_NoException(0,1,True)" methodname="TwoAttackers_Dodge_ResidualTargets_NoException" classname="Corum2.Tests.Wp02R1RegressionTests" runstate="Runnable" seed="684550554" result="Passed" start-time="2026-11-10 05:10:57Z" end-time="2026-11-10 05:10:57Z" duration="0.000779" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1208" name="TwoAttackers_Dodge_ResidualTargets_NoException(0,2,False)" fullname="Corum2.Tests.Wp02R1RegressionTests.TwoAttackers_Dodge_ResidualTargets_NoException(0,2,False)" methodname="TwoAttackers_Dodge_ResidualTargets_NoException" classname="Corum2.Tests.Wp02R1RegressionTests" runstate="Runnable" seed="1014685420" result="Passed" start-time="2026-11-10 05:10:57Z" end-time="2026-11-10 05:10:57Z" duration="0.001330" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1209" name="TwoAttackers_Dodge_ResidualTargets_NoException(0,2,True)" fullname="Corum2.Tests.Wp02R1RegressionTests.TwoAttackers_Dodge_ResidualTargets_NoException(0,2,True)" methodname="TwoAttackers_Dodge_ResidualTargets_NoException" classname="Corum2.Tests.Wp02R1RegressionTests" runstate="Runnable" seed="384809110" result="Passed" start-time="2026-11-10 05:10:57Z" end-time="2026-11-10 05:10:57Z" duration="0.000819" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1210" name="TwoAttackers_Dodge_ResidualTargets_NoException(1,0,False)" fullname="Corum2.Tests.Wp02R1RegressionTests.TwoAttackers_Dodge_ResidualTargets_NoException(1,0,False)" methodname="TwoAttackers_Dodge_ResidualTargets_NoException" classname="Corum2.Tests.Wp02R1RegressionTests" runstate="Runnable" seed="189896182" result="Passed" start-time="2026-11-10 05:10:57Z" end-time="2026-11-10 05:10:57Z" duration="0.000825" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1211" name="TwoAttackers_Dodge_ResidualTargets_NoException(1,0,True)" fullname="Corum2.Tests.Wp02R1RegressionTests.TwoAttackers_Dodge_ResidualTargets_NoException(1,0,True)" methodname="TwoAttackers_Dodge_ResidualTargets_NoException" classname="Corum2.Tests.Wp02R1RegressionTests" runstate="Runnable" seed="1184651154" result="Passed" start-time="2026-11-10 05:10:57Z" end-time="2026-11-10 05:10:57Z" duration="0.000806" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1212" name="TwoAttackers_Dodge_ResidualTargets_NoException(1,1,False)" fullname="Corum2.Tests.Wp02R1RegressionTests.TwoAttackers_Dodge_ResidualTargets_NoException(1,1,False)" methodname="TwoAttackers_Dodge_ResidualTargets_NoException" classname="Corum2.Tests.Wp02R1RegressionTests" runstate="Runnable" seed="729348540" result="Passed" start-time="2026-11-10 05:10:57Z" end-time="2026-11-10 05:10:57Z" duration="0.000785" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1213" name="TwoAttackers_Dodge_ResidualTargets_NoException(1,1,True)" fullname="Corum2.Tests.Wp02R1RegressionTests.TwoAttackers_Dodge_ResidualTargets_NoException(1,1,True)" methodname="TwoAttackers_Dodge_ResidualTargets_NoException" classname="Corum2.Tests.Wp02R1RegressionTests" runstate="Runnable" seed="779124389" result="Passed" start-time="2026-11-10 05:10:57Z" end-time="2026-11-10 05:10:57Z" duration="0.000789" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1214" name="TwoAttackers_Dodge_ResidualTargets_NoException(1,2,False)" fullname="Corum2.Tests.Wp02R1RegressionTests.TwoAttackers_Dodge_ResidualTargets_NoException(1,2,False)" methodname="TwoAttackers_Dodge_ResidualTargets_NoException" classname="Corum2.Tests.Wp02R1RegressionTests" runstate="Runnable" seed="67414602" result="Passed" start-time="2026-11-10 05:10:57Z" end-time="2026-11-10 05:10:57Z" duration="0.000923" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1215" name="TwoAttackers_Dodge_ResidualTargets_NoException(1,2,True)" fullname="Corum2.Tests.Wp02R1RegressionTests.TwoAttackers_Dodge_ResidualTargets_NoException(1,2,True)" methodname="TwoAttackers_Dodge_ResidualTargets_NoException" classname="Corum2.Tests.Wp02R1RegressionTests" runstate="Runnable" seed="1252012524" result="Passed" start-time="2026-11-10 05:10:57Z" end-time="2026-11-10 05:10:57Z" duration="0.001119" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1216" name="TwoAttackers_Dodge_ResidualTargets_NoException(3,0,False)" fullname="Corum2.Tests.Wp02R1RegressionTests.TwoAttackers_Dodge_ResidualTargets_NoException(3,0,False)" methodname="TwoAttackers_Dodge_ResidualTargets_NoException" classname="Corum2.Tests.Wp02R1RegressionTests" runstate="Runnable" seed="2143012340" result="Passed" start-time="2026-11-10 05:10:57Z" end-time="2026-11-10 05:10:57Z" duration="0.001421" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1217" name="TwoAttackers_Dodge_ResidualTargets_NoException(3,0,True)" fullname="Corum2.Tests.Wp02R1RegressionTests.TwoAttackers_Dodge_ResidualTargets_NoException(3,0,True)" methodname="TwoAttackers_Dodge_ResidualTargets_NoException" classname="Corum2.Tests.Wp02R1RegressionTests" runstate="Runnable" seed="2042346310" result="Passed" start-time="2026-11-10 05:10:57Z" end-time="2026-11-10 05:10:57Z" duration="0.001336" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1218" name="TwoAttackers_Dodge_ResidualTargets_NoException(3,1,False)" fullname="Corum2.Tests.Wp02R1RegressionTests.TwoAttackers_Dodge_ResidualTargets_NoException(3,1,False)" methodname="TwoAttackers_Dodge_ResidualTargets_NoException" classname="Corum2.Tests.Wp02R1RegressionTests" runstate="Runnable" seed="1501080712" result="Passed" start-time="2026-11-10 05:10:57Z" end-time="2026-11-10 05:10:57Z" duration="0.001469" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1219" name="TwoAttackers_Dodge_ResidualTargets_NoException(3,1,True)" fullname="Corum2.Tests.Wp02R1RegressionTests.TwoAttackers_Dodge_ResidualTargets_NoException(3,1,True)" methodname="TwoAttackers_Dodge_ResidualTargets_NoException" classname="Corum2.Tests.Wp02R1RegressionTests" runstate="Runnable" seed="2005295386" result="Passed" start-time="2026-11-10 05:10:57Z" end-time="2026-11-10 05:10:57Z" duration="0.001411" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1220" name="TwoAttackers_Dodge_ResidualTargets_NoException(3,2,False)" fullname="Corum2.Tests.Wp02R1RegressionTests.TwoAttackers_Dodge_ResidualTargets_NoException(3,2,False)" methodname="TwoAttackers_Dodge_ResidualTargets_NoException" classname="Corum2.Tests.Wp02R1RegressionTests" runstate="Runnable" seed="748834885" result="Passed" start-time="2026-11-10 05:10:57Z" end-time="2026-11-10 05:10:57Z" duration="0.001105" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1221" name="TwoAttackers_Dodge_ResidualTargets_NoException(3,2,True)" fullname="Corum2.Tests.Wp02R1RegressionTests.TwoAttackers_Dodge_ResidualTargets_NoException(3,2,True)" methodname="TwoAttackers_Dodge_ResidualTargets_NoException" classname="Corum2.Tests.Wp02R1RegressionTests" runstate="Runnable" seed="704753855" result="Passed" start-time="2026-11-10 05:10:57Z" end-time="2026-11-10 05:10:57Z" duration="0.001269" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: C:/Users/wscho/AppData/LocalLow/DefaultCompany/Corum2Remake\TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

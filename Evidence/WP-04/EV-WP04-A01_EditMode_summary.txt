@@ -1,0 +1,21 @@
+EditMode, runtime C# identical to f8cd2ef (later commits f3f4c21..495b7e1 changed only the Editor content builder and WP-04 data assets): test-case 198, results {'Passed': 198}; root result=Passed total=198 passed=198 failed=0
+New in WP-04 (19):
+  Corum2.Tests.AiValidatorTests.BadData_Rejected_WithSourceAndField
+  Corum2.Tests.AiValidatorTests.ValidData_Passes
+  Corum2.Tests.BossTests.Boss_BeyondTrackRange_Waits
+  Corum2.Tests.BossTests.Boss_CanBeParried
+  Corum2.Tests.BossTests.Boss_UsesNormalHitRules_StaggerLaunchImmuneMagicArmorBreak
+  Corum2.Tests.BossTests.NoPatternFits_MovesToPreferredBand
+  Corum2.Tests.BossTests.Pattern_ByDistanceAndPlayerAirState
+  Corum2.Tests.BossTests.PhaseCountsPerBoss_NoSharedHardcode
+  Corum2.Tests.BossTests.PhaseSettings_ApplyOnlyToThatPhase
+  Corum2.Tests.BossTests.Transition_ByPatternUse_ByEvent_ByHp
+  Corum2.Tests.BossTests.TwoThresholdsAtOnce_OnePerCheck_DeathWins
+  Corum2.Tests.EnemyAiTests.Chaser_ApproachesAttacks_ResumesChaseAfterStagger
+  Corum2.Tests.EnemyAiTests.Fleer_FleesAfterHit_ThenReapproachesPerSetting
+  Corum2.Tests.EnemyAiTests.InRange_ReadyAttacksAtOnce_BlockedStatesWaitThenAttack
+  Corum2.Tests.EnemyAiTests.Jumper_JumpsOnlyInsideTheWindow_AndAttacksFromTheAir
+  Corum2.Tests.EnemyAiTests.PerEnemyIntervals_AndNoNewAttackAfterPlayerDeath
+  Corum2.Tests.EnemyAiTests.Projectile_FrontGuardBlocks_NoParry
+  Corum2.Tests.EnemyAiTests.Ranged_WaitsOutside_ShootsInside_RetreatsAfter
+  Corum2.Tests.EnemyAiTests.TenReadyChasers_AllStartAttack_SameTick_NoGlobalLimit
