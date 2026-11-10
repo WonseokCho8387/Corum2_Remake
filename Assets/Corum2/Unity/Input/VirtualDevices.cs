@@ -47,7 +47,10 @@ namespace Corum2.Unity
         public void Button(string name, bool down)
         {
             var b = (GamepadButton)Enum.Parse(typeof(GamepadButton), name, true);
-            _padState = _padState.WithButton(b, down);
+            // Triggers are analog axes: GamepadState.WithButton would set bit 32/33, which wraps onto D-pad Up/Down.
+            if (b == GamepadButton.LeftTrigger) _padState.leftTrigger = down ? 1f : 0f;
+            else if (b == GamepadButton.RightTrigger) _padState.rightTrigger = down ? 1f : 0f;
+            else _padState = _padState.WithButton(b, down);
             InputSystem.QueueStateEvent(_pad, _padState);
         }
 
