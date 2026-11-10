@@ -1,0 +1,10 @@
+EditMode source 6ad45db: test-case 140, results {'Passed': 140}; root result=Passed total=140 passed=140 failed=0
+New in R2 (ManifestYamlTests, 8):
+  Corum2.Tests.ManifestYamlTests.Keys_MustBePlain
+  Corum2.Tests.ManifestYamlTests.Lists_Maps_AndEmptyCollections
+  Corum2.Tests.ManifestYamlTests.Quote_RoundTrips_TrickyStrings
+  Corum2.Tests.ManifestYamlTests.Rendered_Values_AreTyped
+  Corum2.Tests.ManifestYamlTests.ReservedKeys_CannotBeReplaced
+  Corum2.Tests.ManifestYamlTests.Rewrites_KeepRunIdAndStartedAt
+  Corum2.Tests.ManifestYamlTests.Scalars_AreTyped
+  Corum2.Tests.ManifestYamlTests.Set_ReplacesInPlace_FieldOrderStable
