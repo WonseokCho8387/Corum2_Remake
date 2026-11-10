@@ -1,0 +1,250 @@
+{
+ "log": "Evidence/WP-04-R3/runs/RUN-20261110-185524.ndjson",
+ "video_start_tick": 207,
+ "transitions": [
+  {
+   "actor": "boss",
+   "from": "p1",
+   "to": "p2",
+   "transition": [
+    2796,
+    2855,
+    "ended"
+   ],
+   "presentation": [
+    2796,
+    2855,
+    "presentation.end"
+   ],
+   "ids": {
+    "animation": [
+     "warden.roar",
+     "found",
+     "Pulse"
+    ],
+    "vfx": [
+     "vfx.armorGlow",
+     "found",
+     "Aura"
+    ],
+    "camera": [
+     "cam.shakeSmall",
+     "found",
+     "Shake"
+    ]
+   },
+   "frames": [
+    2589,
+    2648
+   ],
+   "start_on_transition_tick": true,
+   "stop_on_end_tick": true,
+   "no_missing_cue": true,
+   "pass": true
+  },
+  {
+   "actor": "boss",
+   "from": "p2",
+   "to": "p3",
+   "transition": [
+    2980,
+    3030,
+    "ended"
+   ],
+   "presentation": [
+    2980,
+    3030,
+    "presentation.end"
+   ],
+   "ids": {
+    "animation": [
+     "warden.rage",
+     "found",
+     "Shake"
+    ],
+    "vfx": [
+     "vfx.redAura",
+     "found",
+     "Burst"
+    ],
+    "camera": [
+     "cam.zoomIn",
+     "found",
+     "Zoom"
+    ]
+   },
+   "frames": [
+    2773,
+    2823
+   ],
+   "start_on_transition_tick": true,
+   "stop_on_end_tick": true,
+   "no_missing_cue": true,
+   "pass": true
+  },
+  {
+   "actor": "boss",
+   "from": "p3",
+   "to": "p1",
+   "transition": [
+    3221,
+    3222,
+    "ended"
+   ],
+   "presentation": [
+    3221,
+    3222,
+    "presentation.end"
+   ],
+   "ids": {
+    "animation": [
+     "",
+     "none",
+     ""
+    ],
+    "vfx": [
+     "",
+     "none",
+     ""
+    ],
+    "camera": [
+     "",
+     "none",
+     ""
+    ]
+   },
+   "frames": [
+    3014,
+    3015
+   ],
+   "start_on_transition_tick": true,
+   "stop_on_end_tick": true,
+   "no_missing_cue": true,
+   "pass": true
+  },
+  {
+   "actor": "boss",
+   "from": "p1",
+   "to": "p2",
+   "transition": [
+    3222,
+    3272,
+    "ended"
+   ],
+   "presentation": [
+    3222,
+    3272,
+    "presentation.end"
+   ],
+   "ids": {
+    "animation": [
+     "warden.roar",
+     "found",
+     "Pulse"
+    ],
+    "vfx": [
+     "vfx.armorGlow",
+     "found",
+     "Aura"
+    ],
+    "camera": [
+     "cam.shakeSmall",
+     "found",
+     "Shake"
+    ]
+   },
+   "frames": [
+    3015,
+    3065
+   ],
+   "start_on_transition_tick": true,
+   "stop_on_end_tick": true,
+   "no_missing_cue": true,
+   "pass": true
+  },
+  {
+   "actor": "boss",
+   "from": "p2",
+   "to": "p3",
+   "transition": [
+    3371,
+    3421,
+    "ended"
+   ],
+   "presentation": [
+    3371,
+    3421,
+    "presentation.end"
+   ],
+   "ids": {
+    "animation": [
+     "warden.rage",
+     "found",
+     "Shake"
+    ],
+    "vfx": [
+     "vfx.redAura",
+     "found",
+     "Burst"
+    ],
+    "camera": [
+     "cam.zoomIn",
+     "found",
+     "Zoom"
+    ]
+   },
+   "frames": [
+    3164,
+    3214
+   ],
+   "start_on_transition_tick": true,
+   "stop_on_end_tick": true,
+   "no_missing_cue": true,
+   "pass": true
+  },
+  {
+   "actor": "sentinel",
+   "from": "s1",
+   "to": "s2",
+   "transition": [
+    3796,
+    3846,
+    "ended"
+   ],
+   "presentation": [
+    3796,
+    3846,
+    "presentation.end"
+   ],
+   "ids": {
+    "animation": [
+     "sentinel.shift",
+     "found",
+     "Flicker"
+    ],
+    "vfx": [
+     "vfx.blink",
+     "found",
+     "Burst"
+    ],
+    "camera": [
+     "cam.none",
+     "found",
+     "None"
+    ]
+   },
+   "frames": [
+    3589,
+    3639
+   ],
+   "start_on_transition_tick": true,
+   "stop_on_end_tick": true,
+   "no_missing_cue": true,
+   "pass": true
+  }
+ ],
+ "presentation_starts_without_transition": [],
+ "unmatched_end_events": [],
+ "skipped": [],
+ "all_pass": true
+}

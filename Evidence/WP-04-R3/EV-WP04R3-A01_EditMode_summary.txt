@@ -1,0 +1,9 @@
+EditMode on the 3a5429d source (run just before the commit with identical files): test-case 230, results {'Passed': 230}; root result=Passed start=2026-11-10 09:54:45Z
+New in WP-04-R3 (7, AiR3PresentationTests):
+  Corum2.Tests.AiR3PresentationTests.PresentationMath_ZeroAtStartAndEnd
+  Corum2.Tests.AiR3PresentationTests.Presentation_DeathDuringTransition_Cancels
+  Corum2.Tests.AiR3PresentationTests.Presentation_HitDuringTransition_Continues_PausesWithHitstop
+  Corum2.Tests.AiR3PresentationTests.Presentation_SameTickChain_PreviousEndsAndNextStartsOnThatTick
+  Corum2.Tests.AiR3PresentationTests.Presentation_StartsAndEndsOnTheJudgedTransitionTicks
+  Corum2.Tests.AiR3PresentationTests.Validate_MissingIdsAndBadValuesRejected
+  Corum2.Tests.AiR3PresentationTests.Wp04Content_EveryBossPresentationIdResolves
