@@ -11,7 +11,7 @@ actor + judgedStartTick + phase. Per transition:
     same transitionSerial, judgedEndTick equal to the judged transition end, and observedTick >= judgedEndTick;
   - no cue reported as "missing";
   - VFX clock (presentation.frame / presentation.vfxTail): vfxTime advances exactly by elapsedGame between rendered
-    frames, does not move on frames with bossPausedThisTick=true (the boss's step on that tick was skipped by hitstop), and equals the transition time at a judged end.
+    frames, does not move on single-tick frames with bossPausedThisTick=true (the boss's step on that tick was skipped by hitstop), and equals the transition time at a judged end.
 Records that match no transition, duplicate starts/ends, presentation.orphanEnd and presentation.dropped all fail.
 all_pass is true only if every transition passes and none of those exist.
 """
@@ -106,8 +106,10 @@ def check(ev):
                 de = f.get("elapsedGame") - prev.get("elapsedGame")
                 if abs(dv - de) > EPS:
                     vfx_issues.append({"tick": f["simulationTick"], "key": list(key), "why": "vfx step %.4f != elapsed step %.4f" % (dv, de)})
-                # the boss's step on this tick was skipped by hitstop (transition timer did not move)
-                if f.get("bossPausedThisTick"):
+                # the boss's step on this tick was skipped by hitstop (transition timer did not move). The flag covers the
+                # last tick only, so the "no movement" rule applies to frames one tick after the previous one; the exact
+                # vfx == elapsed rule above covers every frame.
+                if f.get("bossPausedThisTick") and f["simulationTick"] - prev["simulationTick"] == 1:
                     hitstop_frames += 1
                     if abs(dv) > EPS:
                         vfx_issues.append({"tick": f["simulationTick"], "key": list(key), "why": "vfx advanced %.4f during boss hitstop" % dv})
@@ -181,7 +183,9 @@ def selftest(ev):
             s["judgedStartTick"] = -5
             m.append(s)
         mutate("presentation.start with no judged transition", orphan)
-    hs = [e for e in ev if e["type"] == "presentation.frame" and e.get("bossPausedThisTick") and e.get("vfxTime", -1) >= 0]
+    fr = [e for e in ev if e["type"] == "presentation.frame" and e.get("vfxTime", -1) >= 0]
+    hs = [b for a, b in zip(fr, fr[1:]) if b.get("bossPausedThisTick") and b["simulationTick"] - a["simulationTick"] == 1
+          and a["actorId"] == b["actorId"] and a.get("transitionSerial") == b.get("transitionSerial")]
     if hs:
         def vfx_move(m):
             for e in m:
@@ -199,7 +203,8 @@ def main():
     out = {"log": path.replace("\\", "/"), **check(ev)}
     if "--selftest" in sys.argv:
         out["selftest"] = selftest(ev)
-        out["selftest_all_pass"] = all(r["pass"] is True for r in out["selftest"])
+        # pass None = mutation not applicable to this log (reported, not counted as a failure)
+        out["selftest_all_pass"] = all(r["pass"] is not False for r in out["selftest"])
     json.dump(out, sys.stdout, ensure_ascii=False, indent=1, default=list)
     print()
 
