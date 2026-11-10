@@ -158,8 +158,10 @@ def check_against_git(rows, sfm, doc):
         # exactly the scope paths that git status reported at run start.
         status_paths = set()
         for line in doc["dirty_diff_artifact"]["status"]:
-            p = line[3:].split(" -> ")[-1].strip('"')
-            if any(p == s or p.startswith(s + "/") for s in sfm["scope"]):
+            p = status_path(line)
+            if p.endswith("/"):  # collapsed untracked folder
+                status_paths |= {r for r in row_paths if r.startswith(p) and in_scope(r, sfm["scope"])}
+            elif in_scope(p, sfm["scope"]):
                 status_paths.add(p)
         differing = set(blob_mismatch) | (row_paths - set(tree)) | (set(tree) - row_paths)
         need(differing == status_paths, f"dirty rows {sorted(differing)} differ from git status {sorted(status_paths)}")
