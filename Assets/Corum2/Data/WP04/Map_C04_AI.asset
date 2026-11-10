@@ -61,6 +61,12 @@ MonoBehaviour:
   - id: Z6In
     position: {x: 175.5, y: 0}
     facing: 1
+  - id: Z6Close
+    position: {x: 177.5, y: 0}
+    facing: 1
+  - id: Z7Left
+    position: {x: 200, y: 0}
+    facing: 1
   - id: Z7Boss
     position: {x: 207, y: 0}
     facing: 1
