@@ -128,8 +128,12 @@ namespace Corum2.Unity
         public void Apply(Vector3 feet, float height, int facing, MotorState state)
         {
             Root.position = feet;
-            _body.localPosition = new Vector3(0f, height * 0.5f, 0f);
-            _body.localScale = new Vector3(_width, height, _width);
+            // Temporary death pose (R-06-19 death motion; block-out only, final animation U-11): lying body.
+            var dead = state == MotorState.Dead;
+            var h = dead ? _width : height;
+            var w = dead ? height : _width;
+            _body.localPosition = new Vector3(0f, h * 0.5f, 0f);
+            _body.localScale = new Vector3(w, h, _width);
             _nose.localPosition = new Vector3(facing * (_width * 0.5f + 0.08f), height * 0.75f, 0f);
             _nose.localScale = new Vector3(0.16f, 0.16f, 0.16f);
             var c = StateColor(state);
@@ -148,6 +152,7 @@ namespace Corum2.Unity
                 case MotorState.Airborne: return new Color(1f, 1f, 0.5f);
                 case MotorState.AirDash: return new Color(1f, 0.3f, 0.3f);
                 case MotorState.Dive: return new Color(0.8f, 0.3f, 1f);
+                case MotorState.Dead: return new Color(0.45f, 0.45f, 0.5f);
                 default: return new Color(0.85f, 0.85f, 0.85f);
             }
         }

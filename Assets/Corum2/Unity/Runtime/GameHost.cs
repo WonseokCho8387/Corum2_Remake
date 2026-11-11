@@ -69,6 +69,7 @@ namespace Corum2.Unity
         readonly TickInput _tick = new TickInput();
         WorldView _worldView;
         CombatView _combatView;
+        DeathView _deathView;
         BossPresentationView _presentationView;
         PlayerView _playerView;
         Camera _camera;
@@ -184,6 +185,11 @@ namespace Corum2.Unity
                 if (_hudCanvas == null) BuildCanvas();
                 _ringView = new RingView(_hudCanvas.transform);
             }
+            if (Sim.Death != null)
+            {
+                if (_hudCanvas == null) BuildCanvas();
+                _deathView = new DeathView(_hudCanvas.transform);
+            }
             _camera = Camera.main;
             if (_camera != null)
             {
@@ -269,6 +275,8 @@ namespace Corum2.Unity
                 var vp = _camera.WorldToViewportPoint(new Vector3(p.x, p.y + Sim.Player.Height * 0.5f, z));
                 _ringView.Apply(Sim, _ringProfile, new Vector2(vp.x, vp.y), Time.timeScale);
             }
+
+            _deathView?.Apply(Sim);
 
             var dt = Time.unscaledDeltaTime;
             if (dt > 0f) _fpsSmoothed = _fpsSmoothed <= 0f ? 1f / dt : Mathf.Lerp(_fpsSmoothed, 1f / dt, 0.05f);
@@ -518,6 +526,20 @@ namespace Corum2.Unity
                         Sim.Log.Emit("marker", "player", "", "", "", "TestSetPlayerHp", ("hpBefore", before), ("hpAfter", Sim.Combat.PlayerHp));
                     }
                     break;
+                case "item":
+                {
+                    // item=<itemId>:<count>: test-only inventory set (evidence setup), logged
+                    var kv = arg.Split(':');
+                    var inv = Sim.Items?.Inventory;
+                    if (inv != null)
+                    {
+                        var before = inv.Count(kv[0]);
+                        inv.TestSetCount(kv[0], int.Parse(kv[1], CultureInfo.InvariantCulture));
+                        Sim.Log.Emit("marker", "player", kv[0], "", "", "TestSetItemCount", ("countBefore", before), ("countAfter", inv.Count(kv[0])),
+                            ("inventory", inv.Describe()));
+                    }
+                    break;
+                }
                 case "spawn":
                     // spawn=<spawnId> on the current map (test setup)
                     var s = Sim.CurrentMap.FindSpawn(arg);
@@ -656,6 +678,12 @@ namespace Corum2.Unity
                 sb.AppendFormat(CultureInfo.InvariantCulture, "<size=24><b>HP {0:0}   COMBO {1}   step {2}</b></size>  chain {3}{4}  last end {5} ({6})\n",
                     c.PlayerHp, c.ComboHits, c.ChainSteps, c.ChainId, c.ChainAlive ? " alive" : "", c.LastChainEndReason, c.LastComboHits);
                 sb.Append("enemies ").AppendLine(c.DescribeEnemies());
+                var cast = c.Attack?.Magic != null ? "casting " + c.Attack.Magic.Id + " (" + c.Attack.MagicSource + ")" : "-";
+                var buff = c.BuffMultiplier != 1f
+                    ? string.Format(CultureInfo.InvariantCulture, "buff {0} x{1:0.##} {2:0.0}s", c.BuffMagicId, c.BuffMultiplier, c.BuffUntil - Sim.GameTime)
+                    : "no buff";
+                var hist = Sim.Magic != null ? Sim.Magic.Describe(Sim.GameTime) : "";
+                sb.AppendFormat("<color=#ffe28a>magic: {0}   {1}   dirs [{2}]{3}</color>\n", cast, buff, hist, c.ReviveInvulnerable ? "   REVIVE-INVULN" : "");
             }
             sb.AppendLine("<color=#aaaaaa>pad: stick move, A jump, X attack, Y special(EXP-INPUT-01) | kb: WASD/arrows, Space, J, K</color>");
             foreach (var l in _recentInputs) sb.AppendLine("<color=#c8e6ff>" + l + "</color>");

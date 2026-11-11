@@ -13,6 +13,8 @@ namespace Corum2.Core
         EnemyMelee,
         /// <summary>Core-only test attack for magic rules (R-06-06/12). The magic system itself is P1.</summary>
         TestMagic,
+        /// <summary>Cast motion of a MagicDefinition (command or scroll, WP-05).</summary>
+        Spell,
     }
 
     public enum DamageType
@@ -48,6 +50,8 @@ namespace Corum2.Core
         public bool SuperArmor;          // attacker keeps acting through physical hits (R-06-11)
         /// <summary>Designated attacks that may hit a downed target (R-06-09/10).</summary>
         public bool HitsDowned;
+        /// <summary>No hitbox at all (heal / buff casts).</summary>
+        public bool NoHitbox;
 
         public float Total => Startup + Active + Recovery;
     }
@@ -56,6 +60,12 @@ namespace Corum2.Core
     {
         public DataMeta Meta = new DataMeta();
         public float PlayerMaxHp = 100f;
+        /// <summary>R-06-19 death motion before the revive question / game over (EXP-DEATH-01, length U-08).</summary>
+        public float DeathMotionTime = 1.2f;
+        /// <summary>HP after a revive as a share of max HP (EXP-DEATH-03, U-08).</summary>
+        public float ReviveHpRatio = 0.5f;
+        /// <summary>Full invulnerability after a revive, game seconds (EXP-DEATH-03, U-08).</summary>
+        public float ReviveInvulnTime = 1.5f;
         public AttackDefinition[] GroundNormals = new AttackDefinition[0];
         public AttackDefinition Launcher = new AttackDefinition();
         public AttackDefinition[] AirNormals = new AttackDefinition[0];

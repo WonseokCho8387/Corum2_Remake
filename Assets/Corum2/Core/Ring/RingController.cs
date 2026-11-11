@@ -374,6 +374,14 @@ namespace Corum2.Core
         {
             if (IsMove(e.Action)) TrackDir(e);
 
+            // R-06-19: while the player is dead the death prompt / game-over menu owns the input (EXP-DEATH-04).
+            if (_playerState() == MotorState.Dead && !_ring.IsOpen && e.Action != LogicalAction.RingToggle)
+            {
+                toGame.Add(e);
+                Route(e, "game", "Forward:DeathFlow(R-06-19)");
+                return;
+            }
+
             if (e.Action == LogicalAction.RingToggle)
             {
                 if (e.Edge == InputEdge.Release) { Route(e, "ring", "ToggleRelease"); return; }

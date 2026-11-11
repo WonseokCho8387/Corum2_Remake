@@ -31,6 +31,8 @@ namespace Corum2.Core
                     issues.Add(new ValidationIssue("Item " + i.Id, "Heal items need Amount > 0"));
                 if (i.Effect == ItemEffectType.Magic && p.FindMagic(i.MagicId) == null)
                     issues.Add(new ValidationIssue("Item " + i.Id, "magic '" + i.MagicId + "' not defined"));
+                if (i.Effect == ItemEffectType.Revive && i.Kind != ItemKind.Consumable)
+                    issues.Add(new ValidationIssue("Item " + i.Id, "revive items must be consumables"));
                 if (i.Kind == ItemKind.Quest && i.Effect != ItemEffectType.None)
                     issues.Add(new ValidationIssue("Item " + i.Id, "quest items have no use effect in WP-03"));
             }
@@ -40,6 +42,47 @@ namespace Corum2.Core
                 if (string.IsNullOrEmpty(m.Id) || !magicIds.Add(m.Id)) issues.Add(new ValidationIssue("RingProfile", "magic id empty or duplicated: '" + m.Id + "'"));
                 if (!Finite(m.Power) || m.Power < 0f) issues.Add(new ValidationIssue("Magic " + m.Id, "Power must be a finite number >= 0 (got " + m.Power + ")"));
                 if (!Finite(m.CastTime) || m.CastTime < 0f) issues.Add(new ValidationIssue("Magic " + m.Id, "CastTime must be a finite number >= 0 (got " + m.CastTime + ")"));
+                if (!Finite(m.Recovery) || m.Recovery < 0f) issues.Add(new ValidationIssue("Magic " + m.Id, "Recovery must be a finite number >= 0"));
+                switch (m.Effect)
+                {
+                    case MagicEffect.Attack:
+                        if (!(m.Power > 0f)) issues.Add(new ValidationIssue("Magic " + m.Id, "attack magic needs Power > 0"));
+                        if (!Finite(m.Active) || m.Active <= 0f) issues.Add(new ValidationIssue("Magic " + m.Id, "Active must be > 0"));
+                        if (!Finite(m.HitboxWidth) || m.HitboxWidth <= 0f || !Finite(m.HitboxHeight) || m.HitboxHeight <= 0f)
+                            issues.Add(new ValidationIssue("Magic " + m.Id, "Hitbox size must be > 0"));
+                        if (!Finite(m.HitboxOffsetX) || !Finite(m.HitboxOffsetY)) issues.Add(new ValidationIssue("Magic " + m.Id, "Hitbox offset must be finite"));
+                        if (!Finite(m.Knockback) || m.Knockback <= 0f) issues.Add(new ValidationIssue("Magic " + m.Id, "Knockback must be > 0 for magic (R-06-06)"));
+                        if (!Finite(m.Hitstop) || m.Hitstop < 0f) issues.Add(new ValidationIssue("Magic " + m.Id, "Hitstop must be >= 0"));
+                        break;
+                    case MagicEffect.Heal:
+                        if (!(m.Power > 0f)) issues.Add(new ValidationIssue("Magic " + m.Id, "heal magic needs Power > 0"));
+                        break;
+                    case MagicEffect.Buff:
+                        if (!(m.Power > 0f)) issues.Add(new ValidationIssue("Magic " + m.Id, "buff magic needs Power (multiplier) > 0"));
+                        if (!Finite(m.BuffDuration) || m.BuffDuration <= 0f) issues.Add(new ValidationIssue("Magic " + m.Id, "BuffDuration must be > 0"));
+                        break;
+                }
+            }
+            if (p.MinCommandDirections < 2) issues.Add(new ValidationIssue("RingProfile", "MinCommandDirections must be >= 2 (EXP-CMD-01)"));
+            var cmdIds = new HashSet<string>();
+            var shapes = new HashSet<string>();
+            foreach (var c in p.Commands)
+            {
+                var cs = "Command " + c.Id;
+                if (string.IsNullOrEmpty(c.Id) || !cmdIds.Add(c.Id)) issues.Add(new ValidationIssue("RingProfile", "command id empty or duplicated: '" + c.Id + "'"));
+                if (p.FindMagic(c.MagicId) == null) issues.Add(new ValidationIssue(cs, "magic '" + c.MagicId + "' not defined"));
+                if (c.Directions.Count < p.MinCommandDirections)
+                    issues.Add(new ValidationIssue(cs, "needs at least " + p.MinCommandDirections + " directions (EXP-CMD-01)"));
+                for (var i = 0; i < c.Directions.Count; i++)
+                {
+                    if (c.Directions[i] == Dir8.None) issues.Add(new ValidationIssue(cs, "direction None is not allowed"));
+                    if (i > 0 && c.Directions[i] == c.Directions[i - 1]) issues.Add(new ValidationIssue(cs, "the same direction twice in a row can never be recorded (EXP-CMD-01)"));
+                }
+                if (c.Button != LogicalAction.Attack && c.Button != LogicalAction.SpecialAttack && c.Button != LogicalAction.Guard && c.Button != LogicalAction.Jump)
+                    issues.Add(new ValidationIssue(cs, "button must be an action button (Attack, SpecialAttack, Guard, Jump), got " + c.Button));
+                if (!Finite(c.Window) || c.Window <= 0f) issues.Add(new ValidationIssue(cs, "Window must be a finite number > 0"));
+                var shape = string.Join(">", c.Directions) + "+" + c.Button;
+                if (!shapes.Add(shape)) issues.Add(new ValidationIssue(cs, "same directions and button as another command: " + shape));
             }
             var seen = new HashSet<string>();
             foreach (var s in p.StartInventory)

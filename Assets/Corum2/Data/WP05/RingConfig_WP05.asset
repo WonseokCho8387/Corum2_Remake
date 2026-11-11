@@ -1,0 +1,133 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1b64f8911849ea49bf7774af28987e9, type: 3}
+  m_Name: RingConfig_WP05
+  m_EditorClassIdentifier: Corum2.Unity::Corum2.Unity.RingConfig
+  meta:
+    domainId: ring.config.wp05
+    schemaVersion: 1
+    dataVersion: wp05-1
+    status: experimental
+    policyIds:
+    - EXP-RING-01
+    - EXP-RING-02
+    - EXP-ITEM-02
+    - TEST-ITEM-01
+    - TEST-MAGIC-01
+    - EXP-CMD-01
+    - EXP-CMD-02
+    - EXP-DEATH-05
+    relatedRIds:
+    - R-02-02
+    - R-02-06
+    - R-02-10
+    - R-06-19
+    changeRequestId: 
+  slowScale: 0.2
+  slotsPerPage: 8
+  cursorDeadzone: 0.35
+  magics:
+  - id: fire
+    effect: 0
+    power: 30
+    castTime: 0.2
+    recovery: 0.25
+    active: 0.1
+    hitboxOffsetX: 1.4
+    hitboxOffsetY: 0.9
+    hitboxWidth: 2.2
+    hitboxHeight: 1.6
+    knockback: 5
+    hitstop: 0.05
+    buffDuration: 5
+  - id: cure
+    effect: 1
+    power: 25
+    castTime: 0.25
+    recovery: 0.2
+    active: 0.1
+    hitboxOffsetX: 1.4
+    hitboxOffsetY: 0.9
+    hitboxWidth: 2.2
+    hitboxHeight: 1.6
+    knockback: 4
+    hitstop: 0.04
+    buffDuration: 5
+  - id: might
+    effect: 2
+    power: 1.5
+    castTime: 0.15
+    recovery: 0.15
+    active: 0.1
+    hitboxOffsetX: 1.4
+    hitboxOffsetY: 0.9
+    hitboxWidth: 2.2
+    hitboxHeight: 1.6
+    knockback: 4
+    hitstop: 0.04
+    buffDuration: 4
+  commands:
+  - id: fireball
+    magicId: fire
+    directions: 050000000400000003000000
+    button: 5
+    window: 0.6
+  - id: cure
+    magicId: cure
+    directions: 050000000600000007000000
+    button: 7
+    window: 0.6
+  - id: might
+    magicId: might
+    directions: 050000000600000007000000
+    button: 4
+    window: 0.6
+  commandTakesButton: 1
+  minCommandDirections: 3
+  items:
+  - id: potion
+    displayName: Potion
+    description: Restores 20 HP.
+    kind: 0
+    effect: 1
+    amount: 20
+    magicId: 
+    cooldown: 1
+  - id: scroll
+    displayName: Fire Scroll
+    description: Casts 'fire' once - the same magic data as the fireball command
+      (R-02-10).
+    kind: 1
+    effect: 2
+    amount: 0
+    magicId: fire
+    cooldown: 1
+  - id: feather
+    displayName: Phoenix Feather
+    description: Revive item. Offered only when you die (EXP-DEATH-05).
+    kind: 0
+    effect: 3
+    amount: 0
+    magicId: 
+    cooldown: 0
+  startInventory:
+  - itemId: potion
+    count: 2
+  - itemId: scroll
+    count: 2
+  - itemId: feather
+    count: 1
+  startQuickslots:
+  - 
+  - 
+  - scroll
+  - feather

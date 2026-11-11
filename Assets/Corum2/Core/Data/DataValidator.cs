@@ -82,10 +82,15 @@ namespace Corum2.Core
                          ("ParryWindow", p.ParryWindow, 0f), ("ParryStunTime", p.ParryStunTime, 0f), ("ParryKnockback", p.ParryKnockback, 0f),
                          ("DodgeReactionTime", p.DodgeReactionTime, 0f), ("DodgeKnockback", p.DodgeKnockback, 0f), ("PlayerHitstun", p.PlayerHitstun, 0f),
                          ("KnockbackDecel", p.KnockbackDecel, 0f), ("DiveAreaRadius", p.DiveAreaRadius, 0f), ("DownAttackRange", p.DownAttackRange, 0f),
+                         ("DeathMotionTime", p.DeathMotionTime, 0f), ("ReviveHpRatio", p.ReviveHpRatio, 0f),
                      })
             {
                 if (Finite(issues, "CombatProfile", name, v) && !(v > min)) issues.Add(new ValidationIssue("CombatProfile", name + " must be > 0."));
             }
+            if (Finite(issues, "CombatProfile", "ReviveHpRatio", p.ReviveHpRatio) && p.ReviveHpRatio > 1f)
+                issues.Add(new ValidationIssue("CombatProfile", "ReviveHpRatio must be <= 1 (EXP-DEATH-03)."));
+            if (Finite(issues, "CombatProfile", "ReviveInvulnTime", p.ReviveInvulnTime) && p.ReviveInvulnTime < 0f)
+                issues.Add(new ValidationIssue("CombatProfile", "ReviveInvulnTime must be >= 0 (EXP-DEATH-03)."));
             if (Finite(issues, "CombatProfile", "RollInvulnStart", p.RollInvulnStart) & Finite(issues, "CombatProfile", "RollInvulnEnd", p.RollInvulnEnd) &&
                 !(p.RollInvulnStart >= 0f && p.RollInvulnEnd > p.RollInvulnStart))
                 issues.Add(new ValidationIssue("CombatProfile", "Roll invulnerability must be a part of the roll: 0 <= start < end (R-06-13)."));

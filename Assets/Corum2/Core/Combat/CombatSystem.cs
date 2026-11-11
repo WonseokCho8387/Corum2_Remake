@@ -126,6 +126,10 @@ namespace Corum2.Core
         public float Elapsed;
         public int ChainStep;
         public int Hits;
+        /// <summary>Set for a magic cast (WP-05): the shared MagicDefinition and where the cast came from.</summary>
+        public MagicDefinition Magic;
+        public string MagicSource = "";
+        public bool EffectDone;
         public readonly List<HashSet<string>> HitByEvent = new List<HashSet<string>>();
         public readonly HashSet<string> SkipLogged = new HashSet<string>();
         /// <summary>Hit events of this attack whose attacker hitstop was already applied (R-06-03, WP02-F02).
@@ -294,6 +298,7 @@ namespace Corum2.Core
             if (s == MotorState.Dive) return Reject(e, "ActionLock:Dive", "R-05-03 / R-03-09");
             if (s == MotorState.AirDash)
                 return special ? Reject(e, "ActionLock:AirDash", "EXP-MOVE-05") : ReserveLanding(e);
+            if (Attack?.Magic != null) return Reject(e, "CastInProgress", "EXP-MAGIC-01: no attack or buffer during a cast");
             if (s == MotorState.GroundAttack || s == MotorState.AirAttack)
             {
                 if (_buffered)
@@ -438,6 +443,9 @@ namespace Corum2.Core
             Attack = null;
             Log.Emit("attack.end", Pl, "", "", P.State.ToString(), reason, ("attackInstanceId", a.InstanceId), ("attackId", a.Def.Id),
                 ("elapsed", a.Elapsed), ("hits", a.Hits), ("hitboxRemoved", true));
+            if (a.Magic != null)
+                Log.Emit("magic.cancel", Pl, "", "", P.State.ToString(), reason + "(EXP-MAGIC-03)", ("magicId", a.Magic.Id), ("source", a.MagicSource),
+                    ("attackInstanceId", a.InstanceId), ("elapsed", a.Elapsed), ("effectApplied", a.EffectDone));
             _buffered = false;
         }
 
@@ -480,10 +488,12 @@ namespace Corum2.Core
         public void Step(MapData map, float dt, bool playerFrozen)
         {
             SyncMotorAttacks(map);
+            StepBuff();
 
             if (!playerFrozen && Attack != null && !Attack.MotorDriven)
             {
                 Attack.Elapsed += dt;
+                StepSpell();
                 if (Attack.Def.Kind == AttackKind.AirNormal && P.Grounded) EndAttack(map, "LandedDuringAirAttack(EXP-ATK-02)");
                 else if (Attack.Elapsed >= Attack.Def.Total - TimerEps) EndAttack(map, "MotionEnd");
             }
@@ -756,7 +766,7 @@ namespace Corum2.Core
 
         public Aabb? ActivePlayerHitbox()
         {
-            if (Attack == null) return null;
+            if (Attack == null || Attack.Def.NoHitbox) return null;
             if (Attack.MotorDriven) return PlayerHitbox(Attack.Def);
             var t = Attack.Elapsed;
             if (t < Attack.Def.Startup - TimerEps || t >= Attack.Def.Startup + Attack.Def.Active - TimerEps) return null;
@@ -770,7 +780,7 @@ namespace Corum2.Core
         }
 
         public bool PlayerInvincible =>
-            P.State == MotorState.Roll && P.RollElapsed >= _p.RollInvulnStart && P.RollElapsed <= _p.RollInvulnEnd;
+            (P.State == MotorState.Roll && P.RollElapsed >= _p.RollInvulnStart && P.RollElapsed <= _p.RollInvulnEnd) || ReviveInvulnerable;
 
         void ResolveHits(MapData map, bool playerFrozen)
         {
@@ -918,6 +928,8 @@ namespace Corum2.Core
         {
             var d = a.Def;
             var dmg = TestDamageResolver.Resolve(d);
+            var buff = a.Magic == null && BuffMultiplier != 1f ? BuffMultiplier : 1f; // EXP-MAGIC-04: physical player attacks only
+            dmg *= buff;
             var hpBefore = en.Hp;
             var stateBefore = en.State;
             // R-08-11 boss guard (EXP-BOSS-06): front physical hits only; magic / unblockable / back hits are not guarded.
@@ -1016,6 +1028,7 @@ namespace Corum2.Core
                 ("attackInstanceId", a.InstanceId), ("hitEventId", a.InstanceId + ":" + ev), ("attackId", d.Id), ("attackKind", d.Kind),
                 ("damageType", d.DamageType), ("how", how), ("damageD", dmg), ("damagePolicy", TestDamageResolver.PolicyId),
                 ("hpBefore", hpBefore), ("hpAfter", en.Hp), ("knockbackVel", kb), ("superArmor", armor), ("guarded", guarded), ("damageTaken", taken),
+                ("buffMultiplier", buff), ("magicId", a.Magic?.Id ?? ""), ("magicSource", a.MagicSource),
                 ("chainId", ChainId), ("attackChainStep", a.ChainStep), ("comboBefore", comboBefore), ("comboAfter", ComboHits),
                 ("motionProgress", a.MotorDriven ? -1f : a.Elapsed / d.Total));
             if (en.State == EnemyState.Dead)
@@ -1071,7 +1084,8 @@ namespace Corum2.Core
             if (PlayerHp <= 0f)
             {
                 P.EnterLocked(MotorState.Dead, "PlayerDeath");
-                Log.Emit("player.death", Pl, ownerId, stateBefore.ToString(), "Dead", "HP0(death flow R-06-19 not in WP-02)");
+                if (Attack != null) CancelAttack("PlayerDeath");
+                Log.Emit("player.death", Pl, ownerId, stateBefore.ToString(), "Dead", "HP0->DeathFlow(R-06-19)");
             }
             else
             {

@@ -88,7 +88,8 @@ namespace Corum2.Core
             var s = P.State;
             string reject = null;
             if (item == null || Inventory.Count(itemId) <= 0) reject = "NotOwned";
-            else if (!item.Usable) reject = item.Kind == ItemKind.Quest ? "NotUsable:Quest" : "NotUsable:NoEffect";
+            else if (!item.Usable)
+                reject = item.Kind == ItemKind.Quest ? "NotUsable:Quest" : item.Effect == ItemEffectType.Revive ? "NotUsable:ReviveOnlyOnDeath(EXP-DEATH-05)" : "NotUsable:NoEffect";
             else if (s == MotorState.Dead) reject = "PlayerDead";
             else if (Pending != null) reject = "PendingExists(EXP-ITEM-05, CF-08)";
             else if (CooldownLeft > 0) reject = "Cooldown(EXP-ITEM-02)";
@@ -168,10 +169,11 @@ namespace Corum2.Core
                     break;
                 case ItemEffectType.Magic:
                     var magic = _p.FindMagic(item.MagicId);
-                    effect = "magic:" + item.MagicId;
                     Log.Emit("magic.request", PlayerMotor.Actor, "", "", "", "Scroll(R-02-10)",
                         ("magicId", item.MagicId), ("power", magic?.Power ?? -1f), ("castTime", magic?.CastTime ?? -1f),
-                        ("source", "scroll:" + item.Id), ("note", "magic effect not implemented (U-02, CF-01); base numbers come from the shared MagicDefinition"));
+                        ("source", "scroll:" + item.Id));
+                    var castReject = _sim.Combat != null ? _sim.Combat.CastMagic(magic, "scroll:" + item.Id, u.RequestId) : "NoCombat";
+                    effect = castReject == null ? "magic:" + item.MagicId : "magic:" + item.MagicId + ":refused:" + castReject;
                     break;
             }
             CooldownUntil = _sim.GameTime + item.Cooldown;

@@ -133,6 +133,22 @@ namespace Corum2.Core
             "EXP-PRES-01 boss transition presentation (R-08-11): animation / VFX / camera cues are temporary procedural resources looked up by id in a PresentationLibrary; one playback per judged transition; the judged start / end / cancel ticks come from the Core transition event queue and are logged unchanged, while the first rendered update that shows it (shownTick, displayDelayTicks) and the update that observes its end (observedTick) are logged separately; a transition that starts and ends between rendered updates is logged as presentation.skipped; progress and the VFX clock follow the judged transition time (game time; no advance on ticks the boss is paused by hitstop); body and camera cues and the VFX emission rate are scaled by sin(pi x progress), except the VFX start burst, which fires once at the transition start; at the judged end the VFX emission (rate and bursts) is switched off and only live particles fade for at most their lifetime on game time; hits during the transition do not stop it (EXP-BOSS-03); the camera cue offsets the follow camera only; final resources are U-11; once-only playback under re-entry or contention stays CF-09",
             "EXP-PRES-02 when several transitions play at once, the camera follows the most recently started cue; body and VFX cues play on each boss",
             "TEST-PRES-01 the WP-04 cue values (amplitudes, colours, rates) are test data",
+            "EXP-CMD-01 magic command history = changes of the held 8-way direction; a command matches when its directions are the newest entries in order and the first is no older than Window before the button press; at least MinCommandDirections directions (U-02)",
+            "EXP-CMD-02 a matched command takes the button press when CommandTakesButton is true (the normal action does not run); every match logs the competing normal action (CF-01 undecided)",
+            "EXP-CMD-03 if the cast is refused by the player state, the press goes to the normal action and the refusal is logged",
+            "EXP-CMD-04 several matching commands: the longest sequence wins, then list order",
+            "EXP-CMD-05 a successful command clears the direction history; otherwise entries only expire by age",
+            "EXP-CMD-06 direction history is recorded only while the game owns the input (ring closed, player alive)",
+            "EXP-MAGIC-01 a cast is a player motion (startup = CastTime, effect, Recovery) with the attack movement lock; it starts only from free or guard states",
+            "EXP-MAGIC-02 a cast ends the current attack chain and is not a chain step",
+            "EXP-MAGIC-03 guard or a hit cancels a cast before its effect; a cancelled cast has no effect (a scroll is already consumed)",
+            "EXP-MAGIC-04 temporary effects: Attack = one magic-type hit in front; Heal = +Power HP; Buff = physical player damage x Power for BuffDuration",
+            "TEST-MAGIC-01 magic and command data in the WP-05 scene (directions, windows, power, cast times) are test data",
+            "EXP-DEATH-01 death motion lasts DeathMotionTime game seconds; input is ignored meanwhile (U-08)",
+            "EXP-DEATH-02 declining the revive goes to game over (U-08)",
+            "EXP-DEATH-03 revive: HP = ReviveHpRatio x max, invulnerable for ReviveInvulnTime, same position, one revive item consumed (U-08)",
+            "EXP-DEATH-04 death prompt / game-over input: directions move the cursor (no wrap), A confirms, B declines the revive; the world keeps simulating",
+            "EXP-DEATH-05 revive items are offered only by the death prompt, never used from the ring or a quickslot",
             "TEST-AI-01 enemy/boss speeds, ranges, intervals and patterns in the WP-04 scene are test data",
         };
 
@@ -142,6 +158,11 @@ namespace Corum2.Core
         public readonly ItemUseSystem Items;
         public readonly RingController Ring;
         public readonly RingInputRouter Router;
+        public readonly RingProfile RingProfile;
+        /// <summary>R-02-02 command recognition (null without ring data, which holds the magic and command lists).</summary>
+        public readonly MagicCommandRecognizer Magic;
+        /// <summary>R-06-19 death flow (null without combat).</summary>
+        public readonly DeathFlow Death;
         long _syntheticEventId = 1000000000;
 
         public Simulation(WorldData world, MovementProfile movement, InputProfile input, AirUnlocks unlocks, DiagLogger log,
@@ -164,7 +185,46 @@ namespace Corum2.Core
                 Items = new ItemUseSystem(this, ring);
                 Ring = new RingController(ring, Items, log, () => Tick);
                 Router = new RingInputRouter(Ring, Items, log, () => Player.State, () => _syntheticEventId++);
+                RingProfile = ring;
+                if (combat != null) Magic = new MagicCommandRecognizer(ring);
             }
+            if (combat != null) Death = new DeathFlow(this);
+        }
+
+        /// <summary>R-02-02 / EXP-CMD-01..06: try a magic command for a button press. Null = not taken; the press goes on to
+        /// the normal action.</summary>
+        string TryMagicCommand(in InputEvent e)
+        {
+            if (Magic == null || e.Edge != InputEdge.Press || (Ring != null && Ring.IsOpen) || Player.State == MotorState.Dead) return null;
+            if (!Magic.HasCommandsFor(e.Action)) return null;
+            var cmd = Magic.Match(e.Action, GameTime);
+            var normal = e.Action + "+" + Player.HeldDir + "@" + Player.State;
+            if (cmd == null)
+            {
+                if (Magic.History.Count > 0)
+                    Log.Emit("magic.commandMiss", PlayerMotor.Actor, "", "", "", "NoCommandMatched->NormalAction(EXP-CMD-01)",
+                        ("inputEventId", e.EventId), ("button", e.Action), ("history", Magic.Describe(GameTime)), ("normalAction", normal));
+                return null;
+            }
+            var magic = RingProfile.FindMagic(cmd.MagicId);
+            Log.Emit("magic.command", PlayerMotor.Actor, "", "", cmd.Id, "Matched(R-02-02, EXP-CMD-01)",
+                ("inputEventId", e.EventId), ("commandId", cmd.Id), ("magicId", cmd.MagicId), ("directions", string.Join(">", cmd.Directions)),
+                ("button", e.Action), ("window", cmd.Window), ("history", Magic.Describe(GameTime)),
+                ("competingNormalAction", normal), ("commandTakesButton", RingProfile.CommandTakesButton), ("cf", "CF-01 undecided; EXP-CMD-02"));
+            if (!RingProfile.CommandTakesButton)
+            {
+                Log.Emit("magic.commandLoggedOnly", PlayerMotor.Actor, "", "", "", "CommandTakesButton=false(EXP-CMD-02)", ("commandId", cmd.Id));
+                return null;
+            }
+            var reject = Combat.CastMagic(magic, "command:" + cmd.Id, e.EventId);
+            if (reject != null)
+            {
+                Log.Emit("magic.commandFallback", PlayerMotor.Actor, "", "", "", "CastRefused->NormalAction(EXP-CMD-03)", ("commandId", cmd.Id),
+                    ("reject", reject), ("normalAction", normal));
+                return null;
+            }
+            Magic.Clear(); // EXP-CMD-05
+            return "magic:" + cmd.Id;
         }
 
         /// <summary>
@@ -248,7 +308,17 @@ namespace Corum2.Core
             foreach (var e in input.Events)
             {
                 var stateBefore = Player.State;
-                var outcome = Combat?.HandleEvent(CurrentMap, e) ?? Player.HandleEvent(CurrentMap, e);
+                if (Death != null && Death.Active)
+                {
+                    // R-06-19: the death prompt / game-over menu owns the input (EXP-DEATH-04).
+                    var dOut = Death.HandleEvent(e);
+                    Log.Emit("input", PlayerMotor.Actor, "", stateBefore.ToString(), Player.State.ToString(), dOut,
+                        ("device", e.Device), ("control", e.Control), ("action", e.Action), ("edge", e.Edge),
+                        ("inputEventId", e.EventId), ("requestTime", e.RawTime), ("deliveredTick", Tick),
+                        ("latency", input.RealTime - e.RawTime), ("consumer", "death"), ("heldDir", Player.HeldDir));
+                    continue;
+                }
+                var outcome = TryMagicCommand(e) ?? Combat?.HandleEvent(CurrentMap, e) ?? Player.HandleEvent(CurrentMap, e);
                 Log.Emit("input", PlayerMotor.Actor, "", stateBefore.ToString(), Player.State.ToString(), outcome,
                     ("device", e.Device), ("control", e.Control), ("action", e.Action), ("edge", e.Edge),
                     ("inputEventId", e.EventId), ("requestTime", e.RawTime), ("deliveredTick", Tick),
@@ -256,6 +326,7 @@ namespace Corum2.Core
 
                 if (e.Edge == InputEdge.Press && (e.Action == LogicalAction.MoveUp || e.Action == LogicalAction.MoveDown))
                     TryPointTransition(e);
+                if (Ring == null || !Ring.IsOpen) Magic?.Observe(Player.HeldDir, GameTime, Tick);
             }
 
             // Reconcile with the sampled direction (they should match; a mismatch means a lost edge).
@@ -268,11 +339,13 @@ namespace Corum2.Core
                 Player.HeldH = sampledH;
                 Player.HeldV = sampledV;
                 if (Player.RunDir != 0 && Player.RunDir != sampledH) Player.RunDir = 0;
+                if (Player.State != MotorState.Dead && (Ring == null || !Ring.IsOpen)) Magic?.Observe(Player.HeldDir, GameTime, Tick);
             }
 
             var frozen = Combat != null && Combat.BeginTick(dt);
             var r = frozen ? new MoveResult { Position = Player.Position } : Player.Integrate(CurrentMap, dt);
             Combat?.Step(CurrentMap, dt, frozen);
+            Death?.Step(dt);
             if (r.StartedInside)
                 Log.Emit("collision.startInside", PlayerMotor.Actor, "", Player.State.ToString(), Player.State.ToString(),
                     "BodyOverlappedSolidBeforeMove(diagnostic)", ("position", Player.Position), ("height", Player.Height));

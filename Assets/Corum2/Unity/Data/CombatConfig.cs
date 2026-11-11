@@ -9,6 +9,9 @@ namespace Corum2.Unity
     {
         public MetaFields meta = new MetaFields { domainId = "combat.player", policyIds = new[] { "EXP-ATK-00", "TEST-DMG-01" }, relatedRIds = new[] { "R-04-01", "R-05-02", "R-06-01", "R-07-02" } };
         public float playerMaxHp = 100f;
+        [Header("Player death flow (R-06-19; EXP-DEATH-01/03, U-08)")] public float deathMotionTime = 1.2f;
+        [Range(0.01f, 1f)] public float reviveHpRatio = 0.5f;
+        public float reviveInvulnTime = 1.5f;
         public AttackData[] groundNormals = new AttackData[4];
         public AttackData launcher = new AttackData();
         public AttackData[] airNormals = new AttackData[4];
@@ -32,6 +35,7 @@ namespace Corum2.Unity
         public CombatProfile ToCore() => new CombatProfile
         {
             Meta = meta.ToCore(), PlayerMaxHp = playerMaxHp,
+                DeathMotionTime = deathMotionTime, ReviveHpRatio = reviveHpRatio, ReviveInvulnTime = reviveInvulnTime,
             GroundNormals = groundNormals.Select(a => a.ToCore()).ToArray(), Launcher = launcher.ToCore(),
             AirNormals = airNormals.Select(a => a.ToCore()).ToArray(), AirDash = airDash.ToCore(), Dive = dive.ToCore(), DownAttack = downAttack.ToCore(),
             ComboWindow = comboWindow, AirAttackFallSpeed = airAttackFallSpeed, ParryWindow = parryWindow, ParryStunTime = parryStunTime,

@@ -16,17 +16,60 @@ namespace Corum2.Core
     {
         None,
         Heal,
-        /// <summary>Casts the referenced MagicDefinition. The magic system itself is not implemented (U-02, CF-01).</summary>
+        /// <summary>Casts the referenced MagicDefinition through the same path as the magic command (R-02-10, WP-05).</summary>
         Magic,
+        /// <summary>Revive item (R-06-19): only offered by the death prompt, never used from the ring or a quickslot
+        /// (EXP-DEATH-05).</summary>
+        Revive,
+    }
+
+    /// <summary>What a magic does when its cast time has passed (WP-05 temporary effects, TEST-MAGIC-01; real magic is P1).</summary>
+    public enum MagicEffect
+    {
+        /// <summary>A magic-type hit in front of the player (R-06-06/12 rules apply: magic knockback, armor break).</summary>
+        Attack,
+        /// <summary>Restores Power HP.</summary>
+        Heal,
+        /// <summary>Player attack damage x Power for BuffDuration seconds.</summary>
+        Buff,
+    }
+
+    /// <summary>
+    /// One magic command (R-02-02): a direction sequence followed by an action button. Lists, buttons and windows are
+    /// temporary test data (U-02); conflicts with other actions are CF-01 and handled by the explicit EXP-CMD policies.
+    /// </summary>
+    public sealed class MagicCommand
+    {
+        public string Id = "";
+        public string MagicId = "";
+        /// <summary>Directions in order (8-way sectors; None is not allowed).</summary>
+        public readonly List<Dir8> Directions = new List<Dir8>();
+        public LogicalAction Button = LogicalAction.Attack;
+        /// <summary>Game seconds from the first direction of the sequence to the button press.</summary>
+        public float Window = 0.6f;
     }
 
     /// <summary>One magic's base numbers. A command and a scroll of the same magic must read the same definition (R-02-10).</summary>
     public sealed class MagicDefinition
     {
         public string Id = "";
+        public MagicEffect Effect;
+        /// <summary>Attack: test damage D; Heal: HP; Buff: damage multiplier (TEST-MAGIC-01).</summary>
         public float Power;
         /// <summary>Game seconds from the request to the effect.</summary>
         public float CastTime;
+        /// <summary>Motion lock after the effect (R-05-01 applies to the cast motion, EXP-MAGIC-01).</summary>
+        public float Recovery = 0.2f;
+        // Attack effect hit area (relative to the caster's feet, +X = facing)
+        public float Active = 0.1f;
+        public float HitboxOffsetX = 1.4f;
+        public float HitboxOffsetY = 0.9f;
+        public float HitboxWidth = 2.2f;
+        public float HitboxHeight = 1.6f;
+        /// <summary>Must be &gt; 0 for an attack magic (R-06-06).</summary>
+        public float Knockback = 4f;
+        public float Hitstop = 0.04f;
+        public float BuffDuration = 5f;
     }
 
     public sealed class ItemDefinition
@@ -41,7 +84,7 @@ namespace Corum2.Core
         /// <summary>Item cooldown after this item is used, game seconds (EXP-ITEM-02, value U-03).</summary>
         public float Cooldown = 1f;
 
-        public bool Usable => Kind != ItemKind.Quest && Effect != ItemEffectType.None;
+        public bool Usable => Kind != ItemKind.Quest && Effect != ItemEffectType.None && Effect != ItemEffectType.Revive;
         public bool Discardable => Kind != ItemKind.Quest;
     }
 
@@ -63,6 +106,12 @@ namespace Corum2.Core
         public float CursorDeadzone = 0.35f;
         public readonly List<ItemDefinition> Items = new List<ItemDefinition>();
         public readonly List<MagicDefinition> Magics = new List<MagicDefinition>();
+        public readonly List<MagicCommand> Commands = new List<MagicCommand>();
+        /// <summary>EXP-CMD-02 (CF-01 undecided): true = a recognised command takes the button press and the button's
+        /// normal action does not run; false = the normal action runs and the command is only logged.</summary>
+        public bool CommandTakesButton = true;
+        /// <summary>EXP-CMD-01: shortest allowed direction sequence (keeps temporary commands away from 1-2 direction moves).</summary>
+        public int MinCommandDirections = 3;
         public readonly List<ItemStack> StartInventory = new List<ItemStack>();
         /// <summary>Quickslot item ids at start, index = QuickSlot (Up, Right, Down, Left); "" = empty.</summary>
         public string[] StartQuickslots = { "", "", "", "" };
@@ -169,6 +218,20 @@ namespace Corum2.Core
                 return true;
             }
             return false;
+        }
+
+        /// <summary>Test setup only (evidence scripts, logged by the caller): sets an owned count, adding the stack at the end
+        /// or removing it.</summary>
+        public void TestSetCount(string itemId, int n)
+        {
+            for (var i = 0; i < _stacks.Count; i++)
+            {
+                if (_stacks[i].ItemId != itemId) continue;
+                if (n > 0) _stacks[i] = new ItemStack { ItemId = itemId, Count = n };
+                else Remove(itemId, _stacks[i].Count);
+                return;
+            }
+            if (n > 0) _stacks.Add(new ItemStack { ItemId = itemId, Count = n });
         }
 
         public string Describe()

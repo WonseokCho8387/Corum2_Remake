@@ -108,6 +108,16 @@ namespace Corum2.Core
             _log.Emit("motor.state", Actor, "", before.ToString(), State.ToString(), reason, ("position", Position), ("grounded", Grounded));
         }
 
+        /// <summary>R-06-19 revive: leaves Dead for the free state (only the death flow calls this).</summary>
+        public void ReviveFromDead(string reason)
+        {
+            if (State != MotorState.Dead) return;
+            State = Grounded ? MotorState.Idle : MotorState.Airborne;
+            VelX = 0f;
+            LockedMaxFall = float.MaxValue;
+            _log.Emit("motor.state", Actor, "", "Dead", State.ToString(), reason, ("position", Position));
+        }
+
         public void ReleaseLocked(string reason)
         {
             if (!IsLockedState(State) || State == MotorState.Dead) return;

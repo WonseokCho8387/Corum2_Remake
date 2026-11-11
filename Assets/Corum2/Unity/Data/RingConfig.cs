@@ -22,8 +22,43 @@ namespace Corum2.Unity
     public sealed class MagicEntry
     {
         public string id = "";
-        public float power;
+        public MagicEffect effect;
+        [Tooltip("Attack: test damage D; Heal: HP; Buff: damage multiplier (TEST-MAGIC-01).")] public float power;
         [Tooltip("Game seconds from request to effect.")] public float castTime;
+        public float recovery = 0.2f;
+        [Header("Attack effect")] public float active = 0.1f;
+        public float hitboxOffsetX = 1.4f;
+        public float hitboxOffsetY = 0.9f;
+        public float hitboxWidth = 2.2f;
+        public float hitboxHeight = 1.6f;
+        [Tooltip("> 0 (R-06-06).")] public float knockback = 4f;
+        public float hitstop = 0.04f;
+        [Header("Buff effect")] public float buffDuration = 5f;
+
+        public MagicDefinition ToCore() => new MagicDefinition
+        {
+            Id = id, Effect = effect, Power = power, CastTime = castTime, Recovery = recovery, Active = active,
+            HitboxOffsetX = hitboxOffsetX, HitboxOffsetY = hitboxOffsetY, HitboxWidth = hitboxWidth, HitboxHeight = hitboxHeight,
+            Knockback = knockback, Hitstop = hitstop, BuffDuration = buffDuration,
+        };
+    }
+
+    /// <summary>Inspector form of MagicCommand (R-02-02; list and timing are test data, U-02).</summary>
+    [Serializable]
+    public sealed class CommandEntry
+    {
+        public string id = "";
+        public string magicId = "";
+        public List<Dir8> directions = new List<Dir8>();
+        public LogicalAction button = LogicalAction.Attack;
+        public float window = 0.6f;
+
+        public MagicCommand ToCore()
+        {
+            var c = new MagicCommand { Id = id, MagicId = magicId, Button = button, Window = window };
+            c.Directions.AddRange(directions);
+            return c;
+        }
     }
 
     [Serializable]
@@ -48,6 +83,9 @@ namespace Corum2.Unity
         public int slotsPerPage = 8;
         [Range(0.05f, 0.95f)] public float cursorDeadzone = 0.35f;
         public List<MagicEntry> magics = new List<MagicEntry>();
+        [Header("Magic commands (R-02-02; EXP-CMD-01..06, CF-01 undecided)")] public List<CommandEntry> commands = new List<CommandEntry>();
+        [Tooltip("EXP-CMD-02: a matched command takes the button press (normal action skipped).")] public bool commandTakesButton = true;
+        public int minCommandDirections = 3;
         public List<ItemEntry> items = new List<ItemEntry>();
         public List<StackEntry> startInventory = new List<StackEntry>();
         [Tooltip("Up, Right, Down, Left. Empty = no item.")]
@@ -56,7 +94,10 @@ namespace Corum2.Unity
         public RingProfile ToCore()
         {
             var p = new RingProfile { Meta = meta.ToCore(), SlowScale = slowScale, SlotsPerPage = slotsPerPage, CursorDeadzone = cursorDeadzone };
-            foreach (var m in magics) p.Magics.Add(new MagicDefinition { Id = m.id, Power = m.power, CastTime = m.castTime });
+            foreach (var m in magics) p.Magics.Add(m.ToCore());
+            foreach (var c in commands) p.Commands.Add(c.ToCore());
+            p.CommandTakesButton = commandTakesButton;
+            p.MinCommandDirections = minCommandDirections;
             foreach (var i in items)
                 p.Items.Add(new ItemDefinition
                 {

@@ -176,6 +176,11 @@ def check(ev):
                         p.append("vfx tail time %s / elapsed %s != judged duration %s" % (vt, el, dur))
                     if tl.get("emissionEnabled") is not False or tl.get("loop") is not False:
                         p.append("emission still enabled or looping after the judged end")
+                # WP-04-R5 C02: diagnostic order vfxBegin -> presentation.end -> vfxTail -> vfxTailEnd
+                if begins and tails and stops and not (begins[0]["eventId"] < stops[0]["eventId"] < tails[0]["eventId"]):
+                    p.append("VFX record order: vfxBegin / end / vfxTail out of order")
+                if tails and tailends and tailends[0]["eventId"] <= tails[0]["eventId"]:
+                    p.append("VFX record order: vfxTailEnd before vfxTail")
                 if len(tailends) != 1:
                     p.append("vfxTailEnd count %d (expected 1)" % len(tailends))
                 elif num(tailends[0], "bornAfterEnd") is None or tailends[0]["bornAfterEnd"] != 0:
@@ -327,6 +332,11 @@ def selftest(ev):
     def no_burst(m):  # start burst
         find(m, begins_burst[0]["eventId"])["particles"] = 0
     mutate("start burst not emitted", no_burst, bool(begins_burst))
+
+    def begin_last(m):  # WP-04-R5 C02
+        b = next(e for e in m if e["type"] == "presentation.vfxBegin")
+        b["eventId"] = mx + 10
+    mutate("vfxBegin moved to the end of the log (C02)", begin_last, bool(tails))
 
     def vfx_move(m):
         find(m, hs[0]["eventId"])["vfxTime"] += 0.02
