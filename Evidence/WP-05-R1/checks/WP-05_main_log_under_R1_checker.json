@@ -1,0 +1,358 @@
+{
+ "log": "Evidence/WP-05/runs/RUN-20261112-074813.ndjson",
+ "TC-02-02": {
+  "commands": [
+   {
+    "tick": 264,
+    "command": "fireball",
+    "magic": "fire",
+    "history": "Down@0.18 DownRight@0.12 Right@0.06",
+    "competingNormalAction": "Attack+Right@Walk",
+    "attackInstanceId": 1,
+    "effect": [
+     [
+      273,
+      "AttackActive(EXP-MAGIC-04)"
+     ]
+    ],
+    "hits": [
+     [
+      273,
+      30,
+      "MagicStagger+Knockback(R-06-06)"
+     ]
+    ],
+    "pressOutcome": "magic:fireball",
+    "pass": true
+   },
+   {
+    "tick": 419,
+    "command": "cure",
+    "magic": "cure",
+    "history": "Down@0.18 DownLeft@0.12 Left@0.06",
+    "competingNormalAction": "Guard+Left@Walk",
+    "attackInstanceId": 3,
+    "effect": [
+     [
+      431,
+      "Heal(EXP-MAGIC-04)"
+     ]
+    ],
+    "hits": [],
+    "pressOutcome": "magic:cure",
+    "pass": true
+   },
+   {
+    "tick": 564,
+    "command": "might",
+    "magic": "might",
+    "history": "Down@0.18 DownLeft@0.12 Left@0.06",
+    "competingNormalAction": "Jump+Left@Walk",
+    "attackInstanceId": 4,
+    "effect": [
+     [
+      571,
+      "Buff(EXP-MAGIC-04)"
+     ]
+    ],
+    "hits": [],
+    "pressOutcome": "magic:might",
+    "pass": true
+   },
+   {
+    "tick": 674,
+    "command": "fireball",
+    "magic": "fire",
+    "history": "Down@0.18 DownRight@0.12 Right@0.06",
+    "competingNormalAction": "Attack+Right@Walk",
+    "attackInstanceId": 6,
+    "effect": [
+     [
+      683,
+      "AttackActive(EXP-MAGIC-04)"
+     ]
+    ],
+    "hits": [
+     [
+      683,
+      30,
+      "MagicStagger+Knockback(R-06-06)"
+     ]
+    ],
+    "pressOutcome": "magic:fireball",
+    "pass": true
+   }
+  ],
+  "misses": [
+   {
+    "tick": 342,
+    "history": "Down@0.24 Right@0.08",
+    "normalAction": "Attack+Right@Walk",
+    "pressOutcome": "attack:GroundNormal",
+    "noCast": true,
+    "pass": true
+   },
+   {
+    "tick": 495,
+    "history": "Left@0.30",
+    "normalAction": "Guard+None@Idle",
+    "pressOutcome": "guard",
+    "noCast": true,
+    "pass": true
+   }
+  ],
+  "buffed_physical_hits": [
+   [
+    607,
+    15,
+    1.5
+   ]
+  ],
+  "fallbacks": [],
+  "pass": true
+ },
+ "TC-02-10": {
+  "casts": [
+   {
+    "tick": 264,
+    "magic": "fire",
+    "source": "command:fireball",
+    "attackInstanceId": 1,
+    "power": 30,
+    "castTime": 0.2,
+    "effectDelayTicks": 9,
+    "hitDamage": 30,
+    "itemUse": null,
+    "complete": true
+   },
+   {
+    "tick": 419,
+    "magic": "cure",
+    "source": "command:cure",
+    "attackInstanceId": 3,
+    "power": 25,
+    "castTime": 0.25,
+    "effectDelayTicks": 12,
+    "hitDamage": null,
+    "itemUse": null,
+    "complete": false
+   },
+   {
+    "tick": 564,
+    "magic": "might",
+    "source": "command:might",
+    "attackInstanceId": 4,
+    "power": 1.5,
+    "castTime": 0.15,
+    "effectDelayTicks": 7,
+    "hitDamage": null,
+    "itemUse": null,
+    "complete": false
+   },
+   {
+    "tick": 674,
+    "magic": "fire",
+    "source": "command:fireball",
+    "attackInstanceId": 6,
+    "power": 30,
+    "castTime": 0.2,
+    "effectDelayTicks": 9,
+    "hitDamage": 30,
+    "itemUse": null,
+    "complete": true
+   },
+   {
+    "tick": 765,
+    "magic": "fire",
+    "source": "scroll:scroll",
+    "attackInstanceId": 7,
+    "power": 30,
+    "castTime": 0.2,
+    "effectDelayTicks": 9,
+    "hitDamage": 30,
+    "itemUse": [
+     765,
+     1,
+     1
+    ],
+    "complete": true
+   }
+  ],
+  "command_vs_scroll": [
+   {
+    "magic": "fire",
+    "command": {
+     "tick": 674,
+     "magic": "fire",
+     "source": "command:fireball",
+     "attackInstanceId": 6,
+     "power": 30,
+     "castTime": 0.2,
+     "effectDelayTicks": 9,
+     "hitDamage": 30,
+     "itemUse": null,
+     "complete": true
+    },
+    "scroll": {
+     "tick": 765,
+     "magic": "fire",
+     "source": "scroll:scroll",
+     "attackInstanceId": 7,
+     "power": 30,
+     "castTime": 0.2,
+     "effectDelayTicks": 9,
+     "hitDamage": 30,
+     "itemUse": [
+      765,
+      1,
+      1
+     ],
+     "complete": true
+    },
+    "pass": true
+   }
+  ],
+  "scroll_waits": [],
+  "scroll_cancels": [],
+  "pass": true
+ },
+ "TC-06-19a": {
+  "deaths": [
+   {
+    "deathTick": 869,
+    "motionTick": 869,
+    "motionTicks": 60,
+    "reviveItemsAtDeath": 1,
+    "afterMotion": "RevivePrompt",
+    "promptResult": [
+     "None",
+     "Revived"
+    ],
+    "revive": [
+     1055,
+     0,
+     50
+    ],
+    "enemyAttackStartsWhileDead": 0,
+    "pass": true
+   },
+   {
+    "deathTick": 1206,
+    "motionTick": 1206,
+    "motionTicks": 60,
+    "reviveItemsAtDeath": 1,
+    "afterMotion": "RevivePrompt",
+    "promptResult": [
+     "GameOver",
+     "ReviveDeclined:ButtonB(EXP-DEATH-04)(EXP-DEATH-02)"
+    ],
+    "revive": null,
+    "enemyAttackStartsWhileDead": 0,
+    "pass": true
+   }
+  ],
+  "gameOver": [
+   [
+    1355,
+    "CheckpointRestart,LoadSave,Lobby"
+   ]
+  ],
+  "menuSelects": [
+   [
+    1440,
+    "Lobby",
+    false,
+    "BLOCKED_SPEC(U-08)"
+   ],
+   [
+    1500,
+    "LoadSave",
+    false,
+    "BLOCKED_SPEC(U-08)"
+   ],
+   [
+    1550,
+    "CheckpointRestart",
+    false,
+    "BLOCKED_SPEC(U-08)"
+   ]
+  ],
+  "expectedSelects": [
+   "Lobby",
+   "LoadSave",
+   "CheckpointRestart"
+  ],
+  "cursorMoves": [
+   [
+    1405,
+    "CheckpointRestart",
+    "LoadSave"
+   ],
+   [
+    1420,
+    "LoadSave",
+    "Lobby"
+   ],
+   [
+    1480,
+    "Lobby",
+    "LoadSave"
+   ],
+   [
+    1530,
+    "LoadSave",
+    "CheckpointRestart"
+   ]
+  ],
+  "reviveRefusedFromQuickslot": [
+   [
+    819,
+    "Rejected:NotUsable:ReviveOnlyOnDeath(EXP-DEATH-05)"
+   ]
+  ],
+  "reviveInvulnSkips": [],
+  "pass": true
+ },
+ "TC-06-19b": "BLOCKED_SPEC (U-08): no save/checkpoint contract; selections are logged with returnPerformed=false",
+ "selftest": [
+  {
+   "case": "original",
+   "pass": {
+    "TC-02-02": true,
+    "TC-02-10": true,
+    "TC-06-19a": true
+   }
+  },
+  {
+   "case": "all fire effects and hits removed",
+   "section": "TC-02-10",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "first command fire effect removed",
+   "section": "TC-02-02",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "all menu selections removed",
+   "section": "TC-06-19a",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "enemy attack start one tick after the death",
+   "section": "TC-06-19a",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "scroll item.use removed",
+   "section": "TC-02-10",
+   "sectionPass": false,
+   "pass": true
+  }
+ ],
+ "selftest_all_pass": true
+}

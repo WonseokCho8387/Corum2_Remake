@@ -1,0 +1,12 @@
+EditMode on the 44709f6 source (run just before that commit with identical files): test-case 269, results {'Passed': 269}; root result=Passed start=2026-11-11 23:45:52Z
+New in WP-05-R1 (10, Wp05R1Tests):
+  Corum2.Tests.Wp05R1Tests.F01_Control_RealDiagonalSample_Casts
+  Corum2.Tests.Wp05R1Tests.F01_KeyboardHeldDiagonal_StillRecorded
+  Corum2.Tests.Wp05R1Tests.F01_StickDownThenRight_OneSampleEach_NoPhantomDiagonal
+  Corum2.Tests.Wp05R1Tests.F02_LBThenX_RingOwnsX_NoCastNoAttack
+  Corum2.Tests.Wp05R1Tests.F02_XThenLB_SameFrame_And_WithATickBetween_SameMeaning
+  Corum2.Tests.Wp05R1Tests.F03_CastStartedThenGuardCancel_ScrollStaysConsumed_CooldownStarted
+  Corum2.Tests.Wp05R1Tests.F03_ScrollDuringSlideOrRoll_WaitsThenCastsOnce(Down,Slide)
+  Corum2.Tests.Wp05R1Tests.F03_ScrollDuringSlideOrRoll_WaitsThenCastsOnce(DownRight,Roll)
+  Corum2.Tests.Wp05R1Tests.M01_CommandLengthMatchesHistoryCap
+  Corum2.Tests.Wp05R1Tests.ReviveInvulnerability_LoggedWithItsOwnReason
