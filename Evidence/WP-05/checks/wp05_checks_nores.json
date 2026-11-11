@@ -1,0 +1,62 @@
+{
+ "log": "Evidence/WP-05/runs/RUN-20261112-074951.ndjson",
+ "TC-02-02": {
+  "commands": [],
+  "misses": [],
+  "buffed_physical_hits": [],
+  "magic_hits": [],
+  "fallbacks": [],
+  "pass": false
+ },
+ "TC-02-10": {
+  "casts": [],
+  "command_vs_scroll": [],
+  "pass": false
+ },
+ "TC-06-19a": {
+  "deaths": [
+   {
+    "deathTick": 254,
+    "motionTick": 254,
+    "motionTicks": 60,
+    "reviveItemsAtDeath": 0,
+    "afterMotion": "GameOver",
+    "promptResult": null,
+    "revive": null,
+    "enemyAttackStartsWhileDead": 0,
+    "pass": true
+   }
+  ],
+  "gameOver": [
+   [
+    314,
+    "CheckpointRestart,LoadSave,Lobby"
+   ]
+  ],
+  "menuSelects": [
+   [
+    460,
+    "CheckpointRestart",
+    false,
+    "BLOCKED_SPEC(U-08)"
+   ],
+   [
+    505,
+    "LoadSave",
+    false,
+    "BLOCKED_SPEC(U-08)"
+   ]
+  ],
+  "cursorMoves": [
+   [
+    485,
+    "CheckpointRestart",
+    "LoadSave"
+   ]
+  ],
+  "reviveRefusedFromQuickslot": [],
+  "deathInputRouted": 6,
+  "pass": true
+ },
+ "TC-06-19b": "BLOCKED_SPEC (U-08): no save/checkpoint contract; selections are logged with returnPerformed=false"
+}

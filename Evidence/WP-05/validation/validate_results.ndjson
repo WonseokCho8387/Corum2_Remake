@@ -1,0 +1,3 @@
+{"file": "Evidence/WP-05/runs/RUN-20261112-074813.manifest.yaml", "result": "valid", "kind": "run_manifest", "entries": 321, "total_bytes": 1198019, "git_rows_matched": 321, "git_blob_mismatch": 0, "expected": "valid", "pass": true}
+{"file": "Evidence/WP-05/runs/RUN-20261112-074951.manifest.yaml", "result": "valid", "kind": "run_manifest", "entries": 321, "total_bytes": 1198019, "git_rows_matched": 321, "git_blob_mismatch": 0, "expected": "valid", "pass": true}
+{"pyyaml": "6.0.3", "repo": ".", "worktree": false, "all_pass": true}

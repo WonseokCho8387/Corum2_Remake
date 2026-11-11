@@ -1,0 +1,18 @@
+EditMode on the 31105d9 source (run just before that commit with identical files): test-case 259, results {'Passed': 259}; root result=Passed start=2026-11-11 22:46:03Z
+New in WP-05 (16, Wp05Tests.cs):
+  Corum2.Tests.DeathFlowTests.ButtonB_DeclinesTheRevive
+  Corum2.Tests.DeathFlowTests.DpadDuringDeath_GoesToTheDeathMenu_NotQuickslots
+  Corum2.Tests.DeathFlowTests.NoReviveItem_GameOverDirectly_ThreeOptions
+  Corum2.Tests.DeathFlowTests.ReviveDeclined_GameOver_MenuSelectionLoggedNotPerformed
+  Corum2.Tests.DeathFlowTests.ReviveItem_NotUsableFromQuickslot
+  Corum2.Tests.DeathFlowTests.ReviveOwned_MotionThenPrompt_UseRevives
+  Corum2.Tests.DeathFlowTests.Validator_CommandsMagicAndDeathValues
+  Corum2.Tests.MagicCommandTests.AttackCommand_CastsMagic_InsteadOfTheNormalAttack
+  Corum2.Tests.MagicCommandTests.BuffCommand_OnJump_MultipliesPhysicalDamage
+  Corum2.Tests.MagicCommandTests.CastRefusedInHitStun_FallsBackToTheNormalAction
+  Corum2.Tests.MagicCommandTests.CommandTakesButtonFalse_NormalActionRuns_MatchLogged
+  Corum2.Tests.MagicCommandTests.GuardCancelsTheCast_NoEffect
+  Corum2.Tests.MagicCommandTests.HealCommand_OnGuardButton_And_FailedCommandGuards
+  Corum2.Tests.MagicCommandTests.IncompleteOrLateCommand_RunsTheNormalAttack
+  Corum2.Tests.MagicCommandTests.LongestCommandWins_ThenListOrder
+  Corum2.Tests.MagicScrollEquivalenceTests.CommandAndScroll_SameMagic_SamePowerAndCastTime
