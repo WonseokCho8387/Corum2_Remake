@@ -39,29 +39,31 @@ def check(ev, expect_selects=None):
         return eff, hits
 
     # ---- TC-02-02
+    outcome = {e["inputEventId"]: e["reason"] for e in of("input") if e.get("edge") == "Press" and e.get("inputEventId") is not None}
     cmds = []
     for m in of("magic.command"):
         tick = m["simulationTick"]
         cast = next((c for c in of("magic.cast") if c["eventId"] > m["eventId"] and c["simulationTick"] == tick
                      and c.get("source") == "command:" + str(m.get("commandId"))), None)
-        normal = [a for a in of("attack.start") if a["simulationTick"] == tick] + \
-                 [g for g in of("motor.state") if g["simulationTick"] == tick and g["stateAfter"] == "Guard"]
+        # the game's own outcome for this button press (the "input" event with the same inputEventId)
+        res = outcome.get(m.get("inputEventId"))
         eff, hits = cast_chain(cast) if cast else ([], [])
         is_attack = bool(eff) and str(eff[0]["reason"]).startswith("AttackActive")
         row = {"tick": tick, "command": m.get("commandId"), "magic": m.get("magicId"), "history": m.get("history"),
                "competingNormalAction": m.get("competingNormalAction"), "attackInstanceId": cast.get("attackInstanceId") if cast else None,
                "effect": [(e["simulationTick"], e["reason"]) for e in eff], "hits": [(h["simulationTick"], h.get("damageD"), h["reason"]) for h in hits],
-               "normalActionStarted": bool(normal)}
-        row["pass"] = cast is not None and len(eff) == 1 and not normal and (not is_attack or len(hits) >= 1)
+               "pressOutcome": res}
+        row["pass"] = (cast is not None and len(eff) == 1 and res == "magic:" + str(m.get("commandId"))
+                       and (not is_attack or len(hits) >= 1))
         cmds.append(row)
     misses = []
     for m in of("magic.commandMiss"):
         tick = m["simulationTick"]
-        normal = [a["stateAfter"] for a in of("attack.start") if a["simulationTick"] == tick] + \
-                 ["Guard" for g in of("motor.state") if g["simulationTick"] == tick and g["stateAfter"] == "Guard"]
+        res = outcome.get(m.get("inputEventId"))
+        normal = res is not None and not str(res).startswith("magic:") and not str(res).startswith("rejected")
         no_cast = not [c for c in of("magic.cast") if c["simulationTick"] == tick]
-        misses.append({"tick": tick, "history": m.get("history"), "normalAction": m.get("normalAction"), "normalStarted": normal,
-                       "noCast": no_cast, "pass": bool(normal) and no_cast})
+        misses.append({"tick": tick, "history": m.get("history"), "normalAction": m.get("normalAction"), "pressOutcome": res,
+                       "noCast": no_cast, "pass": normal and no_cast})
     out["TC-02-02"] = {"commands": cmds, "misses": misses,
                        "buffed_physical_hits": [(h["simulationTick"], h.get("damageD"), h.get("buffMultiplier")) for h in of("hit") if h.get("buffMultiplier", 1) not in (1, 1.0)],
                        "fallbacks": [(e["simulationTick"], e.get("reject")) for e in of("magic.commandFallback")],
