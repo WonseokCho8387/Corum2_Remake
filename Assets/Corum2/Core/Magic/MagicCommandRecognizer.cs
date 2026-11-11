@@ -36,6 +36,9 @@ namespace Corum2.Core
             }
         }
 
+        /// <summary>History entries kept (WP05-M01: commands may not be longer, RingValidator checks it).</summary>
+        public const int MaxHistory = 32;
+
         readonly RingProfile _p;
         readonly List<Entry> _history = new List<Entry>();
         Dir8 _last = Dir8.None;
@@ -72,7 +75,7 @@ namespace Corum2.Core
             var n = 0;
             while (n < _history.Count && _history[n].GameTime < cut) n++;
             if (n > 0) _history.RemoveRange(0, n);
-            if (_history.Count > 32) _history.RemoveRange(0, _history.Count - 32);
+            if (_history.Count > MaxHistory) _history.RemoveRange(0, _history.Count - MaxHistory);
         }
 
         /// <summary>Best matching command for a button press now, or null.</summary>

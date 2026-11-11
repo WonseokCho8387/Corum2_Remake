@@ -71,6 +71,8 @@ namespace Corum2.Core
                 var cs = "Command " + c.Id;
                 if (string.IsNullOrEmpty(c.Id) || !cmdIds.Add(c.Id)) issues.Add(new ValidationIssue("RingProfile", "command id empty or duplicated: '" + c.Id + "'"));
                 if (p.FindMagic(c.MagicId) == null) issues.Add(new ValidationIssue(cs, "magic '" + c.MagicId + "' not defined"));
+                if (c.Directions.Count > MagicCommandRecognizer.MaxHistory)
+                    issues.Add(new ValidationIssue(cs, "at most " + MagicCommandRecognizer.MaxHistory + " directions (history size, WP05-M01)"));
                 if (c.Directions.Count < p.MinCommandDirections)
                     issues.Add(new ValidationIssue(cs, "needs at least " + p.MinCommandDirections + " directions (EXP-CMD-01)"));
                 for (var i = 0; i < c.Directions.Count; i++)

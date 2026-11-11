@@ -779,6 +779,11 @@ namespace Corum2.Core
             return Aabb.FromCenterSize(en.Position.X + en.Facing * d.HitboxOffsetX, en.Position.Y + d.HitboxOffsetY, d.HitboxWidth, d.HitboxHeight);
         }
 
+        /// <summary>Why the player is invulnerable now (logged on skipped hits).</summary>
+        public string InvincibleReason => ReviveInvulnerable && P.State != MotorState.Roll
+            ? "PlayerInvincible:Revive(EXP-DEATH-03)"
+            : "PlayerInvincible:RollWindow(R-06-13)";
+
         public bool PlayerInvincible =>
             (P.State == MotorState.Roll && P.RollElapsed >= _p.RollInvulnStart && P.RollElapsed <= _p.RollInvulnEnd) || ReviveInvulnerable;
 
@@ -841,7 +846,7 @@ namespace Corum2.Core
                         if (!en.InvulnLogged)
                         {
                             en.InvulnLogged = true;
-                            Log.Emit("hit.skip", en.Id, Pl, "", P.State.ToString(), "PlayerInvincible:RollWindow(R-06-13)",
+                            Log.Emit("hit.skip", en.Id, Pl, "", P.State.ToString(), InvincibleReason,
                                 ("attackInstanceId", en.AttackInstanceId), ("rollElapsed", P.RollElapsed));
                         }
                         continue;

@@ -437,7 +437,7 @@ namespace Corum2.Core
                     if (PlayerInvincible)
                     {
                         if (!pr.Done && _invulnLogged.Add(-pr.Id))
-                            Log.Emit("hit.skip", pr.OwnerId, Pl, "", P.State.ToString(), "PlayerInvincible:RollWindow(R-06-13)", ("projectileId", pr.Id));
+                            Log.Emit("hit.skip", pr.OwnerId, Pl, "", P.State.ToString(), InvincibleReason, ("projectileId", pr.Id));
                     }
                     else
                     {

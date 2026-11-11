@@ -80,6 +80,10 @@ namespace Corum2.Core
         static bool InMotion(MotorState s) =>
             s == MotorState.GroundAttack || s == MotorState.AirAttack || s == MotorState.AirDash || s == MotorState.Dive;
 
+        /// <summary>EXP-ITEM-07: a magic scroll also waits through a slide or roll (states where a cast cannot start).</summary>
+        static bool WaitsFor(ItemDefinition item, MotorState s) =>
+            InMotion(s) || (item != null && item.Effect == ItemEffectType.Magic && (s == MotorState.Slide || s == MotorState.Roll));
+
         /// <summary>Request from the ring (A on an item) or a quickslot press. Called between ticks at real time.</summary>
         public UseResult Request(string itemId, UseSource source, double realTime, string via)
         {
@@ -104,7 +108,7 @@ namespace Corum2.Core
                 return new UseResult { Decision = UseDecision.Rejected, Reason = reject, RequestId = id };
             }
 
-            var wait = InHitReaction(s) ? "HitReaction(R-05-05)" : InMotion(s) ? "Motion:" + s + "(EXP-ITEM-03, CF-07)" : "";
+            var wait = InHitReaction(s) ? "HitReaction(R-05-05)" : WaitsFor(item, s) ? "Motion:" + s + (InMotion(s) ? "(EXP-ITEM-03, CF-07)" : "(EXP-ITEM-07)") : "";
             Pending = new PendingUse
             {
                 RequestId = id, ItemId = itemId, Source = source, RequestRealTime = realTime, RequestGameTime = _sim.GameTime,
@@ -129,9 +133,10 @@ namespace Corum2.Core
                     ("requestId", u.RequestId), ("consumed", false));
                 return;
             }
-            if (InHitReaction(s) || InMotion(s))
+            var waitItem = _p.FindItem(u.ItemId);
+            if (InHitReaction(s) || WaitsFor(waitItem, s))
             {
-                var why = InHitReaction(s) ? "HitReaction(R-05-05)" : "Motion:" + s + "(EXP-ITEM-03, CF-07)";
+                var why = InHitReaction(s) ? "HitReaction(R-05-05)" : "Motion:" + s + (InMotion(s) ? "(EXP-ITEM-03, CF-07)" : "(EXP-ITEM-07)");
                 if (u.WaitReason != why)
                 {
                     Log.Emit("item.wait", PlayerMotor.Actor, u.ItemId, u.WaitReason, why, "StillLocked", ("requestId", u.RequestId));
@@ -148,6 +153,21 @@ namespace Corum2.Core
         {
             var item = _p.FindItem(u.ItemId);
             var cleared = new List<string>();
+            if (item != null && item.Effect == ItemEffectType.Magic && Inventory.Count(u.ItemId) > 0)
+            {
+                // WP05-F03 / EXP-ITEM-07: start the cast first; consume, clear slots and start the cooldown only if it started.
+                var magic0 = _p.FindMagic(item.MagicId);
+                Log.Emit("magic.request", PlayerMotor.Actor, "", "", "", "Scroll(R-02-10)",
+                    ("magicId", item.MagicId), ("power", magic0?.Power ?? -1f), ("castTime", magic0?.CastTime ?? -1f), ("source", "scroll:" + item.Id),
+                    ("requestId", u.RequestId));
+                var refused = _sim.Combat != null ? _sim.Combat.CastMagic(magic0, "scroll:" + item.Id, u.RequestId) : "NoCombat";
+                if (refused != null)
+                {
+                    Log.Emit("item.cancel", PlayerMotor.Actor, u.ItemId, u.State, "Cancelled", "CastRefused:" + refused + "(EXP-ITEM-07)",
+                        ("requestId", u.RequestId), ("consumed", false), ("cooldownStarted", false), ("count", Inventory.Count(u.ItemId)));
+                    return;
+                }
+            }
             if (item == null || !Inventory.Remove(u.ItemId, 1, cleared))
             {
                 Log.Emit("item.cancel", PlayerMotor.Actor, u.ItemId, u.State, "Cancelled", "NotOwnedAtExecution(EXP-ITEM-04, CF-08)",
@@ -168,12 +188,7 @@ namespace Corum2.Core
                     else effect = "heal(no combat in this scene)";
                     break;
                 case ItemEffectType.Magic:
-                    var magic = _p.FindMagic(item.MagicId);
-                    Log.Emit("magic.request", PlayerMotor.Actor, "", "", "", "Scroll(R-02-10)",
-                        ("magicId", item.MagicId), ("power", magic?.Power ?? -1f), ("castTime", magic?.CastTime ?? -1f),
-                        ("source", "scroll:" + item.Id));
-                    var castReject = _sim.Combat != null ? _sim.Combat.CastMagic(magic, "scroll:" + item.Id, u.RequestId) : "NoCombat";
-                    effect = castReject == null ? "magic:" + item.MagicId : "magic:" + item.MagicId + ":refused:" + castReject;
+                    effect = "magic:" + item.MagicId + ":castStarted";
                     break;
             }
             CooldownUntil = _sim.GameTime + item.Cooldown;

@@ -138,7 +138,8 @@ namespace Corum2.Core
             "EXP-CMD-03 if the cast is refused by the player state, the press goes to the normal action and the refusal is logged",
             "EXP-CMD-04 several matching commands: the longest sequence wins, then list order",
             "EXP-CMD-05 a successful command clears the direction history; otherwise entries only expire by age",
-            "EXP-CMD-06 direction history is recorded only while the game owns the input (ring closed, player alive)",
+            "EXP-CMD-06 direction history and command matching use only input the router gave to the game (decided at routing time, not re-read at the tick); one stick sample's direction edges are recorded as one change (no in-between diagonal); nothing is recorded while the player is dead",
+            "EXP-ITEM-07 a magic scroll requested during a slide or roll waits until it ends (like EXP-ITEM-03); a scroll is consumed and its cooldown starts only when its cast actually starts",
             "EXP-MAGIC-01 a cast is a player motion (startup = CastTime, effect, Recovery) with the attack movement lock; it starts only from free or guard states",
             "EXP-MAGIC-02 a cast ends the current attack chain and is not a chain step",
             "EXP-MAGIC-03 guard or a hit cancels a cast before its effect; a cancelled cast has no effect (a scroll is already consumed)",
@@ -195,7 +196,9 @@ namespace Corum2.Core
         /// the normal action.</summary>
         string TryMagicCommand(in InputEvent e)
         {
-            if (Magic == null || e.Edge != InputEdge.Press || (Ring != null && Ring.IsOpen) || Player.State == MotorState.Dead) return null;
+            // WP05-F02: every event that reaches Step was given to the game by the router when it was routed; the ring
+            // state now (it may have opened after this event in the same frame) is not consulted again.
+            if (Magic == null || e.Edge != InputEdge.Press || Player.State == MotorState.Dead) return null;
             if (!Magic.HasCommandsFor(e.Action)) return null;
             var cmd = Magic.Match(e.Action, GameTime);
             var normal = e.Action + "+" + Player.HeldDir + "@" + Player.State;
@@ -305,8 +308,9 @@ namespace Corum2.Core
 
             Items?.BeginTick();
 
-            foreach (var e in input.Events)
+            for (var ei = 0; ei < input.Events.Count; ei++)
             {
+                var e = input.Events[ei];
                 var stateBefore = Player.State;
                 if (Death != null && Death.Active)
                 {
@@ -326,7 +330,12 @@ namespace Corum2.Core
 
                 if (e.Edge == InputEdge.Press && (e.Action == LogicalAction.MoveUp || e.Action == LogicalAction.MoveDown))
                     TryPointTransition(e);
-                if (Ring == null || !Ring.IsOpen) Magic?.Observe(Player.HeldDir, GameTime, Tick);
+                // WP05-F01: one stick sample becomes several direction edges with the same device time (e.g. Right press then
+                // Down release). Record the held direction only after the last edge of such a group, so the axis state
+                // between two edges of one sample (a diagonal nobody input) never enters the history.
+                if (!(IsMoveAction(e.Action) && ei + 1 < input.Events.Count && IsMoveAction(input.Events[ei + 1].Action) &&
+                      input.Events[ei + 1].RawTime == e.RawTime))
+                    Magic?.Observe(Player.HeldDir, GameTime, Tick);
             }
 
             // Reconcile with the sampled direction (they should match; a mismatch means a lost edge).
@@ -339,7 +348,7 @@ namespace Corum2.Core
                 Player.HeldH = sampledH;
                 Player.HeldV = sampledV;
                 if (Player.RunDir != 0 && Player.RunDir != sampledH) Player.RunDir = 0;
-                if (Player.State != MotorState.Dead && (Ring == null || !Ring.IsOpen)) Magic?.Observe(Player.HeldDir, GameTime, Tick);
+                if (Player.State != MotorState.Dead) Magic?.Observe(Player.HeldDir, GameTime, Tick);
             }
 
             var frozen = Combat != null && Combat.BeginTick(dt);
@@ -385,6 +394,9 @@ namespace Corum2.Core
                     ("enemies", Combat?.DescribeEnemies() ?? ""));
         }
 
+        static bool IsMoveAction(LogicalAction a) =>
+            a == LogicalAction.MoveLeft || a == LogicalAction.MoveRight || a == LogicalAction.MoveUp || a == LogicalAction.MoveDown;
+
         void TryPointTransition(in InputEvent e)
         {
             var wanted = e.Action == LogicalAction.MoveUp ? PointDirection.Up : PointDirection.Down;
@@ -406,7 +418,7 @@ namespace Corum2.Core
             {
                 Log.Emit("map.pointCheck", PlayerMotor.Actor, "", CurrentMap.Id, CurrentMap.Id,
                     !pure ? "NotPureDirection(EXP-MAP-02)" : "PlayerNotReady(EXP-MAP-02):" + Player.State,
-                    ("inputEventId", e.EventId), ("pointId", hit.Id), ("heldDir", Player.HeldDir), ("cf", "CF-01 command overlap not evaluated (magic not implemented)"));
+                    ("inputEventId", e.EventId), ("pointId", hit.Id), ("heldDir", Player.HeldDir), ("cf", "CF-01 map point vs magic command priority undecided (EXP-CMD-02 applies to buttons only)"));
                 return;
             }
             DoTransition(hit.TargetMapId, hit.TargetSpawnId, hit.Id, wanted == PointDirection.Up ? "UpPoint(R-01-04)" : "DownPoint(R-01-04)", e.EventId);
