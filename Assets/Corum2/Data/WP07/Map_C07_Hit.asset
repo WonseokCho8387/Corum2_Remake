@@ -1,0 +1,213 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2cac156314ef0040a2f4f3ec32e56f9, type: 3}
+  m_Name: Map_C07_Hit
+  m_EditorClassIdentifier: Corum2.Unity::Corum2.Unity.MapDefinition
+  meta:
+    domainId: map.C07
+    schemaVersion: 1
+    dataVersion: wp07-1
+    status: experimental
+    policyIds: []
+    relatedRIds:
+    - R-06-01
+    - R-06-02
+    - R-06-03
+    - R-06-04
+    - R-06-05
+    - R-06-06
+    - R-06-07
+    - R-06-08
+    - R-06-09
+    - R-06-10
+    changeRequestId: 
+  mapId: C07
+  minX: 0
+  maxX: 380
+  killY: -10
+  combatPlaneZ: 0
+  solids:
+  - min: {x: -1, y: -2}
+    max: {x: 381, y: 0}
+  spawns:
+  - id: Start
+    position: {x: 4, y: 0}
+    facing: 1
+  - id: Z1Overlap
+    position: {x: 10, y: 0}
+    facing: 1
+  - id: Z2Three
+    position: {x: 40, y: 0}
+    facing: 1
+  - id: Z3Ten
+    position: {x: 65, y: 0}
+    facing: 1
+  - id: K1Small
+    position: {x: 90, y: 0}
+    facing: 1
+  - id: K2Medium
+    position: {x: 115, y: 0}
+    facing: 1
+  - id: K3Large
+    position: {x: 140, y: 0}
+    facing: 1
+  - id: K4Boss
+    position: {x: 165, y: 0}
+    facing: 1
+  - id: L1Able
+    position: {x: 190, y: 0}
+    facing: 1
+  - id: L2Resist
+    position: {x: 215, y: 0}
+    facing: 1
+  - id: L3Immune
+    position: {x: 240, y: 0}
+    facing: 1
+  - id: L4Stop
+    position: {x: 265, y: 0}
+    facing: 1
+  - id: D1Down
+    position: {x: 290, y: 0}
+    facing: 1
+  - id: D1Right
+    position: {x: 292.2, y: 0}
+    facing: 1
+  - id: D2Dive
+    position: {x: 315, y: 0}
+    facing: 1
+  - id: W1Wake
+    position: {x: 340, y: 0}
+    facing: 1
+  - id: W2Magic
+    position: {x: 360, y: 0}
+    facing: 1
+  left:
+    policy: 0
+    connectionId: 
+    targetMapId: 
+    targetSpawnId: 
+  right:
+    policy: 0
+    connectionId: 
+    targetMapId: 
+    targetSpawnId: 
+  points: []
+  enemies:
+  - instanceId: o1
+    enemyId: bag
+    position: {x: 11, y: 0}
+    facing: -1
+  - instanceId: m1
+    enemyId: bag
+    position: {x: 41, y: 0}
+    facing: -1
+  - instanceId: m2
+    enemyId: bag
+    position: {x: 41, y: 0}
+    facing: -1
+  - instanceId: m3
+    enemyId: bag
+    position: {x: 41, y: 0}
+    facing: -1
+  - instanceId: t0
+    enemyId: bag
+    position: {x: 66, y: 0}
+    facing: -1
+  - instanceId: t1
+    enemyId: bag
+    position: {x: 66, y: 0}
+    facing: -1
+  - instanceId: t2
+    enemyId: bag
+    position: {x: 66, y: 0}
+    facing: -1
+  - instanceId: t3
+    enemyId: bag
+    position: {x: 66, y: 0}
+    facing: -1
+  - instanceId: t4
+    enemyId: bag
+    position: {x: 66, y: 0}
+    facing: -1
+  - instanceId: t5
+    enemyId: bag
+    position: {x: 66, y: 0}
+    facing: -1
+  - instanceId: t6
+    enemyId: bag
+    position: {x: 66, y: 0}
+    facing: -1
+  - instanceId: t7
+    enemyId: bag
+    position: {x: 66, y: 0}
+    facing: -1
+  - instanceId: t8
+    enemyId: bag
+    position: {x: 66, y: 0}
+    facing: -1
+  - instanceId: t9
+    enemyId: bag
+    position: {x: 66, y: 0}
+    facing: -1
+  - instanceId: k1
+    enemyId: bag
+    position: {x: 91, y: 0}
+    facing: -1
+  - instanceId: k2
+    enemyId: medium
+    position: {x: 116.1, y: 0}
+    facing: -1
+  - instanceId: k3
+    enemyId: large
+    position: {x: 141.25, y: 0}
+    facing: -1
+  - instanceId: k4
+    enemyId: boss
+    position: {x: 166.3, y: 0}
+    facing: -1
+  - instanceId: l1
+    enemyId: bag
+    position: {x: 191, y: 0}
+    facing: -1
+  - instanceId: l2
+    enemyId: medium
+    position: {x: 216.1, y: 0}
+    facing: -1
+  - instanceId: l3
+    enemyId: boss
+    position: {x: 241.3, y: 0}
+    facing: -1
+  - instanceId: l4
+    enemyId: bag
+    position: {x: 266, y: 0}
+    facing: -1
+  - instanceId: d1
+    enemyId: bag
+    position: {x: 291, y: 0}
+    facing: -1
+  - instanceId: d2
+    enemyId: bag
+    position: {x: 316, y: 0}
+    facing: -1
+  - instanceId: w1
+    enemyId: bag
+    position: {x: 341, y: 0}
+    facing: -1
+  - instanceId: w2
+    enemyId: bag
+    position: {x: 361, y: 0}
+    facing: -1
+  cameraMinX: 9
+  cameraMaxX: 371
+  cameraY: 2.5
+  cameraFollowSharpness: 10
+  groundColor: {r: 0.4, g: 0.38, b: 0.42, a: 1}
