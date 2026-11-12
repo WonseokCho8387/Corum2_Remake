@@ -136,10 +136,13 @@ def check(ev, expect_selects=None):
             pairs.append({"magic": mid, "command": a, "scroll": b,
                           "pass": a["power"] == b["power"] and a["castTime"] == b["castTime"] and a["effectDelayTicks"] == b["effectDelayTicks"]
                           and a["hitDamage"] == b["hitDamage"]})
-    out["TC-02-10"] = {"casts": rows, "command_vs_scroll": pairs,
+    # R3: every scroll cast that started must have a valid consumption link, hit or not (not only the compared pair).
+    scroll_links = [{"tick": r["tick"], "source": r["source"], "pass": r["scrollLink"]["pass"]} for r in rows if r["scrollLink"] is not None]
+    links_ok = all(s["pass"] for s in scroll_links)
+    out["TC-02-10"] = {"casts": rows, "command_vs_scroll": pairs, "scroll_links": scroll_links, "scroll_links_all_pass": links_ok,
                        "scroll_waits": [(e["simulationTick"], e["reason"]) for e in of("item.request") if "EXP-ITEM-07" in e["reason"]],
                        "scroll_cancels": [(e["simulationTick"], e["reason"], e.get("consumed")) for e in of("item.cancel")],
-                       "pass": bool(pairs) and all(p["pass"] for p in pairs)}
+                       "pass": bool(pairs) and all(p["pass"] for p in pairs) and links_ok}
 
     # ---- TC-06-19a
     deaths = []
@@ -263,6 +266,19 @@ def selftest(ev, expect):
                 e["reason"] = "unknown_outcome"
                 break
     mutate("first miss press outcome unknown_outcome", "TC-02-02", unknown_outcome, bool(miss_ids) and base["TC-02-02"]["pass"])
+    # ---- WP-05-R2 review counterexamples (R3): one record of the LAST scroll cast only (in main, the unhit cast at 1020),
+    # leaving the compared pair intact; each must fail TC-02-10.
+    last_use = scroll_uses[-1] if len(scroll_uses) >= 2 else None
+    mutate("last scroll item.use removed (other scroll intact)", "TC-02-10",
+           lambda m: m.__setitem__(slice(None), [e for e in m if e.get("eventId") != last_use["eventId"]]),
+           last_use is not None and base["TC-02-10"]["pass"])
+
+    def shift_last_request_id(m):
+        for e in m:
+            if e.get("eventId") == last_use["eventId"]:
+                e["requestId"] = e["requestId"] + 90000
+    mutate("last scroll item.use requestId +90000 (other scroll intact)", "TC-02-10", shift_last_request_id,
+           last_use is not None and base["TC-02-10"]["pass"])
     return res
 
 
