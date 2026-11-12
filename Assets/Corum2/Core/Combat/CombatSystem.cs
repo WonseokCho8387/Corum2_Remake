@@ -136,6 +136,8 @@ namespace Corum2.Core
         /// Key = hit event index; -1 = dive landing area.</summary>
         public readonly HashSet<int> HitstopEvents = new HashSet<int>();
         public bool MotorDriven => Def.Kind == AttackKind.AirDash || Def.Kind == AttackKind.Dive;
+        /// <summary>Tick on which an enemy guard ended the chain during this motor-driven attack (EXP-COMBO-06), else -1.</summary>
+        public long GuardEndTick = -1;
     }
 
     /// <summary>
@@ -411,7 +413,7 @@ namespace Corum2.Core
             return a;
         }
 
-        void BeginChain(long eventId)
+        void BeginChain(long eventId, string reason = "NewChain")
         {
             ChainId = _nextChainId++;
             ChainAlive = true;
@@ -422,7 +424,7 @@ namespace Corum2.Core
             ComboHits = 0;
             ChainWindow = 0f;
             _endedLinks.Clear();
-            Log.Emit("combo.begin", Pl, "", "", "", "NewChain", ("chainId", ChainId), ("inputEventId", eventId));
+            Log.Emit("combo.begin", Pl, "", "", "", reason, ("chainId", ChainId), ("inputEventId", eventId));
         }
 
         void EndChain(string reason)
@@ -704,13 +706,15 @@ namespace Corum2.Core
                     if (en.VelY < -en.Def.JuggleFallSpeed) en.VelY = -en.Def.JuggleFallSpeed; // R-06-07 slowed, still falling
                 }
             }
+            // WP07-F01: move with this tick's knockback velocity, then decelerate (a weak positive knockback still moves).
+            var knockVelX = en.VelX;
             en.VelX = MathUtil.MoveTowards(en.VelX, 0f, _p.KnockbackDecel * dt);
             // AI movement only while free to move (Idle), during a boss back step, or carried through a jump attack (WP-04).
             // Every hit reaction state stops it; gravity and knockback (VelX) are separate and stay (WP04-F01, EXP-AI-09).
             var keepMove = en.State == EnemyState.Idle || en.State == EnemyState.Evade ||
                            (en.InAttack && !en.Grounded && en.Action == AiAction.Jump);
             if (!keepMove) en.MoveVelX = 0f;
-            var r = Collision.Move(map, en.Position, en.Def.BodyWidth, en.Def.BodyHeight, (en.VelX + en.MoveVelX) * dt, en.Grounded ? 0f : en.VelY * dt);
+            var r = Collision.Move(map, en.Position, en.Def.BodyWidth, en.Def.BodyHeight, (knockVelX + en.MoveVelX) * dt, en.Grounded ? 0f : en.VelY * dt);
             en.Position = r.Position;
             if (r.Landed)
             {
@@ -941,6 +945,7 @@ namespace Corum2.Core
             Log.Emit("combo.guardCancel", Pl, "", P.State.ToString(), "", reason, ("attackInstanceId", a.InstanceId), ("attackId", a.Def.Id),
                 ("guardedHits", guarded), ("targets", targets), ("motorDriven", a.MotorDriven), ("mixedWithEffectiveHits", targets > guarded),
                 ("policy", "EXP-COMBO-05; mixed outcome order CF-06"));
+            if (a.MotorDriven) a.GuardEndTick = _sim.Tick;
             if (Attack == a && !a.MotorDriven)
             {
                 CancelAttack(reason);
@@ -984,6 +989,17 @@ namespace Corum2.Core
             en.Hp = Math.Max(0f, en.Hp - taken);
             a.Hits++;
             a.HitByEvent[ev].Add(en.Id);
+            // WP06-F01 (EXP-COMBO-06): a motor-driven dash / dive keeps moving after an enemy guard ended the chain (R-05-03).
+            // A later effective hit of the same motion is still an effective hit (R-04-05/06): it opens a new chain and counts.
+            if (!ChainAlive && !guarded && a.MotorDriven && a.GuardEndTick >= 0 && _sim.Tick > a.GuardEndTick)
+            {
+                BeginChain(0, "PostGuardEffectiveHit(EXP-COMBO-06)");
+                ChainSteps = 1;
+                ChainHasDash = a.Def.Kind == AttackKind.AirDash;
+                a.ChainStep = 1;
+                Log.Emit("combo.reopen", Pl, en.Id, "", "", "MotorAttackHitAfterGuardEnd(R-04-05/06, EXP-COMBO-06)",
+                    ("attackInstanceId", a.InstanceId), ("attackId", d.Id), ("guardEndTick", a.GuardEndTick), ("chainId", ChainId));
+            }
             var comboBefore = ComboHits;
             // EXP-COMBO-05: a hit absorbed by an enemy guard is not an effective hit (R-04-03/04): no combo count.
             if (ChainAlive && !guarded) ComboHits++;
@@ -1113,12 +1129,18 @@ namespace Corum2.Core
                         ("enemyAttackInstanceId", en.AttackInstanceId), ("rbToHit", sinceRb), ("parryWindow", _p.ParryWindow),
                         ("windowMeaning", "last W s before the hit, game time (EXP-PARRY-01, CF-04)"), ("damageD", dmg), ("damageTaken", g),
                         ("damagePolicy", "EXP-PARRY-02 guard rule"), ("hpBefore", hpBefore), ("hpAfter", PlayerHp), ("enemyStun", _p.ParryStunTime));
+                    if (PlayerHp <= 0f) KillPlayerByDefendedHit(ownerId, stateBefore, "Parry");
                     return;
                 }
                 Log.Emit("guard.block", Pl, ownerId, "Guard", d.GuardBreak ? "released" : "Guard", d.GuardBreak ? "GuardBreak(R-07-06)" : "FrontGuard(R-07-01/02)",
                     ("enemyAttackInstanceId", attackInstanceId), ("via", via), ("parry", en == null ? "not for projectiles (EXP-AI-05)" : "outside window"), ("rbToHit", sinceRb), ("damageD", dmg), ("damageTaken", g),
                     ("guardRule", "D*0.1, <1 -> 0; " + GuardRule.RoundingPolicy), ("damagePolicy", TestDamageResolver.PolicyId),
                     ("hpBefore", hpBefore), ("hpAfter", PlayerHp));
+                if (PlayerHp <= 0f)
+                {
+                    KillPlayerByDefendedHit(ownerId, stateBefore, d.GuardBreak ? "GuardBreak" : "Guard");
+                    return;
+                }
                 if (d.GuardBreak) P.ReleaseLocked("GuardBreak(R-07-06, extra stun undecided U-09)");
                 return;
             }
@@ -1144,6 +1166,16 @@ namespace Corum2.Core
                 ("enemyAttackInstanceId", attackInstanceId), ("via", via), ("attackId", d.Id), ("damageD", dmg), ("damagePolicy", TestDamageResolver.PolicyId),
                 ("hpBefore", hpBefore), ("hpAfter", PlayerHp), ("front", front), ("knockbackVel", P.VelX), ("hitstun", _p.PlayerHitstun),
                 ("extraInvulnerability", "none (R-06-13/14)"));
+        }
+
+        /// <summary>WP08-F02: guard / parry damage that brings HP to 0 is a death like any other (R-06-19).</summary>
+        void KillPlayerByDefendedHit(string ownerId, MotorState stateBefore, string defense)
+        {
+            if (Attack != null) CancelAttack("PlayerDeath");
+            EndChain("PlayerDeath");
+            _buffered = false;
+            P.EnterLocked(MotorState.Dead, "PlayerDeath");
+            Log.Emit("player.death", Pl, ownerId, stateBefore.ToString(), "Dead", "HP0->DeathFlow(R-06-19)", ("cause", "DefendedHit:" + defense));
         }
 
         string Reject(in InputEvent e, string code, string why)

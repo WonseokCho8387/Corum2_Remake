@@ -76,6 +76,8 @@ namespace Corum2.Core
             "EXP-COMBO-02 chain window counts from motion end; ComboWindow editable (R-04-09)",
             "EXP-COMBO-03 after-dash reservation kept until landing; chain window paused while it waits (U-05)",
             "EXP-COMBO-04 R-04-01 max 10 steps: a timed attack past 10 is rejected (chain kept); a dive past 10 without a dash opens a new chain; the dive after a dash may pass 10 only as the CF-03 held branch",
+            "EXP-COMBO-05 an enemy guard on a physical hit is not an effective hit: no count; a timed attack is cancelled and the chain ends (R-04-03); mixed same-tick outcomes CF-06",
+            "EXP-COMBO-06 a dash / dive keeps moving after an enemy guard ended the chain; its later effective hit opens a new chain and counts (R-04-05/06, CF-06)",
             "EXP-GUARD-01 guard damage floor for g>=1 (U-09)",
             "EXP-GUARD-02 held direction turns facing while guarding, no movement (U-09)",
             "EXP-GUARD-03 RB refused during slide/roll",
