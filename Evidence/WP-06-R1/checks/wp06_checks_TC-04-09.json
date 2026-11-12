@@ -1,0 +1,54 @@
+{
+ "logs": [
+  "D:/ProjectR/Corum2Remake/Evidence/WP-06-R1/runs/RUN-20261112-190144.ndjson",
+  "D:/ProjectR/Corum2Remake/Evidence/WP-06-R1/runs/RUN-20261112-190326.ndjson"
+ ],
+ "TC-04-09": {
+  "runs": [
+   {
+    "window": 0.2,
+    "pairs": [
+     {
+      "gapAfterAttackEnd": 0.3,
+      "sameChain": false,
+      "step2": 1
+     },
+     {
+      "gapAfterAttackEnd": 0.6,
+      "sameChain": false,
+      "step2": 1
+     }
+    ]
+   },
+   {
+    "window": 0.6,
+    "pairs": [
+     {
+      "gapAfterAttackEnd": 0.3,
+      "sameChain": true,
+      "step2": 2
+     },
+     {
+      "gapAfterAttackEnd": 0.6,
+      "sameChain": true,
+      "step2": 2
+     }
+    ]
+   }
+  ],
+  "pass": true
+ },
+ "selftest": [
+  {
+   "case": "second attacks start new chains in both runs",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "M01 large-window gaps 0.40 / 0.50 s",
+   "sectionPass": false,
+   "pass": true
+  }
+ ],
+ "selftest_all_pass": true
+}

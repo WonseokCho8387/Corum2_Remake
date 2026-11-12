@@ -1,0 +1,21 @@
+EditMode on 785368b (clean): test-case 293, passed 293, failed 0; result=Passed
+New in R1 (Wp06to08R1Tests):
+  Corum2.Tests.Wp06to08R1Tests.LethalGuardBreakDamage_KillsThePlayer
+  Corum2.Tests.Wp06to08R1Tests.LethalGuardDamage_KillsThePlayer
+  Corum2.Tests.Wp06to08R1Tests.LethalGuardDamage_KillsThePlayer(1.0f)
+  Corum2.Tests.Wp06to08R1Tests.LethalGuardDamage_KillsThePlayer(2.0f)
+  Corum2.Tests.Wp06to08R1Tests.LethalParryDamage_KillsThePlayer
+  Corum2.Tests.Wp06to08R1Tests.MagicKnockback_WeakPositiveScaleMoves
+  Corum2.Tests.Wp06to08R1Tests.MagicKnockback_WeakPositiveScaleMoves(0.05f)
+  Corum2.Tests.Wp06to08R1Tests.MagicKnockback_WeakPositiveScaleMoves(0.1f)
+  Corum2.Tests.Wp06to08R1Tests.MagicKnockback_WeakPositiveScaleMoves(1.0f)
+  Corum2.Tests.Wp06to08R1Tests.MagicOnSuperArmor_WeakScale_StaggersCancelsAndMoves
+  Corum2.Tests.Wp06to08R1Tests.PhysicalKnockback_WeakPositiveMoves_ZeroStays
+  Corum2.Tests.Wp06to08R1Tests.PhysicalKnockback_WeakPositiveMoves_ZeroStays(0.0f)
+  Corum2.Tests.Wp06to08R1Tests.PhysicalKnockback_WeakPositiveMoves_ZeroStays(0.1f)
+  Corum2.Tests.Wp06to08R1Tests.PhysicalKnockback_WeakPositiveMoves_ZeroStays(0.2f)
+  Corum2.Tests.Wp06to08R1Tests.PhysicalKnockback_WeakPositiveMoves_ZeroStays(0.5f)
+  Corum2.Tests.Wp06to08R1Tests.PhysicalKnockback_WeakPositiveMoves_ZeroStays(1.0f)
+  Corum2.Tests.Wp06to08R1Tests.PierceDash_GuardedFirst_LaterEffectiveHitStillCounts
+  Corum2.Tests.Wp06to08R1Tests.PierceDash_GuardedFirst_LaterEffectiveHitStillCounts(0.0f)
+  Corum2.Tests.Wp06to08R1Tests.PierceDash_GuardedFirst_LaterEffectiveHitStillCounts(1.0f)
