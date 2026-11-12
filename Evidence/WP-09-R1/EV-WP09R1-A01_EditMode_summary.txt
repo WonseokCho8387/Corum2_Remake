@@ -1,0 +1,4 @@
+EditMode on de757b8 (clean): test-case 295, passed 295, failed 0; result=Passed
+New in WP-09-R1 (Wp09R1Tests):
+  Corum2.Tests.Wp09R1Tests.M01_Control_StandingEnemy_IsGroundStill_AndPlacementIsTeleport
+  Corum2.Tests.Wp09R1Tests.M01_GroundChaser_WithZeroVelX_IsCountedAsGroundMoving

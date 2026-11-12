@@ -1,0 +1,601 @@
+{
+ "log": "D:/ProjectR/Corum2Remake/Evidence/WP-09-R1/runs/RUN-20261112-234229.ndjson",
+ "TC-02-01": {
+  "pairs": [
+   {
+    "action": "Jump",
+    "keyboard": [
+     {
+      "press": 1,
+      "tick": 227,
+      "outcomeTick": 228,
+      "value": "Jump:Standing"
+     }
+    ],
+    "pad": [
+     {
+      "press": 3,
+      "tick": 272,
+      "outcomeTick": 273,
+      "value": "Jump:Standing"
+     }
+    ],
+    "pass": true,
+    "segment": "MapJump"
+   },
+   {
+    "action": "Attack",
+    "keyboard": [
+     {
+      "press": 5,
+      "tick": 322,
+      "outcomeTick": 323,
+      "value": "ground1"
+     }
+    ],
+    "pad": [
+     {
+      "press": 7,
+      "tick": 347,
+      "outcomeTick": 348,
+      "value": "ground1"
+     }
+    ],
+    "pass": true,
+    "segment": "MapAttack"
+   },
+   {
+    "action": "SpecialAttack",
+    "keyboard": [
+     {
+      "press": 9,
+      "tick": 382,
+      "outcomeTick": 383,
+      "value": "launcher"
+     }
+    ],
+    "pad": [
+     {
+      "press": 11,
+      "tick": 417,
+      "outcomeTick": 418,
+      "value": "launcher"
+     }
+    ],
+    "pass": true,
+    "segment": "MapSpecial"
+   },
+   {
+    "action": "Guard",
+    "keyboard": [
+     {
+      "press": 13,
+      "tick": 462,
+      "outcomeTick": 463,
+      "value": "Guard"
+     }
+    ],
+    "pad": [
+     {
+      "press": 15,
+      "tick": 482,
+      "outcomeTick": 483,
+      "value": "Guard"
+     }
+    ],
+    "pass": true,
+    "segment": "MapGuard"
+   },
+   {
+    "action": "MoveRight",
+    "keyboard": [
+     {
+      "press": 18,
+      "tick": 512,
+      "outcomeTick": 513,
+      "value": [
+       "Right",
+       3.5
+      ]
+     }
+    ],
+    "pad": [
+     {
+      "press": 22,
+      "tick": 537,
+      "outcomeTick": 538,
+      "value": [
+       "Right",
+       3.5
+      ]
+     }
+    ],
+    "pass": true,
+    "segment": "MapMove"
+   },
+   {
+    "action": "RingToggle",
+    "keyboard": [
+     {
+      "press": 25,
+      "tick": 572,
+      "outcomeTick": 572,
+      "value": "Open"
+     },
+     {
+      "press": 33,
+      "tick": 611,
+      "outcomeTick": 611,
+      "value": "Close"
+     }
+    ],
+    "pad": [
+     {
+      "press": 35,
+      "tick": 627,
+      "outcomeTick": 627,
+      "value": "Open"
+     },
+     {
+      "press": 43,
+      "tick": 666,
+      "outcomeTick": 666,
+      "value": "Close"
+     }
+    ],
+    "pass": true,
+    "segment": "MapRing"
+   },
+   {
+    "action": "PagePrev",
+    "keyboard": [
+     {
+      "press": 27,
+      "tick": 581,
+      "outcomeTick": 581,
+      "value": [
+       "Prev(LT)",
+       1
+      ]
+     }
+    ],
+    "pad": [
+     {
+      "press": 37,
+      "tick": 636,
+      "outcomeTick": 636,
+      "value": [
+       "Prev(LT)",
+       1
+      ]
+     }
+    ],
+    "pass": true,
+    "segment": "MapRing"
+   },
+   {
+    "action": "PageNext",
+    "keyboard": [
+     {
+      "press": 29,
+      "tick": 591,
+      "outcomeTick": 591,
+      "value": [
+       "Next(RT)",
+       1
+      ]
+     }
+    ],
+    "pad": [
+     {
+      "press": 39,
+      "tick": 646,
+      "outcomeTick": 646,
+      "value": [
+       "Next(RT)",
+       1
+      ]
+     }
+    ],
+    "pass": true,
+    "segment": "MapRing"
+   },
+   {
+    "action": "ButtonB",
+    "keyboard": [
+     {
+      "press": 31,
+      "tick": 601,
+      "outcomeTick": 601,
+      "value": "NoSelection"
+     }
+    ],
+    "pad": [
+     {
+      "press": 41,
+      "tick": 656,
+      "outcomeTick": 656,
+      "value": "NoSelection"
+     }
+    ],
+    "pass": true,
+    "segment": "MapRing"
+   },
+   {
+    "action": "QuickDown",
+    "keyboard": [
+     {
+      "press": 45,
+      "tick": 702,
+      "outcomeTick": 702,
+      "value": [
+       "Down",
+       "Accepted",
+       "scroll",
+       "magic"
+      ]
+     }
+    ],
+    "pad": [
+     {
+      "press": 47,
+      "tick": 767,
+      "outcomeTick": 767,
+      "value": [
+       "Down",
+       "Accepted",
+       "scroll",
+       "magic"
+      ]
+     }
+    ],
+    "pass": true,
+    "segment": "MapQuickslot"
+   }
+  ],
+  "note": "virtual keyboard / gamepad; real devices and Steam Deck are BLOCKED_ENV",
+  "pass": true
+ },
+ "TC-03-01": {
+  "cases": [
+   {
+    "case": "StrongTiltWalk",
+    "runEvents": [],
+    "walkTicks": 55,
+    "runTicks": 0,
+    "pass": true
+   },
+   {
+    "case": "PadDoubleTapRun",
+    "armed": [
+     889
+    ],
+    "released": [
+     938
+    ],
+    "runTicks": 49,
+    "runOrFastAfterRelease": [],
+    "pass": true
+   },
+   {
+    "case": "KeyDoubleTapRun",
+    "armed": [
+     969
+    ],
+    "released": [
+     1018
+    ],
+    "runTicks": 49,
+    "runOrFastAfterRelease": [],
+    "pass": true
+   }
+  ],
+  "note": "strong tilt = stick (1,0) on the virtual pad",
+  "pass": true
+ },
+ "TC-03-06": {
+  "cases": [
+   {
+    "case": "AirDirectionOnly",
+    "airUse": [],
+    "airVxWithRight": 3.5,
+    "pass": true
+   },
+   {
+    "case": "AirDoubleTap",
+    "events": [
+     "AirDoubleTapIgnored(R-03-06)"
+    ],
+    "airUse": [],
+    "pass": true
+   },
+   {
+    "case": "AirA",
+    "airUse": [
+     "ExtraJump"
+    ],
+    "inputAction": "Jump",
+    "heldDir": "None",
+    "airborneBefore": true,
+    "pass": true
+   },
+   {
+    "case": "AirDirAttack",
+    "airUse": [
+     "AirDash"
+    ],
+    "inputAction": "Attack",
+    "heldDir": "Right",
+    "airborneBefore": true,
+    "pass": true
+   },
+   {
+    "case": "AirDirSpecial",
+    "airUse": [
+     "Dive"
+    ],
+    "inputAction": "SpecialAttack",
+    "heldDir": "Right",
+    "airborneBefore": true,
+    "pass": true
+   },
+   {
+    "case": "AirRB",
+    "guardTick": 1413,
+    "grounded": false,
+    "airUse": [],
+    "pass": true
+   }
+  ],
+  "pass": true
+ },
+ "TC-03-07": {
+  "cases": [
+   {
+    "case": "DashThenJump",
+    "jumpTick": 1473,
+    "landTick": 1538,
+    "airUse": [
+     [
+      "AirDash",
+      1482
+     ],
+     [
+      "ExtraJump",
+      1498
+     ]
+    ],
+    "rejected": [
+     [
+      "AlreadyUsed:AirDash",
+      1507
+     ],
+     [
+      "AlreadyUsed:ExtraJump",
+      1516
+     ]
+    ],
+    "airNormalAttacks": 0,
+    "pass": true
+   },
+   {
+    "case": "JumpThenDash",
+    "jumpTick": 1573,
+    "landTick": 1630,
+    "airUse": [
+     [
+      "ExtraJump",
+      1583
+     ],
+     [
+      "AirDash",
+      1594
+     ]
+    ],
+    "rejected": [
+     [
+      "AlreadyUsed:ExtraJump",
+      1613
+     ]
+    ],
+    "airNormalAttacks": 0,
+    "pass": true
+   },
+   {
+    "case": "AirAttackKeepsCounts",
+    "jumpTick": 1673,
+    "landTick": 1743,
+    "airUse": [
+     [
+      "ExtraJump",
+      1698
+     ],
+     [
+      "AirDash",
+      1707
+     ]
+    ],
+    "rejected": [],
+    "airNormalAttacks": 1,
+    "pass": true
+   }
+  ],
+  "pass": true
+ },
+ "TC-03-08": {
+  "airUse": [
+   "Dive"
+  ],
+  "diveTick": 1787,
+  "landTick": 1797,
+  "rejected": [
+   [
+    "Jump",
+    "ActionLock:Dive",
+    1788
+   ],
+   [
+    "Attack",
+    "ActionLock:Dive",
+    1790
+   ]
+  ],
+  "pass": true
+ },
+ "TC-03-09": {
+  "cases": [
+   {
+    "case": "LandThenAttack",
+    "landTick": 1904,
+    "actionTick": 1905,
+    "ticksAfterLanding": 1,
+    "usedBefore": [
+     "ExtraJump"
+    ],
+    "airBefore": "jump=used,dash=free,dive=free",
+    "airAfter": "jump=free,dash=free,dive=free",
+    "pass": true
+   },
+   {
+    "case": "LandThenGuard",
+    "landTick": 1971,
+    "actionTick": 1972,
+    "ticksAfterLanding": 1,
+    "usedBefore": [],
+    "airBefore": "jump=free,dash=free,dive=free",
+    "airAfter": "jump=free,dash=free,dive=free",
+    "pass": true
+   },
+   {
+    "case": "LandThenJumpAgain",
+    "landTick": 2064,
+    "actionTick": 2065,
+    "ticksAfterLanding": 1,
+    "usedBefore": [
+     "ExtraJump"
+    ],
+    "airBefore": "jump=used,dash=free,dive=free",
+    "airAfter": "jump=free,dash=free,dive=free",
+    "pass": true
+   }
+  ],
+  "note": "CF-02 (landing after special moves) not included",
+  "pass": true
+ },
+ "selftest": [
+  {
+   "case": "original",
+   "pass": {
+    "TC-02-01": true,
+    "TC-03-01": true,
+    "TC-03-06": true,
+    "TC-03-07": true,
+    "TC-03-08": true,
+    "TC-03-09": true
+   }
+  },
+  {
+   "case": "TC-02-01 pad press maps to another action",
+   "section": "TC-02-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-03-01 strong tilt runs",
+   "section": "TC-03-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-03-06 air double tap dashes",
+   "section": "TC-03-06",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-03-07 second dash allowed",
+   "section": "TC-03-07",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-03-08 jump after the dive",
+   "section": "TC-03-08",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-03-09 guard only well after landing",
+   "section": "TC-03-09",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "GPT TC-02-01 second jump reuses the first input id",
+   "section": "TC-02-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "GPT TC-02-01 second scroll reuses the first request id",
+   "section": "TC-02-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "GPT TC-02-01 ring B disposition removed",
+   "section": "TC-02-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "GPT TC-03-01 run continues after release",
+   "section": "TC-03-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "GPT TC-03-06 no direction on the dive input",
+   "section": "TC-03-06",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "GPT TC-03-07 second ability after landing",
+   "section": "TC-03-07",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "GPT TC-03-08 rejected attack after landing",
+   "section": "TC-03-08",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "GPT TC-03-09 action before landing",
+   "section": "TC-03-09",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "GPT TC-03-09 used counter missing before reset",
+   "section": "TC-03-09",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "R1 TC-02-01 pad guard result removed",
+   "section": "TC-02-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "R1 TC-03-06 dash made on the ground",
+   "section": "TC-03-06",
+   "sectionPass": false,
+   "pass": true
+  }
+ ],
+ "selftest_all_pass": true
+}

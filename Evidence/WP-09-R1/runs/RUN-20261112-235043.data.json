@@ -1,0 +1,519 @@
+{
+"runId":"RUN-20261112-235043",
+"movement":{
+    "meta": {
+        "domainId": "movement.player",
+        "schemaVersion": 1,
+        "dataVersion": "wp01-r1",
+        "status": "experimental",
+        "policyIds": [
+            "EXP-MOVE-01"
+        ],
+        "relatedRIds": [
+            "R-03-01",
+            "R-03-02",
+            "R-03-04",
+            "R-03-05",
+            "R-03-06"
+        ],
+        "changeRequestId": ""
+    },
+    "walkSpeed": 3.5,
+    "runSpeed": 7.0,
+    "gravity": 30.0,
+    "jumpHeight": 2.200000047683716,
+    "extraJumpHeight": 1.7999999523162842,
+    "airControlSpeed": 3.5,
+    "airAcceleration": 18.0,
+    "maxFallSpeed": 22.0,
+    "slideSpeed": 9.0,
+    "slideDuration": 0.3499999940395355,
+    "rollSpeed": 7.0,
+    "rollDuration": 0.4000000059604645,
+    "dashSpeed": 12.0,
+    "dashDuration": 0.25,
+    "dashEndSpeed": 3.5,
+    "diveSpeed": 14.0,
+    "diveAngleDeg": 45.0,
+    "bodyWidth": 0.6000000238418579,
+    "standHeight": 1.7999999523162842,
+    "crouchHeight": 0.8999999761581421
+},
+"input":{
+    "meta": {
+        "domainId": "input.profile",
+        "schemaVersion": 1,
+        "dataVersion": "wp03-1",
+        "status": "experimental",
+        "policyIds": [
+            "EXP-INPUT-01",
+            "EXP-INPUT-02",
+            "EXP-INPUT-03",
+            "EXP-TIME-01",
+            "EXP-INPUT-04"
+        ],
+        "relatedRIds": [
+            "R-02-01",
+            "R-03-01"
+        ],
+        "changeRequestId": ""
+    },
+    "stickDeadzone": 0.3499999940395355,
+    "doubleTapWindow": 0.25,
+    "moveStickPaths": [
+        "<Gamepad>/leftStick"
+    ],
+    "moveKeyComposites": [
+        "<Keyboard>/w,<Keyboard>/s,<Keyboard>/a,<Keyboard>/d",
+        "<Keyboard>/upArrow,<Keyboard>/downArrow,<Keyboard>/leftArrow,<Keyboard>/rightArrow"
+    ],
+    "buttons": [
+        {
+            "action": 4,
+            "paths": [
+                "<Gamepad>/buttonSouth",
+                "<Keyboard>/space"
+            ],
+            "policy": "keyboard key EXP-INPUT-02"
+        },
+        {
+            "action": 5,
+            "paths": [
+                "<Gamepad>/buttonWest",
+                "<Keyboard>/j"
+            ],
+            "policy": "keyboard key EXP-INPUT-02"
+        },
+        {
+            "action": 6,
+            "paths": [
+                "<Gamepad>/buttonNorth",
+                "<Keyboard>/k"
+            ],
+            "policy": "EXP-INPUT-01"
+        },
+        {
+            "action": 7,
+            "paths": [
+                "<Gamepad>/rightShoulder",
+                "<Keyboard>/l"
+            ],
+            "policy": "keyboard key EXP-INPUT-02"
+        },
+        {
+            "action": 8,
+            "paths": [
+                "<Gamepad>/leftShoulder",
+                "<Keyboard>/q"
+            ],
+            "policy": "keyboard key EXP-INPUT-02"
+        },
+        {
+            "action": 9,
+            "paths": [
+                "<Gamepad>/dpad/up",
+                "<Keyboard>/1"
+            ],
+            "policy": "EXP-INPUT-02"
+        },
+        {
+            "action": 12,
+            "paths": [
+                "<Gamepad>/dpad/right",
+                "<Keyboard>/2"
+            ],
+            "policy": "EXP-INPUT-02"
+        },
+        {
+            "action": 10,
+            "paths": [
+                "<Gamepad>/dpad/down",
+                "<Keyboard>/3"
+            ],
+            "policy": "EXP-INPUT-02"
+        },
+        {
+            "action": 11,
+            "paths": [
+                "<Gamepad>/dpad/left",
+                "<Keyboard>/4"
+            ],
+            "policy": "EXP-INPUT-02"
+        },
+        {
+            "action": 13,
+            "paths": [
+                "<Gamepad>/buttonEast",
+                "<Keyboard>/e"
+            ],
+            "policy": "EXP-INPUT-04"
+        },
+        {
+            "action": 14,
+            "paths": [
+                "<Gamepad>/leftTrigger",
+                "<Keyboard>/z"
+            ],
+            "policy": "EXP-INPUT-04"
+        },
+        {
+            "action": 15,
+            "paths": [
+                "<Gamepad>/rightTrigger",
+                "<Keyboard>/c"
+            ],
+            "policy": "EXP-INPUT-04"
+        }
+    ]
+},
+"unlocks":{
+    "meta": {
+        "domainId": "unlock.AirUnlocks_All",
+        "schemaVersion": 1,
+        "dataVersion": "wp01-r1",
+        "status": "experimental",
+        "policyIds": [],
+        "relatedRIds": [
+            "R-03-03"
+        ],
+        "changeRequestId": ""
+    },
+    "extraJump": true,
+    "airDash": true,
+    "dive": true
+},
+"world":{"startMapId":"M01","startSpawnId":"Start","maps":[
+{
+    "meta": {
+        "domainId": "map.M01",
+        "schemaVersion": 1,
+        "dataVersion": "wp01-r1",
+        "status": "experimental",
+        "policyIds": [
+            "EXP-MAP-01",
+            "EXP-MAP-02",
+            "EXP-MAP-03",
+            "EXP-CAM-01"
+        ],
+        "relatedRIds": [
+            "R-01-01",
+            "R-01-02",
+            "R-01-03",
+            "R-01-04",
+            "R-01-05"
+        ],
+        "changeRequestId": ""
+    },
+    "mapId": "M01",
+    "minX": 0.0,
+    "maxX": 80.0,
+    "killY": -10.0,
+    "combatPlaneZ": 0.0,
+    "solids": [
+        {
+            "min": {
+                "x": -1.0,
+                "y": -2.0
+            },
+            "max": {
+                "x": 81.0,
+                "y": 0.0
+            }
+        },
+        {
+            "min": {
+                "x": 26.0,
+                "y": 0.0
+            },
+            "max": {
+                "x": 28.0,
+                "y": 1.0
+            }
+        },
+        {
+            "min": {
+                "x": 40.0,
+                "y": 1.2000000476837159
+            },
+            "max": {
+                "x": 42.0,
+                "y": 7.0
+            }
+        }
+    ],
+    "spawns": [
+        {
+            "id": "Start",
+            "position": {
+                "x": 4.0,
+                "y": 0.0
+            },
+            "facing": 1
+        },
+        {
+            "id": "FromRight",
+            "position": {
+                "x": 78.0,
+                "y": 0.0
+            },
+            "facing": -1
+        },
+        {
+            "id": "FromAbove",
+            "position": {
+                "x": 56.0,
+                "y": 0.0
+            },
+            "facing": 1
+        },
+        {
+            "id": "TestPassageWest",
+            "position": {
+                "x": 38.5,
+                "y": 0.0
+            },
+            "facing": 1
+        },
+        {
+            "id": "TestOpen",
+            "position": {
+                "x": 12.0,
+                "y": 0.0
+            },
+            "facing": 1
+        },
+        {
+            "id": "TestPassageSlide",
+            "position": {
+                "x": 37.54999923706055,
+                "y": 0.0
+            },
+            "facing": 1
+        }
+    ],
+    "left": {
+        "policy": 0,
+        "connectionId": "",
+        "targetMapId": "",
+        "targetSpawnId": ""
+    },
+    "right": {
+        "policy": 1,
+        "connectionId": "C-M01-M02",
+        "targetMapId": "M02",
+        "targetSpawnId": "FromLeft"
+    },
+    "points": [
+        {
+            "id": "P-M01-UP",
+            "area": {
+                "min": {
+                    "x": 55.0,
+                    "y": 0.0
+                },
+                "max": {
+                    "x": 57.0,
+                    "y": 2.0
+                }
+            },
+            "direction": 0,
+            "targetMapId": "M03",
+            "targetSpawnId": "FromBelow"
+        }
+    ],
+    "enemies": [],
+    "cameraMinX": 9.0,
+    "cameraMaxX": 71.0,
+    "cameraY": 2.5,
+    "cameraFollowSharpness": 10.0,
+    "groundColor": {
+        "r": 0.44999998807907107,
+        "g": 0.4000000059604645,
+        "b": 0.33000001311302187,
+        "a": 1.0
+    }
+},
+{
+    "meta": {
+        "domainId": "map.M02",
+        "schemaVersion": 1,
+        "dataVersion": "wp01-r1",
+        "status": "experimental",
+        "policyIds": [
+            "EXP-MAP-01",
+            "EXP-MAP-02",
+            "EXP-MAP-03",
+            "EXP-CAM-01"
+        ],
+        "relatedRIds": [
+            "R-01-01",
+            "R-01-02",
+            "R-01-03",
+            "R-01-04",
+            "R-01-05"
+        ],
+        "changeRequestId": ""
+    },
+    "mapId": "M02",
+    "minX": 0.0,
+    "maxX": 40.0,
+    "killY": -10.0,
+    "combatPlaneZ": 0.0,
+    "solids": [
+        {
+            "min": {
+                "x": -1.0,
+                "y": -2.0
+            },
+            "max": {
+                "x": 41.0,
+                "y": 0.0
+            }
+        },
+        {
+            "min": {
+                "x": 10.0,
+                "y": 2.0
+            },
+            "max": {
+                "x": 14.0,
+                "y": 2.5
+            }
+        },
+        {
+            "min": {
+                "x": 20.0,
+                "y": 3.5999999046325685
+            },
+            "max": {
+                "x": 26.0,
+                "y": 4.099999904632568
+            }
+        }
+    ],
+    "spawns": [
+        {
+            "id": "FromLeft",
+            "position": {
+                "x": 2.0,
+                "y": 0.0
+            },
+            "facing": 1
+        }
+    ],
+    "left": {
+        "policy": 1,
+        "connectionId": "C-M02-M01",
+        "targetMapId": "M01",
+        "targetSpawnId": "FromRight"
+    },
+    "right": {
+        "policy": 0,
+        "connectionId": "",
+        "targetMapId": "",
+        "targetSpawnId": ""
+    },
+    "points": [],
+    "enemies": [],
+    "cameraMinX": 9.0,
+    "cameraMaxX": 31.0,
+    "cameraY": 2.5,
+    "cameraFollowSharpness": 10.0,
+    "groundColor": {
+        "r": 0.33000001311302187,
+        "g": 0.41999998688697817,
+        "b": 0.36000001430511477,
+        "a": 1.0
+    }
+},
+{
+    "meta": {
+        "domainId": "map.M03",
+        "schemaVersion": 1,
+        "dataVersion": "wp01-r1",
+        "status": "experimental",
+        "policyIds": [
+            "EXP-MAP-01",
+            "EXP-MAP-02",
+            "EXP-MAP-03",
+            "EXP-CAM-01"
+        ],
+        "relatedRIds": [
+            "R-01-01",
+            "R-01-02",
+            "R-01-03",
+            "R-01-04",
+            "R-01-05"
+        ],
+        "changeRequestId": ""
+    },
+    "mapId": "M03",
+    "minX": 0.0,
+    "maxX": 24.0,
+    "killY": -10.0,
+    "combatPlaneZ": 0.0,
+    "solids": [
+        {
+            "min": {
+                "x": -1.0,
+                "y": -2.0
+            },
+            "max": {
+                "x": 25.0,
+                "y": 0.0
+            }
+        }
+    ],
+    "spawns": [
+        {
+            "id": "FromBelow",
+            "position": {
+                "x": 12.0,
+                "y": 0.0
+            },
+            "facing": 1
+        }
+    ],
+    "left": {
+        "policy": 0,
+        "connectionId": "",
+        "targetMapId": "",
+        "targetSpawnId": ""
+    },
+    "right": {
+        "policy": 0,
+        "connectionId": "",
+        "targetMapId": "",
+        "targetSpawnId": ""
+    },
+    "points": [
+        {
+            "id": "P-M03-DOWN",
+            "area": {
+                "min": {
+                    "x": 11.0,
+                    "y": 0.0
+                },
+                "max": {
+                    "x": 13.0,
+                    "y": 2.0
+                }
+            },
+            "direction": 1,
+            "targetMapId": "M01",
+            "targetSpawnId": "FromAbove"
+        }
+    ],
+    "enemies": [],
+    "cameraMinX": 9.0,
+    "cameraMaxX": 15.0,
+    "cameraY": 2.5,
+    "cameraFollowSharpness": 10.0,
+    "groundColor": {
+        "r": 0.3799999952316284,
+        "g": 0.36000001430511477,
+        "b": 0.47999998927116396,
+        "a": 1.0
+    }
+}]}
+}
