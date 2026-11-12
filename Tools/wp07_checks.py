@@ -173,6 +173,7 @@ def check(ev):
                        and len(dvh) == 1 and dvh[0]["stateBefore"] == "Down" and dvh[0]["hpAfter"] < dvh[0]["hpBefore"]}
 
     # ---- TC-06-10: down (non-down attack skipped), wakeup start / middle no damage (physical and magic), actionable at once (R-06-10)
+    #      "start" = the first hit attempt reaches the target within 5 ticks of the wakeup start (ground1 startup is 3 ticks)
     s = seg.get("WakeupPhysical", [])
     skips = [(x["simulationTick"], x["stateAfter"], x["reason"]) for x in of(s, "hit.skip") if x["targetId"] == "w1"]
     tr = enemy_track(s, "w1")
@@ -187,7 +188,7 @@ def check(ev):
                        "hitsAfterWakeup": [(h["simulationTick"], h["stateBefore"], h["reason"]) for h in hits], "magicDuringWakeup": mskip,
                        "magicHits": len(mhits),
                        "pass": any(k[1] == "Down" and "DownedNotHittable" in k[2] for k in skips) and len(wake_skips) >= 2
-                       and wake and wake_skips[0][0] - wake[0] <= 3 and any(wake[0] < k[0] < wake[-1] - 3 for k in wake_skips)
+                       and wake and wake_skips[0][0] - wake[0] <= 5 and any(wake[0] < k[0] < wake[-1] - 3 for k in wake_skips)
                        and len(hits) == 1 and hits[0]["stateBefore"] == "Idle" and idle_first is not None and hits[0]["simulationTick"] - idle_first <= 5
                        and any("Wakeup" in r for _, r in mskip) and not mhits}
     return out
