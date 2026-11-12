@@ -1,0 +1,428 @@
+{
+ "log": "D:/ProjectR/Corum2Remake/Evidence/WP-09/runs/RUN-20261112-152613.ndjson",
+ "TC-02-01": {
+  "pairs": [
+   {
+    "segment": "MapJump",
+    "action": "Jump",
+    "devices": [
+     "Corum2VirtualGamepad",
+     "Corum2VirtualKeyboard"
+    ],
+    "results": [
+     [
+      236,
+      "Jump:Standing"
+     ],
+     [
+      281,
+      "Jump:Standing"
+     ]
+    ],
+    "pass": true
+   },
+   {
+    "segment": "MapAttack",
+    "action": "Attack",
+    "devices": [
+     "Corum2VirtualGamepad",
+     "Corum2VirtualKeyboard"
+    ],
+    "results": [
+     [
+      331,
+      "Attack:GroundNormal"
+     ],
+     [
+      356,
+      "Attack:GroundNormal"
+     ]
+    ],
+    "pass": true
+   },
+   {
+    "segment": "MapSpecial",
+    "action": "SpecialAttack",
+    "devices": [
+     "Corum2VirtualGamepad",
+     "Corum2VirtualKeyboard"
+    ],
+    "results": [
+     [
+      391,
+      "Attack:Launcher"
+     ],
+     [
+      426,
+      "Attack:Launcher"
+     ]
+    ],
+    "pass": true
+   },
+   {
+    "segment": "MapGuard",
+    "action": "Guard",
+    "devices": [
+     "Corum2VirtualGamepad",
+     "Corum2VirtualKeyboard"
+    ],
+    "results": [
+     [
+      471,
+      "Guard"
+     ],
+     [
+      491,
+      "Guard"
+     ]
+    ],
+    "pass": true
+   },
+   {
+    "segment": "MapMove",
+    "action": "MoveRight",
+    "devices": [
+     "Corum2VirtualGamepad",
+     "Corum2VirtualKeyboard"
+    ],
+    "results": [
+     [
+      520,
+      "MoveRight"
+     ],
+     [
+      545,
+      "MoveRight"
+     ]
+    ],
+    "pass": true
+   },
+   {
+    "segment": "MapRing",
+    "action": "RingToggle",
+    "devices": [
+     "Corum2VirtualGamepad",
+     "Corum2VirtualKeyboard"
+    ],
+    "results": [
+     [
+      580,
+      "ring.open"
+     ],
+     [
+      634,
+      "ring.open"
+     ]
+    ],
+    "pass": true
+   },
+   {
+    "segment": "MapRing",
+    "action": "PagePrev",
+    "devices": [
+     "Corum2VirtualGamepad",
+     "Corum2VirtualKeyboard"
+    ],
+    "results": [
+     [
+      588,
+      "Prev(LT)"
+     ],
+     [
+      643,
+      "Prev(LT)"
+     ]
+    ],
+    "pass": true
+   },
+   {
+    "segment": "MapRing",
+    "action": "PageNext",
+    "devices": [
+     "Corum2VirtualGamepad",
+     "Corum2VirtualKeyboard"
+    ],
+    "results": [
+     [
+      598,
+      "Next(RT)"
+     ],
+     [
+      653,
+      "Next(RT)"
+     ]
+    ],
+    "pass": true
+   },
+   {
+    "segment": "MapRing",
+    "action": "ButtonB",
+    "devices": [
+     "Corum2VirtualGamepad",
+     "Corum2VirtualKeyboard"
+    ],
+    "results": [
+     [
+      608,
+      "B"
+     ],
+     [
+      663,
+      "B"
+     ]
+    ],
+    "pass": true
+   },
+   {
+    "segment": "MapQuickslot",
+    "action": "QuickDown",
+    "devices": [
+     "Corum2VirtualGamepad",
+     "Corum2VirtualKeyboard"
+    ],
+    "results": [
+     [
+      710,
+      "magic"
+     ],
+     [
+      775,
+      "magic"
+     ]
+    ],
+    "pass": true
+   }
+  ],
+  "note": "virtual keyboard / gamepad; real devices and Steam Deck are BLOCKED_ENV",
+  "pass": true
+ },
+ "TC-03-01": {
+  "cases": [
+   {
+    "case": "StrongTiltWalk",
+    "runEvents": [],
+    "walkTicks": 55,
+    "runTicks": 0,
+    "pass": true
+   },
+   {
+    "case": "PadDoubleTapRun",
+    "armed": [
+     896
+    ],
+    "released": [
+     945
+    ],
+    "runTicks": 49,
+    "pass": true
+   },
+   {
+    "case": "KeyDoubleTapRun",
+    "armed": [
+     976
+    ],
+    "released": [
+     1025
+    ],
+    "runTicks": 49,
+    "pass": true
+   }
+  ],
+  "note": "strong tilt = stick (1,0) on the virtual pad",
+  "pass": true
+ },
+ "TC-03-06": {
+  "cases": [
+   {
+    "case": "AirDirectionOnly",
+    "airUse": [],
+    "airVx": 3.5,
+    "pass": true
+   },
+   {
+    "case": "AirDoubleTap",
+    "events": [
+     [
+      "motor.run",
+      "AirDoubleTapIgnored(R-03-06)"
+     ]
+    ],
+    "pass": true
+   },
+   {
+    "case": "AirA",
+    "events": [
+     [
+      "air.use",
+      "ExtraJump"
+     ]
+    ],
+    "pass": true
+   },
+   {
+    "case": "AirDirAttack",
+    "events": [
+     [
+      "air.use",
+      "AirDash"
+     ]
+    ],
+    "pass": true
+   },
+   {
+    "case": "AirDirSpecial",
+    "events": [
+     [
+      "air.use",
+      "Dive"
+     ]
+    ],
+    "pass": true
+   },
+   {
+    "case": "AirRB",
+    "guardTick": 1420,
+    "grounded": false,
+    "airUse": [],
+    "pass": true
+   }
+  ],
+  "pass": true
+ },
+ "TC-03-07": {
+  "cases": [
+   {
+    "case": "DashThenJump",
+    "airUse": [
+     "AirDash",
+     "ExtraJump"
+    ],
+    "rejected": [
+     "AlreadyUsed:AirDash",
+     "AlreadyUsed:ExtraJump"
+    ],
+    "airNormalAttacks": 0,
+    "pass": true
+   },
+   {
+    "case": "JumpThenDash",
+    "airUse": [
+     "ExtraJump",
+     "AirDash"
+    ],
+    "rejected": [
+     "AlreadyUsed:ExtraJump"
+    ],
+    "airNormalAttacks": 0,
+    "pass": true
+   },
+   {
+    "case": "AirAttackKeepsCounts",
+    "airUse": [
+     "ExtraJump",
+     "AirDash"
+    ],
+    "rejected": [],
+    "airNormalAttacks": 1,
+    "pass": true
+   }
+  ],
+  "pass": true
+ },
+ "TC-03-08": {
+  "airUse": [
+   "Dive"
+  ],
+  "rejected": [
+   [
+    "Jump",
+    "ActionLock:Dive"
+   ],
+   [
+    "Attack",
+    "ActionLock:Dive"
+   ]
+  ],
+  "pass": true
+ },
+ "TC-03-09": {
+  "cases": [
+   {
+    "case": "LandThenAttack",
+    "landTick": 1911,
+    "actionTick": 1912,
+    "ticksAfterLanding": 1,
+    "resetAfter": "jump=free,dash=free,dive=free",
+    "pass": true
+   },
+   {
+    "case": "LandThenGuard",
+    "landTick": 1978,
+    "actionTick": 1979,
+    "ticksAfterLanding": 1,
+    "resetAfter": "jump=free,dash=free,dive=free",
+    "pass": true
+   },
+   {
+    "case": "LandThenJumpAgain",
+    "landTick": 2071,
+    "actionTick": 2072,
+    "ticksAfterLanding": 1,
+    "resetAfter": "jump=free,dash=free,dive=free",
+    "pass": true
+   }
+  ],
+  "note": "CF-02 (landing after special moves) not included",
+  "pass": true
+ },
+ "selftest": [
+  {
+   "case": "original",
+   "pass": {
+    "TC-02-01": true,
+    "TC-03-01": true,
+    "TC-03-06": true,
+    "TC-03-07": true,
+    "TC-03-08": true,
+    "TC-03-09": true
+   }
+  },
+  {
+   "case": "TC-02-01 pad press maps to another action",
+   "section": "TC-02-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-03-01 strong tilt runs",
+   "section": "TC-03-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-03-06 air double tap dashes",
+   "section": "TC-03-06",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-03-07 second dash allowed",
+   "section": "TC-03-07",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-03-08 jump after the dive",
+   "section": "TC-03-08",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-03-09 guard only well after landing",
+   "section": "TC-03-09",
+   "sectionPass": false,
+   "pass": true
+  }
+ ],
+ "selftest_all_pass": true
+}

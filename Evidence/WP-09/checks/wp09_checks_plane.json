@@ -1,0 +1,29 @@
+{
+ "log": "D:/ProjectR/Corum2Remake/Evidence/WP-09/runs/RUN-20261112-152836.ndjson",
+ "TC-01-01": {
+  "player": {
+   "frames": 1236,
+   "maxAbsZError": 0,
+   "planeZ": 0
+  },
+  "playerJumps": 10,
+  "enemies": {
+   "samples": 22248,
+   "bossSamples": 2472,
+   "movingOrAirborneSamples": 29,
+   "maxAbsZError": 0,
+   "planeZ": 0
+  },
+  "aiJumps": 1,
+  "allTicksPlaneZ": true,
+  "pass": true
+ },
+ "selftest": [
+  {
+   "case": "an enemy rendered off the plane",
+   "sectionPass": false,
+   "pass": true
+  }
+ ],
+ "selftest_all_pass": true
+}
