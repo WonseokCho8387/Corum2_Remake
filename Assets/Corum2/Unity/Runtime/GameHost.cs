@@ -530,6 +530,19 @@ namespace Corum2.Unity
                         Sim.Log.Emit("marker", "player", "", "", "", "TestSetPlayerHp", ("hpBefore", before), ("hpAfter", Sim.Combat.PlayerHp));
                     }
                     break;
+                case "ehp":
+                {
+                    // ehp=<enemyInstanceId>:<hp>: test-only enemy HP set (evidence setup, e.g. to reach a boss HP phase), logged
+                    var kv = arg.Split(':');
+                    var en = Sim.Combat?.Find(kv[0]);
+                    if (en != null)
+                    {
+                        var before = en.Hp;
+                        en.Hp = float.Parse(kv[1], CultureInfo.InvariantCulture);
+                        Sim.Log.Emit("marker", "", en.Id, "", en.State.ToString(), "TestSetEnemyHp", ("hpBefore", before), ("hpAfter", en.Hp), ("maxHp", en.Def.MaxHp));
+                    }
+                    break;
+                }
                 case "item":
                 {
                     // item=<itemId>:<count>: test-only inventory set (evidence setup), logged

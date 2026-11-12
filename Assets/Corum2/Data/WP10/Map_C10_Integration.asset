@@ -1,0 +1,195 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2cac156314ef0040a2f4f3ec32e56f9, type: 3}
+  m_Name: Map_C10_Integration
+  m_EditorClassIdentifier: Corum2.Unity::Corum2.Unity.MapDefinition
+  meta:
+    domainId: map.C10
+    schemaVersion: 1
+    dataVersion: wp10-1
+    status: experimental
+    policyIds: []
+    relatedRIds:
+    - R-04-01
+    - R-04-04
+    - R-04-10
+    - R-06-01
+    - R-03-07
+    - R-03-09
+    - R-04-07
+    - R-05-03
+    - R-06-11
+    - R-06-12
+    - R-06-15
+    - R-08-12
+    - R-08-01
+    - R-08-02
+    - R-06-14
+    - R-07-03
+    - R-08-09
+    - R-08-10
+    - R-08-11
+    changeRequestId: 
+  mapId: C10
+  minX: 0
+  maxX: 300
+  killY: -10
+  combatPlaneZ: 0
+  solids:
+  - min: {x: -1, y: -2}
+    max: {x: 301, y: 0}
+  spawns:
+  - id: Start
+    position: {x: 4, y: 0}
+    facing: 1
+  - id: I1Mix
+    position: {x: 12, y: 0}
+    facing: 1
+  - id: I1MixFar
+    position: {x: 6, y: 0}
+    facing: 1
+  - id: I3Air
+    position: {x: 45, y: 0}
+    facing: 1
+  - id: I3AirFar
+    position: {x: 39, y: 0}
+    facing: 1
+  - id: I4Armor
+    position: {x: 80, y: 0}
+    facing: 1
+  - id: I4ArmorFar
+    position: {x: 74, y: 0}
+    facing: 1
+  - id: I4ArmorB
+    position: {x: 97, y: 0}
+    facing: 1
+  - id: I4ArmorBFar
+    position: {x: 91, y: 0}
+    facing: 1
+  - id: I4ArmorBCast
+    position: {x: 96, y: 0}
+    facing: 1
+  - id: I4ArmorC
+    position: {x: 114, y: 0}
+    facing: 1
+  - id: I4ArmorCFar
+    position: {x: 108, y: 0}
+    facing: 1
+  - id: I5Mixed
+    position: {x: 140, y: 0}
+    facing: 1
+  - id: I5MixedFar
+    position: {x: 134, y: 0}
+    facing: 1
+  - id: I6Bosses
+    position: {x: 190, y: 0}
+    facing: 1
+  - id: I6BossesFar
+    position: {x: 184, y: 0}
+    facing: 1
+  left:
+    policy: 0
+    connectionId: 
+    targetMapId: 
+    targetSpawnId: 
+  right:
+    policy: 0
+    connectionId: 
+    targetMapId: 
+    targetSpawnId: 
+  points: []
+  enemies:
+  - instanceId: m0
+    enemyId: bag
+    position: {x: 13, y: 0}
+    facing: -1
+  - instanceId: m1
+    enemyId: bag
+    position: {x: 13, y: 0}
+    facing: -1
+  - instanceId: m2
+    enemyId: bag
+    position: {x: 13, y: 0}
+    facing: -1
+  - instanceId: m3
+    enemyId: bag
+    position: {x: 13, y: 0}
+    facing: -1
+  - instanceId: m4
+    enemyId: bag
+    position: {x: 13, y: 0}
+    facing: -1
+  - instanceId: w0
+    enemyId: weak
+    position: {x: 13, y: 0}
+    facing: -1
+  - instanceId: w1
+    enemyId: weak
+    position: {x: 13, y: 0}
+    facing: -1
+  - instanceId: w2
+    enemyId: weak
+    position: {x: 13, y: 0}
+    facing: -1
+  - instanceId: i0
+    enemyId: boss
+    position: {x: 13, y: 0}
+    facing: -1
+  - instanceId: i1
+    enemyId: boss
+    position: {x: 13, y: 0}
+    facing: -1
+  - instanceId: a0
+    enemyId: bag
+    position: {x: 48.5, y: 0}
+    facing: -1
+  - instanceId: wb
+    enemyId: warden
+    position: {x: 81.6, y: 0}
+    facing: -1
+  - instanceId: wb3
+    enemyId: wardenSlowP2
+    position: {x: 98.6, y: 0}
+    facing: -1
+  - instanceId: wb4
+    enemyId: warden
+    position: {x: 115.6, y: 0}
+    facing: -1
+  - instanceId: ch
+    enemyId: chaser
+    position: {x: 142.5, y: 0}
+    facing: -1
+  - instanceId: fl
+    enemyId: fleer
+    position: {x: 137.5, y: 0}
+    facing: -1
+  - instanceId: jp
+    enemyId: jumper
+    position: {x: 144, y: 0}
+    facing: -1
+  - instanceId: rg
+    enemyId: ranged
+    position: {x: 135, y: 0}
+    facing: -1
+  - instanceId: wb2
+    enemyId: warden
+    position: {x: 194, y: 0}
+    facing: -1
+  - instanceId: sn
+    enemyId: sentinel
+    position: {x: 186, y: 0}
+    facing: -1
+  cameraMinX: 9
+  cameraMaxX: 291
+  cameraY: 2.5
+  cameraFollowSharpness: 10
+  groundColor: {r: 0.4, g: 0.38, b: 0.36, a: 1}
