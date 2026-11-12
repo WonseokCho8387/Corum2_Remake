@@ -1,0 +1,365 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2cac156314ef0040a2f4f3ec32e56f9, type: 3}
+  m_Name: Map_C08_Defense
+  m_EditorClassIdentifier: Corum2.Unity::Corum2.Unity.MapDefinition
+  meta:
+    domainId: map.C08
+    schemaVersion: 1
+    dataVersion: wp08-1
+    status: experimental
+    policyIds: []
+    relatedRIds:
+    - R-06-11
+    - R-06-12
+    - R-06-13
+    - R-06-14
+    - R-06-15
+    - R-06-16
+    - R-06-17
+    - R-06-18
+    - R-07-01
+    - R-07-02
+    - R-07-03
+    - R-07-04
+    - R-07-05
+    - R-07-06
+    - R-07-07
+    changeRequestId: 
+  mapId: C08
+  minX: 0
+  maxX: 620
+  killY: -10
+  combatPlaneZ: 0
+  solids:
+  - min: {x: -1, y: -2}
+    max: {x: 621, y: 0}
+  spawns:
+  - id: Start
+    position: {x: 4, y: 0}
+    facing: 1
+  - id: Z1Armor
+    position: {x: 10, y: 0}
+    facing: 1
+  - id: Z1ArmorFar
+    position: {x: 5, y: 0}
+    facing: 1
+  - id: Z2ArmorMagic
+    position: {x: 35, y: 0}
+    facing: 1
+  - id: Z2ArmorMagicFar
+    position: {x: 30, y: 0}
+    facing: 1
+  - id: Z3Roll
+    position: {x: 60, y: 0}
+    facing: 1
+  - id: Z3RollFar
+    position: {x: 55, y: 0}
+    facing: 1
+  - id: Z3Ra
+    position: {x: 59.9, y: 0}
+    facing: 1
+  - id: Z3Rb
+    position: {x: 59, y: 0}
+    facing: 1
+  - id: Z3Rc
+    position: {x: 58, y: 0}
+    facing: 1
+  - id: Z4Multi
+    position: {x: 90, y: 0}
+    facing: 1
+  - id: Z4MultiFar
+    position: {x: 85, y: 0}
+    facing: 1
+  - id: Z5Dodge
+    position: {x: 120, y: 0}
+    facing: 1
+  - id: Z5DodgeFar
+    position: {x: 115, y: 0}
+    facing: 1
+  - id: Z6DodgeMagic
+    position: {x: 145, y: 0}
+    facing: 1
+  - id: Z6DodgeMagicFar
+    position: {x: 140, y: 0}
+    facing: 1
+  - id: Z7DodgeArmor
+    position: {x: 170, y: 0}
+    facing: 1
+  - id: Z7DodgeArmorFar
+    position: {x: 165, y: 0}
+    facing: 1
+  - id: Z8Death
+    position: {x: 195, y: 0}
+    facing: 1
+  - id: Z8DeathFar
+    position: {x: 190, y: 0}
+    facing: 1
+  - id: Z9Link
+    position: {x: 220, y: 0}
+    facing: 1
+  - id: Z9LinkFar
+    position: {x: 215, y: 0}
+    facing: 1
+  - id: Z10Front
+    position: {x: 250, y: 0}
+    facing: 1
+  - id: Z10FrontFar
+    position: {x: 245, y: 0}
+    facing: 1
+  - id: Z10Back
+    position: {x: 266, y: 0}
+    facing: 1
+  - id: Z10BackFar
+    position: {x: 261, y: 0}
+    facing: 1
+  - id: Z11D9
+    position: {x: 280, y: 0}
+    facing: 1
+  - id: Z11D9Far
+    position: {x: 275, y: 0}
+    facing: 1
+  - id: Z12D10
+    position: {x: 305, y: 0}
+    facing: 1
+  - id: Z12D10Far
+    position: {x: 300, y: 0}
+    facing: 1
+  - id: Z13D50
+    position: {x: 330, y: 0}
+    facing: 1
+  - id: Z13D50Far
+    position: {x: 325, y: 0}
+    facing: 1
+  - id: Z14Cont
+    position: {x: 355, y: 0}
+    facing: 1
+  - id: Z14ContFar
+    position: {x: 350, y: 0}
+    facing: 1
+  - id: Z15AirGuard
+    position: {x: 380, y: 0}
+    facing: 1
+  - id: Z15AirGuardFar
+    position: {x: 375, y: 0}
+    facing: 1
+  - id: Z16AirParry
+    position: {x: 405, y: 0}
+    facing: 1
+  - id: Z16AirParryFar
+    position: {x: 400, y: 0}
+    facing: 1
+  - id: Z17Parry
+    position: {x: 430, y: 0}
+    facing: 1
+  - id: Z17ParryFar
+    position: {x: 425, y: 0}
+    facing: 1
+  - id: Z18Unbl
+    position: {x: 455, y: 0}
+    facing: 1
+  - id: Z18UnblFar
+    position: {x: 450, y: 0}
+    facing: 1
+  - id: Z19Break
+    position: {x: 480, y: 0}
+    facing: 1
+  - id: Z19BreakFar
+    position: {x: 475, y: 0}
+    facing: 1
+  - id: Z20Normal
+    position: {x: 505, y: 0}
+    facing: 1
+  - id: Z20NormalFar
+    position: {x: 500, y: 0}
+    facing: 1
+  - id: Z21Cancel
+    position: {x: 530, y: 0}
+    facing: 1
+  - id: Z21CancelFar
+    position: {x: 525, y: 0}
+    facing: 1
+  - id: Z22Stun
+    position: {x: 555, y: 0}
+    facing: 1
+  - id: Z22StunFar
+    position: {x: 550, y: 0}
+    facing: 1
+  - id: Z23Window0
+    position: {x: 580, y: 0}
+    facing: 1
+  - id: Z23Window0Far
+    position: {x: 575, y: 0}
+    facing: 1
+  - id: Z23Window1
+    position: {x: 590, y: 0}
+    facing: 1
+  - id: Z23Window1Far
+    position: {x: 585, y: 0}
+    facing: 1
+  - id: Z23Window2
+    position: {x: 600, y: 0}
+    facing: 1
+  - id: Z23Window2Far
+    position: {x: 595, y: 0}
+    facing: 1
+  - id: Z23Window3
+    position: {x: 610, y: 0}
+    facing: 1
+  - id: Z23Window3Far
+    position: {x: 605, y: 0}
+    facing: 1
+  left:
+    policy: 0
+    connectionId: 
+    targetMapId: 
+    targetSpawnId: 
+  right:
+    policy: 0
+    connectionId: 
+    targetMapId: 
+    targetSpawnId: 
+  points: []
+  enemies:
+  - instanceId: a1
+    enemyId: armor
+    position: {x: 11.2, y: 0}
+    facing: -1
+  - instanceId: a2
+    enemyId: armorSlow
+    position: {x: 36.2, y: 0}
+    facing: -1
+  - instanceId: r1
+    enemyId: slow6
+    position: {x: 61.2, y: 0}
+    facing: -1
+  - instanceId: x1
+    enemyId: hitter
+    position: {x: 91.2, y: 0}
+    facing: -1
+  - instanceId: x2
+    enemyId: hitter
+    position: {x: 91.2, y: 0}
+    facing: -1
+  - instanceId: x3
+    enemyId: hitter
+    position: {x: 88.8, y: 0}
+    facing: -1
+  - instanceId: dd1
+    enemyId: hitter
+    position: {x: 121.2, y: 0}
+    facing: -1
+  - instanceId: dm1
+    enemyId: hitter
+    position: {x: 146.2, y: 0}
+    facing: -1
+  - instanceId: da1
+    enemyId: armor
+    position: {x: 171.2, y: 0}
+    facing: -1
+  - instanceId: w1
+    enemyId: weak
+    position: {x: 196.2, y: 0}
+    facing: -1
+  - instanceId: c1
+    enemyId: weak
+    position: {x: 221, y: 0}
+    facing: -1
+  - instanceId: c2
+    enemyId: bag
+    position: {x: 221, y: 0}
+    facing: -1
+  - instanceId: c3
+    enemyId: bag
+    position: {x: 221, y: 0}
+    facing: -1
+  - instanceId: fl
+    enemyId: slow8
+    position: {x: 248.8, y: 0}
+    facing: -1
+  - instanceId: fr
+    enemyId: hitter
+    position: {x: 251.2, y: 0}
+    facing: -1
+  - instanceId: bl
+    enemyId: hitter
+    position: {x: 264.8, y: 0}
+    facing: -1
+  - instanceId: g9
+    enemyId: hit9
+    position: {x: 281.2, y: 0}
+    facing: -1
+  - instanceId: g10
+    enemyId: hitter
+    position: {x: 306.2, y: 0}
+    facing: -1
+  - instanceId: g50
+    enemyId: hit50
+    position: {x: 331.2, y: 0}
+    facing: -1
+  - instanceId: cg
+    enemyId: hitter
+    position: {x: 356.2, y: 0}
+    facing: -1
+  - instanceId: ag
+    enemyId: slow8
+    position: {x: 381.2, y: 0}
+    facing: -1
+  - instanceId: ap
+    enemyId: slow8
+    position: {x: 406.2, y: 0}
+    facing: -1
+  - instanceId: pp
+    enemyId: hitter
+    position: {x: 431.2, y: 0}
+    facing: -1
+  - instanceId: tu
+    enemyId: unbl
+    position: {x: 456.2, y: 0}
+    facing: -1
+  - instanceId: tb
+    enemyId: brk
+    position: {x: 481.2, y: 0}
+    facing: -1
+  - instanceId: tn
+    enemyId: hitter
+    position: {x: 506.2, y: 0}
+    facing: -1
+  - instanceId: kb
+    enemyId: bag
+    position: {x: 531.2, y: 0}
+    facing: -1
+  - instanceId: hs
+    enemyId: hitter
+    position: {x: 556.2, y: 0}
+    facing: -1
+  - instanceId: pw0
+    enemyId: hitter
+    position: {x: 581.2, y: 0}
+    facing: -1
+  - instanceId: pw1
+    enemyId: hitter
+    position: {x: 591.2, y: 0}
+    facing: -1
+  - instanceId: pw2
+    enemyId: hitter
+    position: {x: 601.2, y: 0}
+    facing: -1
+  - instanceId: pw3
+    enemyId: hitter
+    position: {x: 611.2, y: 0}
+    facing: -1
+  cameraMinX: 9
+  cameraMaxX: 611
+  cameraY: 2.5
+  cameraFollowSharpness: 10
+  groundColor: {r: 0.36, g: 0.4, b: 0.38, a: 1}
