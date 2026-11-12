@@ -1,0 +1,145 @@
+{
+ "log": "Evidence/WP-05-R2/runs/RUN-20261112-103103.ndjson",
+ "TC-02-02": {
+  "commands": [],
+  "misses": [],
+  "buffed_physical_hits": [],
+  "fallbacks": [],
+  "pass": false
+ },
+ "TC-02-10": {
+  "casts": [],
+  "command_vs_scroll": [],
+  "scroll_links": [],
+  "scroll_links_all_pass": true,
+  "scroll_waits": [],
+  "scroll_cancels": [],
+  "pass": false
+ },
+ "TC-06-19a": {
+  "deaths": [
+   {
+    "deathTick": 245,
+    "motionTick": 245,
+    "motionTicks": 60,
+    "motionTime": 1.2,
+    "expectedMotionTicks": 60,
+    "reviveItemsAtDeath": 0,
+    "afterMotion": "GameOver",
+    "promptResult": null,
+    "revive": null,
+    "enemyAttackStartsWhileDead": 0,
+    "pass": true
+   }
+  ],
+  "gameOver": [
+   [
+    305,
+    "CheckpointRestart,LoadSave,Lobby"
+   ]
+  ],
+  "menuSelects": [
+   [
+    451,
+    "CheckpointRestart",
+    false,
+    "BLOCKED_SPEC(U-08)"
+   ],
+   [
+    496,
+    "LoadSave",
+    false,
+    "BLOCKED_SPEC(U-08)"
+   ]
+  ],
+  "expectedSelects": [
+   "CheckpointRestart",
+   "LoadSave"
+  ],
+  "cursorMoves": [
+   [
+    476,
+    "CheckpointRestart",
+    "LoadSave"
+   ]
+  ],
+  "reviveRefusedFromQuickslot": [],
+  "reviveInvulnSkips": [],
+  "pass": true
+ },
+ "TC-06-19b": "BLOCKED_SPEC (U-08): no save/checkpoint contract; selections are logged with returnPerformed=false",
+ "selftest": [
+  {
+   "case": "original",
+   "pass": {
+    "TC-02-02": false,
+    "TC-02-10": false,
+    "TC-06-19a": true
+   }
+  },
+  {
+   "case": "all fire effects and hits removed",
+   "pass": null,
+   "note": "not applicable"
+  },
+  {
+   "case": "first command fire effect removed",
+   "pass": null,
+   "note": "not applicable"
+  },
+  {
+   "case": "all menu selections removed",
+   "section": "TC-06-19a",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "enemy attack start one tick after the death",
+   "section": "TC-06-19a",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "scroll item.use removed",
+   "pass": null,
+   "note": "not applicable"
+  },
+  {
+   "case": "scroll item.use requestId moved to another request",
+   "pass": null,
+   "note": "not applicable"
+  },
+  {
+   "case": "scroll item.use countAfter and cooldown removed",
+   "pass": null,
+   "note": "not applicable"
+  },
+  {
+   "case": "fire hits moved before their cast",
+   "pass": null,
+   "note": "not applicable"
+  },
+  {
+   "case": "first death motion end at the death tick",
+   "section": "TC-06-19a",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "first miss press outcome unknown_outcome",
+   "pass": null,
+   "note": "not applicable"
+  },
+  {
+   "case": "last scroll item.use removed (other scroll intact)",
+   "pass": null,
+   "note": "not applicable"
+  },
+  {
+   "case": "last scroll item.use requestId +90000 (other scroll intact)",
+   "pass": null,
+   "note": "not applicable"
+  }
+ ],
+ "selftest_all_pass": true
+}

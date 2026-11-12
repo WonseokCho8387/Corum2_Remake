@@ -1,0 +1,32 @@
+{
+ "RUN-20261112-102835.ndjson": {
+  "lastScrollUseTick": 1020,
+  "original": {
+   "oldChecker_TC-02-10": true,
+   "newChecker_TC-02-10": true
+  },
+  "lastUseRemoved": {
+   "oldChecker_TC-02-10": true,
+   "newChecker_TC-02-10": false
+  },
+  "lastRequestIdShifted": {
+   "oldChecker_TC-02-10": true,
+   "newChecker_TC-02-10": false
+  }
+ },
+ "RUN-20261112-084821.ndjson": {
+  "lastScrollUseTick": 1035,
+  "original": {
+   "oldChecker_TC-02-10": true,
+   "newChecker_TC-02-10": true
+  },
+  "lastUseRemoved": {
+   "oldChecker_TC-02-10": true,
+   "newChecker_TC-02-10": false
+  },
+  "lastRequestIdShifted": {
+   "oldChecker_TC-02-10": true,
+   "newChecker_TC-02-10": false
+  }
+ }
+}
