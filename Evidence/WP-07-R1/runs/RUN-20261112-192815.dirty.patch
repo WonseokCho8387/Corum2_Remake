@@ -1,0 +1,13 @@
+diff --git a/Assets/Corum2/Data/WP07/CombatConfig_WP07.asset b/Assets/Corum2/Data/WP07/CombatConfig_WP07.asset
+index b21f448..8bc9355 100644
+--- a/Assets/Corum2/Data/WP07/CombatConfig_WP07.asset
++++ b/Assets/Corum2/Data/WP07/CombatConfig_WP07.asset
+@@ -43,7 +43,7 @@ MonoBehaviour:
+     width: 1
+     height: 1.2
+     testDamage: 10
+-    hitstop: 0.04
++    hitstop: 0.1
+     knockback: 1.5
+     launchVelocity: 0
+     hitEvents: 1

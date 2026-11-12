@@ -1,0 +1,23 @@
+diff --git a/Assets/Corum2/Data/WP02/CombatConfig.asset b/Assets/Corum2/Data/WP02/CombatConfig.asset
+index eb21d4e..44a2d03 100644
+--- a/Assets/Corum2/Data/WP02/CombatConfig.asset
++++ b/Assets/Corum2/Data/WP02/CombatConfig.asset
+@@ -27,6 +27,9 @@ MonoBehaviour:
+     - R-07-02
+     changeRequestId: 
+   playerMaxHp: 100
++  deathMotionTime: 1.2
++  reviveHpRatio: 0.5
++  reviveInvulnTime: 1.5
+   groundNormals:
+   - id: ground1
+     kind: 0
+@@ -263,7 +266,7 @@ MonoBehaviour:
+     hitsDowned: 1
+   comboWindow: 0.5
+   airAttackFallSpeed: 1.5
+-  parryWindow: 0.15
++  parryWindow: 0.2
+   parryStunTime: 0.8
+   parryKnockback: 6
+   dodgeReactionTime: 0.35

@@ -1,0 +1,624 @@
+{
+ "log": "D:/ProjectR/Corum2Remake/Evidence/WP-07-R1/runs/RUN-20261112-194039.ndjson",
+ "TC-06-01": {
+  "attacks": [
+   {
+    "attack": "ground1",
+    "instance": 1,
+    "hits": [
+     [
+      "o1",
+      1
+     ]
+    ],
+    "motionTicks": 15
+   },
+   {
+    "attack": "ground2",
+    "instance": 2,
+    "hits": [
+     [
+      "o1",
+      2
+     ]
+    ],
+    "motionTicks": 15
+   }
+  ],
+  "pass": true
+ },
+ "TC-06-02": {
+  "singleAttacks": [
+   [
+    "ground1",
+    [
+     "m1",
+     "m2",
+     "m3"
+    ]
+   ],
+   [
+    "ground2",
+    [
+     "m1",
+     "m2",
+     "m3"
+    ]
+   ],
+   [
+    "ground3",
+    [
+     "m1",
+     "m2",
+     "m3"
+    ]
+   ]
+  ],
+  "threeEventAttack": {
+   "events": [
+    "6:0",
+    "6:1",
+    "6:2"
+   ],
+   "hits": 9,
+   "uniquePairs": 9
+  },
+  "pass": true
+ },
+ "TC-06-03-main": {
+  "one": {
+   "targets": 1,
+   "motionTicks": 15,
+   "stops": [
+    [
+     0.04,
+     1
+    ]
+   ]
+  },
+  "ten": {
+   "targets": 10,
+   "motionTicks": 15,
+   "stops": [
+    [
+     0.04,
+     10
+    ]
+   ]
+  },
+  "pass": true
+ },
+ "TC-06-04": {
+  "enemies": [
+   {
+    "enemy": "k1",
+    "hits": 6,
+    "stagger": 6,
+    "staggerResisted": 0,
+    "staggerStatesAfterHits": 6,
+    "stateConsistent": true
+   },
+   {
+    "enemy": "k2",
+    "hits": 6,
+    "stagger": 6,
+    "staggerResisted": 0,
+    "staggerStatesAfterHits": 6,
+    "stateConsistent": true
+   },
+   {
+    "enemy": "k3",
+    "hits": 6,
+    "stagger": 6,
+    "staggerResisted": 0,
+    "staggerStatesAfterHits": 6,
+    "stateConsistent": true
+   },
+   {
+    "enemy": "k4",
+    "hits": 6,
+    "stagger": 0,
+    "staggerResisted": 6,
+    "staggerStatesAfterHits": 0,
+    "stateConsistent": true
+   }
+  ],
+  "pass": true
+ },
+ "TC-06-05": {
+  "enemies": [
+   {
+    "enemy": "k1",
+    "knockbackVel": [
+     1.5,
+     1.5,
+     1.5,
+     0.5,
+     0.5,
+     0.5
+    ],
+    "maxDisplacement": 0.19,
+    "lastHitVsFirst": [
+     0.5,
+     1.5
+    ],
+    "firstHitDisplacement": 0.0539932251
+   },
+   {
+    "enemy": "k2",
+    "knockbackVel": [
+     0.75,
+     0.75,
+     0.75,
+     0.25,
+     0.25,
+     0.25
+    ],
+    "maxDisplacement": 0.07,
+    "lastHitVsFirst": [
+     0.25,
+     0.75
+    ],
+    "firstHitDisplacement": 0.0179977417
+   },
+   {
+    "enemy": "k3",
+    "knockbackVel": [
+     0.3,
+     0.3,
+     0.3,
+     0.1,
+     0.1,
+     0.1
+    ],
+    "maxDisplacement": 0.02,
+    "lastHitVsFirst": [
+     0.1,
+     0.3
+    ],
+    "firstHitDisplacement": 0.005996704
+   },
+   {
+    "enemy": "k4",
+    "knockbackVel": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "maxDisplacement": 0.0,
+    "lastHitVsFirst": [
+     0,
+     0
+    ],
+    "firstHitDisplacement": null
+   }
+  ],
+  "equalToOneTickDecel_pe": {
+   "knockbackVel": [
+    0.6
+   ],
+   "firstHitDisplacement": 0.0119934082
+  },
+  "pass": true
+ },
+ "TC-06-06": {
+  "enemies": [
+   {
+    "enemy": "k1",
+    "magicHits": 1,
+    "knockbackVel": [
+     5
+    ],
+    "reaction": [
+     "MagicStagger+Knockback(R-06-06)"
+    ],
+    "displacement": 0.4679947,
+    "ok": true
+   },
+   {
+    "enemy": "k2",
+    "magicHits": 1,
+    "knockbackVel": [
+     5
+    ],
+    "reaction": [
+     "MagicStagger+Knockback(R-06-06)"
+    ],
+    "displacement": 0.4679947,
+    "ok": true
+   },
+   {
+    "enemy": "k3",
+    "magicHits": 1,
+    "knockbackVel": [
+     5
+    ],
+    "reaction": [
+     "MagicStagger+Knockback(R-06-06)"
+    ],
+    "displacement": 0.468002319,
+    "ok": true
+   },
+   {
+    "enemy": "k4",
+    "magicHits": 1,
+    "knockbackVel": [
+     5
+    ],
+    "reaction": [
+     "MagicStagger+Knockback(R-06-06)"
+    ],
+    "displacement": 0.468002319,
+    "ok": true
+   },
+   {
+    "enemy": "mw",
+    "magicHits": 1,
+    "knockbackVel": [
+     0.5
+    ],
+    "reaction": [
+     "MagicStagger+Knockback(R-06-06)"
+    ],
+    "displacement": 0.0100097656,
+    "ok": true
+   },
+   {
+    "enemy": "me",
+    "magicHits": 1,
+    "knockbackVel": [
+     0.599999964
+    ],
+    "reaction": [
+     "MagicStagger+Knockback(R-06-06)"
+    ],
+    "displacement": 0.0119934082,
+    "ok": true
+   }
+  ],
+  "pass": true
+ },
+ "TC-06-07": {
+  "fourHits": {
+   "airHits": 4,
+   "peakY": 3.13,
+   "minFallPerTickDuringJuggle": -0.04,
+   "maxFallPerTickAfter": null,
+   "landedTick": 1582,
+   "lastAirHit": 1569,
+   "slowOk": true,
+   "normalFallAfterOk": false
+  },
+  "twoThenStop": {
+   "airHits": 2,
+   "peakY": 3.13,
+   "minFallPerTickDuringJuggle": -0.04,
+   "maxFallPerTickAfter": -0.12,
+   "landedTick": 2016,
+   "lastAirHit": 1987,
+   "slowOk": true,
+   "normalFallAfterOk": true
+  },
+  "note": "slow fall = juggleFallSpeed 2 m/s = 0.04 m per tick",
+  "fourRegisteredAirAttacks": true,
+  "pass": true
+ },
+ "TC-06-08": {
+  "targets": [
+   {
+    "enemy": "l1",
+    "samples": 60,
+    "reaction": "Launched:Launchable(R-06-08)",
+    "damage": 12,
+    "comboAfter": 1,
+    "peakY": 3.13
+   },
+   {
+    "enemy": "l2",
+    "samples": 60,
+    "reaction": "Launched:Resist(R-06-08)",
+    "damage": 12,
+    "comboAfter": 1,
+    "peakY": 0.75
+   },
+   {
+    "enemy": "l3",
+    "samples": 60,
+    "reaction": "LaunchImmune:DamageAndCount(R-04-04)",
+    "damage": 12,
+    "comboAfter": 1,
+    "peakY": 0.0
+   }
+  ],
+  "pass": true
+ },
+ "TC-06-09": {
+  "downAttacks": [
+   {
+    "facing": 1,
+    "hits": [
+     [
+      "d1",
+      "Down",
+      "Down",
+      "DownHit(no extension, CF-10)"
+     ]
+    ]
+   },
+   {
+    "facing": -1,
+    "hits": [
+     [
+      "d1",
+      "Down",
+      "Down",
+      "DownHit(no extension, CF-10)"
+     ]
+    ]
+   }
+  ],
+  "dive": [
+   [
+    "d2",
+    "Down",
+    "DownHit(no extension, CF-10)",
+    20
+   ]
+  ],
+  "pass": true
+ },
+ "TC-06-10": {
+  "skips": [
+   [
+    2611,
+    "Down",
+    "DownedNotHittableByThisAttack(R-06-10)"
+   ],
+   [
+    2657,
+    "Wakeup",
+    "TargetInvincible:Wakeup(R-06-10)"
+   ],
+   [
+    2673,
+    "Wakeup",
+    "TargetInvincible:Wakeup(R-06-10)"
+   ]
+  ],
+  "wakeupTicks": [
+   2653,
+   2682
+  ],
+  "firstIdleTick": 2683,
+  "hitsAfterWakeup": [
+   [
+    2687,
+    "Idle",
+    "Stagger(R-06-04)"
+   ]
+  ],
+  "magicDuringWakeup": [
+   [
+    2922,
+    "TargetInvincible:Wakeup(R-06-10)"
+   ]
+  ],
+  "magicHits": 0,
+  "pass": true,
+  "startBoundary": {
+   "wakeupTicks": [
+    3471,
+    3500
+   ],
+   "firstIdleTick": 3501,
+   "attack": 54,
+   "start": 3466,
+   "skips": [
+    [
+     3468,
+     "DownedNotHittableByThisAttack(R-06-10)"
+    ],
+    [
+     3471,
+     "TargetInvincible:Wakeup(R-06-10)"
+    ]
+   ],
+   "downSkipBefore": true,
+   "pass": true
+  },
+  "endBoundary": {
+   "wakeupTicks": [
+    3670,
+    3699
+   ],
+   "firstIdleTick": 3700,
+   "attack": 56,
+   "start": 3695,
+   "skips": [
+    [
+     3697,
+     "TargetInvincible:Wakeup(R-06-10)"
+    ]
+   ],
+   "hitTick": 3700,
+   "pass": true
+  }
+ },
+ "selftest": [
+  {
+   "case": "original",
+   "pass": {
+    "TC-06-01": true,
+    "TC-06-02": true,
+    "TC-06-03-main": true,
+    "TC-06-04": true,
+    "TC-06-05": true,
+    "TC-06-06": true,
+    "TC-06-07": true,
+    "TC-06-08": true,
+    "TC-06-09": true,
+    "TC-06-10": true
+   }
+  },
+  {
+   "case": "TC-06-01 same motion hits the target twice",
+   "section": "TC-06-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-06-02 one event hits a target twice",
+   "section": "TC-06-02",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-06-03 ten targets stop twice",
+   "section": "TC-06-03-main",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-06-04 stagger-resistant boss staggers",
+   "section": "TC-06-04",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-06-05 large enemy knocked back like a small one",
+   "section": "TC-06-05",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-06-06 magic knockback 0 on the boss",
+   "section": "TC-06-06",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-06-07 enemy floats after the string stops",
+   "section": "TC-06-07",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-06-08 resist rises like launchable",
+   "section": "TC-06-08",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-06-09 down attack launches",
+   "section": "TC-06-09",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-06-10 hit lands during wakeup",
+   "section": "TC-06-10",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "M02 TC-06-01 first hit with no damage",
+   "section": "TC-06-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "M02 TC-06-02 undeclared event ids 90/91/92",
+   "section": "TC-06-02",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "M02 TC-06-03 single-target stop duplicated",
+   "section": "TC-06-03-main",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "M02 TC-06-04 small enemy first reaction recorded as Idle",
+   "section": "TC-06-04",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "M02 TC-06-05 small enemy x pinned to its start",
+   "section": "TC-06-05",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "M02 TC-06-06 boss magic hit linked to an unrelated instance",
+   "section": "TC-06-06",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "M02 TC-06-07 four air hits on one unregistered instance",
+   "section": "TC-06-07",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "M02 TC-06-08 immune target samples removed",
+   "section": "TC-06-08",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "M02 TC-06-09 special presses removed",
+   "section": "TC-06-09",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "M02 TC-06-10 wakeup refusal moved before wakeup starts",
+   "section": "TC-06-10",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "M02 TC-06-10 Idle hit moved to the last wakeup tick",
+   "section": "TC-06-10",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "M02 TC-06-10 extra wakeup refusal on the first Idle tick",
+   "section": "TC-06-10",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "R1 TC-06-05 equal-to-one-tick knockback record shows no movement",
+   "section": "TC-06-05",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "R1 TC-06-06 weak magic knockback does not move",
+   "section": "TC-06-06",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "R1 TC-06-10 start-boundary refusal one tick after wakeup starts",
+   "section": "TC-06-10",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "R1 TC-06-10 end-boundary hit one tick after the first Idle tick",
+   "section": "TC-06-10",
+   "sectionPass": false,
+   "pass": true
+  }
+ ],
+ "selftest_all_pass": true
+}

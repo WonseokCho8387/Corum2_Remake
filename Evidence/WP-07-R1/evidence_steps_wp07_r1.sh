@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+# WP-07 evidence: P0-06 hit / reaction TCs (TC-06-01..10) on the WP07_HitReaction scene (zones 30 m apart), virtual keyboard, recorded video.
+# Keys: J attack, K special (launcher; in the air with a direction = dive), L guard (RB), Space jump, A/D/S/W directions.
+# In the air: direction + J = air dash, neutral J = air normal attack.
+# Usage: wp06_evidence.sh NAME KIND [novideo]   KIND = main | hs (TC-06-03 hitstop run; ground1 hitstop is set by the caller)
+set -u
+NAME=${1:-main}
+KIND=${2:-main}
+VIDEO=${3:-video}
+source C:/Users/wscho/AppData/Local/Temp/claude/65e40243e0f06e30/e88d8a76-fd3b-4580-95f3-dd329e162832/scratchpad/uhelpers.sh
+P=/d/ProjectR/Corum2Remake
+OUT="$P/Diagnostics/WP07/$NAME"
+mkdir -p "$OUT"
+
+MAIN='0.1:tc=TC-06-01;0.1:spawn=Z1Overlap;0.1:mark=SameMotionOverlap;0.3:kbtap=J;0.75:kbtap=J;2.0:tc=TC-06-02;2.0:spawn=Z2Three;2.1:mark=ThreeTargetsAndThreeEvents;2.3:kbtap=J;2.65:kbtap=J;3.0:kbtap=J;3.35:kbtap=J;5.0:tc=TC-06-03;5.0:spawn=Z3Ten;5.1:mark=HitstopTenTargets;5.3:kbtap=J;7.0:tc=TC-06-04;7.0:spawn=K1Small;7.1:mark=Reactions_k1;7.30:kbtap=J;7.65:kbtap=J;8.00:kbtap=J;8.35:kbtap=J;9.4:tc=TC-06-06;9.4:mark=Magic_k1;9.50:kb=S:down;9.56:kb=D:down;9.62:kb=S:up;9.68:kbtap=J;9.76:kb=D:up;11.5:tc=TC-06-04;11.5:spawn=K2Medium;11.6:mark=Reactions_k2;11.80:kbtap=J;12.15:kbtap=J;12.50:kbtap=J;12.85:kbtap=J;13.9:tc=TC-06-06;13.9:mark=Magic_k2;14.00:kb=S:down;14.06:kb=D:down;14.12:kb=S:up;14.18:kbtap=J;14.26:kb=D:up;16.0:tc=TC-06-04;16.0:spawn=K3Large;16.1:mark=Reactions_k3;16.30:kbtap=J;16.65:kbtap=J;17.00:kbtap=J;17.35:kbtap=J;18.4:tc=TC-06-06;18.4:mark=Magic_k3;18.50:kb=S:down;18.56:kb=D:down;18.62:kb=S:up;18.68:kbtap=J;18.76:kb=D:up;20.5:tc=TC-06-04;20.5:spawn=K4Boss;20.6:mark=Reactions_k4;20.80:kbtap=J;21.15:kbtap=J;21.50:kbtap=J;21.85:kbtap=J;22.9:tc=TC-06-06;22.9:mark=Magic_k4;23.00:kb=S:down;23.06:kb=D:down;23.12:kb=S:up;23.18:kbtap=J;23.26:kb=D:up;25.0:tc=TC-06-07;25.0:spawn=L1Able;25.1:mark=LaunchAirFour;25.30:kbtap=K;25.95:kbtap=Space;26.15:kbtap=J;26.45:kbtap=J;26.75:kbtap=J;27.05:kbtap=J;29.0:tc=TC-06-08;29.0:spawn=L2Resist;29.1:mark=LaunchResist;29.30:kbtap=K;31.5:tc=TC-06-08;31.5:spawn=L3Immune;31.6:mark=LaunchImmune;31.80:kbtap=K;34.0:tc=TC-06-07;34.0:spawn=L4Stop;34.1:mark=LaunchAirTwoThenStop;34.30:kbtap=K;34.95:kbtap=Space;35.15:kbtap=J;35.45:kbtap=J;38.0:tc=TC-06-09;38.0:spawn=D1Down;38.1:mark=DownAttackBothSides;38.30:kbtap=K;38.40:await=d1:Down:5;38.50:kb=S:down;38.52:kb=D:down;38.55:kbtap=K;38.70:kb=D:up;38.72:kb=S:up;38.90:spawn=D1Right;39.00:kb=S:down;39.02:kb=A:down;39.05:kbtap=K;39.20:kb=A:up;39.22:kb=S:up;41.5:tc=TC-06-09;41.5:spawn=D2Dive;41.6:mark=DiveOnDowned;41.80:kbtap=K;41.90:await=d2:Down:5;41.95:kbtap=Space;42.10:kb=D:down;42.12:kbtap=K;42.30:kb=D:up;44.5:tc=TC-06-10;44.5:spawn=W1Wake;44.6:mark=WakeupPhysical;44.80:kbtap=K;44.90:await=w1:Down:5;45.00:kbtap=J;45.10:await=w1:Wakeup:5;45.12:kbtap=J;45.45:kbtap=J;45.50:await=w1:Idle:5;45.50:kbtap=J;47.5:tc=TC-06-10;47.5:spawn=W2Magic;47.6:mark=WakeupMagic;47.80:kbtap=K;47.90:await=w2:Wakeup:5;47.92:kb=S:down;47.98:kb=D:down;48.04:kb=S:up;48.10:kbtap=J;48.18:kb=D:up;51.00:tc=TC-06-06;51.00:spawn=K5MagicWeak;51.10:mark=MagicWeak_mw;51.20:kb=S:down;51.26:kb=D:down;51.32:kb=S:up;51.38:kbtap=J;51.46:kb=D:up;53.00:spawn=K6MagicEqual;53.10:mark=MagicEqual_me;53.20:kb=S:down;53.26:kb=D:down;53.32:kb=S:up;53.38:kbtap=J;53.46:kb=D:up;55.00:tc=TC-06-05;55.00:spawn=K7PhysEqual;55.10:mark=PhysEqual_pe;55.30:kbtap=J;57.00:tc=TC-06-10;57.00:spawn=W3WakeStart;57.10:mark=WakeupStartBoundary;57.20:kbtap=K;57.30:await=w3:Down:5;58.18:kbtap=J;60.00:spawn=W4WakeEnd;60.10:mark=WakeupEndBoundary;60.20:kbtap=K;60.30:await=w4:Down:5;61.78:kbtap=J;63.50:mark=ScriptEnd;63.60:flush'
+
+HS='0.1:tc=TC-06-03;0.1:spawn=Z1Overlap;0.1:mark=HitstopOneTarget;0.3:kbtap=J;2.0:spawn=Z3Ten;2.1:mark=HitstopTenTargets;2.3:kbtap=J;3.5:mark=ScriptEnd;3.6:flush'
+
+case "$KIND" in
+  hs) S="$HS" ;;
+  *) S="$MAIN" ;;
+esac
+wait_editor
+ev 'UnityEditor.SceneManagement.EditorSceneManager.OpenScene("Assets/Corum2/Scenes/WP07_HitReaction.unity"); return "opened";' >/dev/null
+unity command editor set_auto_tick $C >/dev/null 2>&1
+unity command editor.playmode set_run_in_background $C >/dev/null 2>&1
+unity command editor.playmode start $C >/dev/null 2>&1
+wait_playing; echo "playing"
+run=$(ev 'return Corum2.Unity.GameHost.Instance.RunId;' | grep -o 'RUN-[0-9-]*')
+echo "$run"
+ev "$INPUT_FOCUS_ON" >/dev/null
+ev 'UnityEngine.Camera.main.aspect = 1.6f; return "aspect";' >/dev/null
+[ "$VIDEO" = video ] && ev "return Corum2.EditorTools.EvidenceRecorder.Start(\"D:/ProjectR/Corum2Remake/Diagnostics/WP07/$NAME/$NAME-$run\", 1280, 800, 50);"
+ev "Corum2.Unity.GameHost.Instance.RunInputScript(\"$S\"); return \"started\";" >/dev/null
+wait_script_done; echo "script done"
+[ "$VIDEO" = video ] && ev 'return Corum2.EditorTools.EvidenceRecorder.Stop();'
+unity command editor.playmode stop $C >/dev/null 2>&1
+wait_edit
+ev "$INPUT_FOCUS_OFF" >/dev/null
+cp "$P/Diagnostics/Runs/$run".* "$OUT/" 2>/dev/null
+unity command editor.playmode set_run_in_background $C -- --enabled false >/dev/null 2>&1
+unity command editor set_auto_tick $C -- --enabled false >/dev/null 2>&1
+echo "done $run"
