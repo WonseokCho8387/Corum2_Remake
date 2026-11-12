@@ -125,9 +125,15 @@ namespace Corum2.Core
         public readonly double RawTime;
         public readonly string Device;
         public readonly string Control;
+        /// <summary>
+        /// Seq of the stick sample this direction edge came from (WP05-F01 R2). All edges of one sample share it; 0 means
+        /// the event is its own sample (buttons, keyboard keys, scripted single edges).
+        /// </summary>
+        public readonly long SampleGroup;
 
-        public InputEvent(long eventId, LogicalAction action, InputEdge edge, double rawTime, string device, string control)
+        public InputEvent(long eventId, LogicalAction action, InputEdge edge, double rawTime, string device, string control, long sampleGroup = 0)
         {
+            SampleGroup = sampleGroup;
             EventId = eventId;
             Action = action;
             Edge = edge;
@@ -187,20 +193,20 @@ namespace Corum2.Core
 
         public Dir8 Current => Dir8Util.FromComponents(_h, _v);
 
-        public void Update(Dir8 dir, double time, string device, string control, Func<long> nextId, List<InputEvent> output)
+        public void Update(Dir8 dir, double time, string device, string control, Func<long> nextId, List<InputEvent> output, long sampleGroup = 0)
         {
             var h = Dir8Util.Horizontal(dir);
             var v = Dir8Util.Vertical(dir);
             if (h != _h)
             {
-                if (_h != 0) output.Add(new InputEvent(nextId(), _h > 0 ? LogicalAction.MoveRight : LogicalAction.MoveLeft, InputEdge.Release, time, device, control));
-                if (h != 0) output.Add(new InputEvent(nextId(), h > 0 ? LogicalAction.MoveRight : LogicalAction.MoveLeft, InputEdge.Press, time, device, control));
+                if (_h != 0) output.Add(new InputEvent(nextId(), _h > 0 ? LogicalAction.MoveRight : LogicalAction.MoveLeft, InputEdge.Release, time, device, control, sampleGroup));
+                if (h != 0) output.Add(new InputEvent(nextId(), h > 0 ? LogicalAction.MoveRight : LogicalAction.MoveLeft, InputEdge.Press, time, device, control, sampleGroup));
                 _h = h;
             }
             if (v != _v)
             {
-                if (_v != 0) output.Add(new InputEvent(nextId(), _v > 0 ? LogicalAction.MoveUp : LogicalAction.MoveDown, InputEdge.Release, time, device, control));
-                if (v != 0) output.Add(new InputEvent(nextId(), v > 0 ? LogicalAction.MoveUp : LogicalAction.MoveDown, InputEdge.Press, time, device, control));
+                if (_v != 0) output.Add(new InputEvent(nextId(), _v > 0 ? LogicalAction.MoveUp : LogicalAction.MoveDown, InputEdge.Release, time, device, control, sampleGroup));
+                if (v != 0) output.Add(new InputEvent(nextId(), v > 0 ? LogicalAction.MoveUp : LogicalAction.MoveDown, InputEdge.Press, time, device, control, sampleGroup));
                 _v = v;
             }
         }

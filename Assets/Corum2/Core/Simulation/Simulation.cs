@@ -138,7 +138,7 @@ namespace Corum2.Core
             "EXP-CMD-03 if the cast is refused by the player state, the press goes to the normal action and the refusal is logged",
             "EXP-CMD-04 several matching commands: the longest sequence wins, then list order",
             "EXP-CMD-05 a successful command clears the direction history; otherwise entries only expire by age",
-            "EXP-CMD-06 direction history and command matching use only input the router gave to the game (decided at routing time, not re-read at the tick); one stick sample's direction edges are recorded as one change (no in-between diagonal); nothing is recorded while the player is dead",
+            "EXP-CMD-06 direction history and command matching use only input the router gave to the game (decided at routing time, not re-read at the tick); one stick sample's direction edges are recorded as one change (no in-between diagonal), grouped by the sample's sequence number so separate samples are each recorded even when their device times tie; nothing is recorded while the player is dead",
             "EXP-ITEM-07 a magic scroll requested during a slide or roll waits until it ends (like EXP-ITEM-03); a scroll is consumed and its cooldown starts only when its cast actually starts",
             "EXP-MAGIC-01 a cast is a player motion (startup = CastTime, effect, Recovery) with the attack movement lock; it starts only from free or guard states",
             "EXP-MAGIC-02 a cast ends the current attack chain and is not a chain step",
@@ -326,15 +326,16 @@ namespace Corum2.Core
                 Log.Emit("input", PlayerMotor.Actor, "", stateBefore.ToString(), Player.State.ToString(), outcome,
                     ("device", e.Device), ("control", e.Control), ("action", e.Action), ("edge", e.Edge),
                     ("inputEventId", e.EventId), ("requestTime", e.RawTime), ("deliveredTick", Tick),
-                    ("latency", input.RealTime - e.RawTime), ("consumer", "game"), ("heldDir", Player.HeldDir));
+                    ("latency", input.RealTime - e.RawTime), ("consumer", "game"), ("heldDir", Player.HeldDir), ("sampleGroup", e.SampleGroup));
 
                 if (e.Edge == InputEdge.Press && (e.Action == LogicalAction.MoveUp || e.Action == LogicalAction.MoveDown))
                     TryPointTransition(e);
-                // WP05-F01: one stick sample becomes several direction edges with the same device time (e.g. Right press then
-                // Down release). Record the held direction only after the last edge of such a group, so the axis state
-                // between two edges of one sample (a diagonal nobody input) never enters the history.
-                if (!(IsMoveAction(e.Action) && ei + 1 < input.Events.Count && IsMoveAction(input.Events[ei + 1].Action) &&
-                      input.Events[ei + 1].RawTime == e.RawTime))
+                // WP05-F01 (R2): one stick sample becomes several direction edges (e.g. Right press then Down release), all
+                // tagged with that sample's Seq. Record the held direction only after the last edge of the sample, so the
+                // axis state between two edges of one sample (a diagonal nobody input) never enters the history. Separate
+                // samples are recorded one by one even when their device times are equal.
+                if (!(IsMoveAction(e.Action) && e.SampleGroup != 0 && ei + 1 < input.Events.Count &&
+                      input.Events[ei + 1].SampleGroup == e.SampleGroup))
                     Magic?.Observe(Player.HeldDir, GameTime, Tick);
             }
 

@@ -53,7 +53,7 @@ namespace Corum2.Tests
         public SimHarness Dir(Dir8 d, double offset = 0)
         {
             _scratch.Clear();
-            _dir.Update(d, _now + offset, "test", "dir", Transport.NextEventId, _scratch);
+            _dir.Update(d, _now + offset, "test", "dir", Transport.NextEventId, _scratch, Transport.NextEventId());
             foreach (var e in _scratch) Transport.Enqueue(e);
             return this;
         }
@@ -95,9 +95,10 @@ namespace Corum2.Tests
                 }
                 else if (it is System.ValueTuple<float, float> xy)
                 {
-                    samples.Add(new StickSample(_now, xy.Item1, xy.Item2, Transport.NextEventId()));
+                    var seq = Transport.NextEventId();
+                    samples.Add(new StickSample(_now, xy.Item1, xy.Item2, seq));
                     _scratch.Clear();
-                    _dir.Update(Dir8Util.FromStick(xy.Item1, xy.Item2, 0.35f), _now, "frame", "stick", Transport.NextEventId, _scratch);
+                    _dir.Update(Dir8Util.FromStick(xy.Item1, xy.Item2, 0.35f), _now, "frame", "stick", Transport.NextEventId, _scratch, seq);
                     events.AddRange(_scratch);
                 }
             }

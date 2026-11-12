@@ -779,13 +779,24 @@ namespace Corum2.Core
             return Aabb.FromCenterSize(en.Position.X + en.Facing * d.HitboxOffsetX, en.Position.Y + d.HitboxOffsetY, d.HitboxWidth, d.HitboxHeight);
         }
 
-        /// <summary>Why the player is invulnerable now (logged on skipped hits).</summary>
-        public string InvincibleReason => ReviveInvulnerable && P.State != MotorState.Roll
-            ? "PlayerInvincible:Revive(EXP-DEATH-03)"
-            : "PlayerInvincible:RollWindow(R-06-13)";
+        /// <summary>
+        /// Why the player is invulnerable now (logged on skipped hits). Each source is named only while it is actually
+        /// active: a roll before its invulnerable window opens is not a roll reason (WP-05-R1 review §4).
+        /// </summary>
+        public string InvincibleReason
+        {
+            get
+            {
+                var roll = InRollWindow;
+                if (roll && ReviveInvulnerable) return "PlayerInvincible:RollWindow(R-06-13)+Revive(EXP-DEATH-03)";
+                if (ReviveInvulnerable) return "PlayerInvincible:Revive(EXP-DEATH-03)";
+                return roll ? "PlayerInvincible:RollWindow(R-06-13)" : "PlayerVulnerable";
+            }
+        }
 
-        public bool PlayerInvincible =>
-            (P.State == MotorState.Roll && P.RollElapsed >= _p.RollInvulnStart && P.RollElapsed <= _p.RollInvulnEnd) || ReviveInvulnerable;
+        public bool InRollWindow => P.State == MotorState.Roll && P.RollElapsed >= _p.RollInvulnStart && P.RollElapsed <= _p.RollInvulnEnd;
+
+        public bool PlayerInvincible => InRollWindow || ReviveInvulnerable;
 
         void ResolveHits(MapData map, bool playerFrozen)
         {

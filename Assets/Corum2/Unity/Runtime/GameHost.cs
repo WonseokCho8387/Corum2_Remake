@@ -565,6 +565,21 @@ namespace Corum2.Unity
                     Virtual.Stick(float.Parse(xy[0], CultureInfo.InvariantCulture), float.Parse(xy[1], CultureInfo.InvariantCulture));
                     break;
                 }
+                case "padsame":
+                {
+                    // padsame=x,y|x,y|...: separate stick samples queued with one shared device time (WP05-F01 R2 evidence).
+                    var parts = arg.Split('|');
+                    var v = new Vector2[parts.Length];
+                    for (var i = 0; i < parts.Length; i++)
+                    {
+                        var xy = parts[i].Split(',');
+                        v[i] = new Vector2(float.Parse(xy[0], CultureInfo.InvariantCulture), float.Parse(xy[1], CultureInfo.InvariantCulture));
+                    }
+                    var t = Virtual.SticksSameTime(v);
+                    Sim.Log.Emit("test.padsame", "script", "", "", "", "SeparateSamplesSameDeviceTime(WP05-F01 R2)",
+                        ("samples", arg), ("deviceTime", t));
+                    break;
+                }
                 case "padbtn":
                 {
                     var kv = arg.Split(':');

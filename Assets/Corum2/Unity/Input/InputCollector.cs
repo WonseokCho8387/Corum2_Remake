@@ -65,9 +65,10 @@ namespace Corum2.Unity
         {
             _stick = ctx.ReadValue<Vector2>();
             _lastDevice = ctx.control != null ? ctx.control.device.name : _lastDevice;
-            _samples.Add(new StickSample(ctx.time, _stick.x, _stick.y, _transport.NextEventId()));
+            var seq = _transport.NextEventId();
+            _samples.Add(new StickSample(ctx.time, _stick.x, _stick.y, seq));
             var d = Dir8Util.FromStick(_stick.x, _stick.y, _deadzone);
-            EmitDir(d, ctx.time, _lastDevice, ctx.control != null ? ctx.control.path : "move");
+            EmitDir(d, ctx.time, _lastDevice, ctx.control != null ? ctx.control.path : "move", seq);
         }
 
         void OnButton(InputAction.CallbackContext ctx, LogicalAction action, InputEdge edge)
@@ -76,10 +77,10 @@ namespace Corum2.Unity
             _transport.Enqueue(new InputEvent(_transport.NextEventId(), action, edge, ctx.time, _lastDevice, ctx.control != null ? ctx.control.path : action.ToString()));
         }
 
-        void EmitDir(Dir8 d, double time, string device, string control)
+        void EmitDir(Dir8 d, double time, string device, string control, long sampleGroup)
         {
             _scratch.Clear();
-            _dir.Update(d, time, device, control, _transport.NextEventId, _scratch);
+            _dir.Update(d, time, device, control, _transport.NextEventId, _scratch, sampleGroup);
             foreach (var e in _scratch) _transport.Enqueue(e);
         }
 
@@ -90,8 +91,9 @@ namespace Corum2.Unity
             _lastDevice = "script";
             _stick = new Vector2(Dir8Util.Horizontal(d), Dir8Util.Vertical(d));
             var now = Time.realtimeSinceStartupAsDouble;
-            _samples.Add(new StickSample(now, _stick.x, _stick.y, _transport.NextEventId()));
-            EmitDir(d, now, "script", "script/dir");
+            var seq = _transport.NextEventId();
+            _samples.Add(new StickSample(now, _stick.x, _stick.y, seq));
+            EmitDir(d, now, "script", "script/dir", seq);
         }
 
         public void InjectButton(LogicalAction a, InputEdge edge)

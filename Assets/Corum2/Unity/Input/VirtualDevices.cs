@@ -44,6 +44,21 @@ namespace Corum2.Unity
             InputSystem.QueueStateEvent(_pad, _padState);
         }
 
+        /// <summary>
+        /// Test-only (WP05-F01 R2): queues several stick samples that all carry the same device time, as separate state
+        /// events, so the collector sees separate samples whose timestamps tie.
+        /// </summary>
+        public double SticksSameTime(params Vector2[] samples)
+        {
+            var t = InputState.currentTime;
+            foreach (var s in samples)
+            {
+                _padState.leftStick = s;
+                InputSystem.QueueStateEvent(_pad, _padState, t);
+            }
+            return t;
+        }
+
         public void Button(string name, bool down)
         {
             var b = (GamepadButton)Enum.Parse(typeof(GamepadButton), name, true);
