@@ -1,0 +1,4 @@
+{"file": "D:/ProjectR/Corum2Remake/Evidence/WP-10-R1/runs\\RUN-20261113-054149.manifest.yaml", "result": "valid", "kind": "run_manifest", "entries": 412, "total_bytes": 1658056, "git_rows_matched": 412, "git_blob_mismatch": 0, "expected": "valid", "pass": true}
+{"file": "D:/ProjectR/Corum2Remake/Evidence/WP-10-R1/runs\\RUN-20261113-054514.manifest.yaml", "result": "valid", "kind": "run_manifest", "entries": 412, "total_bytes": 1658056, "git_rows_matched": 412, "git_blob_mismatch": 0, "expected": "valid", "pass": true}
+{"file": "D:/ProjectR/Corum2Remake/Evidence/WP-10-R1/runs\\RUN-20261113-054756.manifest.yaml", "result": "valid", "kind": "run_manifest", "entries": 412, "total_bytes": 1658056, "git_rows_matched": 412, "git_blob_mismatch": 0, "expected": "valid", "pass": true}
+{"pyyaml": "6.0.3", "repo": ".", "worktree": false, "all_pass": true}

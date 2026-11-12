@@ -1,0 +1,10 @@
+# GameHost.RunInputScript input (game seconds:command), started at game time 4.17058495606576
+0.1:tc=TC-04-09
+0.1:spawn=Z7Lock
+0.2:mark=ComboWindowBoundary
+0.3:kbtap=J
+0.9:kbtap=J
+2.0:kbtap=J
+2.9:kbtap=J
+4.0:mark=ScriptEnd
+4.1:flush

@@ -1,0 +1,581 @@
+{
+ "logs": [
+  "D:/ProjectR/Corum2Remake/Evidence/WP-10-R1/runs/RUN-20261113-054149.ndjson",
+  "D:/ProjectR/Corum2Remake/Evidence/WP-10-R1/runs/RUN-20261113-054514.ndjson",
+  "D:/ProjectR/Corum2Remake/Evidence/WP-10-R1/runs/RUN-20261113-054756.ndjson"
+ ],
+ "TC-INT-01": {
+  "attacks": [
+   "ground1",
+   "ground2",
+   "ground3",
+   "ground4",
+   "launcher",
+   "air1",
+   "air2",
+   "air3",
+   "air4",
+   "dive"
+  ],
+  "hitEvents": 76,
+  "comboEnd": [
+   "Timeout",
+   10,
+   76
+  ],
+  "dead": [
+   "w0",
+   "w1",
+   "w2"
+  ],
+  "linkEnds": [
+   "w0",
+   "w1",
+   "w2"
+  ],
+  "hitsOnDeadAfterDeath": 0,
+  "launchImmune": [
+   [
+    "i0",
+    "LaunchImmune:DamageAndCount(R-04-04)",
+    12
+   ],
+   [
+    "i1",
+    "LaunchImmune:DamageAndCount(R-04-04)",
+    12
+   ]
+  ],
+  "allHitsDamage": true,
+  "pass": true
+ },
+ "TC-INT-03": {
+  "airUse": [
+   "AirDash",
+   "ExtraJump",
+   "Dive"
+  ],
+  "rejected": [
+   [
+    "Guard",
+    "ActionLock:AirDash"
+   ],
+   [
+    "Guard",
+    "ActionLock:Dive"
+   ],
+   [
+    "Attack",
+    "ActionLock:Dive"
+   ]
+  ],
+  "reserved": [
+   516
+  ],
+  "landTick": 557,
+  "reservationExecuted": [
+   557,
+   "attack:GroundNormal"
+  ],
+  "pass": true
+ },
+ "TC-INT-04": {
+  "cases": [
+   {
+    "case": "physical",
+    "phase": "p2",
+    "hit": [
+     "SuperArmor:DamageOnly(R-06-11)",
+     "AttackStartup",
+     "AttackStartup"
+    ],
+    "attackContinued": true,
+    "pass": true
+   },
+   {
+    "case": "magic",
+    "phase": "p2",
+    "hit": [
+     "MagicBreaksArmor:Stagger+Knockback+Cancel(R-06-12)",
+     "AttackStartup",
+     "Stagger",
+     5
+    ],
+    "nextState": [
+     "Stagger",
+     "Idle"
+    ],
+    "knockback": [
+     5,
+     0.4679947,
+     "SingleSource"
+    ],
+    "pass": true
+   },
+   {
+    "case": "weakMagic(R1)",
+    "phase": "p2",
+    "hit": [
+     "MagicBreaksArmor:Stagger+Knockback+Cancel(R-06-12)",
+     "AttackStartup",
+     "Stagger",
+     0.5
+    ],
+    "nextState": [
+     "Stagger",
+     "Idle"
+    ],
+    "knockback": [
+     0.5,
+     0.0100097656,
+     "SingleSource"
+    ],
+    "pass": true
+   },
+   {
+    "case": "simultaneous",
+    "phase": "p2",
+    "dodge": [
+     "wb4",
+     0,
+     true
+    ],
+    "pass": true
+   }
+  ],
+  "note": "the magic case uses a warden copy whose p2 attacks at speed 0.5 (startup 0.7 s), test data",
+  "pass": true
+ },
+ "TC-INT-05": {
+  "enemyAttackStarts": 15,
+  "projectiles": 1,
+  "attackers": [
+   "ch",
+   "fl",
+   "jp",
+   "rg"
+  ],
+  "maxConcurrentEnemyAttacks": 3,
+  "playerHits": 10,
+  "guards": 0,
+  "parries": 1,
+  "rejectedInHitStun": 3,
+  "lockRuns(ticks)": [
+   25,
+   21,
+   31,
+   21,
+   21,
+   21,
+   21,
+   21
+  ],
+  "longestLockSeconds": 0.62,
+  "note": "observation for feel (lock, pressure) is a user review item",
+  "pass": true
+ },
+ "TC-INT-06": {
+  "transitions": [
+   [
+    1959,
+    "wb2",
+    "p1",
+    "p2",
+    "HpBelow:0.6"
+   ],
+   [
+    2059,
+    "sn",
+    "s1",
+    "s2",
+    "Event:shift"
+   ],
+   [
+    2178,
+    "wb2",
+    "p2",
+    "p3",
+    "PatternUsed:crushx2"
+   ]
+  ],
+  "presentations": [
+   [
+    1959,
+    "wb2",
+    "p2"
+   ],
+   [
+    2059,
+    "sn",
+    "s2"
+   ],
+   [
+    2178,
+    "wb2",
+    "p3"
+   ]
+  ],
+  "presentationEnds": [
+   [
+    2009,
+    "wb2",
+    "p2"
+   ],
+   [
+    2109,
+    "sn",
+    "s2"
+   ],
+   [
+    2228,
+    "wb2",
+    "p3"
+   ]
+  ],
+  "afterTransition": [
+   {
+    "boss": "wb2",
+    "phase": "p2",
+    "transitionTick": 1959,
+    "presentationEnd": 2009,
+    "pattern": "shot2",
+    "attacked": true
+   },
+   {
+    "boss": "sn",
+    "phase": "s2",
+    "transitionTick": 2059,
+    "presentationEnd": 2109,
+    "pattern": "bolt2",
+    "attacked": true
+   },
+   {
+    "boss": "wb2",
+    "phase": "p3",
+    "transitionTick": 2178,
+    "presentationEnd": 2228,
+    "pattern": "rush",
+    "attacked": true
+   }
+  ],
+  "pass": true
+ },
+ "TC-INT-07": {
+  "cases": [
+   {
+    "case": "RegisterThenCancel",
+    "modes": [
+     [
+      "Browse",
+      "Registering",
+      "TargetFixed(R-02-07)"
+     ],
+     [
+      "Registering",
+      "Browse",
+      "RegistrationCancelled(EXP-RING-05)"
+     ]
+    ],
+    "closed": 0,
+    "itemUse": 0,
+    "pass": true
+   },
+   {
+    "case": "QuestDiscardRefused",
+    "blocked": [
+     [
+      "key",
+      1
+     ],
+     [
+      "key",
+      1
+     ]
+    ],
+    "closed": 0,
+    "pass": true
+   },
+   {
+    "case": "NormalDiscardDone",
+    "discarded": [
+     [
+      "bread",
+      null
+     ]
+    ],
+    "closed": [
+     "Discarded(R-02-09)"
+    ],
+    "pass": true
+   },
+   {
+    "case": "RegisterNeutralDpad",
+    "ignoredBeforeRelease": 1,
+    "assign": [
+     [
+      "potion",
+      "Up",
+      false
+     ]
+    ],
+    "closed": [
+     "Registered(R-02-09)"
+    ],
+    "itemUse": 0,
+    "pass": true
+   },
+   {
+    "case": "AfterClose",
+    "lastTimeScale": "1",
+    "attack": [
+     "Attack:GroundNormal"
+    ],
+    "pass": true
+   }
+  ],
+  "pass": true
+ },
+ "TC-INT-08": {
+  "cases": [
+   {
+    "case": "WakeupTargetAttack",
+    "skips": [
+     [
+      334,
+      "bag1"
+     ],
+     [
+      348,
+      "bag1"
+     ]
+    ],
+    "hitsDuringWakeup": 0,
+    "pass": true
+   },
+   {
+    "case": "DeadTargetAttack",
+    "dead": "c1",
+    "hitsAfterDeath": 0,
+    "pass": true
+   },
+   {
+    "case": "DeathRevive",
+    "flow": [
+     [
+      "None",
+      "Motion"
+     ],
+     [
+      "Motion",
+      "RevivePrompt"
+     ],
+     [
+      "RevivePrompt",
+      "None"
+     ]
+    ],
+    "revive": [
+     [
+      1,
+      0
+     ]
+    ],
+    "reviveInvulnerableSkips": 1,
+    "pass": true
+   },
+   {
+    "case": "DeathDecline",
+    "flow": [
+     [
+      "None",
+      "Motion"
+     ],
+     [
+      "Motion",
+      "RevivePrompt"
+     ],
+     [
+      "RevivePrompt",
+      "GameOver"
+     ]
+    ],
+    "pass": true
+   },
+   {
+    "case": "GameOverMenus",
+    "selected": [
+     [
+      "Lobby",
+      false
+     ],
+     [
+      "LoadSave",
+      false
+     ],
+     [
+      "CheckpointRestart",
+      false
+     ]
+    ],
+    "pass": true
+   }
+  ],
+  "observedPartsPass": true,
+  "status": "BLOCKED_SPEC",
+  "note": "TC-06-19b (real return to checkpoint / save / lobby) is BLOCKED_SPEC (U-08), so TC-INT-08 cannot be a full PASS (master 13.6)",
+  "pass": false
+ },
+ "selftest": [
+  {
+   "case": "TC-INT-01 dead target hit again",
+   "section": "TC-INT-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-INT-03 RB cancels the dash",
+   "section": "TC-INT-03",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-INT-04 boss-armor magic does not break the armor",
+   "section": "TC-INT-04",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-INT-05 never two enemy attacks at once",
+   "section": "TC-INT-05",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-INT-06 sentinel follows the warden's transition",
+   "section": "TC-INT-06",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-INT-07 quest item discarded",
+   "section": "TC-INT-07",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-INT-08 wakeup hit lands",
+   "section": "TC-INT-08",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "GPT count without damage",
+   "section": "TC-INT-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "GPT tenth attack is ground1",
+   "section": "TC-INT-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "GPT unrelated reservation id",
+   "section": "TC-INT-03",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "GPT landing ground attack missing",
+   "section": "TC-INT-03",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "GPT zero magic knockback",
+   "section": "TC-INT-04",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "GPT wrong dodge target",
+   "section": "TC-INT-04",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "GPT all parries absent",
+   "section": "TC-INT-05",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "GPT no p2 -> p3 transition",
+   "section": "TC-INT-06",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "GPT presentation ends missing",
+   "section": "TC-INT-06",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "GPT registered item differs from the fixed one",
+   "section": "TC-INT-07",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "GPT discard count grows",
+   "section": "TC-INT-07",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "GPT revive invulnerability proof missing",
+   "section": "TC-INT-08",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "GPT feather was not owned",
+   "section": "TC-INT-08",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "GPT wakeup refusal on another target",
+   "section": "TC-INT-08",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "R1 INT-04 weak magic does not move the boss",
+   "section": "TC-INT-04",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "R1 INT-04 weak magic interval fed by two sources",
+   "section": "TC-INT-04",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "R1 INT-06 sentinel never attacks in s2",
+   "section": "TC-INT-06",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "R1 INT-06 sentinel never selects an s2 pattern",
+   "section": "TC-INT-06",
+   "sectionPass": false,
+   "pass": true
+  }
+ ],
+ "selftest_all_pass": true
+}
