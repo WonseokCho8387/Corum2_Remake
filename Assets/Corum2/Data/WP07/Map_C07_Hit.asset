@@ -32,12 +32,12 @@ MonoBehaviour:
     changeRequestId: 
   mapId: C07
   minX: 0
-  maxX: 380
+  maxX: 520
   killY: -10
   combatPlaneZ: 0
   solids:
   - min: {x: -1, y: -2}
-    max: {x: 381, y: 0}
+    max: {x: 521, y: 0}
   spawns:
   - id: Start
     position: {x: 4, y: 0}
@@ -89,6 +89,21 @@ MonoBehaviour:
     facing: 1
   - id: W2Magic
     position: {x: 360, y: 0}
+    facing: 1
+  - id: K5MagicWeak
+    position: {x: 390, y: 0}
+    facing: 1
+  - id: K6MagicEqual
+    position: {x: 415, y: 0}
+    facing: 1
+  - id: K7PhysEqual
+    position: {x: 440, y: 0}
+    facing: 1
+  - id: W3WakeStart
+    position: {x: 465, y: 0}
+    facing: 1
+  - id: W4WakeEnd
+    position: {x: 490, y: 0}
     facing: 1
   left:
     policy: 0
@@ -206,8 +221,28 @@ MonoBehaviour:
     enemyId: bag
     position: {x: 361, y: 0}
     facing: -1
+  - instanceId: mw
+    enemyId: magicWeak
+    position: {x: 391, y: 0}
+    facing: -1
+  - instanceId: me
+    enemyId: magicEqual
+    position: {x: 416, y: 0}
+    facing: -1
+  - instanceId: pe
+    enemyId: physEqual
+    position: {x: 441, y: 0}
+    facing: -1
+  - instanceId: w3
+    enemyId: bag
+    position: {x: 466, y: 0}
+    facing: -1
+  - instanceId: w4
+    enemyId: bag
+    position: {x: 491, y: 0}
+    facing: -1
   cameraMinX: 9
-  cameraMaxX: 371
+  cameraMaxX: 511
   cameraY: 2.5
   cameraFollowSharpness: 10
   groundColor: {r: 0.4, g: 0.38, b: 0.42, a: 1}

@@ -43,6 +43,10 @@ namespace Corum2.Core
         public readonly string Id;
         public Vec2 Position;
         public float VelX;
+        /// <summary>Diagnostics (R1): an ongoing knockback movement, logged with full precision when its velocity reaches 0.</summary>
+        public bool KnockActive;
+        public long KnockStartTick;
+        public float KnockStartX, KnockStartVel;
         public float VelY;
         public int Facing;
         public float Hp;
@@ -708,6 +712,13 @@ namespace Corum2.Core
             }
             // WP07-F01: move with this tick's knockback velocity, then decelerate (a weak positive knockback still moves).
             var knockVelX = en.VelX;
+            if (knockVelX != 0f && !en.KnockActive)
+            {
+                en.KnockActive = true;
+                en.KnockStartTick = _sim.Tick;
+                en.KnockStartX = en.Position.X;
+                en.KnockStartVel = knockVelX;
+            }
             en.VelX = MathUtil.MoveTowards(en.VelX, 0f, _p.KnockbackDecel * dt);
             // AI movement only while free to move (Idle), during a boss back step, or carried through a jump attack (WP-04).
             // Every hit reaction state stops it; gravity and knockback (VelX) are separate and stay (WP04-F01, EXP-AI-09).
@@ -716,6 +727,13 @@ namespace Corum2.Core
             if (!keepMove) en.MoveVelX = 0f;
             var r = Collision.Move(map, en.Position, en.Def.BodyWidth, en.Def.BodyHeight, (knockVelX + en.MoveVelX) * dt, en.Grounded ? 0f : en.VelY * dt);
             en.Position = r.Position;
+            if (en.KnockActive && en.VelX == 0f)
+            {
+                en.KnockActive = false;
+                Log.Emit("enemy.knockback", en.Id, "", "", en.State.ToString(), "KnockbackStopped(R-06-05/06, diagnostics)",
+                    ("startTick", en.KnockStartTick), ("startX", en.KnockStartX), ("endX", en.Position.X), ("displacement", en.Position.X - en.KnockStartX),
+                    ("startVel", en.KnockStartVel), ("decel", _p.KnockbackDecel));
+            }
             if (r.Landed)
             {
                 en.Grounded = true;

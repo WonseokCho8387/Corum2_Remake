@@ -37,12 +37,12 @@ MonoBehaviour:
     changeRequestId: 
   mapId: C08
   minX: 0
-  maxX: 620
+  maxX: 760
   killY: -10
   combatPlaneZ: 0
   solids:
   - min: {x: -1, y: -2}
-    max: {x: 621, y: 0}
+    max: {x: 761, y: 0}
   spawns:
   - id: Start
     position: {x: 4, y: 0}
@@ -64,6 +64,9 @@ MonoBehaviour:
     facing: 1
   - id: Z3RollFar
     position: {x: 55, y: 0}
+    facing: 1
+  - id: Z2Near
+    position: {x: 35.5, y: 0}
     facing: 1
   - id: Z3Ra
     position: {x: 59.9, y: 0}
@@ -218,6 +221,30 @@ MonoBehaviour:
   - id: Z23Window3Far
     position: {x: 605, y: 0}
     facing: 1
+  - id: Z24ArmorWeak
+    position: {x: 650, y: 0}
+    facing: 1
+  - id: Z24ArmorWeakFar
+    position: {x: 645, y: 0}
+    facing: 1
+  - id: Z25LethalGuard
+    position: {x: 675, y: 0}
+    facing: 1
+  - id: Z25LethalGuardFar
+    position: {x: 670, y: 0}
+    facing: 1
+  - id: Z26LethalBreak
+    position: {x: 700, y: 0}
+    facing: 1
+  - id: Z26LethalBreakFar
+    position: {x: 695, y: 0}
+    facing: 1
+  - id: Z27LethalParry
+    position: {x: 725, y: 0}
+    facing: 1
+  - id: Z27LethalParryFar
+    position: {x: 720, y: 0}
+    facing: 1
   left:
     policy: 0
     connectionId: 
@@ -358,8 +385,24 @@ MonoBehaviour:
     enemyId: hitter
     position: {x: 611.2, y: 0}
     facing: -1
+  - instanceId: aw
+    enemyId: armorWeak
+    position: {x: 651.2, y: 0}
+    facing: -1
+  - instanceId: lg
+    enemyId: hitter
+    position: {x: 676.2, y: 0}
+    facing: -1
+  - instanceId: lk
+    enemyId: brk
+    position: {x: 701.2, y: 0}
+    facing: -1
+  - instanceId: lp
+    enemyId: hitter
+    position: {x: 726.2, y: 0}
+    facing: -1
   cameraMinX: 9
-  cameraMaxX: 611
+  cameraMaxX: 751
   cameraY: 2.5
   cameraFollowSharpness: 10
   groundColor: {r: 0.36, g: 0.4, b: 0.38, a: 1}

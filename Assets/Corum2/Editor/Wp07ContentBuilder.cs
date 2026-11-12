@@ -43,6 +43,12 @@ namespace Corum2.EditorTools
 
             var medium = Enemy("Enemy_Medium", "medium", 1000f, new Color(0.45f, 0.6f, 0.8f), 0.5f, 0.5f, LaunchResponse.Resist, 1.0f, 2.0f);
             var large = Enemy("Enemy_Large", "large", 2000f, new Color(0.3f, 0.45f, 0.6f), 0.8f, 0.2f, LaunchResponse.Resist, 1.3f, 2.4f);
+            // R1 (WP07-F01): knockback below / equal to one tick of deceleration (30 m/s^2 * 0.02 s = 0.6 m/s) must still move.
+            var magicWeak = Enemy("Enemy_MagicWeak", "magicWeak", 1000f, new Color(0.7f, 0.5f, 0.8f), 0f, 1f, LaunchResponse.Launchable, 0.8f, 1.6f);
+            magicWeak.magicKnockbackScale = 0.1f; // fireball knockback 5 -> 0.5 m/s (< 0.6)
+            var magicEqual = Enemy("Enemy_MagicEqual", "magicEqual", 1000f, new Color(0.6f, 0.4f, 0.75f), 0f, 1f, LaunchResponse.Launchable, 0.8f, 1.6f);
+            magicEqual.magicKnockbackScale = 0.12f; // 5 -> 0.6 m/s (= one tick of deceleration)
+            var physEqual = Enemy("Enemy_PhysEqual", "physEqual", 1000f, new Color(0.5f, 0.6f, 0.5f), 0f, 0.4f, LaunchResponse.Launchable, 0.8f, 1.6f); // 1.5 -> 0.6 m/s
 
             var map = AssetDatabase.LoadAssetAtPath<MapDefinition>(Dir + "/Map_C07_Hit.asset") ?? Save(ScriptableObject.CreateInstance<MapDefinition>(), "Map_C07_Hit");
             map.meta.domainId = "map.C07";
@@ -50,19 +56,20 @@ namespace Corum2.EditorTools
             map.meta.relatedRIds = Enumerable.Range(1, 10).Select(i => "R-06-" + i.ToString("00")).ToArray();
             map.mapId = "C07";
             map.minX = 0;
-            map.maxX = 380;
+            map.maxX = 520;
             map.cameraMinX = 9;
-            map.cameraMaxX = 371;
+            map.cameraMaxX = 511;
             map.cameraY = 2.5f;
             map.cameraFollowSharpness = 10f;
             map.groundColor = new Color(0.4f, 0.38f, 0.42f);
-            map.solids = new List<BoxData> { new BoxData { min = new Vector2(-1, -2), max = new Vector2(381, 0) } };
+            map.solids = new List<BoxData> { new BoxData { min = new Vector2(-1, -2), max = new Vector2(521, 0) } };
             map.spawns = new List<SpawnData>
             {
                 Sp("Start", 4), Sp("Z1Overlap", 10), Sp("Z2Three", 40), Sp("Z3Ten", 65),
                 Sp("K1Small", 90), Sp("K2Medium", 115), Sp("K3Large", 140), Sp("K4Boss", 165),
                 Sp("L1Able", 190), Sp("L2Resist", 215), Sp("L3Immune", 240), Sp("L4Stop", 265),
                 Sp("D1Down", 290), Sp("D1Right", 292.2f), Sp("D2Dive", 315), Sp("W1Wake", 340), Sp("W2Magic", 360),
+                Sp("K5MagicWeak", 390), Sp("K6MagicEqual", 415), Sp("K7PhysEqual", 440), Sp("W3WakeStart", 465), Sp("W4WakeEnd", 490),
             };
             map.left = new EdgeData { policy = EdgePolicy.Blocked };
             map.right = new EdgeData { policy = EdgePolicy.Blocked };
@@ -85,12 +92,17 @@ namespace Corum2.EditorTools
             map.enemies.Add(En("d2", "bag", 316f));      // TC-06-09 dive on a downed enemy
             map.enemies.Add(En("w1", "bag", 341f));      // TC-06-10 wakeup (physical)
             map.enemies.Add(En("w2", "bag", 361f));      // TC-06-10 wakeup (magic)
+            map.enemies.Add(En("mw", "magicWeak", 391f));  // R1 TC-06-06 weak positive magic knockback (0.5 m/s)
+            map.enemies.Add(En("me", "magicEqual", 416f)); // R1 TC-06-06 magic knockback equal to one tick of deceleration
+            map.enemies.Add(En("pe", "physEqual", 441f));  // R1 TC-06-05 physical knockback equal to one tick of deceleration
+            map.enemies.Add(En("w3", "bag", 466f));        // R1 TC-06-10 attack overlapping the Down -> Wakeup tick
+            map.enemies.Add(En("w4", "bag", 491f));        // R1 TC-06-10 attack overlapping the last Wakeup -> first Idle tick
 
             var world = Save(ScriptableObject.CreateInstance<WorldDefinition>(), "World_WP07");
             world.maps = new List<MapDefinition> { map };
             world.startMapId = "C07";
             world.startSpawnId = "Start";
-            foreach (var o in new Object[] { map, world, medium, large }) EditorUtility.SetDirty(o);
+            foreach (var o in new Object[] { map, world, medium, large, magicWeak, magicEqual, physEqual }) EditorUtility.SetDirty(o);
             AssetDatabase.SaveAssets();
 
             var move = AssetDatabase.LoadAssetAtPath<MovementConfig>(Wp01 + "/MovementConfig.asset");
@@ -100,6 +112,9 @@ namespace Corum2.EditorTools
             var enemies = new[] { "Enemy_Bag", "Enemy_Weak", "Enemy_BossImmune" }.Select(n => AssetDatabase.LoadAssetAtPath<EnemyDefinitionAsset>(Wp02 + "/" + n + ".asset")).ToList();
             enemies.Add(medium);
             enemies.Add(large);
+            enemies.Add(magicWeak);
+            enemies.Add(magicEqual);
+            enemies.Add(physEqual);
             var issues = DataValidator.Validate(world.ToCore(), move.ToCore(), input.ToCore(), air.ToCore());
             issues.AddRange(DataValidator.ValidateCombat(combat.ToCore(), cu.ToCore(), enemies.Select(e => e.ToCore()).ToList(), world.ToCore()));
             foreach (var i in issues) Debug.LogError("[Corum2] " + i);

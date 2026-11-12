@@ -38,6 +38,10 @@ namespace Corum2.EditorTools
                 Hitter("Enemy_Slow8", "slow8", a => a.startup = 0.8f),
                 Hitter("Enemy_ArmorSlow", "armorSlow", a => a.startup = 0.6f, "Enemy_Armor"), // super armor startup long enough to land magic first (TC-06-12)
             };
+            // R1 (WP08-F01): the same armored slow attacker with a weak positive magic knockback scale (fireball 5 -> 0.5 m/s)
+            var armorWeak = Hitter("Enemy_ArmorSlowWeakMagic", "armorWeak", a => a.startup = 0.6f, "Enemy_Armor");
+            armorWeak.magicKnockbackScale = 0.1f;
+            v.Add(armorWeak);
 
             var map = AssetDatabase.LoadAssetAtPath<MapDefinition>(Dir + "/Map_C08_Defense.asset") ?? Save(ScriptableObject.CreateInstance<MapDefinition>(), "Map_C08_Defense");
             map.meta.domainId = "map.C08";
@@ -45,13 +49,13 @@ namespace Corum2.EditorTools
             map.meta.relatedRIds = new[] { "R-06-11", "R-06-12", "R-06-13", "R-06-14", "R-06-15", "R-06-16", "R-06-17", "R-06-18", "R-07-01", "R-07-02", "R-07-03", "R-07-04", "R-07-05", "R-07-06", "R-07-07" };
             map.mapId = "C08";
             map.minX = 0;
-            map.maxX = 620;
+            map.maxX = 760;
             map.cameraMinX = 9;
-            map.cameraMaxX = 611;
+            map.cameraMaxX = 751;
             map.cameraY = 2.5f;
             map.cameraFollowSharpness = 10f;
             map.groundColor = new Color(0.36f, 0.4f, 0.38f);
-            map.solids = new List<BoxData> { new BoxData { min = new Vector2(-1, -2), max = new Vector2(621, 0) } };
+            map.solids = new List<BoxData> { new BoxData { min = new Vector2(-1, -2), max = new Vector2(761, 0) } };
             map.spawns = new List<SpawnData> { Sp("Start", 4) };
             map.enemies = new List<EnemySpawnData>();
             void Z(string id, float x, params (string inst, string def, float dx)[] es)
@@ -63,6 +67,7 @@ namespace Corum2.EditorTools
             Z("Z1Armor", 10, ("a1", "armor", 1.2f));                                   // TC-06-11
             Z("Z2ArmorMagic", 35, ("a2", "armorSlow", 1.2f));                              // TC-06-12
             Z("Z3Roll", 60, ("r1", "slow6", 1.2f));                                    // TC-06-13
+            map.spawns.Add(Sp("Z2Near", 35.5f)); // R1: a2 is pushed 0.47 m by the magic (knockback fix); the armor-again segment starts closer
             map.spawns.Add(Sp("Z3Ra", 59.9f));
             map.spawns.Add(Sp("Z3Rb", 59.0f));
             map.spawns.Add(Sp("Z3Rc", 58.0f));
@@ -87,6 +92,10 @@ namespace Corum2.EditorTools
             Z("Z21Cancel", 530, ("kb", "bag", 1.2f));                                  // TC-07-07 allowed cancels
             Z("Z22Stun", 555, ("hs", "hitter", 1.2f));                                 // TC-07-07 RB during hitstun
             for (var i = 0; i < 4; i++) Z("Z23Window" + i, 580 + 10 * i, ("pw" + i, "hitter", 1.2f)); // TC-07-04: one enemy per offset (a parry pushes its enemy away)
+            Z("Z24ArmorWeak", 650, ("aw", "armorWeak", 1.2f));                        // R1 TC-06-12 weak magic on super armor
+            Z("Z25LethalGuard", 675, ("lg", "hitter", 1.2f));                          // R1 WP08-F02 lethal front guard damage
+            Z("Z26LethalBreak", 700, ("lk", "brk", 1.2f));                             // R1 WP08-F02 lethal guard-break damage
+            Z("Z27LethalParry", 725, ("lp", "hitter", 1.2f));                          // R1 WP08-F02 lethal parry damage (EXP-PARRY-02)
             map.left = new EdgeData { policy = EdgePolicy.Blocked };
             map.right = new EdgeData { policy = EdgePolicy.Blocked };
             map.points = new List<PointData>();

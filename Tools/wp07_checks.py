@@ -151,7 +151,8 @@ def check(ev):
                        "pass": all(kbe[e]["knockbackVel"] for e in kbe) and max(mag_of("k1")) > max(mag_of("k2")) > max(mag_of("k3")) > 0
                        and max(mag_of("k4")) == 0 and kbe["k4"]["maxDisplacement"] == 0
                        and all(abs(kbe[e]["knockbackVel"][-1]) <= abs(kbe[e]["knockbackVel"][0]) for e in kbe)
-                       and all((kbe[e]["firstHitDisplacement"] or 0) > 0 for e in ("k1", "k2", "k3")) and kbe["k4"]["firstHitDisplacement"] == 0
+                       and all((kbe[e]["firstHitDisplacement"] or 0) > 0 for e in ("k1", "k2", "k3")) and kbe["k4"]["firstHitDisplacement"] in (None, 0)
+                       and not [x for x in seg.get("Reactions_k4", []) if x["type"] == "enemy.knockback" and x.get("actorId") == "k4"]
                        and len(ph) == 1 and abs(abs(ph[0].get("knockbackVel", 0)) - 0.6) < 1e-3 and (pe["firstHitDisplacement"] or 0) > 0}
     out["TC-06-06"] = {"enemies": mag, "pass": len(mag) == 6 and all(r["ok"] for r in mag)
                        and {r["enemy"]: r for r in mag}["mw"]["knockbackVel"] and abs({r["enemy"]: r for r in mag}["mw"]["knockbackVel"][0]) < 0.6}
@@ -252,11 +253,13 @@ def wake_boundary(s, eid, which):
     first Wakeup tick and that tick is refused as Wakeup. end: the overlap continues from the last Wakeup tick into the first Idle
     tick and the hit lands exactly on the first Idle tick (no extra invincibility)."""
     tr = enemy_track(s, eid)
-    wake = [t for t, st, *_ in tr if st == "Wakeup"]
-    row = {"wakeupTicks": (wake[0], wake[-1]) if wake else None}
-    if not wake: return {**row, "pass": False}
-    first_wake, last_wake = wake[0], wake[-1]
-    first_idle = next((t for t, st, *_ in tr if t > last_wake and st == "Idle"), None)
+    # transition ticks from the state records (the per-tick snapshot is taken after this tick's hits)
+    w_on = next((e["simulationTick"] for e in of(s, "enemy.state") if e.get("actorId") == eid and e.get("stateAfter") == "Wakeup"), None)
+    w_off = next((e["simulationTick"] for e in of(s, "enemy.state") if e.get("actorId") == eid and e.get("stateBefore") == "Wakeup" and e.get("stateAfter") == "Idle"), None)
+    row = {"wakeupTicks": (w_on, w_off - 1) if w_on is not None and w_off is not None else None}
+    if row["wakeupTicks"] is None: return {**row, "pass": False}
+    first_wake, last_wake = w_on, w_off - 1
+    first_idle = w_off
     row["firstIdleTick"] = first_idle
     atk = [a for a in of(s, "attack.start") if a.get("attackId") == "ground1"]
     sk = of(s, "hit.skip")
