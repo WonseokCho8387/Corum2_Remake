@@ -19,6 +19,8 @@ SCENARIOS = ["ArmorPhysical", "ArmorMagic", "ArmorAgain", "RollBeforeWindow", "R
              "RbDuringHitstun",
              # R1 (GPT WP-08 review): weak magic on super armor (WP08-F01), lethal guard / guard break / parry damage (WP08-F02)
              "ArmorWeakMagic", "ArmorWeakAgain", "LethalGuard", "LethalGuardBreak", "LethalParry",
+             # R2 (GPT WP-06~08 R1 review section 1): two lethal hits on one tick (guarded / unguarded)
+             "DoubleLethalGuard", "DoubleLethalHit",
              "ParryOffset22", "ParryOffset18", "ParryOffset12", "ParryOffset08", "ScriptEnd"]
 ENEMY = re.compile(r"([^:|]+):([A-Za-z]+)@(-?[\d.]+),(-?[\d.]+) hp(-?[\d.]+)")
 
@@ -69,7 +71,18 @@ def knock_disp(s, eid, h, ticks=40):
     """Full-precision enemy.knockback record that starts right after hit h (R1)."""
     k = next((x for x in s if x["type"] == "enemy.knockback" and x.get("actorId") == eid and h["simulationTick"] < x.get("startTick", -1) <= h["simulationTick"] + 8
               and x["simulationTick"] <= h["simulationTick"] + ticks), None)
-    return abs(k["displacement"]) if k else None
+    if not k: return None
+    # R2 (GPT WP08-M01-R1): the record agrees with itself, with the hit and with the 2-decimal per-tick positions of its end ticks;
+    # records with attribution (R2 build) must be single-source and name this hit's attack instance.
+    _, x0 = enemy_at(s, k["startTick"] - 1, eid)
+    _, x1 = enemy_at(s, k["simulationTick"], eid)
+    kv = h.get("knockbackVel") or 0
+    ok = x0 is not None and x1 is not None and abs(k["displacement"] - (k["endX"] - k["startX"])) <= 1e-4 \
+        and abs(k["startVel"] - kv) <= 1e-4 and kv != 0 and k["displacement"] * kv > 0 \
+        and abs(k["startX"] - x0) <= 0.0051 and abs(k["endX"] - x1) <= 0.0051
+    if "attribution" in k:
+        ok = ok and k["attribution"] == "SingleSource" and k.get("firstAttackInstanceId") == h.get("attackInstanceId") and k.get("velocitySets") == 1
+    return abs(k["displacement"]) if ok else -1.0
 
 
 def armor_magic(seg, first, again, eid):
@@ -251,6 +264,7 @@ def check(ev):
         sl = seg.get(name, [])
         g = next(iter(of(sl, typ)), None)
         dth = of(sl, "player.death")
+        flow = [e for e in of(sl, "death.flow") if e.get("stateAfter") == "Motion"]
         rev = next(iter(of(sl, "death.revive")), None)
         starts = [e for e in of(sl, "attack.start") if dth and e["eventId"] > dth[0]["eventId"] and (rev is None or e["eventId"] < rev["eventId"])]
         presses = [e for e in sl if e["type"] == "input" and e.get("action") == "Attack" and e.get("edge") == "Press" and dth and e["eventId"] > dth[0]["eventId"] and (rev is None or e["eventId"] < rev["eventId"])]
@@ -258,8 +272,36 @@ def check(ev):
                        "deaths": [(e["simulationTick"], e.get("cause")) for e in dth], "attackPressesAfterDeath": len(presses), "attackStartsAfterDeath": len(starts),
                        "pass": g is not None and g.get("hpBefore") == 1 and g.get("hpAfter") == 0 and g.get("damageTaken") == 1 and len(dth) == 1
                        and dth[0]["simulationTick"] == g["simulationTick"] and dth[0].get("cause") == cause and dth[0]["eventId"] > g["eventId"]
-                       and len(presses) >= 1 and not starts and tick(sl, g["simulationTick"]).get("stateAfter") == "Dead"})
+                       and len(presses) >= 1 and not starts and tick(sl, g["simulationTick"]).get("stateAfter") == "Dead"
+                       # R2 (GPT WP08-M01-R1): the death names the defended attacker, and the death UI begins (Motion) on that tick
+                       and dth[0].get("targetId") == g.get("targetId") and len(flow) == 1 and flow[0]["simulationTick"] == dth[0]["simulationTick"]
+                       and flow[0]["eventId"] > dth[0]["eventId"]})
     out["WP08-F02"] = {"cases": lethal, "pass": len(lethal) == 3 and all(r["pass"] for r in lethal)}
+
+    # ---- R2 WP08-F02-R1: two enemies hit on the same tick and the first hit kills; the later candidate is only logged as ignored
+    dbl = []
+    for name, typ, cause in (("DoubleLethalGuard", "guard.block", "DefendedHit:Guard"), ("DoubleLethalHit", "hit.player", None)):
+        sl = seg.get(name, [])
+        dth = of(sl, "player.death")
+        rev = next(iter(of(sl, "death.revive")), None)
+        live = [e for e in sl if rev is None or e["eventId"] < rev["eventId"]]
+        hits = [e for e in live if e["type"] in ("guard.block", "guard.parry", "hit.player")]
+        ign = of(live, "hit.player.ignored")
+        flow = [e for e in of(live, "death.flow") if e.get("stateAfter") == "Motion"]
+        d = dth[0] if len(dth) == 1 else None
+        first_hit = hits[0] if len(hits) == 1 else None
+        attacker = (first_hit.get("targetId") if typ.startswith("guard") else first_hit.get("actorId")) if first_hit else None
+        starts = [e for e in of(live, "attack.start") if d and e["eventId"] > d["eventId"]]
+        pr = [e for e in live if e["type"] == "input" and e.get("action") == "Attack" and e.get("edge") == "Press" and d and e["eventId"] > d["eventId"]]
+        dbl.append({"case": name, "deaths": [(e["simulationTick"], e.get("targetId"), e.get("cause")) for e in dth],
+                    "hits": [(e["type"], e["simulationTick"], e.get("actorId"), e.get("targetId")) for e in hits],
+                    "ignored": [(e["simulationTick"], e.get("actorId"), e.get("stateBefore")) for e in ign], "deathMotion": len(flow),
+                    "attackPressesAfterDeath": len(pr), "attackStartsAfterDeath": len(starts),
+                    "pass": d is not None and first_hit is not None and first_hit["type"] == typ and first_hit["simulationTick"] == d["simulationTick"]
+                    and d.get("targetId") == attacker and d.get("cause") == cause and len(ign) == 1 and ign[0]["simulationTick"] == d["simulationTick"]
+                    and ign[0]["eventId"] > d["eventId"] and ign[0].get("actorId") not in (None, attacker) and ign[0].get("stateBefore") == "Dead"
+                    and len(flow) == 1 and flow[0]["simulationTick"] == d["simulationTick"] and len(pr) >= 1 and not starts})
+    out["WP08-F02-R1"] = {"cases": dbl, "pass": len(dbl) == 2 and all(r["pass"] for r in dbl)}
     out["TC-07-02"] = {"cases": rows, "pass": all(r["pass"] for r in rows)}
     out["TC-OPS-02"] = {"same": "TC-07-02 rows; D comes from the test supplier TEST-DMG-01 and is logged with each guard", "pass": out["TC-07-02"]["pass"]}
 
@@ -372,8 +414,8 @@ def selftest(ev):
         m = copy.deepcopy(ev)
         try:
             fn(m)
-        except StopIteration:
-            res.append({"case": name, "section": key, "sectionPass": None, "pass": None, "note": "record to mutate not present"})
+        except (StopIteration, KeyError, IndexError) as x:
+            res.append({"case": name, "section": key, "sectionPass": None, "pass": None, "note": f"record to mutate not present ({x!r})"})
             return
         r = check(m)[key]["pass"]
         res.append({"case": name, "section": key, "sectionPass": r, "pass": r is False})
@@ -512,6 +554,34 @@ def selftest(ev):
         a["simulationTick"] = d["simulationTick"] + 2
         m.insert(m.index(d) + 1, a)
     mutate("R1 F02 attack starts after a parry death", "WP08-F02", attack_after_death)
+
+    # GPT WP-06~08 R1 review section 3 (WP08-M01-R1)
+    def same_ends(m):
+        k = first(m, "ArmorWeakMagic", "enemy.knockback"); k["endX"] = k["startX"]
+    mutate("GPT R1 weak armor magic record starts and ends at one x", "TC-06-12", same_ends)
+    def frozen(m):
+        for e in m:
+            if e["type"] == "tick": e["enemies"] = re.sub(r"(aw:\w+@)[-\d.]+", lambda x: x.group(1) + "0.00", e.get("enemies", ""))
+    mutate("GPT R1 armor target never moves on any tick", "TC-06-12", frozen)
+    mutate("GPT R1 lethal death names another attacker", "WP08-F02", lambda m: first(m, "LethalGuard", "player.death").__setitem__("targetId", "other"))
+    mutate("GPT R1 death UI never begins", "WP08-F02",
+           lambda m: m.remove(next(e for e in segments(m)["LethalGuard"] if e["type"] == "death.flow" and e.get("stateAfter") == "Motion")))
+
+    # R2 double lethal hit (WP08-F02-R1)
+    def second_death(m):
+        i = first(m, "DoubleLethalGuard", "hit.player.ignored")
+        i.update({"type": "player.death", "reason": "HP0->DeathFlow(R-06-19)", "targetId": i["actorId"]})
+    mutate("R2 F02-R1 second attacker publishes a second death", "WP08-F02-R1", second_death)
+    mutate("R2 F02-R1 ignored candidate removed", "WP08-F02-R1", lambda m: m.remove(first(m, "DoubleLethalHit", "hit.player.ignored")))
+    mutate("R2 F02-R1 second candidate hits the dead player", "WP08-F02-R1",
+           lambda m: first(m, "DoubleLethalHit", "hit.player.ignored").update({"type": "hit.player", "reason": "Hit"}))
+    mutate("R2 F02-R1 ignored candidate is the killer itself", "WP08-F02-R1",
+           lambda m: first(m, "DoubleLethalGuard", "hit.player.ignored").__setitem__("actorId", first(m, "DoubleLethalGuard", "player.death")["targetId"]))
+    mutate("R2 F02-R1 ignored one tick later", "WP08-F02-R1",
+           lambda m: first(m, "DoubleLethalHit", "hit.player.ignored").__setitem__("simulationTick", first(m, "DoubleLethalHit", "player.death")["simulationTick"] + 1))
+    def kb_two_sources(m):
+        k = first(m, "ArmorWeakMagic", "enemy.knockback"); k["attribution"] = "Ambiguous"; k["velocitySets"] = 2
+    mutate("R2 06-12 weak armor magic interval fed by two sources", "TC-06-12", kb_two_sources)
     return res
 
 
@@ -537,7 +607,7 @@ def main():
         out = {"log": args[0], **check(ev)}
         if "--selftest" in sys.argv:
             out["selftest"] = selftest(ev)
-            out["selftest_all_pass"] = all(r["pass"] is not False for r in out["selftest"][1:])
+            out["selftest_all_pass"] = all(r["pass"] is True for r in out["selftest"][1:])
     print(json.dumps(out, indent=1, ensure_ascii=False, default=str))
 
 

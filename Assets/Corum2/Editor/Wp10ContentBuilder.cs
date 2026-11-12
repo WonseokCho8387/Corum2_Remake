@@ -37,6 +37,16 @@ namespace Corum2.EditorTools
             slow.enemyId = "wardenSlowP2";
             slow.boss.phases[1].attackSpeed = 0.5f;
             EditorUtility.SetDirty(slow);
+            // R2 TC-INT-04 weak magic (GPT WP-10 review §2): the same slow-p2 warden with a weak but valid magic knockback scale (0.1).
+            var weakPath = Dir + "/Enemy_WardenWeakP2.asset";
+            if (AssetDatabase.LoadAssetAtPath<EnemyDefinitionAsset>(weakPath) == null) AssetDatabase.CopyAsset(slowPath, weakPath);
+            var weak = AssetDatabase.LoadAssetAtPath<EnemyDefinitionAsset>(weakPath);
+            weak.meta.domainId = "enemy.wardenWeakP2";
+            weak.meta.dataVersion = Version;
+            weak.enemyId = "wardenWeakP2";
+            weak.boss.phases[1].attackSpeed = 0.5f;
+            weak.magicKnockbackScale = 0.1f;
+            EditorUtility.SetDirty(weak);
             var map = AssetDatabase.LoadAssetAtPath<MapDefinition>(Dir + "/Map_C10_Integration.asset") ?? Save(ScriptableObject.CreateInstance<MapDefinition>(), "Map_C10_Integration");
             map.meta.domainId = "map.C10";
             map.meta.dataVersion = Version;
@@ -70,6 +80,9 @@ namespace Corum2.EditorTools
             Z("I4ArmorC", 114, ("wb4", "warden", 1.6f));
             Z("I5Mixed", 140, ("ch", "chaser", 2.5f), ("fl", "fleer", -2.5f), ("jp", "jumper", 4f), ("rg", "ranged", -5f)); // TC-INT-05
             Z("I6Bosses", 190, ("wb2", "warden", 4f), ("sn", "sentinel", -4f));     // TC-INT-06 two bosses, separate transitions
+            map.spawns.Add(Sp("I6SnRange", 179f)); // R2 TC-INT-06: 7 m left of the sentinel's start (its s2 pattern needs 4..9 m)
+            Z("I4ArmorD", 260, ("wb5", "wardenWeakP2", 1.6f));                     // R2 TC-INT-04 weak magic on the p2 super armor
+            map.spawns.Add(Sp("I4ArmorDCast", 259f));
             map.left = new EdgeData { policy = EdgePolicy.Blocked };
             map.right = new EdgeData { policy = EdgePolicy.Blocked };
             map.points = new List<PointData>();
@@ -90,6 +103,7 @@ namespace Corum2.EditorTools
             enemies.AddRange(new[] { "Enemy_Chaser", "Enemy_Fleer", "Enemy_Jumper", "Enemy_Ranged", "Enemy_Warden", "Enemy_Sentinel" }
                 .Select(n => AssetDatabase.LoadAssetAtPath<EnemyDefinitionAsset>(Wp04 + "/" + n + ".asset")));
             enemies.Add(slow);
+            enemies.Add(weak);
             var issues = DataValidator.Validate(world.ToCore(), move.ToCore(), input.ToCore(), air.ToCore());
             issues.AddRange(DataValidator.ValidateCombat(combat.ToCore(), cu.ToCore(), enemies.Select(e => e.ToCore()).ToList(), world.ToCore()));
             foreach (var i in issues) Debug.LogError("[Corum2] " + i);

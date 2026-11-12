@@ -37,12 +37,12 @@ MonoBehaviour:
     changeRequestId: 
   mapId: C08
   minX: 0
-  maxX: 760
+  maxX: 800
   killY: -10
   combatPlaneZ: 0
   solids:
   - min: {x: -1, y: -2}
-    max: {x: 761, y: 0}
+    max: {x: 801, y: 0}
   spawns:
   - id: Start
     position: {x: 4, y: 0}
@@ -245,6 +245,18 @@ MonoBehaviour:
   - id: Z27LethalParryFar
     position: {x: 720, y: 0}
     facing: 1
+  - id: Z28DoubleLethalGuard
+    position: {x: 750, y: 0}
+    facing: 1
+  - id: Z28DoubleLethalGuardFar
+    position: {x: 745, y: 0}
+    facing: 1
+  - id: Z29DoubleLethalHit
+    position: {x: 775, y: 0}
+    facing: 1
+  - id: Z29DoubleLethalHitFar
+    position: {x: 770, y: 0}
+    facing: 1
   left:
     policy: 0
     connectionId: 
@@ -400,6 +412,22 @@ MonoBehaviour:
   - instanceId: lp
     enemyId: hitter
     position: {x: 726.2, y: 0}
+    facing: -1
+  - instanceId: dg1
+    enemyId: hitter
+    position: {x: 751.2, y: 0}
+    facing: -1
+  - instanceId: dg2
+    enemyId: hitter
+    position: {x: 751.2, y: 0}
+    facing: -1
+  - instanceId: dn1
+    enemyId: hitter
+    position: {x: 776.2, y: 0}
+    facing: -1
+  - instanceId: dn2
+    enemyId: hitter
+    position: {x: 776.2, y: 0}
     facing: -1
   cameraMinX: 9
   cameraMaxX: 751

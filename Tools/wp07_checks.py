@@ -16,7 +16,9 @@ SCENARIOS = ["SameMotionOverlap", "ThreeTargetsAndThreeEvents", "HitstopOneTarge
              "Magic_k2", "Reactions_k3", "Magic_k3", "Reactions_k4", "Magic_k4", "LaunchAirFour", "LaunchResist", "LaunchImmune",
              "LaunchAirTwoThenStop", "DownAttackBothSides", "DiveOnDowned", "WakeupPhysical", "WakeupMagic",
              # R1 (GPT WP-07 review): weak magic / equal-to-one-tick knockback, wakeup boundaries reached by an attack already active
-             "MagicWeak_mw", "MagicEqual_me", "PhysEqual_pe", "WakeupStartBoundary", "WakeupEndBoundary", "ScriptEnd"]
+             "MagicWeak_mw", "MagicEqual_me", "PhysEqual_pe", "WakeupStartBoundary", "WakeupEndBoundary",
+             # R2 (GPT WP-06~08 R1 review): magic already active at both wakeup boundaries
+             "MagicWakeupStartBoundary", "MagicWakeupEndBoundary", "ScriptEnd"]
 
 
 def effective(h):
@@ -34,11 +36,25 @@ def moved_after(s, eid, h, ticks=40):
     k = next((x for x in s if x["type"] == "enemy.knockback" and x.get("actorId") == eid and h["simulationTick"] < x.get("startTick", -1) <= h["simulationTick"] + 8
               and x["simulationTick"] <= h["simulationTick"] + ticks), None)
     if not k: return None
-    # the rounded per-tick positions must agree with the record (2-decimal rounding: +-0.011)
+    return knock_ok(s, eid, h, k)
+
+
+def knock_ok(s, eid, h, k):
+    """R2 (GPT WP-06~08 R1 review §3): the record is this hit's own single-source interval and agrees with itself and the ticks.
+    - displacement = endX - startX; start velocity = the hit's knockback velocity; displacement has its sign.
+    - each full-precision endpoint agrees with the 2-decimal per-tick position of that tick (|x - round| <= 0.005 + eps);
+      the per-tick track is not used for the size of the move.
+    - records with attribution fields (R2 build) must be SingleSource and name this hit's attack instance.
+    Returns |displacement|, or -1.0 when any link fails."""
     tr = {t: x for t, _, x, _, _ in enemy_track(s, eid)}
     x0, x1 = tr.get(k["startTick"] - 1), tr.get(k["simulationTick"])
-    if x0 is None or x1 is None or abs((x1 - x0) - k["displacement"]) > 0.011: return -1.0
-    return abs(k["displacement"])
+    kv = h.get("knockbackVel") or 0
+    ok = x0 is not None and x1 is not None and abs(k["displacement"] - (k["endX"] - k["startX"])) <= 1e-4 \
+        and abs(k["startVel"] - kv) <= 1e-4 and kv != 0 and k["displacement"] * kv > 0 \
+        and abs(k["startX"] - x0) <= 0.0051 and abs(k["endX"] - x1) <= 0.0051
+    if "attribution" in k:
+        ok = ok and k["attribution"] == "SingleSource" and k.get("firstAttackInstanceId") == h.get("attackInstanceId") and k.get("velocitySets") == 1
+    return abs(k["displacement"]) if ok else -1.0
 ENEMY = re.compile(r"([^:|]+):([A-Za-z]+)@(-?[\d.]+),(-?[\d.]+) hp(-?[\d.]+)")
 
 
@@ -244,11 +260,13 @@ def check(ev):
                        and not [x for x in of(s, "hit.skip") if x["targetId"] == "w1" and "Wakeup" in x["reason"] and x["simulationTick"] > wake[-1]]}
     out["TC-06-10"]["startBoundary"] = wake_boundary(seg.get("WakeupStartBoundary", []), "w3", "start")
     out["TC-06-10"]["endBoundary"] = wake_boundary(seg.get("WakeupEndBoundary", []), "w4", "end")
-    out["TC-06-10"]["pass"] = out["TC-06-10"]["pass"] and out["TC-06-10"]["startBoundary"]["pass"] and out["TC-06-10"]["endBoundary"]["pass"]
+    out["TC-06-10"]["magicStartBoundary(R2)"] = wake_boundary(seg.get("MagicWakeupStartBoundary", []), "w3", "start", magic=True)
+    out["TC-06-10"]["magicEndBoundary(R2)"] = wake_boundary(seg.get("MagicWakeupEndBoundary", []), "w4", "end", magic=True)
+    out["TC-06-10"]["pass"] = out["TC-06-10"]["pass"] and out["TC-06-10"]["startBoundary"]["pass"] and out["TC-06-10"]["endBoundary"]["pass"]         and out["TC-06-10"]["magicStartBoundary(R2)"]["pass"] and out["TC-06-10"]["magicEndBoundary(R2)"]["pass"]
     return out
 
 
-def wake_boundary(s, eid, which):
+def wake_boundary(s, eid, which, magic=False):
     """R1: one ground attack is already active when the target changes state. start: the overlap continues from Down into the
     first Wakeup tick and that tick is refused as Wakeup. end: the overlap continues from the last Wakeup tick into the first Idle
     tick and the hit lands exactly on the first Idle tick (no extra invincibility)."""
@@ -261,25 +279,31 @@ def wake_boundary(s, eid, which):
     first_wake, last_wake = w_on, w_off - 1
     first_idle = w_off
     row["firstIdleTick"] = first_idle
-    atk = [a for a in of(s, "attack.start") if a.get("attackId") == "ground1"]
+    # R2: the same check for magic (the cast record starts the attack instance; its effect is the active part)
+    atk = of(s, "magic.cast") if magic else [a for a in of(s, "attack.start") if a.get("attackId") == "ground1"]
     sk = of(s, "hit.skip")
-    hits = [h for h in of(s, "hit") if h["targetId"] == eid and h.get("attackId") == "ground1"]
+    hits = [h for h in of(s, "hit") if h["targetId"] == eid and (h.get("damageType") == "Magic" if magic else h.get("attackId") == "ground1")]
     ok = False
     for a in atk:
         inst = a["attackInstanceId"]
         e = next((x for x in of(s, "attack.end") if x.get("attackInstanceId") == inst), None)
+        act = next((x for x in of(s, "magic.effect") if x.get("attackInstanceId") == inst), None) if magic else a
         my_sk = [(x["simulationTick"], x["reason"]) for x in sk if x["targetId"] == eid and x.get("attackInstanceId") == inst]
         my_h = [h for h in hits if h.get("attackInstanceId") == inst]
         if which == "start":
             inv = [t for t, r in my_sk if "Wakeup" in r]
+            down = [t for t, r in my_sk if "Downed" in r and t < first_wake]
+            # R2 (GPT WP07-M02-R1): the same instance touched the downed target before the first Wakeup tick (an already-active attack)
             cand = a["simulationTick"] < first_wake and inv == [first_wake] and not my_h and state_at(tr, first_wake - 1) == "Down" \
-                and e is not None and e["simulationTick"] > first_wake
-            if cand: row.update({"attack": inst, "start": a["simulationTick"], "skips": my_sk, "downSkipBefore": any("Downed" in r and t < first_wake for t, r in my_sk)})
+                and e is not None and e["simulationTick"] > first_wake and bool(down) and act is not None and act["simulationTick"] <= down[0]
+            if cand: row.update({"attack": inst, "start": a["simulationTick"], "skips": my_sk, "downSkipBefore": down})
         else:
             inv = [t for t, r in my_sk if "Wakeup" in r]
-            cand = a["simulationTick"] < last_wake and len(inv) == 1 and inv[0] <= last_wake and len(my_h) == 1 and first_idle is not None \
-                and my_h[0]["simulationTick"] == first_idle == last_wake + 1 and my_h[0]["stateBefore"] == "Idle" and my_h[0]["hpAfter"] < my_h[0]["hpBefore"]
-            if cand: row.update({"attack": inst, "start": a["simulationTick"], "skips": my_sk, "hitTick": my_h[0]["simulationTick"]})
+            # R2 (GPT WP07-M02-R1): the attack is still alive on the hit tick (its end is not before the hit)
+            cand = a["simulationTick"] < last_wake and len(inv) >= 1 and all(t <= last_wake for t in inv) and len(my_h) == 1 and first_idle is not None \
+                and my_h[0]["simulationTick"] == first_idle == last_wake + 1 and my_h[0]["stateBefore"] == "Idle" and my_h[0]["hpAfter"] < my_h[0]["hpBefore"] \
+                and e is not None and e["simulationTick"] >= my_h[0]["simulationTick"] and act is not None and act["simulationTick"] <= inv[0]
+            if cand: row.update({"attack": inst, "start": a["simulationTick"], "skips": my_sk, "hitTick": my_h[0]["simulationTick"], "attackEnd": e["simulationTick"]})
         ok = ok or cand
     no_extra = not [x for x in sk if x["targetId"] == eid and "Wakeup" in x["reason"] and (x["simulationTick"] < first_wake or x["simulationTick"] > last_wake)]
     row["pass"] = ok and no_extra
@@ -332,7 +356,11 @@ def selftest(ev):
 
     def mutate(name, key, fn):
         m = copy.deepcopy(ev)
-        fn(m)
+        try:
+            fn(m)
+        except (StopIteration, KeyError, IndexError) as x:
+            res.append({"case": name, "section": key, "sectionPass": None, "pass": None, "note": f"record to mutate not present ({x!r})"})
+            return
         r = check(m)[key]["pass"]
         res.append({"case": name, "section": key, "sectionPass": r, "pass": r is False})
 
@@ -517,6 +545,40 @@ def selftest(ev):
         for e in s:
             if e["type"] == "hit" and e["targetId"] == "w4": e["simulationTick"] += 1
     mutate("R1 TC-06-10 end-boundary hit one tick after the first Idle tick", "TC-06-10", r1_end_late)
+
+    # GPT WP-06~08 R1 review §3 (WP07-M02-R1)
+    def first_in(m, name, typ, pred=lambda e: True):
+        return next(e for e in segments(m)[name] if e["type"] == typ and pred(e))
+    def same_ends(m):
+        k = first_in(m, "PhysEqual_pe", "enemy.knockback"); k["endX"] = k["startX"]
+    mutate("GPT R1 0.6 m/s record ends where it starts", "TC-06-05", same_ends)
+    mutate("GPT R1 weak magic record has a wrong start velocity", "TC-06-06", lambda m: first_in(m, "MagicWeak_mw", "enemy.knockback").__setitem__("startVel", -500))
+    mutate("GPT R1 no contact on the downed target before the first Wakeup", "TC-06-10",
+           lambda m: m.remove(first_in(m, "WakeupStartBoundary", "hit.skip", lambda e: "Downed" in e["reason"])))
+    mutate("GPT R1 attack already ended before the first-Idle hit", "TC-06-10",
+           lambda m: first_in(m, "WakeupEndBoundary", "attack.end", lambda e: e.get("attackId") == "ground1").__setitem__(
+               "simulationTick", first_in(m, "WakeupEndBoundary", "hit", lambda e: e["targetId"] == "w4")["simulationTick"] - 4))
+
+    # R2 cases
+    def two_sources(m):
+        k = first_in(m, "Magic_k3", "enemy.knockback"); k["attribution"] = "Ambiguous"; k["velocitySets"] = 2
+    mutate("R2 TC-06-06 knockback interval fed by two sources", "TC-06-06", two_sources)
+    mutate("R2 TC-06-05 record names another attack instance", "TC-06-05",
+           lambda m: first_in(m, "PhysEqual_pe", "enemy.knockback").__setitem__("firstAttackInstanceId", -1))
+    def tick_frozen(m):  # the target never moves in the per-tick track (record endpoints no longer agree with the ticks)
+        k = first_in(m, "MagicWeak_mw", "enemy.knockback")
+        for e in segments(m)["MagicWeak_mw"]:
+            if e["type"] == "tick" and e["simulationTick"] >= k["startTick"]:
+                e["enemies"] = re.sub(r"(mw:[A-Za-z]+@)(-?[\d.]+)", lambda x: x.group(1) + "%.2f" % (k["startX"] - 0.02), e.get("enemies", ""))
+    mutate("R2 TC-06-06 weak magic target frozen in every tick", "TC-06-06", tick_frozen)
+    mutate("R2 TC-06-10 magic start: no Downed contact first", "TC-06-10",
+           lambda m: m.remove(first_in(m, "MagicWakeupStartBoundary", "hit.skip", lambda e: "Downed" in e["reason"])))
+    mutate("R2 TC-06-10 magic end: hit one tick after the first Idle", "TC-06-10",
+           lambda m: first_in(m, "MagicWakeupEndBoundary", "hit", lambda e: e["targetId"] == "w4").__setitem__(
+               "simulationTick", first_in(m, "MagicWakeupEndBoundary", "hit", lambda e: e["targetId"] == "w4")["simulationTick"] + 1))
+    mutate("R2 TC-06-10 magic end: effect ended before the hit", "TC-06-10",
+           lambda m: first_in(m, "MagicWakeupEndBoundary", "attack.end", lambda e: e.get("attackId") == "magic.fire").__setitem__(
+               "simulationTick", first_in(m, "MagicWakeupEndBoundary", "hit", lambda e: e["targetId"] == "w4")["simulationTick"] - 1))
     return res
 
 
@@ -539,7 +601,7 @@ def main():
         out = {"log": args[0], **check(ev)}
         if "--selftest" in sys.argv:
             out["selftest"] = selftest(ev)
-            out["selftest_all_pass"] = all(r["pass"] is not False for r in out["selftest"][1:])
+            out["selftest_all_pass"] = all(r["pass"] is True for r in out["selftest"][1:])
     print(json.dumps(out, indent=1, ensure_ascii=False, default=str))
 
 

@@ -18,7 +18,10 @@ SCENARIOS = ["TenTargetsStandardChain", "LaunchThenStayOnGround", "InitialDash",
              "MoveGround+2", "MoveGround+12", "MoveGround+22", "MoveRepressGround", "JumpGround+2", "JumpGround+12", "JumpGround+22",
              "MoveLauncher+2", "MoveLauncher+12", "MoveLauncher+22", "MoveRepressLauncher", "JumpLauncher+2", "JumpLauncher+12", "JumpLauncher+22",
              "GuardThenPierce", "NoGuardPierce", "FiveTargetsOneAttack",
+             # R2 (GPT WP-06~08 R1 review): TC-05-01 air normal / air dash / dive, control + move / jump at start / middle / end
+             *[f"Air{a}_{c}" for a in ("AirNormal", "AirDash", "Dive") for c in ("Control", "Movestart", "Movemid", "Moveend", "Jumpstart", "Jumpmid", "Jumpend")],
              "ScriptEnd"]
+AIR = {"AirNormal": ("air1", "ActionLock:AirAttack"), "AirDash": ("airDash", "ActionLock:AirDash"), "Dive": ("dive", "ActionLock:Dive")}
 
 R1_MATRIX = ["MoveGround+2", "MoveGround+12", "MoveGround+22", "MoveRepressGround", "JumpGround+2", "JumpGround+12", "JumpGround+22",
              "MoveLauncher+2", "MoveLauncher+12", "MoveLauncher+22", "MoveRepressLauncher", "JumpLauncher+2", "JumpLauncher+12", "JumpLauncher+22"]
@@ -147,6 +150,10 @@ def check(ev):
         and len(g_end) == 1 and g_end[0]["simulationTick"] == g_first[0]["simulationTick"] and g_later[0]["simulationTick"] > g_first[0]["simulationTick"] \
         and effective(g_later[0], 0) and g_later[0]["stateAfter"] == "Stagger" and len(reo) == 1 and reo[0]["simulationTick"] == g_later[0]["simulationTick"] \
         and reo[0]["eventId"] < g_later[0]["eventId"] and g_later[0].get("chainId") == reo[0].get("chainId") != ga.get("chainId") and later_end.get("comboHits") == 1
+    # R2 (GPT WP06-M01-R1): the reopen names this dash's real guard tick, and the new chain really begins (combo.begin) on the hit tick
+    beg = [x for x in of(sg, "combo.begin", "PostGuardEffectiveHit") if reo and x.get("chainId") == reo[0].get("chainId")]
+    guard1 = guard1 and reo[0].get("guardEndTick") == g_first[0]["simulationTick"] == g_end[0]["simulationTick"] and reo[0].get("attackId") == "airDash" \
+        and len(beg) == 1 and beg[0]["simulationTick"] == g_later[0]["simulationTick"] and beg[0]["eventId"] < reo[0]["eventId"]
     na, nh, _, _ = dash("NoGuardPierce")
     sn = seg.get("NoGuardPierce", [])
     n_first = [x for x in nh if x["targetId"] == "np"]
@@ -275,7 +282,8 @@ def check(ev):
             row.update({"rejectOffsetTicks": rj[0]["simulationTick"] - a["simulationTick"] if rj else None, "motionTicks": e["simulationTick"] - a["simulationTick"],
                         "jumpAfterEnd": jm[0]["simulationTick"] - e["simulationTick"] if jm else None})
             ok = ok and len(rj) == 1 and len(jp) == 2 and rj[0].get("inputEventId") == jp[0].get("inputEventId") \
-                and a["simulationTick"] <= rj[0]["simulationTick"] <= e["simulationTick"] and len(jm) == 1 and jm[0]["simulationTick"] > e["simulationTick"]
+                and a["simulationTick"] <= rj[0]["simulationTick"] <= e["simulationTick"] and len(jm) == 1 and jm[0]["simulationTick"] > e["simulationTick"] \
+                and jm[0].get("inputEventId") == jp[1].get("inputEventId")  # R2 (GPT WP06-M01-R1): the jump after the end is the second press
         row["pass"] = ok
         mat.append(row)
     phases_ok = True
@@ -289,6 +297,61 @@ def check(ev):
     out["TC-05-01"]["matrix"] = mat
     out["TC-05-01"]["matrixPhasesCovered"] = phases_ok
     out["TC-05-01"]["pass"] = out["TC-05-01"]["pass"] and all(r["pass"] for r in mat) and phases_ok
+
+    # R2 (GPT WP-06~08 R1 review TC-05-01): air normal / air dash / dive. The attack's own motion and gravity are told apart from
+    # steering by the control (same attack, no extra input): x relative to the attack start must match the control tick by tick
+    # until the motion ends. A held Left changes nothing before the end and steers after it; a jump inside the motion is refused
+    # with the motion's lock (linked to its press) and a second press after the end executes (linked by input id).
+    air_rows, air_ok = [], True
+    for atk, (aid, lock) in AIR.items():
+        def motion(name):
+            sm = seg.get(f"Air{atk}_{name}", [])
+            a = next((x for x in of(sm, "attack.start") if x.get("attackId") == aid), None)
+            e = next((x for x in of(sm, "attack.end") if a and x.get("attackInstanceId") == a["attackInstanceId"]), None)
+            tk = {t["simulationTick"]: t for t in ticks(sm)}
+            if not a or not e or a["simulationTick"] not in tk:
+                return sm, a, e, None, tk
+            x0 = tk[a["simulationTick"]]["x"]
+            d = [round(tk[k]["x"] - x0, 4) if k in tk else None for k in range(a["simulationTick"], e["simulationTick"] + 7)]
+            return sm, a, e, d, tk
+        _, ca, ce, cd, _ = motion("Control")
+        ctrl_ok = ca is not None and ce is not None and cd is not None and None not in cd and not of(seg.get(f"Air{atk}_Control", []), "input.reject")
+        n = ce["simulationTick"] - ca["simulationTick"] if ctrl_ok else None
+        offs = {"Move": [], "Jump": []}
+        for case in ("Movestart", "Movemid", "Moveend", "Jumpstart", "Jumpmid", "Jumpend"):
+            sm, a, e, d, tk = motion(case)
+            row = {"attack": atk, "case": case}
+            ok = ctrl_ok and a is not None and e is not None and d is not None and e["simulationTick"] - a["simulationTick"] == n
+            if ok:
+                within = d[:n + 1] == cd[:n + 1]
+                row.update({"motionTicks": n, "sameAsControlDuringMotion": within})
+                if case.startswith("Move"):
+                    p = next((x for x in sm if x["type"] == "input" and x.get("action") == "MoveLeft" and x.get("edge") == "Press"), None)
+                    off = p["simulationTick"] - a["simulationTick"] if p else None
+                    held = [tk[k].get("heldDir") for k in range(p["simulationTick"], e["simulationTick"] + 1) if k in tk] if p else []
+                    steer = [k for k in range(n + 1, n + 7) if d[k] is not None and cd[k] is not None and d[k] < cd[k] - 1e-3]
+                    row.update({"pressOffset": off, "heldLeftInMotion": all("Left" in str(h) for h in held), "steersAfterEndAtOffset": steer[:1]})
+                    ok = within and p is not None and 0 <= off < n and bool(held) and row["heldLeftInMotion"] and bool(steer) \
+                        and not [x for x in sm if x["type"] == "input.reject" and x.get("action") == "MoveLeft"]
+                    offs["Move"].append(off)
+                else:
+                    jp = [x for x in sm if x["type"] == "input" and x.get("action") == "Jump" and x.get("edge") == "Press" and x["simulationTick"] >= a["simulationTick"]]
+                    rj = [x for x in of(sm, "input.reject", lock) if x.get("action") == "Jump"]
+                    ex = [x for x in sm if x["type"] in ("air.use", "motor.jump") and x["simulationTick"] > a["simulationTick"]]
+                    off = rj[0]["simulationTick"] - a["simulationTick"] if rj else None
+                    row.update({"rejectOffset": off, "afterEnd": [(x["type"], x["reason"], x["simulationTick"] - e["simulationTick"]) for x in ex]})
+                    ok = within and len(jp) == 2 and len(rj) == 1 and rj[0].get("inputEventId") == jp[0].get("inputEventId") and 0 <= off <= n \
+                        and bool(ex) and all(x["simulationTick"] > e["simulationTick"] for x in ex) and ex[0].get("inputEventId") == jp[1].get("inputEventId")
+                    offs["Jump"].append(off)
+            row["pass"] = ok
+            air_ok = air_ok and ok
+            air_rows.append(row)
+        for kind, o in offs.items():  # start (<= 2), middle, last 3 ticks before the end
+            cov = n is not None and len(o) == 3 and None not in o and o[0] <= 2 and 3 <= o[1] <= n - 3 and n - 3 <= o[2] < n
+            air_rows.append({"attack": atk, "case": kind + "PhasesCovered", "offsets": o, "motionTicks": n, "pass": cov})
+            air_ok = air_ok and cov
+    out["TC-05-01"]["airMatrix(R2)"] = air_rows
+    out["TC-05-01"]["pass"] = out["TC-05-01"]["pass"] and air_ok
 
     # ---- TC-05-06: press during motion is received then executed at motion end (times separated); after the window it is a new chain;
     #      the dash landing reservation keeps its receive and execute times (R-05-06, EXP-COMBO-01/03)
@@ -384,7 +447,11 @@ def selftest(ev):
 
     def mutate(name, key, fn):
         m = copy.deepcopy(ev)
-        fn(m)
+        try:
+            fn(m)
+        except (StopIteration, KeyError, IndexError) as x:
+            res.append({"case": name, "section": key, "sectionPass": None, "pass": None, "note": f"record to mutate not present ({x!r})"})
+            return
         r = check(m)[key]["pass"]
         res.append({"case": name, "section": key, "sectionPass": r, "pass": r is False})
 
@@ -540,6 +607,37 @@ def selftest(ev):
         j = next(e for e in s if e["type"] == "motor.jump")
         j["simulationTick"] = a["simulationTick"] + 5
     mutate("R1 TC-05-01 jump executed during the motion", "TC-05-01", jump_inside)
+
+    # GPT WP-06~08 R1 review §3 (WP06-M01-R1)
+    def seg_first(m, name, typ, pred=lambda e: True):
+        return next(e for e in segments(m)[name] if e["type"] == typ and pred(e))
+    mutate("GPT R1 reopen claims a wrong guard tick", "TC-04-06", lambda m: seg_first(m, "GuardThenPierce", "combo.reopen").__setitem__("guardEndTick", -500))
+    mutate("GPT R1 new chain never begins", "TC-04-06",
+           lambda m: m.remove(seg_first(m, "GuardThenPierce", "combo.begin", lambda e: "PostGuardEffectiveHit" in e["reason"])))
+    mutate("GPT R1 jump after the end has another input id", "TC-05-01", lambda m: seg_first(m, "JumpGround+2", "motor.jump").__setitem__("inputEventId", 99999))
+
+    # R2 air matrix
+    def air_steer(m):  # the dash moves with the held Left during its motion
+        s = segments(m)["AirAirDash_Movemid"]
+        a = next(e for e in s if e["type"] == "attack.start")
+        for e in s:
+            if e["type"] == "tick" and a["simulationTick"] + 8 <= e["simulationTick"] <= a["simulationTick"] + 12: e["x"] -= 0.05
+    mutate("R2 TC-05-01 air dash steered by Left during the motion", "TC-05-01", air_steer)
+    mutate("R2 TC-05-01 jump during the air normal executes", "TC-05-01",
+           lambda m: seg_first(m, "AirAirNormal_Jumpmid", "input.reject").update({"type": "air.use", "reason": "ExtraJump"}))
+    mutate("R2 TC-05-01 dive jump reject from another press", "TC-05-01", lambda m: seg_first(m, "AirDive_Jumpend", "input.reject").__setitem__("inputEventId", 99999))
+    mutate("R2 TC-05-01 dive move pressed after the end", "TC-05-01",
+           lambda m: seg_first(m, "AirDive_Moveend", "input", lambda e: e.get("action") == "MoveLeft" and e.get("edge") == "Press").__setitem__(
+               "simulationTick", seg_first(m, "AirDive_Moveend", "attack.end")["simulationTick"] + 1))
+    def no_steer_after(m):  # Left held but the air normal never steers after its end
+        s = segments(m)["AirAirNormal_Moveend"]
+        c = {e["simulationTick"] - next(x for x in segments(m)["AirAirNormal_Control"] if x["type"] == "attack.start")["simulationTick"]: e["x"]
+             for e in segments(m)["AirAirNormal_Control"] if e["type"] == "tick"}
+        a = next(e for e in s if e["type"] == "attack.start")
+        for e in s:
+            if e["type"] == "tick" and (e["simulationTick"] - a["simulationTick"]) in c:
+                e["x"] = c[e["simulationTick"] - a["simulationTick"]] - next(x for x in segments(m)["AirAirNormal_Control"] if x["type"] == "tick" and x["simulationTick"] == next(y for y in segments(m)["AirAirNormal_Control"] if y["type"] == "attack.start")["simulationTick"])["x"] + next(x for x in s if x["type"] == "tick" and x["simulationTick"] == a["simulationTick"])["x"]
+    mutate("R2 TC-05-01 held Left never steers after the air normal", "TC-05-01", no_steer_after)
     return res
 
 
@@ -571,7 +669,7 @@ def main():
         out = {"log": args[0], **check(ev)}
         if "--selftest" in sys.argv:
             out["selftest"] = selftest(ev)
-            out["selftest_all_pass"] = all(r["pass"] is not False for r in out["selftest"][1:])
+            out["selftest_all_pass"] = all(r["pass"] is True for r in out["selftest"][1:])
     print(json.dumps(out, indent=1, ensure_ascii=False, default=str))
 
 

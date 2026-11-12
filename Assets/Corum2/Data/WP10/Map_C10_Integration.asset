@@ -96,6 +96,18 @@ MonoBehaviour:
   - id: I6BossesFar
     position: {x: 184, y: 0}
     facing: 1
+  - id: I6SnRange
+    position: {x: 179, y: 0}
+    facing: 1
+  - id: I4ArmorD
+    position: {x: 260, y: 0}
+    facing: 1
+  - id: I4ArmorDFar
+    position: {x: 254, y: 0}
+    facing: 1
+  - id: I4ArmorDCast
+    position: {x: 259, y: 0}
+    facing: 1
   left:
     policy: 0
     connectionId: 
@@ -187,6 +199,10 @@ MonoBehaviour:
   - instanceId: sn
     enemyId: sentinel
     position: {x: 186, y: 0}
+    facing: -1
+  - instanceId: wb5
+    enemyId: wardenWeakP2
+    position: {x: 261.6, y: 0}
     facing: -1
   cameraMinX: 9
   cameraMaxX: 291

@@ -47,6 +47,11 @@ namespace Corum2.Core
         public bool KnockActive;
         public long KnockStartTick;
         public float KnockStartX, KnockStartVel;
+        // R2 knockback attribution (diagnostics only): velocity sets that fed the interval, AI drive / wall during it.
+        public bool KnockPending, KnockAiMove, KnockBlocked;
+        public int KnockSets;
+        public long KnockFirstInstance, KnockLastInstance;
+        public string KnockFirstSource = "", KnockLastSource = "";
         public float VelY;
         public int Facing;
         public float Hp;
@@ -725,14 +730,27 @@ namespace Corum2.Core
             var keepMove = en.State == EnemyState.Idle || en.State == EnemyState.Evade ||
                            (en.InAttack && !en.Grounded && en.Action == AiAction.Jump);
             if (!keepMove) en.MoveVelX = 0f;
-            var r = Collision.Move(map, en.Position, en.Def.BodyWidth, en.Def.BodyHeight, (knockVelX + en.MoveVelX) * dt, en.Grounded ? 0f : en.VelY * dt);
+            var wantDx = (knockVelX + en.MoveVelX) * dt;
+            var r = Collision.Move(map, en.Position, en.Def.BodyWidth, en.Def.BodyHeight, wantDx, en.Grounded ? 0f : en.VelY * dt);
+            if (en.KnockActive)
+            {
+                en.KnockPending = false;
+                if (en.MoveVelX != 0f) en.KnockAiMove = true;
+                if (Math.Abs(r.Position.X - en.Position.X - wantDx) > 1e-4f) en.KnockBlocked = true; // above float32 rounding at x ~ 300
+            }
             en.Position = r.Position;
             if (en.KnockActive && en.VelX == 0f)
             {
                 en.KnockActive = false;
+                var single = en.KnockSets == 1 && !en.KnockAiMove && !en.KnockBlocked;
                 Log.Emit("enemy.knockback", en.Id, "", "", en.State.ToString(), "KnockbackStopped(R-06-05/06, diagnostics)",
                     ("startTick", en.KnockStartTick), ("startX", en.KnockStartX), ("endX", en.Position.X), ("displacement", en.Position.X - en.KnockStartX),
-                    ("startVel", en.KnockStartVel), ("decel", _p.KnockbackDecel));
+                    ("startVel", en.KnockStartVel), ("decel", _p.KnockbackDecel), ("ticks", _sim.Tick - en.KnockStartTick + 1),
+                    ("velocitySets", en.KnockSets), ("firstSource", en.KnockFirstSource), ("firstAttackInstanceId", en.KnockFirstInstance),
+                    ("lastSource", en.KnockLastSource), ("lastAttackInstanceId", en.KnockLastInstance),
+                    ("aiMoveDuring", en.KnockAiMove), ("blocked", en.KnockBlocked),
+                    ("attribution", single ? "SingleSource" : "Ambiguous"));
+                en.KnockSets = 0;
             }
             if (r.Landed)
             {
@@ -989,7 +1007,25 @@ namespace Corum2.Core
             en.AttackSpent = true;
             en.State = EnemyState.DodgeReact;
             en.Timer = _p.DodgeReactionTime;
-            en.VelX = -away * _p.DodgeKnockback;
+            SetKnock(en, -away * _p.DodgeKnockback, "Dodge", en.AttackInstanceId);
+        }
+
+        /// <summary>Sets an enemy's knockback velocity and notes the source for the enemy.knockback diagnostic (R2).</summary>
+        void SetKnock(EnemyActor en, float vel, string source, long instanceId)
+        {
+            if (!en.KnockActive && !en.KnockPending)
+            {
+                en.KnockSets = 0;
+                en.KnockAiMove = false;
+                en.KnockBlocked = false;
+                en.KnockFirstSource = source;
+                en.KnockFirstInstance = instanceId;
+            }
+            en.KnockPending = vel != 0f || en.KnockActive;
+            if (en.KnockPending) en.KnockSets++;
+            en.KnockLastSource = source;
+            en.KnockLastInstance = instanceId;
+            en.VelX = vel;
         }
 
         void ApplyHitToEnemy(PlayerAttack a, EnemyActor en, int ev, string how)
@@ -1053,7 +1089,7 @@ namespace Corum2.Core
                 en.State = EnemyState.Stagger;
                 en.Timer = Math.Max(0.1f, en.Def.StaggerTime);
                 kb = away * d.Knockback * en.Def.MagicKnockbackScale; // > 0 by validation (R-06-06)
-                en.VelX = kb;
+                SetKnock(en, kb, "Hit:" + d.Id, a.InstanceId);
                 reaction = armor ? "MagicBreaksArmor:Stagger+Knockback+Cancel(R-06-12)" : "MagicStagger+Knockback(R-06-06)";
             }
             else if (armor)
@@ -1100,7 +1136,7 @@ namespace Corum2.Core
                 }
                 else reaction = "StaggerResisted(R-06-04)";
                 kb = away * d.Knockback * en.Def.PhysicalKnockbackScale;
-                en.VelX = kb;
+                SetKnock(en, kb, "Hit:" + d.Id, a.InstanceId);
             }
             en.Hitstop = d.Hitstop;
             if (!guarded && !reaction.StartsWith("SuperArmor")) CutAiPropulsion(en, reaction);
@@ -1124,6 +1160,14 @@ namespace Corum2.Core
         {
             var en = parryTarget;
             if (en != null) en.AttackSpent = true;
+            if (P.State == MotorState.Dead)
+            {
+                // WP08-F02-R1: a later candidate of the same tick (collected before the first one killed the player) reaches a
+                // dead player: no damage, no reaction, no second death; only this diagnostic. Living-target order stays CF-05/06.
+                Log.Emit("hit.player.ignored", ownerId, Pl, "Dead", "Dead", "TargetAlreadyDead(WP08-F02-R1)",
+                    ("enemyAttackInstanceId", attackInstanceId), ("via", via), ("attackId", d.Id), ("hp", PlayerHp));
+                return;
+            }
             var dmg = TestDamageResolver.Resolve(d);
             var hpBefore = PlayerHp;
             var front = (srcX - P.Position.X) * P.Facing >= 0f; // equal X counts as front (EXP-GUARD-04, U-09)
@@ -1141,7 +1185,7 @@ namespace Corum2.Core
                     // R-07-05: enemy attack stopped, knockback, vulnerable; player free to act. Damage on parry: U-09 (EXP-PARRY-02 guard rule).
                     en.State = EnemyState.Stagger;
                     en.Timer = _p.ParryStunTime;
-                    en.VelX = -away * _p.ParryKnockback;
+                    SetKnock(en, -away * _p.ParryKnockback, "Parry", en.AttackInstanceId);
                     CutAiPropulsion(en, "Parry");
                     Log.Emit("guard.parry", Pl, en.Id, "Guard", "Guard", "Parry(R-07-04/05)",
                         ("enemyAttackInstanceId", en.AttackInstanceId), ("rbToHit", sinceRb), ("parryWindow", _p.ParryWindow),

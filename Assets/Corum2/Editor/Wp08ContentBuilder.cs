@@ -49,13 +49,13 @@ namespace Corum2.EditorTools
             map.meta.relatedRIds = new[] { "R-06-11", "R-06-12", "R-06-13", "R-06-14", "R-06-15", "R-06-16", "R-06-17", "R-06-18", "R-07-01", "R-07-02", "R-07-03", "R-07-04", "R-07-05", "R-07-06", "R-07-07" };
             map.mapId = "C08";
             map.minX = 0;
-            map.maxX = 760;
+            map.maxX = 800;
             map.cameraMinX = 9;
             map.cameraMaxX = 751;
             map.cameraY = 2.5f;
             map.cameraFollowSharpness = 10f;
             map.groundColor = new Color(0.36f, 0.4f, 0.38f);
-            map.solids = new List<BoxData> { new BoxData { min = new Vector2(-1, -2), max = new Vector2(761, 0) } };
+            map.solids = new List<BoxData> { new BoxData { min = new Vector2(-1, -2), max = new Vector2(801, 0) } };
             map.spawns = new List<SpawnData> { Sp("Start", 4) };
             map.enemies = new List<EnemySpawnData>();
             void Z(string id, float x, params (string inst, string def, float dx)[] es)
@@ -96,6 +96,8 @@ namespace Corum2.EditorTools
             Z("Z25LethalGuard", 675, ("lg", "hitter", 1.2f));                          // R1 WP08-F02 lethal front guard damage
             Z("Z26LethalBreak", 700, ("lk", "brk", 1.2f));                             // R1 WP08-F02 lethal guard-break damage
             Z("Z27LethalParry", 725, ("lp", "hitter", 1.2f));                          // R1 WP08-F02 lethal parry damage (EXP-PARRY-02)
+            Z("Z28DoubleLethalGuard", 750, ("dg1", "hitter", 1.2f), ("dg2", "hitter", 1.2f)); // R2 WP08-F02-R1: two hits on one tick, the first kills
+            Z("Z29DoubleLethalHit", 775, ("dn1", "hitter", 1.2f), ("dn2", "hitter", 1.2f));   //   same without guard
             map.left = new EdgeData { policy = EdgePolicy.Blocked };
             map.right = new EdgeData { policy = EdgePolicy.Blocked };
             map.points = new List<PointData>();
