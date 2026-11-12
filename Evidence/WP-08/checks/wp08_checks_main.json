@@ -1,0 +1,537 @@
+{
+ "log": "D:/ProjectR/Corum2Remake/Evidence/WP-08/runs/RUN-20261112-150909.ndjson",
+ "TC-06-11": {
+  "hit": [
+   "SuperArmor:DamageOnly(R-06-11)",
+   "AttackStartup",
+   "AttackStartup",
+   10,
+   1,
+   0
+  ],
+  "attackContinued": true,
+  "armorAttackLanded": 2,
+  "pass": true
+ },
+ "TC-06-12": {
+  "magicHit": [
+   "MagicBreaksArmor:Stagger+Knockback+Cancel(R-06-12)",
+   "AttackStartup",
+   "Stagger",
+   5
+  ],
+  "armorAttackCancelled": true,
+  "nextArmorAttackPhysicalHit": [
+   "SuperArmor:DamageOnly(R-06-11)",
+   "AttackStartup",
+   "AttackStartup"
+  ],
+  "pass": true
+ },
+ "TC-06-13": {
+  "cases": [
+   {
+    "case": "RollBeforeWindow",
+    "rollElapsedAtHit": 0.04,
+    "playerState": "Roll",
+    "result": "hit",
+    "reason": "Hit",
+    "pass": true
+   },
+   {
+    "case": "RollInWindow",
+    "rollElapsedAtHit": 0.16,
+    "playerState": "Roll",
+    "result": "skip",
+    "reason": "PlayerInvincible:RollWindow(R-06-13)",
+    "pass": true
+   },
+   {
+    "case": "RollAfterWindow",
+    "rollElapsedAtHit": 0.34,
+    "playerState": "Roll",
+    "result": "hit",
+    "reason": "Hit",
+    "pass": true
+   },
+   {
+    "case": "NormalHitThenNextAttack",
+    "hits": [
+     [
+      1008,
+      "none (R-06-13/14)"
+     ],
+     [
+      1109,
+      "none (R-06-13/14)"
+     ]
+    ],
+    "skips": 0,
+    "pass": true
+   }
+  ],
+  "rollWindow": "0.05..0.30 s (rollInvulnStart/End)",
+  "pass": true
+ },
+ "TC-06-14": {
+  "hits": 9,
+  "hitTicks": [
+   1142,
+   1228,
+   1314,
+   1318
+  ],
+  "lockRuns(ticks)": [
+   21,
+   21,
+   25
+  ],
+  "longestLockSeconds": 0.5,
+  "firstWalkTick": 1303,
+  "damageTotal": 90,
+  "addedProtection": [],
+  "note": "observation only; the pass criterion for feel is undecided (R-06-14)",
+  "pass": true
+ },
+ "TC-06-15": {
+  "case": {
+   "case": "DodgeNormal",
+   "tick": 1412,
+   "damage": 0,
+   "playerHp": [
+    810,
+    810
+   ],
+   "comboBefore": 0,
+   "playerState": "DodgeReact",
+   "enemyState": [
+    "DodgeReact"
+   ],
+   "chainAliveBefore": true,
+   "chainEnd": [
+    "Dodge"
+   ],
+   "enemyArmor": false,
+   "hitsSameTick": 0,
+   "pass": true
+  },
+  "pass": true
+ },
+ "TC-06-16": {
+  "magicVsNormal": {
+   "case": "DodgeMagic",
+   "tick": 1537,
+   "damage": 0,
+   "playerHp": [
+    810,
+    810
+   ],
+   "comboBefore": 0,
+   "playerState": "DodgeReact",
+   "enemyState": [
+    "DodgeReact"
+   ],
+   "chainAliveBefore": false,
+   "chainEnd": [],
+   "enemyArmor": false,
+   "hitsSameTick": 0,
+   "pass": true
+  },
+  "normalVsSuperArmor": {
+   "case": "DodgeArmor",
+   "tick": 1662,
+   "damage": 0,
+   "playerHp": [
+    810,
+    810
+   ],
+   "comboBefore": 0,
+   "playerState": "DodgeReact",
+   "enemyState": [
+    "DodgeReact"
+   ],
+   "chainAliveBefore": true,
+   "chainEnd": [
+    "Dodge"
+   ],
+   "enemyArmor": true,
+   "hitsSameTick": 0,
+   "pass": true
+  },
+  "pass": true
+ },
+ "TC-06-17": {
+  "deathTick": 1781,
+  "attacksAfterDeath": 5,
+  "hitsAfterDeath": 0,
+  "vanishTick": 1822,
+  "removedTick": 1843,
+  "pass": true
+ },
+ "TC-06-18": {
+  "linkEnd": [
+   [
+    "c1",
+    true
+   ]
+  ],
+  "hitsAfterDeath": [
+   [
+    "c2",
+    5
+   ],
+   [
+    "c3",
+    6
+   ],
+   [
+    "c2",
+    7
+   ],
+   [
+    "c3",
+    8
+   ],
+   [
+    "c2",
+    9
+   ],
+   [
+    "c3",
+    10
+   ]
+  ],
+  "chainEnd": [
+   [
+    "Timeout",
+    10
+   ]
+  ],
+  "chains": [
+   10
+  ],
+  "pass": true
+ },
+ "TC-07-01": {
+  "frontGuard": [
+   "fr",
+   "FrontGuard(R-07-01/02)",
+   1
+  ],
+  "rearHit": [
+   "bl",
+   "Guard",
+   "HitFromBehind(R-07-01)",
+   false,
+   10
+  ],
+  "afterTurn": [
+   "bl",
+   "FrontGuard(R-07-01/02)",
+   -1
+  ],
+  "pass": true
+ },
+ "TC-07-02": {
+  "cases": [
+   {
+    "case": "Guard9",
+    "damageD": 9,
+    "damageTaken": 0,
+    "hp": [
+     788,
+     788
+    ],
+    "damagePolicy": "TEST-DMG-01 fixed D per attack (test input, not the remake formula, U-09)",
+    "guardRule": "D*0.1, <1 -> 0; EXP-GUARD-01 floor for g>=1 (U-09 undecided)",
+    "pass": true
+   },
+   {
+    "case": "Guard10",
+    "damageD": 10,
+    "damageTaken": 1,
+    "hp": [
+     788,
+     787
+    ],
+    "damagePolicy": "TEST-DMG-01 fixed D per attack (test input, not the remake formula, U-09)",
+    "guardRule": "D*0.1, <1 -> 0; EXP-GUARD-01 floor for g>=1 (U-09 undecided)",
+    "pass": true
+   },
+   {
+    "case": "Guard50",
+    "damageD": 50,
+    "damageTaken": 5,
+    "hp": [
+     787,
+     782
+    ],
+    "damagePolicy": "TEST-DMG-01 fixed D per attack (test input, not the remake formula, U-09)",
+    "guardRule": "D*0.1, <1 -> 0; EXP-GUARD-01 floor for g>=1 (U-09 undecided)",
+    "pass": true
+   }
+  ],
+  "pass": true
+ },
+ "TC-OPS-02": {
+  "same": "TC-07-02 rows; D comes from the test supplier TEST-DMG-01 and is logged with each guard",
+  "pass": true
+ },
+ "TC-07-03": {
+  "consecutiveGround": [
+   [
+    2593,
+    1
+   ],
+   [
+    2679,
+    1
+   ]
+  ],
+  "guardLeftBetween": 0,
+  "airGuard": [
+   2778,
+   0.8766085
+  ],
+  "airParry": [
+   2888,
+   0.8766085,
+   0.0599999763071537
+  ],
+  "pass": true
+ },
+ "TC-07-04-main": {
+  "window": 0.15,
+  "cases": [
+   {
+    "case": "ParryOffset22",
+    "rbToHit": 0.22,
+    "windowLogged": null,
+    "result": "guard",
+    "expected": "guard",
+    "pass": true
+   },
+   {
+    "case": "ParryOffset18",
+    "rbToHit": 0.18,
+    "windowLogged": null,
+    "result": "guard",
+    "expected": "guard",
+    "pass": true
+   },
+   {
+    "case": "ParryOffset12",
+    "rbToHit": 0.12,
+    "windowLogged": 0.15,
+    "result": "parry",
+    "expected": "parry",
+    "pass": true
+   },
+   {
+    "case": "ParryOffset08",
+    "rbToHit": 0.08,
+    "windowLogged": 0.15,
+    "result": "parry",
+    "expected": "parry",
+    "pass": true
+   }
+  ],
+  "pass": true
+ },
+ "TC-07-05": {
+  "parryTick": 2973,
+  "rbToHit": 0.0599999763071537,
+  "enemyStun": 0.8,
+  "enemyStateAtParry": [
+   "AttackActive"
+  ],
+  "enemyX": [
+   431.2,
+   431.58
+  ],
+  "playerAttackStartAfter(ticks)": 2,
+  "hit": [
+   "pp",
+   "Stagger",
+   "Stagger(R-06-04)"
+  ],
+  "pass": true
+ },
+ "TC-07-06": {
+  "normal": [
+   "FrontGuard(R-07-01/02)",
+   "Guard",
+   1
+  ],
+  "unblockable": [
+   "Guard",
+   "Unblockable(R-07-06)",
+   10
+  ],
+  "guardBreak": [
+   "GuardBreak(R-07-06)",
+   "released",
+   1,
+   "Idle"
+  ],
+  "pass": true
+ },
+ "TC-07-07": {
+  "cases": [
+   {
+    "case": "RbGroundNormal",
+    "result": "GuardCancel",
+    "pass": true
+   },
+   {
+    "case": "RbLauncher",
+    "result": "GuardCancel",
+    "pass": true
+   },
+   {
+    "case": "RbAirNormal",
+    "result": "GuardCancel",
+    "pass": true
+   },
+   {
+    "case": "RbDash",
+    "result": "ActionLock:AirDash",
+    "pass": true
+   },
+   {
+    "case": "RbDive",
+    "result": "ActionLock:Dive",
+    "pass": true
+   },
+   {
+    "case": "RbDuringHitstun",
+    "result": [
+     "ActionLock:HitStun",
+     "guard after hitstun"
+    ],
+    "pass": true
+   }
+  ],
+  "pass": true
+ },
+ "selftest": [
+  {
+   "case": "original",
+   "pass": {
+    "TC-06-11": true,
+    "TC-06-12": true,
+    "TC-06-13": true,
+    "TC-06-14": true,
+    "TC-06-15": true,
+    "TC-06-16": true,
+    "TC-06-17": true,
+    "TC-06-18": true,
+    "TC-07-01": true,
+    "TC-07-02": true,
+    "TC-OPS-02": true,
+    "TC-07-03": true,
+    "TC-07-04-main": true,
+    "TC-07-05": true,
+    "TC-07-06": true,
+    "TC-07-07": true
+   }
+  },
+  {
+   "case": "TC-06-11 armor hit staggers",
+   "section": "TC-06-11",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-06-12 magic does not cancel the armor attack",
+   "section": "TC-06-12",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-06-13 hit inside the roll window",
+   "section": "TC-06-13",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-06-13 skip after the roll window",
+   "section": "TC-06-13",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-06-14 a protection skip appears",
+   "section": "TC-06-14",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-06-15 HP changes on a Dodge",
+   "section": "TC-06-15",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-06-16 armor Dodge without armor",
+   "section": "TC-06-16",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-06-17 dead target hit again",
+   "section": "TC-06-17",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-06-18 A's death ends the whole chain",
+   "section": "TC-06-18",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-07-01 rear attack guarded",
+   "section": "TC-07-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-07-02 D=9 takes 1",
+   "section": "TC-07-02",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-07-03 'air' parry on the ground",
+   "section": "TC-07-03",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-07-04 RB 0.18 s before = parry at window 0.15",
+   "section": "TC-07-04-main",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-07-05 attack only well after the parry",
+   "section": "TC-07-05",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-07-06 unblockable guarded",
+   "section": "TC-07-06",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-07-07 RB cancels the dash",
+   "section": "TC-07-07",
+   "sectionPass": false,
+   "pass": true
+  }
+ ],
+ "selftest_all_pass": true
+}

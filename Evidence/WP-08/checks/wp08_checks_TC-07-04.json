@@ -1,0 +1,139 @@
+{
+ "logs": [
+  "D:/ProjectR/Corum2Remake/Evidence/WP-08/runs/RUN-20261112-150909.ndjson",
+  "D:/ProjectR/Corum2Remake/Evidence/WP-08/runs/RUN-20261112-150520.ndjson",
+  "D:/ProjectR/Corum2Remake/Evidence/WP-08/runs/RUN-20261112-150650.ndjson"
+ ],
+ "TC-07-04": {
+  "runs": [
+   {
+    "window": 0.15,
+    "cases": [
+     {
+      "case": "ParryOffset22",
+      "rbToHit": 0.22,
+      "windowLogged": null,
+      "result": "guard",
+      "expected": "guard",
+      "pass": true
+     },
+     {
+      "case": "ParryOffset18",
+      "rbToHit": 0.18,
+      "windowLogged": null,
+      "result": "guard",
+      "expected": "guard",
+      "pass": true
+     },
+     {
+      "case": "ParryOffset12",
+      "rbToHit": 0.12,
+      "windowLogged": 0.15,
+      "result": "parry",
+      "expected": "parry",
+      "pass": true
+     },
+     {
+      "case": "ParryOffset08",
+      "rbToHit": 0.08,
+      "windowLogged": 0.15,
+      "result": "parry",
+      "expected": "parry",
+      "pass": true
+     }
+    ],
+    "pass": true
+   },
+   {
+    "window": 0.1,
+    "cases": [
+     {
+      "case": "ParryOffset22",
+      "rbToHit": 0.22,
+      "windowLogged": null,
+      "result": "guard",
+      "expected": "guard",
+      "pass": true
+     },
+     {
+      "case": "ParryOffset18",
+      "rbToHit": 0.18,
+      "windowLogged": null,
+      "result": "guard",
+      "expected": "guard",
+      "pass": true
+     },
+     {
+      "case": "ParryOffset12",
+      "rbToHit": 0.12,
+      "windowLogged": null,
+      "result": "guard",
+      "expected": "guard",
+      "pass": true
+     },
+     {
+      "case": "ParryOffset08",
+      "rbToHit": 0.08,
+      "windowLogged": 0.1,
+      "result": "parry",
+      "expected": "parry",
+      "pass": true
+     }
+    ],
+    "pass": true
+   },
+   {
+    "window": 0.2,
+    "cases": [
+     {
+      "case": "ParryOffset22",
+      "rbToHit": 0.22,
+      "windowLogged": null,
+      "result": "guard",
+      "expected": "guard",
+      "pass": true
+     },
+     {
+      "case": "ParryOffset18",
+      "rbToHit": 0.18,
+      "windowLogged": 0.2,
+      "result": "parry",
+      "expected": "parry",
+      "pass": true
+     },
+     {
+      "case": "ParryOffset12",
+      "rbToHit": 0.12,
+      "windowLogged": 0.2,
+      "result": "parry",
+      "expected": "parry",
+      "pass": true
+     },
+     {
+      "case": "ParryOffset08",
+      "rbToHit": 0.08,
+      "windowLogged": 0.2,
+      "result": "parry",
+      "expected": "parry",
+      "pass": true
+     }
+    ],
+    "pass": true
+   }
+  ],
+  "windows": [
+   0.1,
+   0.15,
+   0.2
+  ],
+  "pass": true
+ },
+ "selftest": [
+  {
+   "case": "window 0.10 parries RB 0.12 s before",
+   "sectionPass": false,
+   "pass": true
+  }
+ ],
+ "selftest_all_pass": true
+}
