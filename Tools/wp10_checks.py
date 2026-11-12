@@ -124,7 +124,8 @@ def check_main(ev):
                      and (h.get("knockbackVel") or 0) != 0 and bool(kok)})
     s = seg.get("BossArmorSimultaneous", [])
     d = next(iter(of(s, "dodge")), None)
-    wb4_att = [e for e in of(s, "enemy.state") if e.get("actorId") == "wb4" and e.get("stateAfter") == "AttackStartup"]
+    # the startup can precede the segment marker (the script awaits it), so it is read from the whole log
+    wb4_att = [e for e in of(ev, "enemy.state") if e.get("actorId") == "wb4" and e.get("stateAfter") == "AttackStartup" and d and e["eventId"] < d["eventId"]][-1:]
     rows.append({"case": "simultaneous", "phase": phase_at(s, "wb4", d["simulationTick"]) if d else None,
                  "dodge": (d["targetId"], d.get("damage"), d.get("enemyArmor")) if d else None,
                  "pass": d is not None and d.get("damage") == 0 and d.get("enemyArmor") is True and phase_at(s, "wb4", d["simulationTick"]) == "p2"
@@ -333,7 +334,8 @@ def selftest(main, i7, i8):
            lambda m: first(m, "BossArmorWeakMagic", "enemy.knockback").update(endX=first(m, "BossArmorWeakMagic", "enemy.knockback")["startX"], displacement=0.0))
     mutate("R1 INT-04 weak magic interval fed by two sources", "TC-INT-04", 0,
            lambda m: first(m, "BossArmorWeakMagic", "enemy.knockback").update(attribution="Ambiguous", velocitySets=2))
-    mutate("R1 INT-06 sentinel never attacks in s2", "TC-INT-06", 0, drop(0, "SentinelPhase2Pattern", "projectile.spawn", lambda e: e.get("actorId") == "sn"))
+    mutate("R1 INT-06 sentinel never attacks in s2", "TC-INT-06", 0, lambda m: [drop(0, "SentinelPhase2Pattern", t, lambda e: e.get("actorId") == "sn" and
+           (e["type"] == "projectile.spawn" or e.get("stateAfter") == "AttackStartup"))(m) for t in ("projectile.spawn", "enemy.state")])
     mutate("R1 INT-06 sentinel never selects an s2 pattern", "TC-INT-06", 0, drop(0, "SentinelPhase2Pattern", "boss.pattern", lambda e: e.get("actorId") == "sn"))
     return res
 

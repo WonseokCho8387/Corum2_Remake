@@ -574,11 +574,11 @@ def selftest(ev):
     mutate("R2 TC-06-10 magic start: no Downed contact first", "TC-06-10",
            lambda m: m.remove(first_in(m, "MagicWakeupStartBoundary", "hit.skip", lambda e: "Downed" in e["reason"])))
     mutate("R2 TC-06-10 magic end: hit one tick after the first Idle", "TC-06-10",
-           lambda m: first_in(m, "MagicWakeupEndBoundary", "hit", lambda e: e["targetId"] == "w4").__setitem__(
-               "simulationTick", first_in(m, "MagicWakeupEndBoundary", "hit", lambda e: e["targetId"] == "w4")["simulationTick"] + 1))
+           lambda m: first_in(m, "MagicWakeupEndBoundary", "hit", lambda e: e["targetId"] == "w4" and e.get("damageType") == "Magic").__setitem__(
+               "simulationTick", first_in(m, "MagicWakeupEndBoundary", "hit", lambda e: e["targetId"] == "w4" and e.get("damageType") == "Magic")["simulationTick"] + 1))
     mutate("R2 TC-06-10 magic end: effect ended before the hit", "TC-06-10",
            lambda m: first_in(m, "MagicWakeupEndBoundary", "attack.end", lambda e: e.get("attackId") == "magic.fire").__setitem__(
-               "simulationTick", first_in(m, "MagicWakeupEndBoundary", "hit", lambda e: e["targetId"] == "w4")["simulationTick"] - 1))
+               "simulationTick", first_in(m, "MagicWakeupEndBoundary", "hit", lambda e: e["targetId"] == "w4" and e.get("damageType") == "Magic")["simulationTick"] - 1))
     return res
 
 
