@@ -14,7 +14,26 @@ import sys
 SCENARIOS = ["TenTargetsStandardChain", "LaunchThenStayOnGround", "InitialDash", "PierceDash", "InitialDive", "AreaDive", "EnemyGuardCancel",
              "MissEndsChain", "TimeoutEndsChain", "RbCancelEndsChain", "MoveDuringAttack", "JumpDuringAttack", "BufferedPress", "PressAfterWindow",
              "LaunchAirNormalDashThenAttack", "RbAtDashStart", "RbAtDashActive", "RbAtDashEnd", "RbAtDiveStart", "RbAtDiveMid", "ComboWindowBoundary",
+             # R1 (GPT WP-06 review): TC-05-01 matrix, WP06-F01 guard 1 / 0 pierce dash, TC-04-04 one attack on 5 targets
+             "MoveGround+2", "MoveGround+12", "MoveGround+22", "MoveRepressGround", "JumpGround+2", "JumpGround+12", "JumpGround+22",
+             "MoveLauncher+2", "MoveLauncher+12", "MoveLauncher+22", "MoveRepressLauncher", "JumpLauncher+2", "JumpLauncher+12", "JumpLauncher+22",
+             "GuardThenPierce", "NoGuardPierce", "FiveTargetsOneAttack",
              "ScriptEnd"]
+
+R1_MATRIX = ["MoveGround+2", "MoveGround+12", "MoveGround+22", "MoveRepressGround", "JumpGround+2", "JumpGround+12", "JumpGround+22",
+             "MoveLauncher+2", "MoveLauncher+12", "MoveLauncher+22", "MoveRepressLauncher", "JumpLauncher+2", "JumpLauncher+12", "JumpLauncher+22"]
+
+
+def effective(h, before=None):
+    """An effective hit (R-04-05): not guarded, real HP loss, count +1 (comboBefore -> comboAfter)."""
+    ok = (h.get("guarded") is False and h.get("hpAfter") is not None and h.get("hpBefore") is not None and h["hpAfter"] < h["hpBefore"]
+          and h.get("comboAfter") == h.get("comboBefore", -99) + 1)
+    return ok and (before is None or h.get("comboBefore") == before)
+
+
+def next_start_after(ev, e):
+    """The first attack.start after event e in the whole log (not cut at the next marker; GPT WP-06 review 3)."""
+    return next((x for x in ev if x["type"] == "attack.start" and x["eventId"] > e["eventId"]), None)
 
 
 def load(path):
@@ -43,6 +62,12 @@ def ticks(s):
     return [e for e in s if e["type"] == "tick"]
 
 
+def in_motion(s, a, x):
+    """x happens inside attack a: at or after its start, at or before its end."""
+    e = next((y for y in s if y["type"] == "attack.end" and y.get("attackInstanceId") == a["attackInstanceId"]), None)
+    return e is not None and a["simulationTick"] <= x["simulationTick"] <= e["simulationTick"] and a["eventId"] < x["eventId"]
+
+
 def check(ev):
     seg = segments(ev)
     out = {}
@@ -57,11 +82,27 @@ def check(ev):
     final = ends[0] if ends else {}
     maxcombo = max([h.get("comboAfter", 0) for h in of(s, "hit")] or [0])
     jumps = of(s, "motor.jump")
+    sets = [frozenset(h["targetId"] for h in hits_of(s, a.get("attackInstanceId"))) for a in starts]
+    seq = [h.get("comboAfter") for h in of(s, "hit")]
+    every_eff = all(effective(h) for h in of(s, "hit"))
+    same_ten = bool(sets) and len(sets[0]) == 10 and all(x == sets[0] for x in sets)
+    # R1: one attack on 5 targets shows +5 (the same display path as 100, V+L)
+    s5 = seg.get("FiveTargetsOneAttack", [])
+    st5 = of(s5, "attack.start")
+    h5 = hits_of(s5, st5[0]["attackInstanceId"]) if st5 else []
+    ce5 = next(iter(of(s5, "combo.end")), {})
+    five = {"attacks": len(st5), "targets": sorted(h["targetId"] for h in h5), "ticks": sorted({h["simulationTick"] for h in h5}),
+            "counts": [h.get("comboAfter") for h in h5], "comboEnd": ce5.get("comboHits"),
+            "pass": len(st5) == 1 and sorted(h["targetId"] for h in h5) == ["f0", "f1", "f2", "f3", "f4"] and len({h["simulationTick"] for h in h5}) == 1
+            and [h.get("comboAfter") for h in h5] == [1, 2, 3, 4, 5] and all(effective(h) for h in h5) and ce5.get("comboHits") == 5}
     out["TC-04-04"] = {"attacks": kinds, "perAttack(id,distinctTargets,hits)": per, "chains": sorted(chains), "jumps": len(jumps),
+                       "sameTenTargetsEveryAttack": same_ten, "everyHitEffective": every_eff, "countSequence1to100": seq == list(range(1, 101)),
+                       "fiveTargets": five,
                        "comboEnd": (final.get("reason"), final.get("attackChainStep"), final.get("comboHits")), "maxComboAfter": maxcombo,
                        "pass": len(starts) == 10 and len(chains) == 1 and all(d == 10 and n == 10 for _, d, n in per)
                        and kinds == ["ground1", "ground2", "ground3", "ground4", "launcher", "air1", "air2", "air3", "air4", "dive"]
-                       and final.get("attackChainStep") == 10 and final.get("comboHits") == 100 and maxcombo == 100 and len(jumps) == 1}
+                       and final.get("attackChainStep") == 10 and final.get("comboHits") == 100 and maxcombo == 100 and len(jumps) == 1
+                       and same_ten and every_eff and seq == list(range(1, 101)) and five["pass"]}
 
     # ---- TC-04-02: launch, no automatic rise, no jump, then ground attack on the other enemy (R-04-02)
     s = seg.get("LaunchThenStayOnGround", [])
@@ -75,7 +116,9 @@ def check(ev):
                        "jumps": len(of(s, "motor.jump")),
                        "pass": bool(la_hits) and all(h["reason"].startswith("Launched") for h in la_hits) and bool(tk) and all(t.get("grounded") for t in tk)
                        and max(t.get("y", 0) for t in tk) == 0 and not of(s, "motor.jump") and len(g_hits) >= 1
-                       and all(h["targetId"] != la_hits[0]["targetId"] for h in g_hits)}
+                       and all(h["targetId"] != la_hits[0]["targetId"] for h in g_hits)
+                       and all(h["simulationTick"] > la["simulationTick"] and h["eventId"] > la["eventId"] for h in g_hits)
+                       and all(in_motion(s, a, h) for a in ground for h in hits_of(s, a["attackInstanceId"]))}
 
     # ---- TC-04-06: initial dash stops at the first target (+1), upgraded dash pierces the line (+3) (R-04-06)
     def dash(name):
@@ -89,8 +132,34 @@ def check(ev):
     a2, h2, e2, c2 = dash("PierceDash")
     out["TC-04-06"] = {"initial": {"targets": [x["targetId"] for x in h1], "comboHits": c1.get("comboHits"), "endTickAfterHit": (e1 or {}).get("simulationTick", 0) - (h1[0]["simulationTick"] if h1 else 0)},
                        "pierce": {"targets": [x["targetId"] for x in h2], "comboHits": c2.get("comboHits")},
-                       "pass": len(h1) == 1 and c1.get("comboHits") == 1 and e1 is not None and e1["simulationTick"] - h1[0]["simulationTick"] <= 1
-                       and len({x["targetId"] for x in h2}) == 3 and len(h2) == 3 and c2.get("comboHits") == 3}
+                       "pass": len(h1) == 1 and c1.get("comboHits") == 1 and e1 is not None and 0 <= e1["simulationTick"] - h1[0]["simulationTick"] <= 1
+                       and e1["eventId"] > h1[0]["eventId"] and effective(h1[0], 0)
+                       and len({x["targetId"] for x in h2}) == 3 and len(h2) == 3 and c2.get("comboHits") == 3 and all(effective(x) for x in h2)}
+    # R1 WP06-F01: guard on the first target ends the chain (no count); the later effective hit of the same dash opens a new chain and counts.
+    ga, gh, ge, _ = dash("GuardThenPierce")
+    sg = seg.get("GuardThenPierce", [])
+    g_first = [x for x in gh if x["targetId"] == "gp"]
+    g_later = [x for x in gh if x["targetId"] == "gq"]
+    g_end = [x for x in of(sg, "combo.end", "EnemyGuardCancel") if ga and x.get("chainId") == ga.get("chainId")]
+    reo = [x for x in of(sg, "combo.reopen") if ga and x.get("attackInstanceId") == ga["attackInstanceId"]]
+    later_end = next((x for x in of(sg, "combo.end") if reo and x.get("chainId") == reo[0].get("chainId")), {})
+    guard1 = bool(ga) and len(g_first) == 1 and len(g_later) == 1 and g_first[0].get("guarded") is True and g_first[0]["comboAfter"] == g_first[0]["comboBefore"] == 0 \
+        and len(g_end) == 1 and g_end[0]["simulationTick"] == g_first[0]["simulationTick"] and g_later[0]["simulationTick"] > g_first[0]["simulationTick"] \
+        and effective(g_later[0], 0) and g_later[0]["stateAfter"] == "Stagger" and len(reo) == 1 and reo[0]["simulationTick"] == g_later[0]["simulationTick"] \
+        and reo[0]["eventId"] < g_later[0]["eventId"] and g_later[0].get("chainId") == reo[0].get("chainId") != ga.get("chainId") and later_end.get("comboHits") == 1
+    na, nh, _, _ = dash("NoGuardPierce")
+    sn = seg.get("NoGuardPierce", [])
+    n_first = [x for x in nh if x["targetId"] == "np"]
+    n_later = [x for x in nh if x["targetId"] == "nq"]
+    guard0 = bool(na) and len(n_first) == 1 and len(n_later) == 1 and effective(n_first[0], 0) and effective(n_later[0], 1) \
+        and n_later[0]["simulationTick"] > n_first[0]["simulationTick"] and not of(sn, "combo.reopen") and not of(sn, "combo.guardCancel")
+    out["TC-04-06"]["guardThenPierce(WP06-F01)"] = {"first": [(x["targetId"], x["simulationTick"], x.get("guarded"), x.get("comboBefore"), x.get("comboAfter")) for x in g_first],
+                                                   "later": [(x["targetId"], x["simulationTick"], x.get("damageTaken"), x.get("comboBefore"), x.get("comboAfter")) for x in g_later],
+                                                   "guardEnd": [(x["simulationTick"], x["reason"]) for x in g_end], "reopen": [x["simulationTick"] for x in reo],
+                                                   "newChainComboHits": later_end.get("comboHits"), "pass": guard1}
+    out["TC-04-06"]["noGuardControl"] = {"first": [(x["targetId"], x["simulationTick"], x.get("comboAfter")) for x in n_first],
+                                         "later": [(x["targetId"], x["simulationTick"], x.get("comboAfter")) for x in n_later], "pass": guard0}
+    out["TC-04-06"]["pass"] = out["TC-04-06"]["pass"] and guard1 and guard0
 
     # ---- TC-04-08: initial dive hits one (closest), upgraded dive hits the configured area (R-04-08, U-05)
     def dive(name):
@@ -99,8 +168,15 @@ def check(ev):
         return hits_of(s, a["attackInstanceId"]) if a else [], s
     dh1, s1 = dive("InitialDive")
     dh2, s2 = dive("AreaDive")
-    out["TC-04-08"] = {"initial": [x["targetId"] for x in dh1], "area": [(x["targetId"], x.get("how")) for x in dh2],
-                       "pass": len(dh1) == 1 and dh1[0]["targetId"] == "d1" and len({x["targetId"] for x in dh2}) == 3 and len(dh2) == 3}
+    land2 = next(iter(of(s2, "motor.land")), None)
+    area = [x for x in dh2 if str(x.get("how", "")).startswith("DiveArea")]
+    contact = [x for x in dh2 if x.get("how") == "Overlap"]
+    out["TC-04-08"] = {"initial": [(x["targetId"], x.get("how")) for x in dh1], "area": [(x["targetId"], x.get("how"), x["simulationTick"]) for x in dh2],
+                       "landTick": land2["simulationTick"] if land2 else None,
+                       "pass": len(dh1) == 1 and dh1[0]["targetId"] == "d1" and dh1[0].get("how") == "Overlap" and effective(dh1[0])
+                       and len({x["targetId"] for x in dh2}) == 3 and len(dh2) == 3 and len(contact) == 1 and len(area) == 2 and land2 is not None
+                       and all(x["simulationTick"] == land2["simulationTick"] for x in area) and contact[0]["simulationTick"] < land2["simulationTick"]
+                       and all(effective(x) for x in dh2)}
 
     # ---- TC-04-03: guard cancel / miss / timeout / RB cancel each end the chain; the next attack starts a new chain (R-04-03)
     rows = []
@@ -110,9 +186,9 @@ def check(ev):
         ce = of(s, "combo.end")
         first = st[0] if st else None
         e = ce[0] if ce else None
-        nxt = st[1] if len(st) > 1 else None
+        nxt = next_start_after(ev, e) if e is not None else None
         ok = (first is not None and e is not None and str(e["reason"]).startswith(reason) and e.get("chainId") == first.get("chainId")
-              and (nxt is None or nxt.get("chainId") != first.get("chainId")))
+              and nxt is not None and nxt.get("chainId") != first.get("chainId") and nxt.get("attackChainStep") == 1 and nxt.get("newChain") is True)
         if want_hits is not None and e is not None: ok = ok and e.get("comboHits") == want_hits
         rows.append({"case": name, "endReason": e["reason"] if e else None, "comboHits": e.get("comboHits") if e else None,
                      "chain": first.get("chainId") if first else None, "nextChain": nxt.get("chainId") if nxt else None, "pass": ok})
@@ -167,6 +243,53 @@ def check(ev):
                        "pass": len(held) >= 3 and not moved_in_attack and len(after) > 0 and max(t["x"] for t in after) > att[0]["x"]
                        and len(rej) >= 1 and bool(att_end) and bool(jmp) and jmp[0]["simulationTick"] > att_end[0]["simulationTick"]}
 
+    # R1 matrix (GPT WP-06 review 5.3): ground normal and launcher; move held from start / middle / just before the end, released and
+    # pressed again after the end; jump at the same three points. Every press inside the motion is linked to the motion by tick.
+    mat = []
+    for name in R1_MATRIX:
+        sm = seg.get(name, [])
+        a = next(iter(of(sm, "attack.start")), None)
+        e = next((x for x in of(sm, "attack.end") if a and x.get("attackInstanceId") == a["attackInstanceId"]), None)
+        row = {"case": name, "attack": a.get("attackId") if a else None}
+        ok = a is not None and e is not None and a.get("attackId") == ("ground1" if "Ground" in name else "launcher")
+        if ok and name.startswith("Move"):
+            press = [x for x in sm if x["type"] == "input" and x.get("action") == "MoveRight" and x.get("edge") == "Press"]
+            mtk = [t for t in ticks(sm) if a["simulationTick"] <= t["simulationTick"] < e["simulationTick"]]
+            xs = {round(t["x"], 4) for t in mtk}
+            walk = [t for t in ticks(sm) if t["simulationTick"] > e["simulationTick"] and t.get("stateAfter") == "Walk"]
+            p0 = press[0] if press else None
+            row.update({"pressOffsetTicks": p0["simulationTick"] - a["simulationTick"] if p0 else None, "motionTicks": e["simulationTick"] - a["simulationTick"],
+                        "xDuringMotion": sorted(xs), "firstWalkAfterEnd": walk[0]["simulationTick"] - e["simulationTick"] if walk else None})
+            ok = ok and p0 is not None and a["simulationTick"] <= p0["simulationTick"] < e["simulationTick"] and len(xs) == 1 and bool(mtk) \
+                and all(t.get("stateAfter") == "GroundAttack" for t in mtk) and bool(walk) and walk[-1]["x"] > mtk[0]["x"]
+            if "Repress" in name:
+                rel = [x for x in sm if x["type"] == "input" and x.get("action") == "MoveRight" and x.get("edge") == "Release"]
+                ok = ok and len(press) == 2 and bool(rel) and rel[0]["simulationTick"] < e["simulationTick"] < press[1]["simulationTick"] <= walk[0]["simulationTick"]
+                row["repressAfterEnd"] = press[1]["simulationTick"] - e["simulationTick"] if len(press) == 2 else None
+            else:
+                ok = ok and walk[0]["simulationTick"] == e["simulationTick"] + 1 and all("Right" in str(t.get("heldDir")) for t in mtk if t["simulationTick"] >= p0["simulationTick"])
+        elif ok:
+            rj = [x for x in of(sm, "input.reject") if x.get("action") == "Jump" and x["reason"] == "ActionLock:GroundAttack"]
+            jp = [x for x in sm if x["type"] == "input" and x.get("action") == "Jump" and x.get("edge") == "Press"]
+            jm = of(sm, "motor.jump")
+            row.update({"rejectOffsetTicks": rj[0]["simulationTick"] - a["simulationTick"] if rj else None, "motionTicks": e["simulationTick"] - a["simulationTick"],
+                        "jumpAfterEnd": jm[0]["simulationTick"] - e["simulationTick"] if jm else None})
+            ok = ok and len(rj) == 1 and len(jp) == 2 and rj[0].get("inputEventId") == jp[0].get("inputEventId") \
+                and a["simulationTick"] <= rj[0]["simulationTick"] <= e["simulationTick"] and len(jm) == 1 and jm[0]["simulationTick"] > e["simulationTick"]
+        row["pass"] = ok
+        mat.append(row)
+    phases_ok = True
+    for atk in ("Ground", "Launcher"):
+        for kind, key in (("Move", "pressOffsetTicks"), ("Jump", "rejectOffsetTicks")):
+            rows_ = [r for r in mat if r["case"].startswith(kind + atk + "+")]
+            offs = [r.get(key) for r in rows_]
+            spans = [r.get("motionTicks") for r in rows_]
+            # start (<= 2 ticks), middle, and the last 3 ticks before the end are each covered
+            phases_ok = phases_ok and len(offs) == 3 and None not in offs and offs[0] <= 2 and 3 <= offs[1] <= spans[1] - 4 and offs[2] >= spans[2] - 3
+    out["TC-05-01"]["matrix"] = mat
+    out["TC-05-01"]["matrixPhasesCovered"] = phases_ok
+    out["TC-05-01"]["pass"] = out["TC-05-01"]["pass"] and all(r["pass"] for r in mat) and phases_ok
+
     # ---- TC-05-06: press during motion is received then executed at motion end (times separated); after the window it is a new chain;
     #      the dash landing reservation keeps its receive and execute times (R-05-06, EXP-COMBO-01/03)
     s = seg.get("BufferedPress", [])
@@ -185,6 +308,8 @@ def check(ev):
                        "reservation": [(r["simulationTick"], r.get("inputEventId")) for r in rv],
                        "reservationExecuted": [(r["simulationTick"], r.get("reservedGameTime"), r.get("execGameTime")) for r in rx],
                        "pass": len(buf) == 1 and len(bx) == 1 and bx[0].get("inputEventId") == buf[0].get("inputEventId")
+                       and bx[0].get("execGameTime") is not None and abs(bx[0]["execGameTime"] - bx[0]["gameTime"]) < 1e-6
+                       and any(a["simulationTick"] == bx[0]["simulationTick"] and a.get("inputEventId") == buf[0].get("inputEventId") for a in of(s, "attack.start"))
                        and bx[0]["simulationTick"] > buf[0]["simulationTick"] and any(a["simulationTick"] == bx[0]["simulationTick"] for a in ae)
                        and len(st2) == 2 and st2[0].get("chainId") != st2[1].get("chainId") and bool(ce2) and ce2[0]["eventId"] < st2[1]["eventId"]
                        and len(rv) == 1 and len(rx) == 1 and rx[0].get("inputEventId") == rv[0].get("inputEventId")
@@ -220,7 +345,9 @@ def check(ev):
             phase = round((rj[0]["simulationTick"] - a["simulationTick"]) / span, 2)
         rb.append({"case": name, "guardPresses": len(guard_in), "rejected": [(r["simulationTick"], r["reason"]) for r in rj], "motionEnd": e["reason"] if e else None,
                    "pressPhase(0=start,1=end)": phase, "pass": len(guard_in) == 1 and len(rj) == 1 and not gcancel and e is not None
-                   and e["reason"] in ("AirDashEnd", "DiveEnd")})
+                   and e["reason"] in ("AirDashEnd", "DiveEnd") and rj[0].get("inputEventId") == guard_in[0].get("inputEventId")
+                   and a is not None and a["simulationTick"] <= rj[0]["simulationTick"] < e["simulationTick"] and rj[0].get("stateBefore") == state
+                   and guard_in[0]["simulationTick"] <= rj[0]["simulationTick"]})
     out["TC-05-03"] = {"cases": rb, "pass": len(rb) == 5 and all(r["pass"] for r in rb)}
     return out
 
@@ -245,7 +372,8 @@ def cw_check(runs):
     if ok:
         small, large = sorted(rows, key=lambda r: r["window"] or 0)
         gaps = [p["gapAfterAttackEnd"] for r in rows for p in r["pairs"]]
-        ok = (small["window"] < large["window"] and all(g is not None and small["window"] < g <= large["window"] for g in gaps)
+        same = all(abs(a["gapAfterAttackEnd"] - b["gapAfterAttackEnd"]) <= 0.021 for a, b in zip(small["pairs"], large["pairs"])) if None not in gaps else False
+        ok = (same and max(gaps) >= large["window"] - 0.021 and small["window"] < large["window"] and all(g is not None and small["window"] < g <= large["window"] for g in gaps)
               and all(not p["sameChain"] for p in small["pairs"]) and all(p["sameChain"] and p["step2"] == 2 for p in large["pairs"]))
     return {"TC-04-09": {"runs": rows, "pass": ok}}
 
@@ -329,6 +457,89 @@ def selftest(ev):
         drop = {id(h) for h in hs[1:]}
         m[:] = [e for e in m if id(e) not in drop]
     mutate("TC-04-08 upgraded dive hits one target", "TC-04-08", area_one)
+
+    # GPT WP-06 review M01: the 8 counterexamples it found passing
+    def foreign_target(m):
+        h = next(e for e in segments(m)["TenTargetsStandardChain"] if e["type"] == "hit")
+        h["targetId"] = "zz"
+    mutate("M01 TC-04-04 one target replaced by an id the other attacks never hit", "TC-04-04", foreign_target)
+
+    def first_guarded(m):
+        h = next(e for e in segments(m)["TenTargetsStandardChain"] if e["type"] == "hit")
+        h["guarded"] = True
+        h["hpAfter"] = h["hpBefore"]
+        h["damageTaken"] = 0
+    mutate("M01 TC-04-04 first hit guarded with no damage, count kept", "TC-04-04", first_guarded)
+
+    def end_before_hit(m):
+        s = segments(m)["InitialDash"]
+        h = next(e for e in s if e["type"] == "hit")
+        e = next(x for x in s if x["type"] == "attack.end")
+        e["simulationTick"] = h["simulationTick"] - 1
+    mutate("M01 TC-04-06 initial dash ends 1 tick before its hit", "TC-04-06", end_before_hit)
+
+    def area_as_contact(m):
+        for e in segments(m)["AreaDive"]:
+            if e["type"] == "hit": e["how"] = "Overlap"
+    mutate("M01 TC-04-08 landing-area hits turned into contact hits", "TC-04-08", area_as_contact)
+
+    def rb_after_end(m):
+        s = segments(m)["RbAtDiveMid"]
+        e = next(x for x in s if x["type"] == "attack.end")
+        for x in s:
+            if (x["type"] == "input" and x.get("action") == "Guard") or (x["type"] == "input.reject" and x.get("action") == "Guard"):
+                x["simulationTick"] = e["simulationTick"] + 2
+    mutate("M01 TC-05-03 RB press and reject moved 2 ticks after the dive ended", "TC-05-03", rb_after_end)
+
+    def no_exec_time(m):
+        for e in segments(m)["BufferedPress"]:
+            if e["type"] == "attack.bufferExecuted": e.pop("execGameTime", None)
+    mutate("M01 TC-05-06 execGameTime removed", "TC-05-06", no_exec_time)
+
+    def ground_hit_before_launch(m):
+        s = segments(m)["LaunchThenStayOnGround"]
+        la = next(e for e in s if e["type"] == "attack.start" and e.get("attackId") == "launcher")
+        g = [e for e in s if e["type"] == "hit" and str(e.get("attackId", "")).startswith("ground")]
+        g[0]["simulationTick"] = la["simulationTick"] - 3
+    mutate("M01 TC-04-02 ground hit moved before the launcher start", "TC-04-02", ground_hit_before_launch)
+
+    def miss_next_old_chain(m):
+        s = segments(m)["MissEndsChain"]
+        ce = next(e for e in s if e["type"] == "combo.end")
+        nx = next_start_after(m, ce)
+        nx["chainId"] = ce["chainId"]
+        nx["newChain"] = False
+    mutate("TC-04-03 attack after a miss (outside the marker) reuses the old chain", "TC-04-03", miss_next_old_chain)
+
+    # R1 cases
+    def guard_swallows(m):
+        for e in segments(m)["GuardThenPierce"]:
+            if e["type"] == "hit" and e["targetId"] == "gq": e["comboAfter"] = e["comboBefore"]
+    mutate("R1 WP06-F01 later effective hit not counted", "TC-04-06", guard_swallows)
+
+    def guard_no_end(m):
+        drop = {id(e) for e in segments(m)["GuardThenPierce"] if e["type"] == "combo.end" and str(e["reason"]).startswith("EnemyGuardCancel")}
+        m[:] = [e for e in m if id(e) not in drop]
+    mutate("R1 WP06-F01 guard does not end the chain", "TC-04-06", guard_no_end)
+
+    def five_as_four(m):
+        h = [e for e in segments(m)["FiveTargetsOneAttack"] if e["type"] == "hit"]
+        m[:] = [e for e in m if e is not h[-1]]
+    mutate("R1 TC-04-04 one attack reaches only 4 of 5", "TC-04-04", five_as_four)
+
+    def moved_mid(m):
+        s = segments(m)["MoveLauncher+12"]
+        a = next(e for e in s if e["type"] == "attack.start")
+        t = [e for e in s if e["type"] == "tick" and e["simulationTick"] == a["simulationTick"] + 8]
+        t[0]["x"] += 0.07
+    mutate("R1 TC-05-01 launcher moves after a middle press", "TC-05-01", moved_mid)
+
+    def jump_inside(m):
+        s = segments(m)["JumpGround+22"]
+        a = next(e for e in s if e["type"] == "attack.start")
+        j = next(e for e in s if e["type"] == "motor.jump")
+        j["simulationTick"] = a["simulationTick"] + 5
+    mutate("R1 TC-05-01 jump executed during the motion", "TC-05-01", jump_inside)
     return res
 
 
@@ -343,8 +554,18 @@ def main():
                 for e in ev:
                     if e["type"] == "attack.start" and e.get("attackChainStep") == 2: e["chainId"] = -1
             out["selftest"] = [{"case": "second attacks start new chains in both runs", "sectionPass": cw_check(m)["TC-04-09"]["pass"]}]
-            out["selftest"][0]["pass"] = out["selftest"][0]["sectionPass"] is False
-            out["selftest_all_pass"] = out["selftest"][0]["pass"]
+            # GPT WP-06 review M01: the large-window run's two measured gaps changed to 0.40 / 0.50 s
+            m2 = copy.deepcopy(runs)
+            big = max(m2, key=lambda ev: next((e.get("window") for e in ev if e["type"] == "combo.window"), 0))
+            st = [e for e in segments(big)["ComboWindowBoundary"] if e["type"] == "attack.start"]
+            for k, gap in ((1, 0.40), (3, 0.50)):
+                a_prev = st[k - 1]
+                end = next(e for e in big if e["type"] == "attack.end" and e.get("attackInstanceId") == a_prev.get("attackInstanceId"))
+                press = next(e for e in big if e["type"] == "input" and e.get("inputEventId") == st[k].get("inputEventId") and e.get("edge") == "Press")
+                press["gameTime"] = end["gameTime"] + gap
+            out["selftest"].append({"case": "M01 large-window gaps 0.40 / 0.50 s", "sectionPass": cw_check(m2)["TC-04-09"]["pass"]})
+            for r in out["selftest"]: r["pass"] = r["sectionPass"] is False
+            out["selftest_all_pass"] = all(r["pass"] for r in out["selftest"])
     else:
         ev = load(args[0])
         out = {"log": args[0], **check(ev)}

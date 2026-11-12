@@ -46,23 +46,36 @@ namespace Corum2.EditorTools
             p1.transitions = new List<PhaseTransitionData>(); // stays in its guarding phase
             EditorUtility.SetDirty(guardian);
 
+            // R1 (WP06-F01): the same guardian without guarding, for the guard 1 / 0 comparison of a pierce dash.
+            var g0Path = Dir + "/Enemy_GuardianNoGuard.asset";
+            if (AssetDatabase.LoadAssetAtPath<EnemyDefinitionAsset>(g0Path) == null) AssetDatabase.CopyAsset(gPath, g0Path);
+            var guardian0 = AssetDatabase.LoadAssetAtPath<EnemyDefinitionAsset>(g0Path);
+            guardian0.meta.domainId = "enemy.guardianNoGuard";
+            guardian0.meta.dataVersion = Version;
+            guardian0.meta.policyIds = new[] { "EXP-BOSS-05", "EXP-COMBO-06", "TEST-DMG-01" };
+            guardian0.enemyId = "guardianNoGuard";
+            guardian0.boss.phases[0].guardFrequency = 0f;
+            guardian0.boss.phases[0].transitions = new List<PhaseTransitionData>();
+            EditorUtility.SetDirty(guardian0);
+
             var map = AssetDatabase.LoadAssetAtPath<MapDefinition>(Dir + "/Map_C06_Sweep.asset") ?? Save(ScriptableObject.CreateInstance<MapDefinition>(), "Map_C06_Sweep");
             map.meta.domainId = "map.C06";
             map.meta.dataVersion = Version;
             map.meta.relatedRIds = new[] { "R-04-02", "R-04-03", "R-04-04", "R-04-06", "R-04-07", "R-04-08", "R-05-01", "R-05-03", "R-05-06" };
             map.mapId = "C06";
             map.minX = 0;
-            map.maxX = 220;
+            map.maxX = 320;
             map.cameraMinX = 9;
-            map.cameraMaxX = 211;
+            map.cameraMaxX = 311;
             map.cameraY = 2.5f;
             map.cameraFollowSharpness = 10f;
             map.groundColor = new Color(0.38f, 0.4f, 0.42f);
-            map.solids = new List<BoxData> { new BoxData { min = new Vector2(-1, -2), max = new Vector2(221, 0) } };
+            map.solids = new List<BoxData> { new BoxData { min = new Vector2(-1, -2), max = new Vector2(321, 0) } };
             map.spawns = new List<SpawnData>
             {
                 Sp("Start", 4), Sp("Z1Ten", 12.0f), Sp("Z2Launch", 42f), Sp("Z3Pierce", 74f), Sp("Z4Dive", 102.6f),
                 Sp("Z5Guard", 140f), Sp("Z6Dash", 170f), Sp("Z7Lock", 200f),
+                Sp("Z8GuardPierce", 230f), Sp("Z9NoGuardPierce", 260f), Sp("Z10Five", 290f),
             };
             map.left = new EdgeData { policy = EdgePolicy.Blocked };
             map.right = new EdgeData { policy = EdgePolicy.Blocked };
@@ -80,6 +93,11 @@ namespace Corum2.EditorTools
             map.enemies.Add(En("g1", "guardian", 141.2f)); // TC-04-03 guard cancel
             map.enemies.Add(En("k1", "bag", 171.3f)); // TC-04-07 / TC-05-03 / TC-05-06
             map.enemies.Add(En("m1", "bag", 201.2f)); // TC-05-01 attack motion lock
+            map.enemies.Add(En("gp", "guardian", 231.5f)); // R1 WP06-F01: guarding boss first on the pierce line
+            map.enemies.Add(En("gq", "bag", 233.5f)); //   then an ordinary target reached on a later tick
+            map.enemies.Add(En("np", "guardianNoGuard", 261.5f)); // R1 control: same layout, guard frequency 0
+            map.enemies.Add(En("nq", "bag", 263.5f));
+            for (var i = 0; i < 5; i++) map.enemies.Add(En("f" + i, "bag", 291f)); // R1 TC-04-04: one attack on 5 targets -> +5
 
             var world = Save(ScriptableObject.CreateInstance<WorldDefinition>(), "World_WP06");
             world.maps = new List<MapDefinition> { map };
@@ -94,6 +112,7 @@ namespace Corum2.EditorTools
             var combat = AssetDatabase.LoadAssetAtPath<CombatConfig>(Wp02 + "/CombatConfig.asset");
             var cu = AssetDatabase.LoadAssetAtPath<CombatUnlockFixture>(Wp02 + "/CombatUnlocks_None.asset");
             var enemies = Enemies(guardian);
+            enemies.Add(guardian0);
             var issues = DataValidator.Validate(world.ToCore(), move.ToCore(), input.ToCore(), air.ToCore());
             issues.AddRange(DataValidator.ValidateCombat(combat.ToCore(), cu.ToCore(), enemies.Select(e => e.ToCore()).ToList(), world.ToCore()));
             foreach (var i in issues) Debug.LogError("[Corum2] " + i);
