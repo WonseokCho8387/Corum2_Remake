@@ -63,6 +63,10 @@ namespace Corum2.Unity
             t.localScale = new Vector3(b.Width, b.Height, 0.05f);
         }
 
+        /// <summary>Rendered depth check of enemies (TC-01-01): samples, of which bosses / moving or airborne, and the largest |z - planeZ|.</summary>
+        public long EnemySamples, BossSamples, MovingSamples;
+        public float MaxEnemyZError;
+
         public void Sync(CombatSystem c, float z)
         {
             // enemies
@@ -90,6 +94,11 @@ namespace Corum2.Unity
                 var h = e.State == EnemyState.Down || e.State == EnemyState.Dead ? e.Def.BodyHeight * 0.35f : e.Def.BodyHeight;
                 v.root.position = new Vector3(e.Position.X, e.Position.Y + h * 0.5f, z);
                 v.root.localScale = new Vector3(e.Def.BodyWidth, h, e.Def.BodyWidth);
+                // TC-01-01: rendered enemies and bosses stay on the combat plane (depth fixed).
+                EnemySamples++;
+                MaxEnemyZError = Mathf.Max(MaxEnemyZError, Mathf.Abs(v.root.position.z - z));
+                if (e.Boss != null) BossSamples++;
+                if (Mathf.Abs(e.VelX) > 0.01f || !e.Grounded) MovingSamples++;
                 var baseCol = _colors.TryGetValue(e.Def.Id, out var bc) ? bc : Color.red;
                 var stateCol = StateTint(e.State, baseCol);
                 if (v.mat.HasProperty("_BaseColor")) v.mat.SetColor("_BaseColor", stateCol);

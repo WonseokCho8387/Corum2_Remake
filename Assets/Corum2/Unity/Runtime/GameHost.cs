@@ -359,6 +359,10 @@ namespace Corum2.Unity
             {
                 Sim.Log.Emit("view.planeCheck", "player", "", "", "", "RenderedPlayerDepth",
                     ("frames", _viewFrames), ("maxAbsZError", _maxViewZError), ("planeZ", Sim.CurrentMap.CombatPlaneZ));
+                if (_combatView != null)
+                    Sim.Log.Emit("view.planeCheck", "enemies", "", "", "", "RenderedEnemyDepth",
+                        ("samples", _combatView.EnemySamples), ("bossSamples", _combatView.BossSamples), ("movingOrAirborneSamples", _combatView.MovingSamples),
+                        ("maxAbsZError", _combatView.MaxEnemyZError), ("planeZ", Sim.CurrentMap.CombatPlaneZ));
                 Sim.Log.Emit("run.end", "", "", "", "", "HostDestroyed", ("ticks", Sim.Tick), ("transitions", Sim.TransitionCount));
             }
             _sink?.Dispose();
