@@ -86,8 +86,12 @@ def check(ev):
         s = seg.get(name, [])
         roll = next((e for e in of(s, "motor.state") if e.get("stateAfter") == "Roll"), None)
         res = next((e for e in s if e["type"] in ("hit.player", "hit.skip") and e.get("actorId") == "r1"), None)
-        el = round((res["simulationTick"] - roll["simulationTick"]) * DT, 3) if roll and res else None
-        st_at_hit = tick(s, res["simulationTick"] - 1).get("stateAfter") if res else None
+        # roll time the simulation uses at the hit = (hit tick - roll start tick + 1) ticks; a skip also logs it as rollElapsed
+        el = None
+        if roll and res:
+            el = round(res["rollElapsed"], 3) if res["type"] == "hit.skip" and "rollElapsed" in res else round((res["simulationTick"] - roll["simulationTick"] + 1) * DT, 3)
+        ended = roll and res and [e for e in of(s, "motor.state") if e.get("stateBefore") == "Roll" and roll["simulationTick"] <= e["simulationTick"] < res["simulationTick"]]
+        st_at_hit = "Roll" if roll and res and roll["simulationTick"] <= res["simulationTick"] and not ended else None
         got = None if res is None else ("skip" if res["type"] == "hit.skip" else "hit")
         rows.append({"case": name, "rollElapsedAtHit": el, "playerState": st_at_hit, "result": got, "reason": res["reason"] if res else None,
                      "pass": got == want and st_at_hit == "Roll" and el is not None
