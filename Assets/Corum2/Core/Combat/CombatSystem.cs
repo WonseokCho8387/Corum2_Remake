@@ -755,6 +755,7 @@ namespace Corum2.Core
         // ================================================================ hits
 
         readonly List<(EnemyActor en, int ev)> _pc = new List<(EnemyActor, int)>();
+        int _guardedHits; // hits absorbed by an enemy guard during the current hit application (EXP-COMBO-05)
         readonly List<EnemyActor> _ec = new List<EnemyActor>();
 
         Aabb PlayerHitbox(AttackDefinition d)
@@ -881,8 +882,10 @@ namespace Corum2.Core
             {
                 var a = atk;
                 var how = Attack == null ? "Overlap(sameTickAfterDodge, EXP-DODGE-01)" : "Overlap";
+                _guardedHits = 0;
                 foreach (var (en, ev) in _pc) ApplyHitToEnemy(a, en, ev, how);
                 ApplyAttackerHitstop(a, _pc[0].ev, _pc.Count);
+                EnemyGuardCancel(a, _pc.Count);
                 if (a.Def.Kind == AttackKind.AirDash && !Unlocks.DashPierce && P.State == MotorState.AirDash)
                     P.EndDash("DashStoppedAtFirstTarget(R-04-06)");
             }
@@ -914,10 +917,36 @@ namespace Corum2.Core
             {
                 if (!en.Targetable || en.State == EnemyState.Wakeup || a.HitByEvent[0].Contains(en.Id)) continue;
                 if (Math.Abs(en.Position.X - P.Position.X) > _p.DiveAreaRadius || Math.Abs(en.Position.Y - P.Position.Y) > 1.5f) continue;
+                if (n == 0) _guardedHits = 0;
                 ApplyHitToEnemy(a, en, 0, "DiveArea(R-04-08 upgraded)");
                 n++;
             }
-            if (n > 0) ApplyAttackerHitstop(a, -1, n); // landing area = its own hit event (EXP-HITSTOP-02)
+            if (n > 0)
+            {
+                ApplyAttackerHitstop(a, -1, n); // landing area = its own hit event (EXP-HITSTOP-02)
+                EnemyGuardCancel(a, n);
+            }
+        }
+
+        /// <summary>R-04-03 "적 가드에 의한 공격 캔슬" (EXP-COMBO-05): when an enemy guard absorbs a physical hit, the player's
+        /// timed attack is cancelled (hitbox removed) and the chain ends. Motor-driven dash / dive keep their motion (R-05-03)
+        /// but the chain still ends. The same tick may also contain unguarded hits on other targets; they keep their damage and
+        /// count, and the guard still ends the chain (mixed-outcome order is CF-06, this is the experimental choice).</summary>
+        void EnemyGuardCancel(PlayerAttack a, int targets)
+        {
+            if (_guardedHits <= 0) return;
+            var guarded = _guardedHits;
+            _guardedHits = 0;
+            var reason = "EnemyGuardCancel(R-04-03, EXP-COMBO-05)";
+            Log.Emit("combo.guardCancel", Pl, "", P.State.ToString(), "", reason, ("attackInstanceId", a.InstanceId), ("attackId", a.Def.Id),
+                ("guardedHits", guarded), ("targets", targets), ("motorDriven", a.MotorDriven), ("mixedWithEffectiveHits", targets > guarded),
+                ("policy", "EXP-COMBO-05; mixed outcome order CF-06"));
+            if (Attack == a && !a.MotorDriven)
+            {
+                CancelAttack(reason);
+                if (P.State == MotorState.GroundAttack || P.State == MotorState.AirAttack) P.ReleaseLocked("EnemyGuardCancel");
+            }
+            EndChain(reason);
         }
 
         void Dodge(EnemyActor en)
@@ -956,7 +985,9 @@ namespace Corum2.Core
             a.Hits++;
             a.HitByEvent[ev].Add(en.Id);
             var comboBefore = ComboHits;
-            if (ChainAlive) ComboHits++;
+            // EXP-COMBO-05: a hit absorbed by an enemy guard is not an effective hit (R-04-03/04): no combo count.
+            if (ChainAlive && !guarded) ComboHits++;
+            if (guarded) _guardedHits++;
             var away = Math.Sign(en.Position.X - P.Position.X);
             if (away == 0) away = P.Facing;
             var armor = en.InAttack && en.CurAttack != null && (en.CurAttack.SuperArmor || en.PhaseSuperArmor) && !en.ArmorBrokenThisAttack;

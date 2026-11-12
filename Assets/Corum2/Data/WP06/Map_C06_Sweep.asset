@@ -1,0 +1,165 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2cac156314ef0040a2f4f3ec32e56f9, type: 3}
+  m_Name: Map_C06_Sweep
+  m_EditorClassIdentifier: Corum2.Unity::Corum2.Unity.MapDefinition
+  meta:
+    domainId: map.C06
+    schemaVersion: 1
+    dataVersion: wp06-1
+    status: experimental
+    policyIds: []
+    relatedRIds:
+    - R-04-02
+    - R-04-03
+    - R-04-04
+    - R-04-06
+    - R-04-07
+    - R-04-08
+    - R-05-01
+    - R-05-03
+    - R-05-06
+    changeRequestId: 
+  mapId: C06
+  minX: 0
+  maxX: 220
+  killY: -10
+  combatPlaneZ: 0
+  solids:
+  - min: {x: -1, y: -2}
+    max: {x: 221, y: 0}
+  spawns:
+  - id: Start
+    position: {x: 4, y: 0}
+    facing: 1
+  - id: Z1Ten
+    position: {x: 12, y: 0}
+    facing: 1
+  - id: Z2Launch
+    position: {x: 42, y: 0}
+    facing: 1
+  - id: Z3Pierce
+    position: {x: 74, y: 0}
+    facing: 1
+  - id: Z4Dive
+    position: {x: 102.6, y: 0}
+    facing: 1
+  - id: Z5Guard
+    position: {x: 140, y: 0}
+    facing: 1
+  - id: Z6Dash
+    position: {x: 170, y: 0}
+    facing: 1
+  - id: Z7Lock
+    position: {x: 200, y: 0}
+    facing: 1
+  left:
+    policy: 0
+    connectionId: 
+    targetMapId: 
+    targetSpawnId: 
+  right:
+    policy: 0
+    connectionId: 
+    targetMapId: 
+    targetSpawnId: 
+  points: []
+  enemies:
+  - instanceId: t0
+    enemyId: bag
+    position: {x: 13, y: 0}
+    facing: -1
+  - instanceId: t1
+    enemyId: bag
+    position: {x: 13, y: 0}
+    facing: -1
+  - instanceId: t2
+    enemyId: bag
+    position: {x: 13, y: 0}
+    facing: -1
+  - instanceId: t3
+    enemyId: bag
+    position: {x: 13, y: 0}
+    facing: -1
+  - instanceId: t4
+    enemyId: bag
+    position: {x: 13, y: 0}
+    facing: -1
+  - instanceId: t5
+    enemyId: bag
+    position: {x: 13, y: 0}
+    facing: -1
+  - instanceId: t6
+    enemyId: bag
+    position: {x: 13, y: 0}
+    facing: -1
+  - instanceId: t7
+    enemyId: bag
+    position: {x: 13, y: 0}
+    facing: -1
+  - instanceId: t8
+    enemyId: bag
+    position: {x: 13, y: 0}
+    facing: -1
+  - instanceId: t9
+    enemyId: bag
+    position: {x: 13, y: 0}
+    facing: -1
+  - instanceId: la
+    enemyId: bag
+    position: {x: 43, y: 0}
+    facing: -1
+  - instanceId: lb
+    enemyId: bag
+    position: {x: 41, y: 0}
+    facing: -1
+  - instanceId: p1
+    enemyId: bag
+    position: {x: 75.4, y: 0}
+    facing: -1
+  - instanceId: p2
+    enemyId: bag
+    position: {x: 76.2, y: 0}
+    facing: -1
+  - instanceId: p3
+    enemyId: bag
+    position: {x: 77, y: 0}
+    facing: -1
+  - instanceId: d1
+    enemyId: bag
+    position: {x: 103.4, y: 0}
+    facing: -1
+  - instanceId: d2
+    enemyId: bag
+    position: {x: 104, y: 0}
+    facing: -1
+  - instanceId: d3
+    enemyId: bag
+    position: {x: 104.6, y: 0}
+    facing: -1
+  - instanceId: g1
+    enemyId: guardian
+    position: {x: 141.2, y: 0}
+    facing: -1
+  - instanceId: k1
+    enemyId: bag
+    position: {x: 171.3, y: 0}
+    facing: -1
+  - instanceId: m1
+    enemyId: bag
+    position: {x: 201.2, y: 0}
+    facing: -1
+  cameraMinX: 9
+  cameraMaxX: 211
+  cameraY: 2.5
+  cameraFollowSharpness: 10
+  groundColor: {r: 0.38, g: 0.4, b: 0.42, a: 1}

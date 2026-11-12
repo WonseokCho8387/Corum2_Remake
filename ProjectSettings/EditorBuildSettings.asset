@@ -20,6 +20,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Corum2/Scenes/WP04_AI.unity
     guid: 17d62ced5258b5940b4ab45852c91974
+  - enabled: 1
+    path: Assets/Corum2/Scenes/WP05_MagicDeath.unity
+    guid: e0fe1e467001ab649aabd4c2c3b2d7d6
+  - enabled: 1
+    path: Assets/Corum2/Scenes/WP06_ComboState.unity
+    guid: 34d28336eae00fe45a6fbc5d62370328
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
