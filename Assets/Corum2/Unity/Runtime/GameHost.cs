@@ -82,6 +82,11 @@ namespace Corum2.Unity
         float _fpsSmoothed;
         long _viewFrames;
         float _maxViewZError;
+        // WP09-M01: rendered player frames per input direction fed to the simulation, and while airborne.
+        readonly long[] _dirFrames = new long[9];
+        readonly float[] _dirMaxZ = new float[9];
+        long _airFrames;
+        float _airMaxZ;
 
         // scripted input
         readonly List<(double at, string cmd)> _script = new List<(double, string)>();
@@ -260,7 +265,11 @@ namespace Corum2.Unity
             if (_combatView != null) _combatView.Sync(Sim.Combat, z);
             if (_presentationView != null) _presentationView.Sync(Sim, z, Time.fixedDeltaTime);
             _viewFrames++;
-            _maxViewZError = Mathf.Max(_maxViewZError, Mathf.Abs(_playerView.Root.position.z - z));
+            var pz = Mathf.Abs(_playerView.Root.position.z - z);
+            _maxViewZError = Mathf.Max(_maxViewZError, pz);
+            var di = (int)_tick.Dir;
+            if (di >= 0 && di < 9) { _dirFrames[di]++; _dirMaxZ[di] = Mathf.Max(_dirMaxZ[di], pz); }
+            if (!Sim.Player.Grounded) { _airFrames++; _airMaxZ = Mathf.Max(_airMaxZ, pz); }
             if (_camera != null)
             {
                 var cx = Mathf.Lerp(_prevCamX, _currCamX, alpha);
@@ -358,11 +367,20 @@ namespace Corum2.Unity
             if (Sim != null)
             {
                 Sim.Log.Emit("view.planeCheck", "player", "", "", "", "RenderedPlayerDepth",
-                    ("frames", _viewFrames), ("maxAbsZError", _maxViewZError), ("planeZ", Sim.CurrentMap.CombatPlaneZ));
+                    ("frames", _viewFrames), ("maxAbsZError", _maxViewZError), ("planeZ", Sim.CurrentMap.CombatPlaneZ),
+                    ("dirFrames", DirTable(_dirFrames)), ("dirMaxAbsZError", DirTable(_dirMaxZ)), ("airFrames", _airFrames), ("airMaxAbsZError", _airMaxZ));
                 if (_combatView != null)
-                    Sim.Log.Emit("view.planeCheck", "enemies", "", "", "", "RenderedEnemyDepth",
-                        ("samples", _combatView.EnemySamples), ("bossSamples", _combatView.BossSamples), ("movingOrAirborneSamples", _combatView.MovingSamples),
-                        ("maxAbsZError", _combatView.MaxEnemyZError), ("planeZ", Sim.CurrentMap.CombatPlaneZ));
+                {
+                    var cv = _combatView;
+                    Sim.Log.Emit("view.planeCheck", "enemies", "", "", "", "RenderedEnemyDepth(WP09-M01)",
+                        ("samples", cv.EnemySamples), ("bossSamples", cv.BossSamples), ("bossMovingSamples", cv.BossMovingSamples),
+                        ("firstSamples", cv.FirstSamples), ("airborneSamples", cv.AirborneSamples), ("teleportSamples", cv.TeleportSamples),
+                        ("groundMovingSamples", cv.GroundMovingSamples), ("groundStillSamples", cv.GroundStillSamples),
+                        ("propelledSamples", cv.PropelledSamples), ("teleportDx", CombatView.TeleportDx),
+                        ("maxAbsZError", cv.MaxEnemyZError), ("maxAbsZFirst", cv.MaxZFirst), ("maxAbsZAirborne", cv.MaxZAirborne),
+                        ("maxAbsZTeleport", cv.MaxZTeleport), ("maxAbsZGroundMoving", cv.MaxZGroundMoving), ("maxAbsZGroundStill", cv.MaxZGroundStill),
+                        ("planeZ", Sim.CurrentMap.CombatPlaneZ));
+                }
                 Sim.Log.Emit("run.end", "", "", "", "", "HostDestroyed", ("ticks", Sim.Tick), ("transitions", Sim.TransitionCount));
             }
             _sink?.Dispose();
@@ -370,6 +388,14 @@ namespace Corum2.Unity
         }
 
         static Vector2 ToV(Vec2 v) => new Vector2(v.X, v.Y);
+
+        static string DirTable<T>(T[] values)
+        {
+            var parts = new List<string>();
+            for (var i = 0; i < values.Length; i++)
+                parts.Add(((Dir8)i) + ":" + string.Format(CultureInfo.InvariantCulture, "{0}", values[i]));
+            return string.Join(",", parts);
+        }
 
         // ---------------------------------------------------------------- scripted input
 

@@ -63,9 +63,21 @@ namespace Corum2.Unity
             t.localScale = new Vector3(b.Width, b.Height, 0.05f);
         }
 
-        /// <summary>Rendered depth check of enemies (TC-01-01): samples, of which bosses / moving or airborne, and the largest |z - planeZ|.</summary>
-        public long EnemySamples, BossSamples, MovingSamples;
+        /// <summary>Rendered depth check of enemies (TC-01-01): samples, of which bosses, and the largest |z - planeZ|.</summary>
+        public long EnemySamples, BossSamples;
         public float MaxEnemyZError;
+
+        /// <summary>
+        /// WP09-M01: every sample falls in exactly one class, from the rendered root's own movement since the
+        /// previous frame (not from VelX alone, which misses AI walking via MoveVelX):
+        /// First (no previous frame), Airborne (!Grounded), Teleport (grounded jump of >= TeleportDx, test placement),
+        /// GroundMoving (grounded, 0 &lt; |dx| &lt; TeleportDx), GroundStill (grounded, dx = 0).
+        /// Propelled counts samples with AI drive or knockback (|MoveVelX| or |VelX| &gt; 0.01), independent of the classes.
+        /// </summary>
+        public long FirstSamples, AirborneSamples, TeleportSamples, GroundMovingSamples, GroundStillSamples, PropelledSamples, BossMovingSamples;
+        public float MaxZAirborne, MaxZGroundMoving, MaxZGroundStill, MaxZTeleport, MaxZFirst;
+        public const float TeleportDx = 1f;
+        readonly Dictionary<EnemyActor, float> _lastRootX = new Dictionary<EnemyActor, float>();
 
         public void Sync(CombatSystem c, float z)
         {
@@ -78,6 +90,7 @@ namespace Corum2.Unity
             {
                 Object.Destroy(_enemies[e].root.gameObject);
                 _enemies.Remove(e);
+                _lastRootX.Remove(e);
             }
             var boxIndex = 0;
             foreach (var e in c.Enemies)
@@ -98,7 +111,19 @@ namespace Corum2.Unity
                 EnemySamples++;
                 MaxEnemyZError = Mathf.Max(MaxEnemyZError, Mathf.Abs(v.root.position.z - z));
                 if (e.Boss != null) BossSamples++;
-                if (Mathf.Abs(e.VelX) > 0.01f || !e.Grounded) MovingSamples++;
+                var err = Mathf.Abs(v.root.position.z - z);
+                var rx = v.root.position.x;
+                if (Mathf.Abs(e.MoveVelX) > 0.01f || Mathf.Abs(e.VelX) > 0.01f) PropelledSamples++;
+                if (!_lastRootX.TryGetValue(e, out var lastX)) { FirstSamples++; MaxZFirst = Mathf.Max(MaxZFirst, err); }
+                else if (!e.Grounded) { AirborneSamples++; MaxZAirborne = Mathf.Max(MaxZAirborne, err); if (e.Boss != null) BossMovingSamples++; }
+                else
+                {
+                    var dx = Mathf.Abs(rx - lastX);
+                    if (dx >= TeleportDx) { TeleportSamples++; MaxZTeleport = Mathf.Max(MaxZTeleport, err); }
+                    else if (dx > 0f) { GroundMovingSamples++; MaxZGroundMoving = Mathf.Max(MaxZGroundMoving, err); if (e.Boss != null) BossMovingSamples++; }
+                    else { GroundStillSamples++; MaxZGroundStill = Mathf.Max(MaxZGroundStill, err); }
+                }
+                _lastRootX[e] = rx;
                 var baseCol = _colors.TryGetValue(e.Def.Id, out var bc) ? bc : Color.red;
                 var stateCol = StateTint(e.State, baseCol);
                 if (v.mat.HasProperty("_BaseColor")) v.mat.SetColor("_BaseColor", stateCol);
