@@ -1,0 +1,10 @@
+# GameHost.RunInputScript input (game seconds:command), started at game time 5.0467104095804984
+0.1:tc=TC-06-03
+0.1:spawn=Z1Overlap
+0.1:mark=HitstopOneTarget
+0.3:kbtap=J
+2.0:spawn=Z3Ten
+2.1:mark=HitstopTenTargets
+2.3:kbtap=J
+3.5:mark=ScriptEnd
+3.6:flush

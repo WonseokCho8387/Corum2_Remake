@@ -1,0 +1,64 @@
+{
+ "logs": [
+  "D:/ProjectR/Corum2Remake/Evidence/WP-07/runs/RUN-20261112-142628.ndjson",
+  "D:/ProjectR/Corum2Remake/Evidence/WP-07/runs/RUN-20261112-142906.ndjson"
+ ],
+ "TC-06-03": {
+  "mainRun": {
+   "one": {
+    "targets": 1,
+    "motionTicks": 15,
+    "stops": [
+     [
+      0.04,
+      1
+     ]
+    ]
+   },
+   "ten": {
+    "targets": 10,
+    "motionTicks": 15,
+    "stops": [
+     [
+      0.04,
+      10
+     ]
+    ]
+   },
+   "pass": true
+  },
+  "inspectorRun": {
+   "one": {
+    "targets": 1,
+    "motionTicks": 18,
+    "stops": [
+     [
+      0.1,
+      1
+     ]
+    ]
+   },
+   "ten": {
+    "targets": 10,
+    "motionTicks": 18,
+    "stops": [
+     [
+      0.1,
+      10
+     ]
+    ]
+   },
+   "pass": true
+  },
+  "extraTicks": 3,
+  "pass": true
+ },
+ "selftest": [
+  {
+   "case": "Inspector change has no effect",
+   "sectionPass": false,
+   "pass": true
+  }
+ ],
+ "selftest_all_pass": true
+}

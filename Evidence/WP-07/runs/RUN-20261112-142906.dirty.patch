@@ -1,0 +1,27 @@
+diff --git a/Assets/Corum2/Data/WP07/CombatConfig_WP07.asset b/Assets/Corum2/Data/WP07/CombatConfig_WP07.asset
+index b21f448..8bc9355 100644
+--- a/Assets/Corum2/Data/WP07/CombatConfig_WP07.asset
++++ b/Assets/Corum2/Data/WP07/CombatConfig_WP07.asset
+@@ -43,7 +43,7 @@ MonoBehaviour:
+     width: 1
+     height: 1.2
+     testDamage: 10
+-    hitstop: 0.04
++    hitstop: 0.1
+     knockback: 1.5
+     launchVelocity: 0
+     hitEvents: 1
+diff --git a/ProjectSettings/EditorBuildSettings.asset b/ProjectSettings/EditorBuildSettings.asset
+index 575a40e..f56f43f 100644
+--- a/ProjectSettings/EditorBuildSettings.asset
++++ b/ProjectSettings/EditorBuildSettings.asset
+@@ -26,6 +26,9 @@ EditorBuildSettings:
+   - enabled: 1
+     path: Assets/Corum2/Scenes/WP06_ComboState.unity
+     guid: 34d28336eae00fe45a6fbc5d62370328
++  - enabled: 1
++    path: Assets/Corum2/Scenes/WP07_HitReaction.unity
++    guid: 0caee6793ab059b4599b52d843a4afa1
+   m_configObjects:
+     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+   m_UseUCBPForAssetBundles: 0
