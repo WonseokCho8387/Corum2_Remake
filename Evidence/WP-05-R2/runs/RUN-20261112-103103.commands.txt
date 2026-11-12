@@ -1,0 +1,14 @@
+# GameHost.RunInputScript input (game seconds:command), started at game time 4.442978507653061
+0.1:tc=TC-06-19a
+0.1:item=feather:0
+0.1:spawn=TestHitter
+0.1:hp=1
+4.0:mark=GameOverNoRevive
+4.5:mark=SelectCheckpoint
+4.5:padtap=A
+5.0:pad=0,-1
+5.1:pad=0,0
+5.4:mark=SelectLoadSave
+5.4:padtap=A
+6.5:mark=ScriptEnd
+6.6:flush

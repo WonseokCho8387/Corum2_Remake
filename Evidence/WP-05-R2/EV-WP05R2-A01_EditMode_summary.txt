@@ -1,0 +1,8 @@
+EditMode on the 5af26f0 source (committed, clean tree): test-case 275, passed 275, failed 0; root result=Passed start=2026-11-12 01:32:18Z
+New in WP-05-R2 (6 test cases, Wp05R2Tests; 269 + 6 = 275):
+  Corum2.Tests.Wp05R2Tests.EdgesOfOneSample_ShareItsSeq_KeyboardEventsHaveNone
+  Corum2.Tests.Wp05R2Tests.F01_HarnessFrame_ThreeSamplesSameTime_Casts
+  Corum2.Tests.Wp05R2Tests.F01_SeparateSamplesWithTheSameTime_EachRecorded(0.0d)
+  Corum2.Tests.Wp05R2Tests.F01_SeparateSamplesWithTheSameTime_EachRecorded(1E-06.0d)
+  Corum2.Tests.Wp05R2Tests.F01_TwoSamplesSameFrame_DownThenRight_StillNoPhantomDiagonal
+  Corum2.Tests.Wp05R2Tests.Reason_RollBeforeItsWindow_DuringRevive_IsRevive
