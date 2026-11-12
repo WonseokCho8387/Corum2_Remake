@@ -1,0 +1,5 @@
+EditMode on the 09389c5 source (committed, clean tree): test-case 278, passed 278, failed 0; root result=Passed start=2026-11-12 05:00:46Z
+New in WP-06 (Wp06Tests):
+  Corum2.Tests.Wp06Tests.BackHit_IsNotGuarded_ChainContinues
+  Corum2.Tests.Wp06Tests.EnemyGuard_CancelsTheAttack_EndsTheChain_NoComboCount
+  Corum2.Tests.Wp06Tests.EnemyGuard_MixedWithAnEffectiveHit_KeepsThatHitsCount_StillEndsTheChain

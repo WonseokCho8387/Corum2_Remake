@@ -1,0 +1,421 @@
+{
+ "log": "D:/ProjectR/Corum2Remake/Evidence/WP-06/runs/RUN-20261112-140343.ndjson",
+ "TC-04-04": {
+  "attacks": [
+   "ground1",
+   "ground2",
+   "ground3",
+   "ground4",
+   "launcher",
+   "air1",
+   "air2",
+   "air3",
+   "air4",
+   "dive"
+  ],
+  "perAttack(id,distinctTargets,hits)": [
+   [
+    "ground1",
+    10,
+    10
+   ],
+   [
+    "ground2",
+    10,
+    10
+   ],
+   [
+    "ground3",
+    10,
+    10
+   ],
+   [
+    "ground4",
+    10,
+    10
+   ],
+   [
+    "launcher",
+    10,
+    10
+   ],
+   [
+    "air1",
+    10,
+    10
+   ],
+   [
+    "air2",
+    10,
+    10
+   ],
+   [
+    "air3",
+    10,
+    10
+   ],
+   [
+    "air4",
+    10,
+    10
+   ],
+   [
+    "dive",
+    10,
+    10
+   ]
+  ],
+  "chains": [
+   1
+  ],
+  "jumps": 1,
+  "comboEnd": [
+   "Timeout",
+   10,
+   100
+  ],
+  "maxComboAfter": 100,
+  "pass": true
+ },
+ "TC-04-02": {
+  "launcherHits": [
+   [
+    "la",
+    "Launched:Launchable(R-06-08)"
+   ]
+  ],
+  "groundAttackHits": [
+   [
+    "lb",
+    "Stagger(R-06-04)"
+   ],
+   [
+    "lb",
+    "Stagger(R-06-04)"
+   ]
+  ],
+  "playerMaxY": 0,
+  "allTicksGrounded": true,
+  "jumps": 0,
+  "pass": true
+ },
+ "TC-04-06": {
+  "initial": {
+   "targets": [
+    "p1"
+   ],
+   "comboHits": 1,
+   "endTickAfterHit": 1
+  },
+  "pierce": {
+   "targets": [
+    "p1",
+    "p2",
+    "p3"
+   ],
+   "comboHits": 3
+  },
+  "pass": true
+ },
+ "TC-04-08": {
+  "initial": [
+   "d1"
+  ],
+  "area": [
+   [
+    "d1",
+    "Overlap"
+   ],
+   [
+    "d2",
+    "DiveArea(R-04-08 upgraded)"
+   ],
+   [
+    "d3",
+    "DiveArea(R-04-08 upgraded)"
+   ]
+  ],
+  "pass": true
+ },
+ "TC-04-03": {
+  "cases": [
+   {
+    "case": "EnemyGuardCancel",
+    "endReason": "EnemyGuardCancel(R-04-03, EXP-COMBO-05)",
+    "comboHits": 0,
+    "chain": 8,
+    "nextChain": 9,
+    "pass": true,
+    "guardDetail": {
+     "guardCancel": 2,
+     "guardedHits": [
+      [
+       "g1",
+       "BossGuard:GuardRule(R-08-11, EXP-BOSS-06)",
+       0
+      ]
+     ],
+     "attackEnd": "EnemyGuardCancel(R-04-03, EXP-COMBO-05)"
+    }
+   },
+   {
+    "case": "MissEndsChain",
+    "endReason": "Miss",
+    "comboHits": 0,
+    "chain": 10,
+    "nextChain": null,
+    "pass": true
+   },
+   {
+    "case": "TimeoutEndsChain",
+    "endReason": "Timeout",
+    "comboHits": 1,
+    "chain": 11,
+    "nextChain": null,
+    "pass": true,
+    "windowSeconds": 0.5,
+    "timeoutAfterAttackEnd": 0.4999998025596142
+   },
+   {
+    "case": "RbCancelEndsChain",
+    "endReason": "GuardCancel",
+    "comboHits": 1,
+    "chain": 12,
+    "nextChain": 13,
+    "pass": true,
+    "attackEnd": "GuardCancel",
+    "hitboxRemoved": true
+   }
+  ],
+  "pass": true
+ },
+ "TC-05-01": {
+  "attackTicks": 45,
+  "attackTicksWithRightHeld": 28,
+  "xPerAttackMotion": [
+   [
+    200
+   ],
+   [
+    200
+   ],
+   [
+    200.28
+   ]
+  ],
+  "walkTicksAfter": 13,
+  "jumpRejectedDuringAttack": 1,
+  "jumpAfterEnd": [
+   [
+    1552,
+    "Jump:Standing"
+   ]
+  ],
+  "pass": true
+ },
+ "TC-05-06": {
+  "buffered": [
+   [
+    1637,
+    117
+   ]
+  ],
+  "bufferExecuted": [
+   [
+    1647,
+    117,
+    32.93998699262738
+   ]
+  ],
+  "afterWindow": {
+   "chains": [
+    18,
+    19
+   ],
+   "endsBetween": [
+    "Timeout",
+    "Timeout"
+   ]
+  },
+  "reservation": [
+   [
+    1879,
+    135
+   ]
+  ],
+  "reservationExecuted": [
+   [
+    1911,
+    37.5799851603806,
+    38.21998490765691
+   ]
+  ],
+  "pass": true
+ },
+ "TC-04-07": {
+  "attacks": [
+   "launcher",
+   "air1",
+   "airDash",
+   "ground1"
+  ],
+  "airNormalAfterDash": 0,
+  "landTick": 1911,
+  "reservationExecTick": 1911,
+  "sameChain": true,
+  "pass": true
+ },
+ "TC-05-03": {
+  "cases": [
+   {
+    "case": "RbAtDashStart",
+    "guardPresses": 1,
+    "rejected": [
+     [
+      1991,
+      "ActionLock:AirDash"
+     ]
+    ],
+    "motionEnd": "AirDashEnd",
+    "pressPhase(0=start,1=end)": 0.06,
+    "pass": true
+   },
+   {
+    "case": "RbAtDashActive",
+    "guardPresses": 1,
+    "rejected": [
+     [
+      2095,
+      "ActionLock:AirDash"
+     ]
+    ],
+    "motionEnd": "AirDashEnd",
+    "pressPhase(0=start,1=end)": 0.31,
+    "pass": true
+   },
+   {
+    "case": "RbAtDashEnd",
+    "guardPresses": 1,
+    "rejected": [
+     [
+      2201,
+      "ActionLock:AirDash"
+     ]
+    ],
+    "motionEnd": "AirDashEnd",
+    "pressPhase(0=start,1=end)": 0.69,
+    "pass": true
+   },
+   {
+    "case": "RbAtDiveStart",
+    "guardPresses": 1,
+    "rejected": [
+     [
+      2293,
+      "ActionLock:Dive"
+     ]
+    ],
+    "motionEnd": "DiveEnd",
+    "pressPhase(0=start,1=end)": 0.0,
+    "pass": true
+   },
+   {
+    "case": "RbAtDiveMid",
+    "guardPresses": 1,
+    "rejected": [
+     [
+      2397,
+      "ActionLock:Dive"
+     ]
+    ],
+    "motionEnd": "DiveEnd",
+    "pressPhase(0=start,1=end)": 0.25,
+    "pass": true
+   }
+  ],
+  "pass": true
+ },
+ "selftest": [
+  {
+   "case": "original",
+   "pass": {
+    "TC-04-04": true,
+    "TC-04-02": true,
+    "TC-04-06": true,
+    "TC-04-08": true,
+    "TC-04-03": true,
+    "TC-05-01": true,
+    "TC-05-06": true,
+    "TC-04-07": true,
+    "TC-05-03": true
+   }
+  },
+  {
+   "case": "TC-04-04 duplicate target inside one attack",
+   "section": "TC-04-04",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-04-02 player rises after the launcher",
+   "section": "TC-04-02",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-04-06 initial dash hits a second target",
+   "section": "TC-04-06",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-04-03 guarded hit counted as combo",
+   "section": "TC-04-03",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-04-03 a miss does not end the chain",
+   "section": "TC-04-03",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-04-03 attack after an RB cancel keeps the old chain",
+   "section": "TC-04-03",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-05-01 player moves during the attack",
+   "section": "TC-05-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-05-03 RB cancels the dash",
+   "section": "TC-05-03",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-04-07 air normal after the dash",
+   "section": "TC-04-07",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-05-06 buffered press executed before the motion ends",
+   "section": "TC-05-06",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-04-08 upgraded dive hits one target",
+   "section": "TC-04-08",
+   "sectionPass": false,
+   "pass": true
+  }
+ ],
+ "selftest_all_pass": true
+}
