@@ -16,7 +16,10 @@ SCENARIOS = ["ArmorPhysical", "ArmorMagic", "ArmorAgain", "RollBeforeWindow", "R
              "MultiEnemyLock", "DodgeNormal", "DodgeMagic", "DodgeArmor", "AttackTheDead", "OneDiesOthersContinue", "FrontGuardFacingRight",
              "RearAttackWhileGuardingRight", "TurnLeftAndGuard", "Guard9", "Guard10", "Guard50", "ConsecutiveGuard", "AirGuard", "AirParry",
              "ParryThenAttack", "GuardNormal", "GuardUnblockable", "GuardBreak", "RbGroundNormal", "RbLauncher", "RbAirNormal", "RbDash", "RbDive",
-             "RbDuringHitstun", "ParryOffset22", "ParryOffset18", "ParryOffset12", "ParryOffset08", "ScriptEnd"]
+             "RbDuringHitstun",
+             # R1 (GPT WP-08 review): weak magic on super armor (WP08-F01), lethal guard / guard break / parry damage (WP08-F02)
+             "ArmorWeakMagic", "ArmorWeakAgain", "LethalGuard", "LethalGuardBreak", "LethalParry",
+             "ParryOffset22", "ParryOffset18", "ParryOffset12", "ParryOffset08", "ScriptEnd"]
 ENEMY = re.compile(r"([^:|]+):([A-Za-z]+)@(-?[\d.]+),(-?[\d.]+) hp(-?[\d.]+)")
 
 
@@ -48,6 +51,43 @@ def enemy_at(s, n, eid):
     return None, None
 
 
+def enemy_hp(s, n, eid):
+    for m in ENEMY.finditer(str(tick(s, n).get("enemies", ""))):
+        if m.group(1) == eid: return float(m.group(5))
+    return None
+
+
+def effective(h):
+    return h.get("hpAfter") is not None and h["hpAfter"] < h["hpBefore"] and h.get("comboAfter") == h.get("comboBefore", -99) + 1
+
+
+def press_of(s, action, before_tick, after_tick=-1):
+    return [e for e in s if e["type"] == "input" and e.get("action") == action and e.get("edge") == "Press" and after_tick <= e["simulationTick"] <= before_tick]
+
+
+def knock_disp(s, eid, h, ticks=40):
+    """Full-precision enemy.knockback record that starts right after hit h (R1)."""
+    k = next((x for x in s if x["type"] == "enemy.knockback" and x.get("actorId") == eid and h["simulationTick"] < x.get("startTick", -1) <= h["simulationTick"] + 8
+              and x["simulationTick"] <= h["simulationTick"] + ticks), None)
+    return abs(k["displacement"]) if k else None
+
+
+def armor_magic(seg, first, again, eid):
+    s = seg.get(first, [])
+    mh = next((e for e in of(s, "hit") if e.get("damageType") == "Magic" and e["targetId"] == eid), None)
+    cast = next((e for e in of(s, "magic.cast") if mh and e.get("attackInstanceId") == mh.get("attackInstanceId")), None)
+    cancelled = mh is not None and not [e for e in of(s, "enemy.state") if e.get("actorId") == eid and e.get("stateAfter") == "AttackActive" and e["simulationTick"] < mh["simulationTick"] + 20]
+    hit_by_that = [e for e in of(s, "hit.player") if e.get("actorId") == eid and mh and e["simulationTick"] < mh["simulationTick"] + 20]
+    disp = knock_disp(s, eid, mh) if mh else None
+    s2 = seg.get(again, [])
+    h2 = next((e for e in of(s2, "hit") if e["targetId"] == eid), None)
+    return {"magicHit": (mh["reason"], mh["stateBefore"], mh["stateAfter"], mh.get("knockbackVel")) if mh else None, "displacement": disp,
+            "armorAttackCancelled": cancelled, "nextArmorAttackPhysicalHit": (h2["targetId"], h2["reason"], h2["stateBefore"], h2["stateAfter"]) if h2 else None,
+            "pass": mh is not None and cast is not None and mh["reason"].startswith("MagicBreaksArmor") and mh["stateBefore"].startswith("Attack") and mh["stateAfter"] == "Stagger"
+            and abs(mh.get("knockbackVel") or 0) > 0 and (disp or 0) > 0 and cancelled and not hit_by_that and mh["hpAfter"] < mh["hpBefore"]
+            and h2 is not None and h2["reason"].startswith("SuperArmor:DamageOnly") and h2["stateBefore"].startswith("Attack") and effective(h2)}
+
+
 def attack_start(s, eid):
     return next((e["simulationTick"] for e in of(s, "enemy.state") if e.get("actorId") == eid and e.get("stateAfter") == "AttackStartup"), None)
 
@@ -63,22 +103,14 @@ def check(ev):
     landed = [e for e in of(s, "hit.player") if e.get("actorId") == "a1"]
     out["TC-06-11"] = {"hit": (h["reason"], h["stateBefore"], h["stateAfter"], h["hpBefore"] - h["hpAfter"], h.get("comboAfter"), h.get("knockbackVel")) if h else None,
                        "attackContinued": bool(act and h and act[0]["simulationTick"] > h["simulationTick"]), "armorAttackLanded": len(landed),
-                       "pass": h is not None and h["reason"].startswith("SuperArmor:DamageOnly") and h["hpAfter"] < h["hpBefore"] and h.get("comboAfter", 0) >= 1
+                       "pass": h is not None and h["targetId"] == "a1" and effective(h) and all(e.get("actorId") == "a1" for e in act + landed) and h["reason"].startswith("SuperArmor:DamageOnly") and h["hpAfter"] < h["hpBefore"] and h.get("comboAfter", 0) >= 1
                        and h.get("knockbackVel") == 0 and h["stateAfter"] == h["stateBefore"] and bool(act) and act[0]["simulationTick"] > h["simulationTick"] and bool(landed)}
 
     # ---- TC-06-12: magic during the armor attack: stagger + knockback + cancel; the next armor attack is armored again (R-06-12)
-    s = seg.get("ArmorMagic", [])
-    mh = next((e for e in of(s, "hit") if e.get("damageType") == "Magic"), None)
-    start = attack_start(s, "a2")
-    cancelled = mh is not None and not [e for e in of(s, "enemy.state") if e.get("actorId") == "a2" and e.get("stateAfter") == "AttackActive" and e["simulationTick"] < mh["simulationTick"] + 20]
-    hit_by_that = [e for e in of(s, "hit.player") if e.get("actorId") == "a2" and mh and e["simulationTick"] < mh["simulationTick"] + 20]
-    s2 = seg.get("ArmorAgain", [])
-    h2 = next(iter(of(s2, "hit")), None)
-    out["TC-06-12"] = {"magicHit": (mh["reason"], mh["stateBefore"], mh["stateAfter"], mh.get("knockbackVel")) if mh else None,
-                       "armorAttackCancelled": cancelled, "nextArmorAttackPhysicalHit": (h2["reason"], h2["stateBefore"], h2["stateAfter"]) if h2 else None,
-                       "pass": mh is not None and mh["reason"].startswith("MagicBreaksArmor") and mh["stateBefore"].startswith("Attack") and mh["stateAfter"] == "Stagger"
-                       and abs(mh.get("knockbackVel") or 0) > 0 and cancelled and not hit_by_that
-                       and h2 is not None and h2["reason"].startswith("SuperArmor:DamageOnly") and h2["stateBefore"].startswith("Attack")}
+    base12 = armor_magic(seg, "ArmorMagic", "ArmorAgain", "a2")
+    weak12 = armor_magic(seg, "ArmorWeakMagic", "ArmorWeakAgain", "aw")
+    out["TC-06-12"] = {"scale1_a2": base12, "weakScale0.1_aw(WP08-F01)": weak12,
+                       "pass": base12["pass"] and weak12["pass"] and weak12["magicHit"] is not None and abs(weak12["magicHit"][3]) < 0.6}
 
     # ---- TC-06-13: roll invulnerability only inside its window; no automatic invulnerability after a normal hit (R-06-13)
     rows = []
@@ -93,9 +125,12 @@ def check(ev):
         ended = roll and res and [e for e in of(s, "motor.state") if e.get("stateBefore") == "Roll" and roll["simulationTick"] <= e["simulationTick"] < res["simulationTick"]]
         st_at_hit = "Roll" if roll and res and roll["simulationTick"] <= res["simulationTick"] and not ended else None
         got = None if res is None else ("skip" if res["type"] == "hit.skip" else "hit")
+        side = {"RollBeforeWindow": lambda x: x < 0.05, "RollInWindow": lambda x: 0.05 <= x <= 0.30, "RollAfterWindow": lambda x: x > 0.30}[name]
+        reason_ok = res is not None and (res["reason"] == "PlayerInvincible:RollWindow(R-06-13)" if want == "skip" else res["reason"].startswith("Hit"))
+        tick_el = round((res["simulationTick"] - roll["simulationTick"] + 1) * DT, 3) if roll and res else None
         rows.append({"case": name, "rollElapsedAtHit": el, "playerState": st_at_hit, "result": got, "reason": res["reason"] if res else None,
-                     "pass": got == want and st_at_hit == "Roll" and el is not None
-                     and ((want == "skip" and 0.05 <= el <= 0.30) or (want == "hit" and (el < 0.05 or el > 0.30)))})
+                     "pass": got == want and st_at_hit == "Roll" and el is not None and side(el) and reason_ok
+                     and (want != "skip" or abs(el - tick_el) <= 0.011)})
     s = seg.get("NormalHitThenNextAttack", [])
     hp = [e for e in of(s, "hit.player") if e.get("actorId") == "r1"]
     sk = [e for e in of(s, "hit.skip") if e.get("actorId") == "r1"]
@@ -119,7 +154,8 @@ def check(ev):
                        "longestLockSeconds": round(longest * DT, 2), "firstWalkTick": walk, "damageTotal": dmg,
                        "addedProtection": [e["reason"] for e in of(s, "hit.skip")],
                        "note": "observation only; the pass criterion for feel is undecided (R-06-14)",
-                       "pass": len(hp) >= 3 and longest > 0 and walk is not None and not of(s, "hit.skip")
+                       "attackers": sorted({e.get("actorId") for e in hp}),
+                       "pass": len(hp) >= 3 and longest > 0 and walk is not None and not of(s, "hit.skip") and {e.get("actorId") for e in hp} == {"x1", "x2", "x3"}
                        and all(e.get("extraInvulnerability", "").startswith("none") for e in hp)}
 
     # ---- TC-06-15 / 16: same-tick hits -> Dodge both sides, no HP change, no count, chain ends, both reactions (R-06-15/16)
@@ -143,8 +179,17 @@ def check(ev):
         return {"case": name, "tick": n, "damage": d.get("damage"), "playerHp": (before.get("hp"), after.get("hp")), "comboBefore": d.get("comboBefore"),
                 "playerState": after.get("stateAfter"), "enemyState": en_state, "chainAliveBefore": alive, "chainEnd": [e["reason"] for e in ce],
                 "enemyArmor": d.get("enemyArmor"), "hitsSameTick": len(same),
+                "enemyHp": (enemy_hp(s, n - 1, eid), enemy_hp(s, n, eid)), "attackIdsLinked": linked(s, d, eid),
                 "pass": d.get("damage") == 0 and before.get("hp") == after.get("hp") and not same and after.get("stateAfter") == "DodgeReact"
-                and en_state[0] == "DodgeReact" and ((bool(ce) and ce[0]["reason"] == "Dodge") if alive else not ce)}
+                and en_state[0] == "DodgeReact" and ((bool(ce) and ce[0]["reason"] == "Dodge") if alive else not ce)
+                and enemy_hp(s, n - 1, eid) is not None and enemy_hp(s, n - 1, eid) == enemy_hp(s, n, eid) and linked(s, d, eid)}
+
+    def linked(s, d, eid):
+        pa = d.get("playerAttackInstanceId")
+        ea = d.get("enemyAttackInstanceId")
+        p_ok = any(e.get("attackInstanceId") == pa and e["eventId"] < d["eventId"] for e in s if e["type"] in ("attack.start", "magic.cast"))
+        e_ok = any(e.get("actorId") == eid and e.get("stateAfter") == "AttackStartup" and e.get("attackInstanceId") == ea for e in of(s, "enemy.state"))
+        return p_ok and e_ok
     d1 = dodge("DodgeNormal", "dd1")
     out["TC-06-15"] = {"case": d1, "pass": d1["pass"]}
     dm, da = dodge("DodgeMagic", "dm1"), dodge("DodgeArmor", "da1")
@@ -161,7 +206,7 @@ def check(ev):
                        "vanishTick": van["simulationTick"] if van else None, "removedTick": rem["simulationTick"] if rem else None,
                        "pass": death is not None and len(starts_after) >= 3 and not later and van is not None and rem is not None
                        and death["simulationTick"] < van["simulationTick"] < rem["simulationTick"]
-                       and any(e["simulationTick"] < van["simulationTick"] for e in starts_after) and any(e["simulationTick"] > van["simulationTick"] for e in starts_after)}
+                       and any(e["simulationTick"] < van["simulationTick"] for e in starts_after) and any(van["simulationTick"] <= e["simulationTick"] < rem["simulationTick"] for e in starts_after)}
 
     # ---- TC-06-18: only A's link ends; the chain keeps counting B and C (R-06-18, R-04-10)
     s = seg.get("OneDiesOthersContinue", [])
@@ -174,7 +219,8 @@ def check(ev):
                        "chainEnd": [(e["reason"], e.get("comboHits")) for e in ends], "chains": sorted(chain_ids),
                        "pass": death is not None and len(link) == 1 and link[0]["targetId"] == "c1" and link[0].get("chainAlive") is True
                        and len(after) >= 4 and {e["targetId"] for e in after} == {"c2", "c3"} and len(chain_ids) == 1
-                       and [e.get("comboAfter") for e in after] == sorted(e.get("comboAfter") for e in after)
+                       and [e.get("comboAfter") for e in after] == sorted(e.get("comboAfter") for e in after) and all(effective(e) for e in after)
+                       and all(b.get("comboAfter") == a.get("comboAfter") + 1 for a, b in zip(after, after[1:]))
                        and (not ends or ends[0]["reason"] == "Timeout" and ends[0]["comboHits"] == max(e.get("comboAfter") for e in after))}
 
     # ---- TC-07-01: front only; the rear attacker hits; after turning, the same attacker is guarded (R-07-01)
@@ -182,11 +228,14 @@ def check(ev):
     b = next(iter(of(seg.get("RearAttackWhileGuardingRight", []), "hit.player")), None)
     c = next(iter(of(seg.get("TurnLeftAndGuard", []), "guard.block")), None)
     fc = lambda s, e: tick(s, e["simulationTick"] - 1).get("facing") if e else None
+    sb = seg.get("RearAttackWhileGuardingRight", [])
+    behind = b is not None and enemy_at(sb, b["simulationTick"] - 1, b.get("actorId"))[1] is not None \
+        and (enemy_at(sb, b["simulationTick"] - 1, b.get("actorId"))[1] - tick(sb, b["simulationTick"] - 1).get("x", 0)) * tick(sb, b["simulationTick"] - 1).get("facing", 0) < 0
     out["TC-07-01"] = {"frontGuard": (a.get("targetId"), a["reason"], fc(seg.get("FrontGuardFacingRight", []), a)) if a else None,
                        "rearHit": (b.get("actorId"), b["stateBefore"], b["reason"], b.get("front"), b["hpBefore"] - b["hpAfter"]) if b else None,
                        "afterTurn": (c.get("targetId"), c["reason"], fc(seg.get("TurnLeftAndGuard", []), c)) if c else None,
                        "pass": a is not None and a["reason"].startswith("FrontGuard") and fc(seg["FrontGuardFacingRight"], a) == 1
-                       and b is not None and b["stateBefore"] == "Guard" and b["reason"].startswith("HitFromBehind") and b.get("front") is False and b["hpAfter"] < b["hpBefore"]
+                       and b is not None and b["stateBefore"] == "Guard" and b["reason"].startswith("HitFromBehind") and b.get("front") is False and b["hpAfter"] < b["hpBefore"] and behind
                        and c is not None and c.get("targetId") == b.get("actorId") and c["reason"].startswith("FrontGuard") and fc(seg["TurnLeftAndGuard"], c) == -1}
 
     # ---- TC-07-02 / TC-OPS-02: D = 9 / 10 / 50 -> 0 / 1 / 5 (test D supplier, policy logged)
@@ -196,7 +245,21 @@ def check(ev):
         rows.append({"case": name, "damageD": e.get("damageD") if e else None, "damageTaken": e.get("damageTaken") if e else None,
                      "hp": (e["hpBefore"], e["hpAfter"]) if e else None, "damagePolicy": e.get("damagePolicy") if e else None, "guardRule": e.get("guardRule") if e else None,
                      "pass": e is not None and e.get("damageD") == d and e.get("damageTaken") == g and e["hpBefore"] - e["hpAfter"] == g
-                     and str(e.get("damagePolicy", "")).startswith("TEST-DMG-01")})
+                     and str(e.get("damagePolicy", "")).startswith("TEST-DMG-01") and str(e.get("guardRule", "")).startswith("D*0.1")})
+    lethal = []
+    for name, cause, typ in (("LethalGuard", "DefendedHit:Guard", "guard.block"), ("LethalGuardBreak", "DefendedHit:GuardBreak", "guard.block"), ("LethalParry", "DefendedHit:Parry", "guard.parry")):
+        sl = seg.get(name, [])
+        g = next(iter(of(sl, typ)), None)
+        dth = of(sl, "player.death")
+        rev = next(iter(of(sl, "death.revive")), None)
+        starts = [e for e in of(sl, "attack.start") if dth and e["eventId"] > dth[0]["eventId"] and (rev is None or e["eventId"] < rev["eventId"])]
+        presses = [e for e in sl if e["type"] == "input" and e.get("action") == "Attack" and e.get("edge") == "Press" and dth and e["eventId"] > dth[0]["eventId"] and (rev is None or e["eventId"] < rev["eventId"])]
+        lethal.append({"case": name, "defense": (g["reason"], g.get("hpBefore"), g.get("hpAfter"), g.get("damageTaken")) if g else None,
+                       "deaths": [(e["simulationTick"], e.get("cause")) for e in dth], "attackPressesAfterDeath": len(presses), "attackStartsAfterDeath": len(starts),
+                       "pass": g is not None and g.get("hpBefore") == 1 and g.get("hpAfter") == 0 and g.get("damageTaken") == 1 and len(dth) == 1
+                       and dth[0]["simulationTick"] == g["simulationTick"] and dth[0].get("cause") == cause and dth[0]["eventId"] > g["eventId"]
+                       and len(presses) >= 1 and not starts and tick(sl, g["simulationTick"]).get("stateAfter") == "Dead"})
+    out["WP08-F02"] = {"cases": lethal, "pass": len(lethal) == 3 and all(r["pass"] for r in lethal)}
     out["TC-07-02"] = {"cases": rows, "pass": all(r["pass"] for r in rows)}
     out["TC-OPS-02"] = {"same": "TC-07-02 rows; D comes from the test supplier TEST-DMG-01 and is logged with each guard", "pass": out["TC-07-02"]["pass"]}
 
@@ -206,11 +269,14 @@ def check(ev):
     broke = [e for e in of(s, "motor.state") if e.get("stateBefore") == "Guard" and cg and cg[0]["simulationTick"] <= e["simulationTick"] <= cg[-1]["simulationTick"]]
     ag = next(iter(of(seg.get("AirGuard", []), "guard.block")), None)
     ap = next(iter(of(seg.get("AirParry", []), "guard.parry")), None)
-    air = lambda s, e: tick(s, e["simulationTick"] - 1).get("grounded") is False if e else False
+    air = lambda s, e: (tick(s, e["simulationTick"] - 1).get("grounded") is False and tick(s, e["simulationTick"]).get("grounded") is False) if e else False
+    sap = seg.get("AirParry", [])
+    rbp = press_of(sap, "Guard", ap["simulationTick"]) if ap else []
+    rb_ok = bool(rbp) and abs((ap["gameTime"] - rbp[-1]["gameTime"]) - ap.get("rbToHit", -1)) <= 0.011 if ap else False
     out["TC-07-03"] = {"consecutiveGround": [(e["simulationTick"], e.get("damageTaken")) for e in cg], "guardLeftBetween": len(broke),
                        "airGuard": (ag["simulationTick"], tick(seg["AirGuard"], ag["simulationTick"] - 1).get("y")) if ag else None,
                        "airParry": (ap["simulationTick"], tick(seg["AirParry"], ap["simulationTick"] - 1).get("y"), ap.get("rbToHit")) if ap else None,
-                       "pass": len(cg) >= 2 and not broke and air(seg.get("AirGuard", []), ag) and air(seg.get("AirParry", []), ap)}
+                       "pass": len(cg) >= 2 and not broke and air(seg.get("AirGuard", []), ag) and air(seg.get("AirParry", []), ap) and rb_ok}
 
     # ---- TC-07-04 (main run part): with window 0.15, RB 0.22 / 0.18 s before the hit = guard, 0.12 / 0.08 = parry
     out["TC-07-04-main"] = parry_offsets(seg, 0.15)
@@ -227,7 +293,8 @@ def check(ev):
                        "enemyStateAtParry": [e["stateAfter"] for e in es], "enemyX": (x0, x1), "playerAttackStartAfter(ticks)": (st["simulationTick"] - p["simulationTick"]) if st and p else None,
                        "hit": (hit["targetId"], hit["stateBefore"], hit["reason"]) if hit else None,
                        "pass": p is not None and stopped and x0 is not None and x1 is not None and x1 > x0 and st is not None and st["simulationTick"] - p["simulationTick"] <= 3
-                       and hit is not None and hit["stateBefore"] == "Stagger" and (hit["simulationTick"] - p["simulationTick"]) * DT < p.get("enemyStun", 0)}
+                       and hit is not None and hit["stateBefore"] == "Stagger" and (hit["simulationTick"] - p["simulationTick"]) * DT < p.get("enemyStun", 0)
+                       and hit["targetId"] == p.get("targetId") == "pp" and effective(hit)}
 
     # ---- TC-07-06: normal = guarded, unblockable = hit through the guard, guard break = guard released (R-07-06)
     n = next(iter(of(seg.get("GuardNormal", []), "guard.block")), None)
@@ -239,13 +306,18 @@ def check(ev):
                        "guardBreak": (gb["reason"], gb.get("stateAfter"), gb.get("damageTaken"), rel.get("stateAfter") if rel else None) if gb else None,
                        "pass": n is not None and n["reason"].startswith("FrontGuard") and n.get("stateAfter") == "Guard"
                        and u is not None and u["stateBefore"] == "Guard" and u["reason"].startswith("Unblockable") and u["hpAfter"] < u["hpBefore"]
-                       and gb is not None and gb["reason"].startswith("GuardBreak") and rel is not None and rel.get("stateAfter") != "Guard"}
+                       and gb is not None and gb["reason"].startswith("GuardBreak") and rel is not None and rel.get("stateAfter") != "Guard"
+                       and gb.get("damageD") == 10 and gb.get("damageTaken") == 1 and gb["hpBefore"] - gb["hpAfter"] == 1 and n.get("damageTaken") == 1}
 
     # ---- TC-07-07: RB cancels ground normal / launcher / air normal; refused in dash, dive, hitstun; allowed after hitstun (R-07-07)
     rows = []
     for name in ("RbGroundNormal", "RbLauncher", "RbAirNormal"):
-        e = next((x for x in of(seg.get(name, []), "attack.end") if x["reason"] == "GuardCancel"), None)
-        rows.append({"case": name, "result": "GuardCancel" if e else None, "pass": e is not None and e.get("hitboxRemoved") is True})
+        sc = seg.get(name, [])
+        e = next((x for x in of(sc, "attack.end") if x["reason"] == "GuardCancel"), None)
+        a0 = next((x for x in of(sc, "attack.start") if e and x.get("attackInstanceId") == e.get("attackInstanceId")), None)
+        rbp = press_of(sc, "Guard", e["simulationTick"], a0["simulationTick"]) if e and a0 else []
+        rows.append({"case": name, "result": "GuardCancel" if e else None, "rbPressTick": rbp[0]["simulationTick"] if rbp else None,
+                     "pass": e is not None and e.get("hitboxRemoved") is True and a0 is not None and len(rbp) == 1})
     for name, st in (("RbDash", "AirDash"), ("RbDive", "Dive")):
         e = [x for x in of(seg.get(name, []), "input.reject") if x.get("action") == "Guard" and x["reason"] == "ActionLock:" + st]
         gc = [x for x in of(seg.get(name, []), "attack.end") if x["reason"] == "GuardCancel"]
@@ -265,9 +337,12 @@ def parry_offsets(seg, window):
         e = next((y for y in s if y["type"] in ("guard.block", "guard.parry")), None)
         got = None if e is None else ("parry" if e["type"] == "guard.parry" else "guard")
         want = "parry" if x <= window + 1e-6 else "guard"
+        rbp = press_of(s, "Guard", e["simulationTick"]) if e else []
         rows.append({"case": name, "rbToHit": round(e["rbToHit"], 3) if e else None, "windowLogged": e.get("parryWindow") if e and got == "parry" else None,
                      "result": got, "expected": want,
-                     "pass": e is not None and got == want and abs(e["rbToHit"] - x) <= 0.011})
+                     "pass": e is not None and got == want and abs(e["rbToHit"] - x) <= 0.011 and bool(rbp)
+                     and abs((e["gameTime"] - rbp[-1]["gameTime"]) - e["rbToHit"]) <= 0.011
+                     and (got != "parry" or abs((e.get("parryWindow") or -1) - window) < 1e-6)})
     return {"window": window, "cases": rows, "pass": all(r["pass"] for r in rows)}
 
 
@@ -281,6 +356,11 @@ def pw_check(runs):
             if p: w = p.get("parryWindow"); break
         res.append(parry_offsets(seg, round(w, 3) if w is not None else -1))
     ws = sorted(r["window"] for r in res)
+    # every parry record in a run carries the same window (GPT WP-08 review M01: one record changed to 0.01 passed)
+    for ev, r in zip(runs, res):
+        wins = {round(e.get("parryWindow"), 3) for e in ev if e["type"] == "guard.parry"}
+        r["parryWindowsInRun"] = sorted(wins)
+        if len(wins) != 1: r["pass"] = False
     return {"TC-07-04": {"runs": res, "windows": ws, "pass": ws == [0.1, 0.15, 0.2] and all(r["pass"] for r in res)}}
 
 
@@ -340,6 +420,98 @@ def selftest(ev):
     mutate("TC-07-05 attack only well after the parry", "TC-07-05", late_attack)
     mutate("TC-07-06 unblockable guarded", "TC-07-06", lambda m: first(m, "GuardUnblockable", "hit.player").__setitem__("reason", "Hit"))
     mutate("TC-07-07 RB cancels the dash", "TC-07-07", lambda m: first(m, "RbDash", "input.reject", lambda e: e.get("action") == "Guard").__setitem__("type", "input"))
+
+    # GPT WP-08 review M01: the 17 changes it found passing (one of them also in the 3-run check, see --pw)
+    mutate("M01 06-11 first physical hit on another target", "TC-06-11", lambda m: first(m, "ArmorPhysical", "hit").__setitem__("targetId", "zz"))
+    mutate("M01 06-12 armor-restored check on another enemy", "TC-06-12", lambda m: first(m, "ArmorAgain", "hit").__setitem__("targetId", "zz"))
+
+    def roll_before_is_after(m):
+        s = segments(m)["RollBeforeWindow"]
+        r = first(m, "RollBeforeWindow", "motor.state", lambda e: e.get("stateAfter") == "Roll")
+        h = next(e for e in s if e["type"] == "hit.player" and e.get("actorId") == "r1")
+        r["simulationTick"] = h["simulationTick"] - 17
+    mutate("M01 06-13 'before' roll moved so the hit is after the window", "TC-06-13", roll_before_is_after)
+    mutate("M01 06-13 skip reason is revive invulnerability", "TC-06-13", lambda m: first(m, "RollInWindow", "hit.skip").__setitem__("reason", "PlayerInvincible:Revive(EXP-DEATH-03)"))
+
+    def one_attacker(m):
+        for e in segments(m)["MultiEnemyLock"]:
+            if e["type"] == "hit.player": e["actorId"] = "x1"
+    mutate("M01 06-14 all hits by one attacker", "TC-06-14", one_attacker)
+
+    def dodge_enemy_hp(m):
+        d = first(m, "DodgeNormal", "dodge")
+        t = first(m, "DodgeNormal", "tick", lambda e: e["simulationTick"] == d["simulationTick"])
+        t["enemies"] = re.sub(r"(dd1:[A-Za-z]+@-?[\d.]+,-?[\d.]+ hp)(-?[\d.]+)", lambda q: q.group(1) + "%d" % (float(q.group(2)) - 10), t["enemies"])
+    mutate("M01 06-15 enemy HP drops on the Dodge tick", "TC-06-15", dodge_enemy_hp)
+    mutate("M01 06-16 magic Dodge with an unknown player attack id", "TC-06-16", lambda m: first(m, "DodgeMagic", "dodge").__setitem__("playerAttackInstanceId", 99999))
+
+    def starts_after_removal(m):
+        s = segments(m)["AttackTheDead"]
+        rem = next(e for e in s if e["type"] == "enemy.removed")
+        van = next(e for e in s if e["type"] == "enemy.vanish")
+        for e in s:
+            if e["type"] == "attack.start" and van["simulationTick"] <= e["simulationTick"] < rem["simulationTick"]: e["simulationTick"] = rem["simulationTick"] + 3
+    mutate("M01 06-17 attacks during the vanish moved after removal", "TC-06-17", starts_after_removal)
+
+    def combo_fixed(m):
+        s = segments(m)["OneDiesOthersContinue"]
+        d = next(e for e in s if e["type"] == "hit" and e["targetId"] == "c1" and e["reason"].startswith("Death"))
+        for e in s:
+            if e["type"] == "hit" and e["eventId"] > d["eventId"]: e["comboAfter"] = 4
+    mutate("M01 06-18 combo of the later hits fixed at 4", "TC-06-18", combo_fixed)
+
+    def rear_flipped(m):
+        b = first(m, "RearAttackWhileGuardingRight", "hit.player")
+        t = first(m, "RearAttackWhileGuardingRight", "tick", lambda e: e["simulationTick"] == b["simulationTick"] - 1)
+        t["facing"] = -1
+    mutate("M01 07-01 rear-hit facing reversed", "TC-07-01", rear_flipped)
+    mutate("M01 OPS-02 guard rule field removed", "TC-OPS-02", lambda m: first(m, "Guard10", "guard.block").pop("guardRule"))
+
+    def air_parry_ground(m):
+        g = first(m, "AirParry", "guard.parry")
+        first(m, "AirParry", "tick", lambda e: e["simulationTick"] == g["simulationTick"]).__setitem__("grounded", True)
+    mutate("M01 07-03 air parry tick on the ground", "TC-07-03", air_parry_ground)
+
+    def rb_after_parry(m):
+        g = first(m, "AirParry", "guard.parry")
+        for e in segments(m)["AirParry"]:
+            if e["type"] == "input" and e.get("action") == "Guard" and e.get("edge") == "Press" and e["simulationTick"] <= g["simulationTick"]:
+                e["simulationTick"] = g["simulationTick"] + 2
+                e["gameTime"] = g["gameTime"] + 0.04
+    mutate("M01 07-03 RB press moved after the parry", "TC-07-03", rb_after_parry)
+    mutate("M01 07-04 one parry record with window 0.01", "TC-07-04-main", lambda m: first(m, "ParryOffset08", "guard.parry").__setitem__("parryWindow", 0.01))
+
+    def counter_other(m):
+        p = first(m, "ParryThenAttack", "guard.parry")
+        h = first(m, "ParryThenAttack", "hit", lambda e: e["eventId"] > p["eventId"])
+        h["targetId"] = "zz"
+    mutate("M01 07-05 counter hit on another enemy", "TC-07-05", counter_other)
+
+    def break_dmg(m):
+        g = first(m, "GuardBreak", "guard.block")
+        g["damageTaken"] = 10
+        g["hpAfter"] = g["hpBefore"] - 10
+    mutate("M01 07-06 guard-break damage 10", "TC-07-06", break_dmg)
+
+    def no_rb_launcher(m):
+        drop = {id(e) for e in segments(m)["RbLauncher"] if e["type"] == "input" and e.get("action") == "Guard" and e.get("edge") == "Press"}
+        m[:] = [e for e in m if id(e) not in drop]
+    mutate("M01 07-07 launcher cancel without its RB press", "TC-07-07", no_rb_launcher)
+
+    # R1
+    def weak_no_move(m):
+        for e in segments(m)["ArmorWeakMagic"]:
+            if e["type"] == "enemy.knockback": e["displacement"] = 0.0
+    mutate("R1 06-12 weak magic on armor does not move", "TC-06-12", weak_no_move)
+    mutate("R1 F02 guard death missing", "WP08-F02", lambda m: m.remove(first(m, "LethalGuard", "player.death")))
+
+    def attack_after_death(m):
+        d = first(m, "LethalParry", "player.death")
+        a = copy.deepcopy(next(e for e in m if e["type"] == "attack.start"))
+        a["eventId"] = d["eventId"] + 0.5
+        a["simulationTick"] = d["simulationTick"] + 2
+        m.insert(m.index(d) + 1, a)
+    mutate("R1 F02 attack starts after a parry death", "WP08-F02", attack_after_death)
     return res
 
 
@@ -354,7 +526,12 @@ def main():
                 if e["type"] == "guard.block" and abs(e.get("rbToHit", 0) - 0.12) < 0.011: e["type"] = "guard.parry"; e["parryWindow"] = 0.1
             r = pw_check(m)["TC-07-04"]["pass"]
             out["selftest"] = [{"case": "window 0.10 parries RB 0.12 s before", "sectionPass": r, "pass": r is False}]
-            out["selftest_all_pass"] = r is False
+            m2 = copy.deepcopy(runs)
+            last = [e for e in m2[0] if e["type"] == "guard.parry"][-1]
+            last["parryWindow"] = 0.01
+            r2 = pw_check(m2)["TC-07-04"]["pass"]
+            out["selftest"].append({"case": "M01 one parry record of a run with window 0.01", "sectionPass": r2, "pass": r2 is False})
+            out["selftest_all_pass"] = all(x["pass"] for x in out["selftest"])
     else:
         ev = load(args[0])
         out = {"log": args[0], **check(ev)}
