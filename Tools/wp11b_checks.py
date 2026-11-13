@@ -5,9 +5,19 @@ Part B (scene WP11_Ops): TC-OPS-01 and TC-UNITY-03 from seven runs of one scenar
   v1 extraJump=0, v2 airDash=0, v3 dashPierce=1, v4 diveArea=1, v5 comboWindow=0.3 (each a one-value Inspector change, restored from git).
 Part C (scene WP11_Ops): TC-UNITY-05 (observation) and TC-UNITY-06 from a 50 Hz and a 60 Hz run:
   python Tools/wp11b_checks.py --time s50.ndjson s60.ndjson [--selftest]
+
+R1 (GPT WP-11B review section 6, eleven false passes):
+  - run-wide ids are no longer dropped: within a zone each id family is renumbered by first appearance, so references between records
+    (hit -> attack instance, attack -> input) must match the baseline;
+  - the comboWindow exception allows only Timeout ends that move by the window difference, and tick combo counts between the two ends;
+  - air-unlock variants must be refused with their own Locked reason; twins must both exist on every tick and only ta is hit;
+  - routing and delivery must agree record for record (device, action, edge, requestTime, owner, ticks, latency);
+  - frame samples must be contiguous, each frame's ticks must equal the simTick advance, the step must hold in every phase,
+    costs must be finite and non-negative, and paused frames after the first must run 0 ticks.
 """
 import copy
 import json
+import math
 import os
 import re
 import sys
@@ -49,6 +59,19 @@ def of(s, t, reason=None):
     return [e for e in s if e["type"] == t and (reason is None or str(e.get("reason", "")).startswith(reason))]
 
 
+def family(k):
+    """Id family of a run-wide counter key (attack instance ids share one numbering across their keys)."""
+    if k == "attackInstanceId" or k.endswith("AttackInstanceId"):
+        return "attack"
+    if "inputEventId" in k:
+        return "input"
+    return k
+
+
+def is_id_key(k):
+    return k in COUNTERS or "inputEventId" in k
+
+
 def norm(v):
     if isinstance(v, float):
         return round(v, 4)
@@ -64,15 +87,25 @@ def signature(s, drop_combo=False):
         return []
     t0 = s[0]["simulationTick"]
     out = []
+    labels = {}
     for e in s:
         if e["type"] in ("frame.sample",) or (drop_combo and e["type"].startswith("combo.")):
             continue
-        d = {k: norm(v) for k, v in e.items() if k not in SKIP and k not in COUNTERS and k not in ECHO and "inputEventId" not in k and k != "sampleGroup" and k != "simulationTick"}
+        d = {k: norm(v) for k, v in e.items() if k not in SKIP and k not in ECHO and k != "sampleGroup" and k != "simulationTick"}
+        if e["type"] == "tick":  # player state only (the tick's last-chain / last-attack ids are not events of this zone)
+            d = {k: d.get(k) for k in ("type", "x", "y", "vx", "vy", "stateAfter", "grounded", "air") + (() if drop_combo else ("combo",))}
+        for k in [k for k in d if is_id_key(k)]:  # R1: renumber ids by first appearance in the zone (references survive, absolute values do not)
+            v = d[k]
+            if isinstance(v, int) and v > 0:
+                fam = labels.setdefault(family(k), {})
+                d[k] = "#" + str(fam.setdefault(v, len(fam) + 1))
+            elif k == "hitEventId" and isinstance(v, str) and re.fullmatch(r"\d+:\d+", v):  # "<attack instance>:<hit event>"
+                a, h = (int(x) for x in v.split(":"))
+                fam = labels.setdefault("attack", {})
+                d[k] = "#" + str(fam.setdefault(a, len(fam) + 1)) + ":" + str(h)
         for k in list(d):  # absolute ticks become ticks from the zone marker
             if k.endswith("Tick") and isinstance(d[k], (int, float)):
                 d[k] = d[k] - t0
-        if e["type"] == "tick":
-            d = {k: d.get(k) for k in ("type", "x", "y", "vx", "vy", "stateAfter", "grounded", "air") + (() if drop_combo else ("combo",))}
         out.append((e["simulationTick"] - t0, json.dumps(d, sort_keys=True, ensure_ascii=False)))
     return out
 
@@ -84,6 +117,42 @@ def first_diff(a, b):
     if len(a) != len(b):
         return {"index": min(len(a), len(b)), "base": a[len(b)] if len(a) > len(b) else None, "variant": b[len(a)] if len(b) > len(a) else None}
     return None
+
+
+def tick_dt(ev):
+    ts = sorted((e["simulationTick"], e["gameTime"]) for e in ev if e["type"] == "tick")
+    ds = [round(b[1] - a[1], 6) for a, b in zip(ts, ts[1:]) if b[0] == a[0] + 1]
+    return max(set(ds), key=ds.count) if ds else None
+
+
+def combo_timeout_only(a, b, shorter, ev):
+    """R1 (GPT WP-11B #3): in a zone the combo window touches only through its length, every combo record must match the baseline
+    (ids renumbered, ticks relative) except that a Timeout end may come exactly `shorter` seconds earlier; the tick combo count may
+    differ only between the two Timeout ticks."""
+    dt = tick_dt(ev)
+    if not a or not b or not dt:
+        return False
+    shift = round(shorter / dt)
+    ca = [x for x in signature(a) if json.loads(x[1])["type"].startswith("combo.")]
+    cb = [x for x in signature(b) if json.loads(x[1])["type"].startswith("combo.")]
+    if len(ca) != len(cb):
+        return False
+    windows = []
+    for (ta, ja), (tb, jb) in zip(ca, cb):
+        da, db = json.loads(ja), json.loads(jb)
+        if da != db:
+            return False
+        if ta == tb:
+            continue
+        if not (da["type"] == "combo.end" and str(da.get("reason")) == "Timeout" and ta - tb == shift):
+            return False
+        windows.append((tb, ta))
+    t0a, t0b = a[0]["simulationTick"], b[0]["simulationTick"]
+    ka = {e["simulationTick"] - t0a: e.get("combo") for e in a if e["type"] == "tick"}
+    kb = {e["simulationTick"] - t0b: e.get("combo") for e in b if e["type"] == "tick"}
+    if ka.keys() != kb.keys():
+        return False
+    return all(ka[t] == kb[t] or any(lo <= t < hi for lo, hi in windows) for t in ka)
 
 
 def echoes(ev):
@@ -136,13 +205,20 @@ def twins(ev, seg):
     rx = re.compile(r"(t[ab]):([A-Za-z]+)@(-?[\d.]+),(-?[\d.]+) hp(-?[\d.]+)")
     hp = {"ta": set(), "tb": set()}
     st = {"ta": set(), "tb": set()}
+    ticks, both = 0, 0
     for e in s:
         if e["type"] == "tick":
+            ticks += 1
+            found = [m.group(1) for m in rx.finditer(e.get("enemies", ""))]
+            both += sorted(found) == ["ta", "tb"]  # R1: each twin exactly once on every tick (GPT WP-11B #4)
             for m in rx.finditer(e.get("enemies", "")):
                 hp[m.group(1)].add(float(m.group(5)))
                 st[m.group(1)].add(m.group(2))
-    return {"taHp": sorted(hp["ta"]), "tbHp": sorted(hp["tb"]), "tbStates": sorted(st["tb"]),
-            "pass": len(hp["ta"]) >= 2 and len(hp["tb"]) == 1 and st["tb"] == {"Idle"} and max(hp["ta"]) == min(hp["tb"])}
+    hits = of(s, "hit")
+    hit_ok = bool(hits) and all(h.get("targetId") == "ta" and h.get("hpAfter", 0) < h.get("hpBefore", 0) for h in hits)
+    return {"taHp": sorted(hp["ta"]), "tbHp": sorted(hp["tb"]), "tbStates": sorted(st["tb"]), "ticks": ticks, "ticksWithBothTwins": both,
+            "hitTargets": sorted({h.get("targetId") for h in hits}),
+            "pass": ticks > 0 and both == ticks and hit_ok and len(hp["ta"]) >= 2 and len(hp["tb"]) == 1 and st["tb"] == {"Idle"} and max(hp["ta"]) == min(hp["tb"])}
 
 
 def check_ops(paths, logs):
@@ -161,17 +237,19 @@ def check_ops(paths, logs):
         # the combo window governs every chain: in the other zones only the chain records (combo.*) and the tick's combo count may move;
         # positions, states, attacks and hits must be identical there
         chain_only = sorted(z for z in changed - expect if field == "comboWindow"
-                            and signature(seg["base"].get(z, []), True) == signature(seg[v].get(z, []), True))
+                            and signature(seg["base"].get(z, []), True) == signature(seg[v].get(z, []), True)
+                            and combo_timeout_only(seg["base"].get(z, []), seg[v].get(z, []), float(b0) - float(b1), runs["base"]))
         changed -= set(chain_only)
         p = pb[v]
         one = p is not None and p["files"] == [asset] and len(p["minus"]) == 1 and len(p["plus"]) == 1 \
             and p["minus"][0] == f"{field}: {b0}" and p["plus"][0] == f"{field}: {b1}"
         bb, bv = beh["base"], beh[v]
-        if v == "v1":
-            spec = bb["O1Jump"]["extraJump"] == 1 and bv["O1Jump"]["extraJump"] == 0 and len(bv["O1Jump"]["rejected"]) == 1
+        if v == "v1":  # R1: refused for the setting itself (GPT WP-11B #1)
+            spec = bb["O1Jump"]["extraJump"] == 1 and bv["O1Jump"]["extraJump"] == 0 and bv["O1Jump"]["rejected"] == ["Locked:ExtraJump"] \
+                and bb["O1Jump"]["rejected"] == []
         elif v == "v2":
             spec = bb["O2Dash"]["dashes"] == 1 and bv["O2Dash"]["dashes"] == 0 and bv["O3Pierce"]["dashes"] == 0 \
-                and bv["O2Dash"]["rejected"] and bv["O3Pierce"]["dashHits"] == []
+                and bv["O2Dash"]["rejected"] == ["Locked:AirDash"] and bv["O3Pierce"]["rejected"] == ["Locked:AirDash"] and bv["O3Pierce"]["dashHits"] == []
         elif v == "v3":
             spec = bb["O3Pierce"]["dashHits"] == ["pa"] and bv["O3Pierce"]["dashHits"] == ["pa", "pb", "pc"]
         elif v == "v4":
@@ -248,6 +326,21 @@ def transport(ev):
     dup = [i for i, v in delivered.items() if len(v) > 1]
     late = [e["inputEventId"] for e in game if e["inputEventId"] in delivered and delivered[e["inputEventId"]][0]["simulationTick"] < e["simulationTick"]]
     owner = all(e.get("consumer") in ("game", "ring", "quickslot") and e.get("requestTime") is not None for e in routes)
+    # R1 (GPT WP-11B #5-#7): each delivery has exactly one route with the same id, owned by the game, with the same device / action / edge /
+    # requestTime; it is delivered on its own tick, not before routing, and its latency is its real time minus its request time
+    by_id = {}
+    for e in routes:
+        by_id.setdefault(e["inputEventId"], []).append(e)
+    mismatch = []
+    for e in dev:
+        r = by_id.get(e["inputEventId"], [])
+        ok = len(r) == 1 and r[0].get("consumer") == "game" == e.get("consumer") \
+            and all(e.get(k) == r[0].get(k) for k in ("device", "action", "edge", "requestTime")) \
+            and e.get("deliveredTick") == e["simulationTick"] and r[0]["simulationTick"] <= e["simulationTick"] \
+            and isinstance(e.get("latency"), (int, float)) and isinstance(e.get("requestTime"), (int, float)) and e["requestTime"] >= 0 \
+            and abs(e["realTime"] - e["requestTime"] - e["latency"]) < 1e-6
+        if not ok:
+            mismatch.append(e["inputEventId"])
     groups = {e.get("sampleGroup") for e in ev if e.get("sampleGroup") is not None}
     ids = set(rid) | set(delivered) | groups | {e.get("inputEventId") for e in ev if e.get("inputEventId") is not None}
     ids.discard(None)
@@ -255,26 +348,52 @@ def transport(ev):
     small = sorted(i for i in ids if i < 1000000000)
     gaps = [i for i in range(1, (small[-1] if small else 0) + 1) if i not in ids]
     return {"routedEdges": len(routes), "uniqueRouteIds": len(rid) == len(set(rid)), "gameEdges": len(game), "gameDeliveredOnce": not missing and not dup,
-            "missing": missing, "duplicated": dup, "deliveredBeforeRouting": late, "ownerAndTime": owner, "idGaps": gaps,
-            "pass": len(rid) == len(set(rid)) and not missing and not dup and not late and owner and not gaps and len(routes) > 0}
+            "missing": missing, "duplicated": dup, "deliveredBeforeRouting": late, "ownerAndTime": owner, "idGaps": gaps, "routeDeliveryMismatch": mismatch,
+            "pass": len(rid) == len(set(rid)) and not missing and not dup and not late and owner and not gaps and len(routes) > 0 and not mismatch}
+
+
+def frames_ok(ev, dt):
+    """R1 (GPT WP-11B #9-#11): frame samples are contiguous; each frame's ticks equal the simTick advance and its own tick; the fixed step
+    is the run's in every phase; costs are finite and non-negative; inside the pause, frames after the first run 0 ticks."""
+    seg = segments(ev)
+    fr = [e for p in PHASES for e in of(seg.get(p, []), "frame.sample")]
+    bad = []
+    for a, b in zip(fr, fr[1:]):
+        if b["frame"] != a["frame"] + 1 or b["simTick"] - a["simTick"] != b["ticksThisFrame"]:
+            bad.append(("sequence", b["eventId"]))
+    for e in fr:
+        c = e.get("simCostMs")
+        if not isinstance(c, (int, float)) or not math.isfinite(c) or c < 0 or e["simTick"] != e["simulationTick"] or abs(e["fixedDeltaTime"] - dt) > 1e-4:
+            bad.append(("sample", e["eventId"]))
+    ps = of(ev, "time.pause", "PauseStart")
+    pe = of(ev, "time.pause", "PauseEnd")
+    if len(ps) != 1 or len(pe) != 1:
+        bad.append(("pause", None))
+    else:
+        inside = [e for e in fr if ps[0]["eventId"] < e["eventId"] < pe[0]["eventId"]]
+        if not inside or any(e["ticksThisFrame"] != 0 or e["timeScale"] != 0 for e in inside[1:]):
+            bad.append(("pauseTicks", [e["eventId"] for e in inside if e["ticksThisFrame"]][1:]))
+    return {"frames": len(fr), "bad": bad[:10], "pass": bool(fr) and not bad}
 
 
 def check_time(paths, logs):
     out = {}
     obs = {}
     tr = {}
+    fr = {}
     for hz, ev in zip((50, 60), logs):
         seg = segments(ev)
         obs[hz] = {p: phase_obs(seg.get(p, [])) for p in PHASES}
         tr[hz] = transport(ev)
+        fr[hz] = frames_ok(ev, 0.02 if hz == 50 else 1 / 60)
     # observation completeness (no policy verdict): each phase sampled at both rates with the conditions it is meant to show
     def ok(hz):
         o = obs[hz]
         dt = 0.02 if hz == 50 else 1 / 60
         return all(o[p]["frames"] > 0 for p in PHASES) and abs((o["C_Normal"]["fixedDeltaTime"] or 0) - dt) < 1e-4 \
             and o["C_Slow"]["timeScale"].get(0.2, 0) > 0 and o["C_Pause"]["timeScale"].get(0.0, 0) > 0 and o["C_Pause"]["ticksPerFrame"].get(0, 0) > 0 \
-            and max(o["C_Delay"]["ticksPerFrame"]) >= 5 and len(o["C_Pause"]["pauses"]) == 2
-    out["TC-UNITY-05"] = {"status": "OBSERVED", "policyVerdict": "BLOCKED_SPEC (U-06, CF-04/05, EXP-SIM-01)", "rates": obs,
+            and max(o["C_Delay"]["ticksPerFrame"]) >= 5 and len(o["C_Pause"]["pauses"]) == 2 and fr[hz]["pass"]
+    out["TC-UNITY-05"] = {"status": "OBSERVED", "policyVerdict": "BLOCKED_SPEC (U-06, CF-04/05, EXP-SIM-01)", "rates": obs, "frameConsistency": fr,
                           "observationComplete": ok(50) and ok(60),
                           "note": "observation only: frames, ticks per frame, time scale, input request/delivery, attack length, simulation cost per tick",
                           "pass": ok(50) and ok(60)}
@@ -284,6 +403,7 @@ def check_time(paths, logs):
         seg = segments(ev)
         d = seg.get("C_Delay", [])
         jd = [e for e in of(d, "input") if e.get("action") == "Attack"]
+        jr = [e for e in of(d, "input.route") if e.get("action") == "Attack" and e.get("edge") == "Press" and e.get("consumer") == "game"]
         multi = next((e for e in of(d, "frame.sample") if e["ticksThisFrame"] >= 5), None)
         st = of(d, "attack.start")
         r = seg.get("C_RingTx", [])
@@ -292,6 +412,9 @@ def check_time(paths, logs):
                      "attackStartedOnce": len(st) == 1, "ringTransitionRoutes": rr,
                      "pass": len(jd) == 2 and jd[0]["edge"] == "Press" and jd[1]["edge"] == "Release" and jd[0]["deliveredTick"] == jd[1]["deliveredTick"]
                      and multi is not None and len(st) == 1
+                     # R1 (GPT WP-11B #8): the one attack start is the delayed frame's own Attack press, routed to the game
+                     and len(jr) == 1 and st[0].get("inputEventId") == jd[0].get("inputEventId") == jr[0]["inputEventId"]
+                     and st[0]["simulationTick"] == jd[0]["deliveredTick"]
                      and ("RingToggle", "Press", "ring") in rr and ("Jump", "Press", "game") in rr}
     out["TC-UNITY-06"] = {"transport": tr, "cases": cases,
                           "note": "an attack pressed on the frame the ring opens goes to the ring (its release to the game): the contention order is CF-01/07/08",
@@ -330,6 +453,13 @@ def selftest(mode, paths, logs):
         mutate("dash variant changes the jump zone too", "TC-OPS-01", 3, lambda m, s: first(s["O1Jump"], "tick").update(y=0.5))
         mutate("combo variant also moves a hit in another zone", "TC-OPS-01", 6, lambda m, s: first(s["O6Twins"], "hit").update(targetId="tb"))
         mutate("combo variant run with the base window", "TC-OPS-01", 6, lambda m, s: [e.update(window=0.5) for e in m if e["type"] == "combo.window"])
+        # GPT WP-11B review section 6
+        mutate("GPT jump refused for another cause", "TC-OPS-01", 2,
+               lambda m, s: first(s["O1Jump"], "input.reject", lambda e: e.get("action") == "Jump").update(reason="ActionLock:HitStun"))
+        mutate("GPT twins hit linked to an unrelated attack", "TC-OPS-01", 6, lambda m, s: first(s["O6Twins"], "hit").update(attackInstanceId=90000))
+        mutate("GPT twins chain ends by an invented cause", "TC-OPS-01", 6, lambda m, s: first(s["O6Twins"], "combo.end").update(reason="EnemyGuardCancel"))
+        mutate("GPT second twin missing from one rerun tick", "TC-UNITY-03", 1,
+               lambda m, s: (lambda e: e.update(enemies="|".join(v for v in e["enemies"].split("|") if not v.startswith("tb:"))))(of(s["O6Twins"], "tick")[4]))
     else:
         mutate("game press delivered twice", "TC-UNITY-06", 0, lambda m, s: m.insert(m.index(first(s["C_Normal"], "input", lambda e: e.get("edge") == "Press")) + 1,
                                                                                     dict(first(s["C_Normal"], "input", lambda e: e.get("edge") == "Press"), simulationTick=first(s["C_Normal"], "input", lambda e: e.get("edge") == "Press")["simulationTick"] + 1)))
@@ -341,6 +471,16 @@ def selftest(mode, paths, logs):
                [m.remove(e) for e in [x for x in m if x.get("inputEventId") == 1]])
         mutate("no stop frames observed at 60 Hz", "TC-UNITY-05", 1, lambda m, s: [e.update(timeScale=1, ticksThisFrame=1) for e in of(s["C_Pause"], "frame.sample")])
         mutate("60 Hz run at 50 Hz step", "TC-UNITY-05", 1, lambda m, s: [e.update(fixedDeltaTime=0.02) for e in of(s["C_Normal"], "frame.sample")])
+        # GPT WP-11B review section 6
+        jump = lambda e: e.get("action") == "Jump"
+        mutate("GPT routed jump delivered as another action", "TC-UNITY-06", 0, lambda m, s: first(s["C_Normal"], "input", jump).update(action="SpecialAttack"))
+        mutate("GPT delivery request time unrelated to its route", "TC-UNITY-06", 1, lambda m, s: first(s["C_Normal"], "input", jump).update(requestTime=-1000))
+        mutate("GPT delivered press routed to the ring", "TC-UNITY-06", 0, lambda m, s: first(s["C_Normal"], "input.route", jump).update(consumer="ring"))
+        mutate("GPT delayed attack linked to an existing Jump id", "TC-UNITY-06", 1, lambda m, s: first(s["C_Delay"], "attack.start").update(inputEventId=1))
+        mutate("GPT negative simulation cost", "TC-UNITY-05", 0, lambda m, s: first(s["C_Normal"], "frame.sample").update(simCostMs=-99))
+        mutate("GPT 50 Hz step only in the 60 Hz slow phase", "TC-UNITY-05", 1, lambda m, s: [e.update(fixedDeltaTime=0.02) for e in of(s["C_Slow"], "frame.sample")])
+        mutate("GPT a tick inside the pause", "TC-UNITY-05", 0,
+               lambda m, s: first(s["C_Pause"], "frame.sample", lambda e: e["timeScale"] == 0 and e["ticksThisFrame"] == 0).update(ticksThisFrame=1))
     return res
 
 

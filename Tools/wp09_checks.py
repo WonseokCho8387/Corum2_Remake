@@ -7,9 +7,13 @@ Usage:
   python Tools/wp09_checks.py --slide <slide run>.ndjson [--selftest]  TC-03-04 left-facing slide into the low passage (keyboard and pad)
 
 R3 (GPT WP-09-R2 review): the run's <run>.data.json beside the log supplies stickDeadzone and slideSpeed.
+R4 (GPT WP-09-R3 review): the ring release uses RingConfig.cursorDeadzone with the Core's strict boundary (|v| < dz is neutral);
+the sidecar is used only when its runId equals the log's and, with a manifest beside it, its SHA-256 equals data_snapshot_sha256.
 """
 import copy
+import hashlib
 import json
+import os
 import re
 import sys
 
@@ -34,6 +38,58 @@ def cfg(path, default=None):
             return default
         o = o[k]
     return o
+
+
+def ring_deadzone():
+    """R4: the ring's own cursor deadzone (RingController.Cursor -> Dir8Util.FromStick(x, y, RingConfig.cursorDeadzone))."""
+    for x in CFG.get("extra") or []:
+        if isinstance(x, dict) and x.get("asset") == "RingConfig" and isinstance(x.get("data"), dict):
+            v = x["data"].get("cursorDeadzone")
+            return v if isinstance(v, (int, float)) and not isinstance(v, bool) else None
+    return None
+
+
+def stick_neutral(stick, dz):
+    """Dir8Util.FromStick: None when |v| < deadzone or |v| <= 0 (the exact boundary is not neutral)."""
+    if dz is None or not (isinstance(stick, list) and len(stick) == 2 and all(isinstance(c, (int, float)) for c in stick)):
+        return False
+    mag = (stick[0] ** 2 + stick[1] ** 2) ** 0.5
+    return mag < dz or mag <= 0.0
+
+
+def run_dt(ev):
+    """R4: the run's own fixed step (most common game-time difference between consecutive tick records), not a 50 Hz constant."""
+    ts = sorted((e["simulationTick"], e.get("gameTime")) for e in ev if e.get("type") == "tick" and isinstance(e.get("gameTime"), (int, float)))
+    ds = [round(b[1] - a[1], 6) for a, b in zip(ts, ts[1:]) if b[0] == a[0] + 1]
+    return max(set(ds), key=ds.count) if ds else None
+
+
+def load_cfg(log_path, ev):
+    """R4: load <run>.data.json only if it belongs to this run (GPT WP-09-R3: a same-named file with another runId passed)."""
+    CFG.clear()
+    dpath = re.sub(r"\.ndjson$", ".data.json", log_path)
+    mpath = re.sub(r"\.ndjson$", ".manifest.yaml", log_path)
+    run_id = next((e.get("runId") for e in ev if e.get("type") == "run.start"), None)
+    try:
+        raw = open(dpath, "rb").read()
+    except OSError:
+        return {"sidecar": dpath, "status": "missing"}
+    d = json.loads(raw.decode("utf-8"))
+    st = {"sidecar": dpath, "logRunId": run_id, "dataRunId": d.get("runId")}
+    if not run_id or d.get("runId") != run_id or any(e.get("runId") != run_id for e in ev):
+        return {**st, "status": "runId mismatch"}
+    if os.path.exists(mpath):
+        man = open(mpath, encoding="utf-8").read()
+        want = re.search(r'^data_snapshot_sha256:\s*"?([0-9a-f]{64})"?', man, re.M)
+        mid = re.search(r'^run_id:\s*"?([^"\s]+)"?', man, re.M)
+        got = hashlib.sha256(raw).hexdigest()
+        st.update(manifest=mpath, manifestSha=want and want.group(1), dataSha=got)
+        if not want or want.group(1) != got or not mid or mid.group(1) != run_id:
+            return {**st, "status": "manifest mismatch"}
+    else:
+        st["manifest"] = None
+    CFG.update(d)
+    return {**st, "status": "ok"}
 
 
 def inv_count(s, item):
@@ -123,6 +179,13 @@ def quick_outcome(s, p, used):
             return None
         if req["reason"].startswith("Accepted:NextTick") and not u.get("waitedFor") and u["simulationTick"] != req["simulationTick"] + 1:
             return None
+        # R4: a non-empty waitedFor must be the last item.wait state the core logged for this request between request and execution
+        # (GPT WP-09-R3: an invented wait reason let a NextTick request run two ticks late)
+        if u.get("waitedFor"):
+            waits = [w for w in s if w["type"] == "item.wait" and w.get("requestId") == req["requestId"] and req["eventId"] < w["eventId"] < u["eventId"]
+                     and req["simulationTick"] <= w["simulationTick"] < u["simulationTick"]]
+            if not waits or waits[-1].get("stateAfter") != u["waitedFor"]:
+                return None
     return req, (d, req["reason"].split(":")[0], req["targetId"], uses[0]["reason"].split(":")[0] if uses else None)
 
 
@@ -310,6 +373,27 @@ def plane_check(ev):
     return {"TC-01-01": r}
 
 
+def inv_snapshot(v):
+    """R4: an inventory snapshot must be a string of item x count parts ('' = empty); None or another type is not a snapshot."""
+    return isinstance(v, str) and all(re.fullmatch(r".+x\d+", p.strip()) for p in v.split(",") if p.strip())
+
+
+def discard_snapshots_ok(ev, d):
+    """R4 (GPT WP-09-R3): the discard's own snapshot is a real snapshot with countAfter, and the next later snapshot shows countAfter,
+    unless that record itself changes the item, in which case it must start from countAfter and show its own countAfter."""
+    item = d.get("item")
+    if not inv_snapshot(d.get("inventory")) or inv_count(d["inventory"], item) != d.get("countAfter"):
+        return False
+    nxt = next((x for x in ev if x["eventId"] > d["eventId"] and "inventory" in x), None)
+    if nxt is None:
+        return True
+    if not inv_snapshot(nxt.get("inventory")):
+        return False
+    if nxt.get("targetId") == item and "countBefore" in nxt and "countAfter" in nxt:
+        return nxt["countBefore"] == d["countAfter"] and inv_count(nxt["inventory"], item) == nxt["countAfter"]
+    return inv_count(nxt["inventory"], item) == d["countAfter"]
+
+
 def dev_check(ev):
     seg = segments(ev, DEV_SCENARIOS)
     out = {}
@@ -323,15 +407,15 @@ def dev_check(ev):
             fix = [e for e in of(s, "ring.mode", "TargetFixed") if any(within(e, p) for p in presses(s, "SpecialAttack", dev))]
             dp = presses(s, "Quick" + slot, dev)
             asg = [e for e in of(s, "quickslot.assign") if e.get("slot") == slot and any(within(e, p, 0, 0) and p.get("consumer") == "ring" for p in dp)]
-            dz = cfg("input.stickDeadzone")
-            rel = [e for e in of(s, "ring.release") if fix and asg and fix[0]["eventId"] < e["eventId"] < asg[0]["eventId"]
-                   # R3: a real neutral release (GPT WP-09-R2 #2): Held -> Released in Registering for the fixed target, and the logged stick
-                   # inside this run's stickDeadzone; no stick record after it and before the assignment leaves the deadzone
-                   and dz is not None and e.get("mode") == "Registering" and (e.get("stateBefore"), e.get("stateAfter")) == ("Held", "Released")
+            dz = ring_deadzone()
+            # R4 (GPT WP-09-R3): the release is judged by the ring's own cursorDeadzone with the Core's strict boundary, once per
+            # registering session for the fixed target. As in RingController (ReleasedSinceRegister), a later re-tilt does not undo it.
+            same_session = fix and asg and not [x for x in s if x["type"] in ("ring.open", "ring.close") and fix[0]["eventId"] < x["eventId"] < asg[0]["eventId"]]
+            rel = [e for e in of(s, "ring.release") if same_session and fix[0]["eventId"] < e["eventId"] < asg[0]["eventId"]
+                   and e.get("mode") == "Registering" and (e.get("stateBefore"), e.get("stateAfter")) == ("Held", "Released")
                    and e.get("target") == fix[0]["target"] and fix[0]["simulationTick"] <= e["simulationTick"] <= asg[0]["simulationTick"]
-                   and isinstance(e.get("stick"), list) and (e["stick"][0] ** 2 + e["stick"][1] ** 2) ** 0.5 <= dz
-                   and not [x for x in of(s, "ring.cursor") if e["eventId"] < x["eventId"] < asg[0]["eventId"] and isinstance(x.get("stick"), list)
-                            and (x["stick"][0] ** 2 + x["stick"][1] ** 2) ** 0.5 > dz]]
+                   and stick_neutral(e.get("stick"), dz)]
+            rel = rel if len([e for e in of(s, "ring.release") if fix and asg and fix[0]["eventId"] < e["eventId"] < asg[0]["eventId"]]) == 1 else []
             ok = len(op) == 1 and len(fix) == 1 and len(asg) == 1 and asg[0]["stateAfter"] == fix[0]["target"] and asg[0].get("stickReleasedSinceY") is True \
                 and len(rel) >= 1 \
                 and not [p for p in presses(s, "Quick" + slot) if p.get("device") != dev]
@@ -361,9 +445,7 @@ def dev_check(ev):
                      "pass": len(ask) == 1 and ask[0]["selectedItem"] != "" and len(conf) == 1 and conf[0]["item"] == ask[0]["target"] == ask[0]["selectedItem"]
                      and conf[0]["countAfter"] == conf[0]["countBefore"] - 1 and len(cl) == 1
                      # R3: the discard's own inventory snapshot and the next later snapshot in this run show countAfter (GPT WP-09-R2 #4)
-                     and "inventory" in conf[0] and inv_count(conf[0]["inventory"], conf[0]["item"]) == conf[0]["countAfter"]
-                     and all(inv_count(x["inventory"], conf[0]["item"]) == conf[0]["countAfter"]
-                             for x in [next((x for x in ev if x["eventId"] > conf[0]["eventId"] and "inventory" in x), None)] if x)})
+                     and discard_snapshots_ok(ev, conf[0])})
         all_req = [e["requestId"] for e in of(s, "item.request")]
         per[d] = {"steps": rows, "requestIdsUnique": len(req_ids) == len(set(req_ids)) == 4, "pass": all(r["pass"] for r in rows) and len(req_ids) == len(set(req_ids)) == 4}
     same = [r["step"] for r in per["Kb"]["steps"]] == [r["step"] for r in per["Pad"]["steps"]]
@@ -385,12 +467,14 @@ def slide_check(ev):
         slides = []
         ids = [st.get("inputEventId") for st in starts]
         speed = cfg("movement.slideSpeed")
+        dt0 = run_dt(ev)  # R4: the run's own fixed step
         gt = {n: e.get("gameTime") for n, e in tk.items()}
         for st in starts:
             # R2: the slide's own inputEventId must be a Jump press received on or before the start (GPT WP-09-R1 M02)
             # R3: ... delivered and consumed by the game on the start tick, and claimed by no other start (GPT WP-09-R2 #5)
             inp = next((e for e in of(s, "input") if e.get("inputEventId") == st.get("inputEventId") and e.get("edge") == "Press" and e.get("action") == "Jump"
-                        and e["simulationTick"] == st["simulationTick"] and e.get("consumer") == "game" and e.get("reason") == "slide"), None)
+                        and e["simulationTick"] == st["simulationTick"] and e.get("deliveredTick") == st["simulationTick"]  # R4
+                        and e.get("consumer") == "game" and e.get("reason") == "slide"), None)
             if ids.count(st.get("inputEventId")) != 1:
                 inp = None
             en = next((e for e in ends if e["eventId"] > st["eventId"]), None)
@@ -406,11 +490,11 @@ def slide_check(ev):
                     dt = (gt.get(n) or 0) - (gt.get(n - 1) or 0)
                     steps.append((n, abs(tk[n]["x"] - tk[n - 1]["x"]), dt))
             max_step = max((d for _, d, _ in steps), default=None)
-            traj_ok = traj_ok and bool(steps) and all(0 < dt <= DT + 1e-6 and d <= speed * dt + 1e-3 for _, d, dt in steps)
+            traj_ok = traj_ok and bool(steps) and dt0 is not None and all(0 < dt <= dt0 + 1e-6 and d <= speed * dt + 1e-3 for _, d, dt in steps)
             slides.append({"tick": st["simulationTick"], "facing": tk.get(st["simulationTick"], {}).get("facing"), "fromX": before.get("x"),
                            "device": inp and inp.get("device"), "heldDir": inp and inp.get("heldDir"),
                            "end": en and en["reason"], "endX": en and en.get("position", [None])[0], "endTick": en and en["simulationTick"],
-                           "trajectoryTicks": len(traj), "maxStepM": max_step, "stepLimitM": speed and speed * DT, "trajectoryOk": traj_ok})
+                           "trajectoryTicks": len(traj), "maxStepM": max_step, "stepLimitM": speed and dt0 and speed * dt0, "runDt": dt0, "trajectoryOk": traj_ok})
         left = [x for x in slides if x["facing"] == -1]
         enter = next((x for x in left if x["end"] == "SlideEnd:CeilingKeepsCrouch" and CEILING[0] - 0.5 <= x["endX"] <= CEILING[1] + 0.5 and x["fromX"] > CEILING[1]), None)
         exit_ = next((x for x in left if enter and x["tick"] > enter["tick"] and x["fromX"] == enter["endX"] and x["endX"] < CEILING[0] - 0.5 and x["end"] == "SlideEnd"), None)
@@ -550,8 +634,31 @@ def dev_selftest(ev):
          lambda m, s: (lambda u: u.update(simulationTick=u["simulationTick"] - 2, execTick=u["execTick"] - 2))(first(s, "item.use", lambda e: e.get("requestId") == 5))),
         ("GPT-R2 pad discard inventory still holds the item", "TC-02-01", "DevPad_Discard",
          lambda m, s: (lambda d: d.update(inventory=d["inventory"] + "," + d["item"] + "x1"))(first(s, "ring.discard"))),
+        # GPT WP-09-R3 review section 3 (false passes)
+        ("GPT-R3 NextTick request runs two ticks late under an invented wait reason", "TC-02-01", "DevPad_UseQuickslots", r3_invented_wait),
+        ("GPT-R3 discard snapshot is null", "TC-02-01", "DevPad_Discard", lambda m, s: first(s, "ring.discard").__setitem__("inventory", None)),
+        ("R4 release stick exactly on the ring deadzone boundary", "TC-02-01", "DevKb_RegisterUp", r4_boundary_release),
     ]
     return run_mutations(ev, dev_check, cases, DEV_SCENARIOS)
+
+
+def r3_invented_wait(m, s):
+    """GPT WP-09-R3 probes.py `delayed`: move request 5's execution to request+2 with waitedFor set, no item.wait record."""
+    u = next(e for e in s if e["type"] == "item.use" and e.get("requestId") == 5)
+    m.remove(u)
+    t = next(e for e in s if e["type"] == "tick" and e["simulationTick"] == 746)
+    u.update(simulationTick=746, execTick=746, gameTime=t["gameTime"], execGameTime=t["gameTime"], realTime=t["realTime"], waitedFor="unsupported-wait")
+    m.insert(m.index(t), u)
+    for n, row in enumerate(m, m[0]["eventId"]):
+        row["eventId"] = n
+
+
+def r4_boundary_release(m, s):
+    """The release stick has length exactly cursorDeadzone, which Dir8Util.FromStick does not treat as neutral."""
+    dz = ring_deadzone()
+    for e in s:
+        if e["type"] in ("ring.release", "ring.cursor") and e["type"] == "ring.release":
+            e["stick"] = [dz, 0]
 
 
 def slide_selftest(ev):
@@ -578,6 +685,9 @@ def slide_selftest(ev):
          lambda m, s: first(s, "motor.state", lambda e: e["simulationTick"] == 360 and e.get("stateAfter") == "Slide").update(inputEventId=15)),
         ("GPT-R2 exit slide teleports on its last tick", "TC-03-04", "SlideLeftKb",
          lambda m, s: [e.update(x=40.6500053) for e in of(s, "tick") if 360 <= e["simulationTick"] <= 376]),
+        # GPT WP-09-R3 review section 3
+        ("GPT-R3 exit Jump delivered on another tick", "TC-03-04", "SlideLeftKb",
+         lambda m, s: first(s, "input", lambda e: e.get("inputEventId") == 17).__setitem__("deliveredTick", 90000)),
     ]
     return run_mutations(ev, slide_check, cases, SLIDE_SCENARIOS)
 
@@ -585,17 +695,12 @@ def slide_selftest(ev):
 def main():
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     ev = load(args[0])
-    dpath = re.sub(r"\.ndjson$", ".data.json", args[0])
-    try:
-        with open(dpath, encoding="utf-8") as f:
-            CFG.update(json.load(f))
-    except OSError:
-        pass  # without the snapshot the R3 config-bound rules (dev release, slide steps) fail closed
+    src = load_cfg(args[0], ev)  # R4: without a verified snapshot of this run the config-bound rules fail closed
     if "--plane" in sys.argv: fn, st = plane_check, plane_selftest
     elif "--dev" in sys.argv: fn, st = dev_check, dev_selftest
     elif "--slide" in sys.argv: fn, st = slide_check, slide_selftest
     else: fn, st = check, selftest
-    out = {"log": args[0], **fn(ev)}
+    out = {"log": args[0], "dataSnapshot": src, **fn(ev)}
     if "--selftest" in sys.argv:
         out["selftest"] = st(ev)
         out["selftest_all_pass"] = all(r["pass"] is True for r in out["selftest"][1:])
