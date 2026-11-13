@@ -1,0 +1,627 @@
+{
+ "logs": [
+  "Evidence/WP-11A-R1/runs/RUN-20261113-231444.ndjson",
+  "Evidence/WP-11A-R1/runs/RUN-20261113-231921.ndjson"
+ ],
+ "TC-08-02": {
+  "cases": [
+   {
+    "case": "A2R1Attack",
+    "enemy": "ra",
+    "firstAttack": 315,
+    "reentry": [
+     341,
+     "AttackRecovery",
+     1.54
+    ],
+    "nextAttack": 411,
+    "inRangeUntilNextAttack": true,
+    "firstIdleTick": 350,
+    "statesBetween": [
+     "AttackRecovery",
+     "Idle"
+    ],
+    "restrictionEnds": 350,
+    "attackOnRelease": false,
+    "cooldownBlock": [
+     351,
+     1.18000007
+    ],
+    "attackDue": 410,
+    "pass": true
+   },
+   {
+    "case": "A2R1Wait",
+    "enemy": "rw",
+    "firstAttack": 550,
+    "reentry": [
+     616,
+     "Idle",
+     1.54
+    ],
+    "nextAttack": 646,
+    "inRangeUntilNextAttack": true,
+    "firstIdleTick": 616,
+    "statesBetween": [
+     "Idle"
+    ],
+    "cooldownBlock": [
+     616,
+     0.580000639
+    ],
+    "attackDue": 645,
+    "pass": true
+   },
+   {
+    "case": "A2R1Stagger",
+    "enemy": "rs",
+    "firstAttack": 810,
+    "reentry": [
+     864,
+     "Stagger",
+     1.6
+    ],
+    "nextAttack": 893,
+    "inRangeUntilNextAttack": true,
+    "firstIdleTick": 892,
+    "statesBetween": [
+     "Idle",
+     "Stagger"
+    ],
+    "restrictionEnds": 892,
+    "attackOnRelease": true,
+    "cooldownBlock": null,
+    "attackDue": null,
+    "pass": true
+   },
+   {
+    "case": "A2R1Down",
+    "enemy": "rd",
+    "firstAttack": 1095,
+    "reentry": [
+     1187,
+     "Down",
+     1.54
+    ],
+    "nextAttack": 1366,
+    "inRangeUntilNextAttack": true,
+    "firstIdleTick": 1305,
+    "statesBetween": [
+     "Down",
+     "Idle",
+     "Wakeup"
+    ],
+    "restrictionEnds": 1305,
+    "attackOnRelease": false,
+    "cooldownBlock": [
+     1306,
+     1.18000007
+    ],
+    "attackDue": 1365,
+    "pass": true
+   }
+  ],
+  "note": "re-entry into range while restricted (attacking, re-attack wait, stagger 1.5 s, down 2.5 s test data); the ready entry and the dead case are in WP-11A",
+  "pass": true
+ },
+ "TC-08-12": {
+  "part": "boss parried in the air (R2 carry-over)",
+  "cases": [
+   {
+    "case": "GAirg1",
+    "phase": "g1",
+    "parryTick": 1674,
+    "playerGroundedBefore": false,
+    "playerGroundedOnTick": false,
+    "playerY": 1.697825,
+    "jumpTick": 1665,
+    "bossAttackActive": true,
+    "phaseOnTick": "g1",
+    "bossOnTick": "Stagger",
+    "knockback": [
+     6,
+     0.6599884
+    ],
+    "rbToHit": 0.1199999526143074,
+    "parryWindow": 0.15,
+    "pass": true
+   },
+   {
+    "case": "GAirg2",
+    "phase": "g2",
+    "parryTick": 1870,
+    "playerGroundedBefore": false,
+    "playerGroundedOnTick": false,
+    "playerY": 1.697825,
+    "jumpTick": 1861,
+    "bossAttackActive": true,
+    "phaseOnTick": "g2",
+    "bossOnTick": "Stagger",
+    "knockback": [
+     6,
+     0.6599884
+    ],
+    "rbToHit": 0.1199999526143074,
+    "parryWindow": 0.15,
+    "pass": true
+   },
+   {
+    "case": "GAirg3",
+    "phase": "g3",
+    "parryTick": 2091,
+    "playerGroundedBefore": false,
+    "playerGroundedOnTick": false,
+    "playerY": 1.697825,
+    "jumpTick": 2082,
+    "bossAttackActive": true,
+    "phaseOnTick": "g3",
+    "bossOnTick": "Stagger",
+    "knockback": [
+     6,
+     0.6599884
+    ],
+    "rbToHit": 0.1199999526143074,
+    "parryWindow": 0.15,
+    "pass": true
+   }
+  ],
+  "pass": true
+ },
+ "TC-UNITY-02": {
+  "part": "rendered mesh bounds vs judged bodies (R1)",
+  "main": {
+   "playerClasses": {
+    "air": 83,
+    "airDash": 12,
+    "dive": 6,
+    "hitStun": 188,
+    "knockback": 105,
+    "other": 181,
+    "still": 2750,
+    "walkRun": 531
+   },
+   "enemyClasses": {
+    "air": 102,
+    "dead": 99,
+    "down": 175,
+    "knockback": 54,
+    "still": 52064,
+    "walk": 24
+   },
+   "playerExcessFrames": 0,
+   "enemyExcessFrames": 0,
+   "playerClassesPresent": [
+    "walkRun",
+    "air",
+    "airDash",
+    "dive",
+    "knockback",
+    "hitStun"
+   ],
+   "enemyClassesPresent": [
+    "walk",
+    "knockback",
+    "air",
+    "down",
+    "dead"
+   ]
+  },
+  "faultControl": {
+   "playerFault": 0.3,
+   "enemyFault": 0.3,
+   "playerExcessFrames": 1241,
+   "enemyExcessFrames": 16570,
+   "playerOutsideByClass": {
+    "air": 0.3,
+    "airDash": 0.3,
+    "dive": 0.283,
+    "hitStun": 0.3,
+    "knockback": 0.3,
+    "other": 0.3,
+    "still": 0.3,
+    "walkRun": 0.3
+   },
+   "enemyOutsideByClass": {
+    "air": 0.3,
+    "dead": 0.3,
+    "down": 0.3,
+    "knockback": 0.3,
+    "still": 0.3
+   },
+   "playerWallPenetrationMax": 0.2999
+  },
+  "planeCheck": true,
+  "pass": true
+ },
+ "TC-UNITY-07": {
+  "part": "candidate -> resolution links and late signals (R1)",
+  "wholeRun": {
+   "playerHits": 7,
+   "hitsLinkedToCandidates": 7,
+   "candidatesWithoutResolution": [],
+   "uniqueHitKeys": true,
+   "signals": 29,
+   "signalsConsistent": 29,
+   "verdictsCovered": {
+    "Rejected:NotActive:Startup": true,
+    "Rejected:NotActive:Recovery": true,
+    "Rejected:StaleInstance:Ended": true,
+    "Rejected:StaleInstance:Cancelled": true,
+    "Accepted:SameAsCollectedCandidate": true,
+    "Rejected:AlreadyHitThisEvent": true,
+    "Rejected:NoOverlap": true,
+    "Rejected:NoAttackInstance": true
+   },
+   "lateSignalsApplied": 0,
+   "castCase": {
+    "cast": 30,
+    "cancelTick": 3493,
+    "verdicts": [
+     [
+      3490,
+      "Rejected:NotActive:Startup"
+     ],
+     [
+      3521,
+      "Rejected:StaleInstance:Cancelled:PlayerHit"
+     ]
+    ]
+   }
+  },
+  "signals": [
+   {
+    "tick": 3297,
+    "instance": 0,
+    "target": "lb",
+    "verdict": "Rejected:NoAttackInstance",
+    "delayTicks": 1,
+    "consistent": true
+   },
+   {
+    "tick": 3297,
+    "instance": 0,
+    "target": "lf",
+    "verdict": "Rejected:NoAttackInstance",
+    "delayTicks": 1,
+    "consistent": true
+   },
+   {
+    "tick": 3299,
+    "instance": 27,
+    "target": "lb",
+    "verdict": "Accepted:SameAsCollectedCandidate",
+    "delayTicks": 1,
+    "consistent": true
+   },
+   {
+    "tick": 3299,
+    "instance": 27,
+    "target": "lf",
+    "verdict": "Rejected:NoOverlap",
+    "delayTicks": 1,
+    "consistent": true
+   },
+   {
+    "tick": 3303,
+    "instance": 27,
+    "target": "lb",
+    "verdict": "Rejected:AlreadyHitThisEvent",
+    "delayTicks": 3,
+    "consistent": true
+   },
+   {
+    "tick": 3303,
+    "instance": 27,
+    "target": "lf",
+    "verdict": "Rejected:NoOverlap",
+    "delayTicks": 3,
+    "consistent": true
+   },
+   {
+    "tick": 3303,
+    "instance": 27,
+    "target": "lb",
+    "verdict": "Rejected:AlreadyHitThisEvent",
+    "delayTicks": 1,
+    "consistent": true
+   },
+   {
+    "tick": 3303,
+    "instance": 27,
+    "target": "lf",
+    "verdict": "Rejected:NoOverlap",
+    "delayTicks": 1,
+    "consistent": true
+   },
+   {
+    "tick": 3305,
+    "instance": 27,
+    "target": "lb",
+    "verdict": "Rejected:AlreadyHitThisEvent",
+    "delayTicks": 1,
+    "consistent": true
+   },
+   {
+    "tick": 3305,
+    "instance": 27,
+    "target": "lf",
+    "verdict": "Rejected:NoOverlap",
+    "delayTicks": 1,
+    "consistent": true
+   },
+   {
+    "tick": 3307,
+    "instance": 27,
+    "target": "lb",
+    "verdict": "Rejected:NotActive:Recovery",
+    "delayTicks": 1,
+    "consistent": true
+   },
+   {
+    "tick": 3307,
+    "instance": 27,
+    "target": "lf",
+    "verdict": "Rejected:NotActive:Recovery",
+    "delayTicks": 1,
+    "consistent": true
+   },
+   {
+    "tick": 3309,
+    "instance": 27,
+    "target": "lb",
+    "verdict": "Rejected:NotActive:Recovery",
+    "delayTicks": 1,
+    "consistent": true
+   },
+   {
+    "tick": 3309,
+    "instance": 27,
+    "target": "lf",
+    "verdict": "Rejected:NotActive:Recovery",
+    "delayTicks": 1,
+    "consistent": true
+   },
+   {
+    "tick": 3311,
+    "instance": 27,
+    "target": "lb",
+    "verdict": "Rejected:NotActive:Recovery",
+    "delayTicks": 1,
+    "consistent": true
+   },
+   {
+    "tick": 3311,
+    "instance": 27,
+    "target": "lf",
+    "verdict": "Rejected:NotActive:Recovery",
+    "delayTicks": 1,
+    "consistent": true
+   },
+   {
+    "tick": 3313,
+    "instance": 0,
+    "target": "lb",
+    "verdict": "Rejected:NoAttackInstance",
+    "delayTicks": 1,
+    "consistent": true
+   },
+   {
+    "tick": 3313,
+    "instance": 0,
+    "target": "lf",
+    "verdict": "Rejected:NoAttackInstance",
+    "delayTicks": 1,
+    "consistent": true
+   },
+   {
+    "tick": 3315,
+    "instance": 0,
+    "target": "lb",
+    "verdict": "Rejected:NoAttackInstance",
+    "delayTicks": 1,
+    "consistent": true
+   },
+   {
+    "tick": 3315,
+    "instance": 0,
+    "target": "lf",
+    "verdict": "Rejected:NoAttackInstance",
+    "delayTicks": 1,
+    "consistent": true
+   },
+   {
+    "tick": 3317,
+    "instance": 0,
+    "target": "lb",
+    "verdict": "Rejected:NoAttackInstance",
+    "delayTicks": 1,
+    "consistent": true
+   },
+   {
+    "tick": 3317,
+    "instance": 0,
+    "target": "lf",
+    "verdict": "Rejected:NoAttackInstance",
+    "delayTicks": 1,
+    "consistent": true
+   },
+   {
+    "tick": 3319,
+    "instance": 0,
+    "target": "lb",
+    "verdict": "Rejected:NoAttackInstance",
+    "delayTicks": 1,
+    "consistent": true
+   },
+   {
+    "tick": 3319,
+    "instance": 0,
+    "target": "lf",
+    "verdict": "Rejected:NoAttackInstance",
+    "delayTicks": 1,
+    "consistent": true
+   },
+   {
+    "tick": 3337,
+    "instance": 27,
+    "target": "lb",
+    "verdict": "Rejected:StaleInstance:Ended:MotionEnd",
+    "delayTicks": 1,
+    "consistent": true
+   },
+   {
+    "tick": 3342,
+    "instance": 27,
+    "target": "lf",
+    "verdict": "Rejected:StaleInstance:Ended:MotionEnd",
+    "delayTicks": 1,
+    "consistent": true
+   },
+   {
+    "tick": 3490,
+    "instance": 30,
+    "target": "lc",
+    "verdict": "Rejected:NotActive:Startup",
+    "delayTicks": 1,
+    "consistent": true
+   },
+   {
+    "tick": 3521,
+    "instance": 30,
+    "target": "lc",
+    "verdict": "Rejected:StaleInstance:Cancelled:PlayerHit",
+    "delayTicks": 1,
+    "consistent": true
+   },
+   {
+    "tick": 3536,
+    "instance": 0,
+    "target": "lc",
+    "verdict": "Rejected:NoAttackInstance",
+    "delayTicks": 1,
+    "consistent": true
+   }
+  ],
+  "pass": true
+ },
+ "selftest": [
+  {
+   "case": "original",
+   "pass": {
+    "TC-08-02": true,
+    "TC-08-12": true,
+    "TC-UNITY-02": true,
+    "TC-UNITY-07": true
+   }
+  },
+  {
+   "case": "08-02 attack starts while staggered after re-entry",
+   "section": "TC-08-02",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "08-02 attack starts while down after re-entry",
+   "section": "TC-08-02",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "08-02 re-entry wait has no cooldown block",
+   "section": "TC-08-02",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "08-02 the player never leaves the range",
+   "section": "TC-08-02",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "08-12 air parry on the ground",
+   "section": "TC-08-12",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "08-12 air parry names another boss attack",
+   "section": "TC-08-12",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "08-12 air parry in the wrong phase",
+   "section": "TC-08-12",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "08-12 parried boss keeps attacking",
+   "section": "TC-08-12",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "U-02 rendered player outside its tick segment in the dash",
+   "section": "TC-UNITY-02",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "U-02 rendered enemy size differs while down",
+   "section": "TC-UNITY-02",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "U-02 no dead enemy frames measured",
+   "section": "TC-UNITY-02",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "U-02 fault control does not react",
+   "section": "TC-UNITY-02",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "U-02 main run has excess frames",
+   "section": "TC-UNITY-02",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "U-07 late signal applied as a hit",
+   "section": "TC-UNITY-07",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "U-07 stale signal accepted",
+   "section": "TC-UNITY-07",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "U-07 startup signal judged after the cancel",
+   "section": "TC-UNITY-07",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "U-07 hit without a collected candidate",
+   "section": "TC-UNITY-07",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "U-07 recovery signal called startup",
+   "section": "TC-UNITY-07",
+   "sectionPass": false,
+   "pass": true
+  }
+ ],
+ "selftest_all_pass": true
+}

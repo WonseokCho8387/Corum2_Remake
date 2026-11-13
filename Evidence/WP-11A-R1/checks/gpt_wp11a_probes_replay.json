@@ -1,0 +1,150 @@
+{
+ "probes": [
+  {
+   "tc": "TC-05-04",
+   "scenario": "H5Kb_Attack",
+   "case": "accepted attack after stun attributed to an unrelated input",
+   "expected": false,
+   "actual": false,
+   "changed": [
+    1168,
+    979,
+    "inputEventId",
+    15,
+    90000
+   ]
+  },
+  {
+   "tc": "TC-08-02",
+   "scenario": "A2Ready",
+   "case": "cooldown block reason is an unrelated constraint",
+   "expected": false,
+   "actual": false,
+   "changed": [
+    3765,
+    3241,
+    "reason",
+    "Cooldown:ReattackInterval(R-08-07)(R-08-02)",
+    "OutOfRange"
+   ]
+  },
+  {
+   "tc": "TC-08-05",
+   "scenario": "J5NearIn",
+   "case": "air attack decision without actual startup",
+   "expected": false,
+   "actual": false,
+   "changed": [
+    5018,
+    "AirAttack(R-08-05)"
+   ]
+  },
+  {
+   "tc": "TC-08-09",
+   "scenario": "B9Duo",
+   "case": "last observed phase contradicts transition",
+   "expected": false,
+   "actual": false,
+   "changed": [
+    6026,
+    {
+     "state": "Idle",
+     "x": 351.33,
+     "y": 0.0,
+     "hp": 45.0,
+     "phase": "b1"
+    }
+   ]
+  },
+  {
+   "tc": "TC-08-12",
+   "scenario": "Gg2Phys",
+   "case": "armor hit claims no damage",
+   "expected": false,
+   "actual": false,
+   "changed": [
+    8400,
+    7102,
+    "hpAfter",
+    990,
+    1000
+   ]
+  },
+  {
+   "tc": "TC-08-12",
+   "scenario": "Gg2Magic",
+   "case": "knockback endpoint contradicts displacement",
+   "expected": false,
+   "actual": false,
+   "changed": [
+    8703,
+    7321,
+    "endX",
+    592.068,
+    0
+   ]
+  },
+  {
+   "tc": "TC-UNITY-02",
+   "scenario": "U2WallEnemy",
+   "case": "wall knockback distance is negative despite increasing x",
+   "expected": false,
+   "actual": false,
+   "changed": [
+    12087,
+    9816,
+    "displacement",
+    0.09991455,
+    -4
+   ]
+  },
+  {
+   "tc": "TC-UNITY-02",
+   "scenario": "U2WallRun",
+   "case": "remove all rendered depth evidence",
+   "expected": false,
+   "actual": false,
+   "changed": [
+    13062,
+    13063
+   ]
+  },
+  {
+   "tc": "TC-UNITY-07",
+   "scenario": "U7Multi",
+   "case": "one ground1 hit moved to startup before activation",
+   "expected": false,
+   "actual": false,
+   "changed": {
+    "oldTick": 9922,
+    "newTick": 9920,
+    "instance": 122,
+    "startupSeconds": 0.06
+   }
+  },
+  {
+   "tc": "TC-UNITY-07",
+   "scenario": "U7Cancel",
+   "case": "cancel event at a different tick from actual hit",
+   "expected": false,
+   "actual": false,
+   "changed": [
+    12424,
+    10080,
+    "simulationTick",
+    10090,
+    10080
+   ]
+  }
+ ],
+ "allRejected": true,
+ "original": {
+  "TC-05-04": true,
+  "TC-08-02": true,
+  "TC-08-05": true,
+  "TC-08-09": true,
+  "TC-08-12": true,
+  "TC-UNITY-02": true,
+  "TC-UNITY-07": true
+ }
+}
