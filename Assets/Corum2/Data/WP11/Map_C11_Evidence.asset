@@ -1,0 +1,312 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2cac156314ef0040a2f4f3ec32e56f9, type: 3}
+  m_Name: Map_C11_Evidence
+  m_EditorClassIdentifier: Corum2.Unity::Corum2.Unity.MapDefinition
+  meta:
+    domainId: map.C11
+    schemaVersion: 1
+    dataVersion: wp11-1
+    status: experimental
+    policyIds: []
+    relatedRIds:
+    - R-05-04
+    - R-08-02
+    - R-08-05
+    - R-08-09
+    - R-08-12
+    - R-00-03
+    - R-00-05
+    - R-06-01
+    - R-06-10
+    changeRequestId: 
+  mapId: C11
+  minX: 0
+  maxX: 1100
+  killY: -10
+  combatPlaneZ: 0
+  solids:
+  - min: {x: -1, y: -2}
+    max: {x: 1101, y: 0}
+  - min: {x: 865, y: 0}
+    max: {x: 866, y: 5}
+  - min: {x: 888.65, y: 0}
+    max: {x: 889.65, y: 5}
+  - min: {x: 922, y: 0}
+    max: {x: 923, y: 5}
+  spawns:
+  - id: Start
+    position: {x: 4, y: 0}
+    facing: 1
+  - id: H5Kb
+    position: {x: 20, y: 0}
+    facing: 1
+  - id: H5Pad
+    position: {x: 50, y: 0}
+    facing: 1
+  - id: A2Ready
+    position: {x: 80, y: 0}
+    facing: 1
+  - id: A2Stagger
+    position: {x: 110, y: 0}
+    facing: 1
+  - id: A2Down
+    position: {x: 140, y: 0}
+    facing: 1
+  - id: A2Dead
+    position: {x: 170, y: 0}
+    facing: 1
+  - id: J5NearIn
+    position: {x: 200, y: 0}
+    facing: 1
+  - id: J5NearOut
+    position: {x: 230, y: 0}
+    facing: 1
+  - id: J5FarIn
+    position: {x: 260, y: 0}
+    facing: 1
+  - id: J5FarOut
+    position: {x: 290, y: 0}
+    facing: 1
+  - id: B9Solo
+    position: {x: 320, y: 0}
+    facing: 1
+  - id: B9Duo
+    position: {x: 350, y: 0}
+    facing: 1
+  - id: B9Warden
+    position: {x: 380, y: 0}
+    facing: 1
+  - id: Gg1Phys
+    position: {x: 410, y: 0}
+    facing: 1
+  - id: Gg1Magic
+    position: {x: 440, y: 0}
+    facing: 1
+  - id: Gg1Parry
+    position: {x: 470, y: 0}
+    facing: 1
+  - id: Gg1Simul
+    position: {x: 500, y: 0}
+    facing: 1
+  - id: Gg1Launch
+    position: {x: 530, y: 0}
+    facing: 1
+  - id: Gg2Phys
+    position: {x: 560, y: 0}
+    facing: 1
+  - id: Gg2Magic
+    position: {x: 590, y: 0}
+    facing: 1
+  - id: Gg2Parry
+    position: {x: 620, y: 0}
+    facing: 1
+  - id: Gg2Simul
+    position: {x: 650, y: 0}
+    facing: 1
+  - id: Gg2Launch
+    position: {x: 680, y: 0}
+    facing: 1
+  - id: Gg3Phys
+    position: {x: 710, y: 0}
+    facing: 1
+  - id: Gg3Magic
+    position: {x: 740, y: 0}
+    facing: 1
+  - id: Gg3Parry
+    position: {x: 770, y: 0}
+    facing: 1
+  - id: Gg3Simul
+    position: {x: 800, y: 0}
+    facing: 1
+  - id: Gg3Launch
+    position: {x: 830, y: 0}
+    facing: 1
+  - id: U2WallMove
+    position: {x: 860, y: 0}
+    facing: 1
+  - id: U2WallKnock
+    position: {x: 890, y: 0}
+    facing: 1
+  - id: U2WallEnemy
+    position: {x: 920, y: 0}
+    facing: 1
+  - id: U7Multi
+    position: {x: 950, y: 0}
+    facing: 1
+  - id: U7Cancel
+    position: {x: 980, y: 0}
+    facing: 1
+  - id: U7Wakeup
+    position: {x: 1010, y: 0}
+    facing: 1
+  left:
+    policy: 0
+    connectionId: 
+    targetMapId: 
+    targetSpawnId: 
+  right:
+    policy: 0
+    connectionId: 
+    targetMapId: 
+    targetSpawnId: 
+  points: []
+  enemies:
+  - instanceId: hk
+    enemyId: hitter
+    position: {x: 21.2, y: 0}
+    facing: -1
+  - instanceId: hp
+    enemyId: hitter
+    position: {x: 51.2, y: 0}
+    facing: -1
+  - instanceId: pr
+    enemyId: post
+    position: {x: 84, y: 0}
+    facing: -1
+  - instanceId: ps
+    enemyId: post
+    position: {x: 114, y: 0}
+    facing: -1
+  - instanceId: pd
+    enemyId: post
+    position: {x: 144, y: 0}
+    facing: -1
+  - instanceId: px
+    enemyId: postWeak
+    position: {x: 174, y: 0}
+    facing: -1
+  - instanceId: jn1
+    enemyId: jumperStill
+    position: {x: 204, y: 0}
+    facing: -1
+  - instanceId: jn2
+    enemyId: jumperStill
+    position: {x: 236, y: 0}
+    facing: -1
+  - instanceId: jf1
+    enemyId: jumperFar
+    position: {x: 266, y: 0}
+    facing: -1
+  - instanceId: jf2
+    enemyId: jumperFar
+    position: {x: 294, y: 0}
+    facing: -1
+  - instanceId: ba
+    enemyId: bossSolo
+    position: {x: 321.6, y: 0}
+    facing: -1
+  - instanceId: bb
+    enemyId: bossDuo
+    position: {x: 351.6, y: 0}
+    facing: -1
+  - instanceId: bc
+    enemyId: warden
+    position: {x: 381.6, y: 0}
+    facing: -1
+  - instanceId: xg1Phys
+    enemyId: gauntlet
+    position: {x: 411.6, y: 0}
+    facing: -1
+  - instanceId: xg1Magic
+    enemyId: gauntlet
+    position: {x: 441.6, y: 0}
+    facing: -1
+  - instanceId: xg1Parry
+    enemyId: gauntlet
+    position: {x: 471.6, y: 0}
+    facing: -1
+  - instanceId: xg1Simul
+    enemyId: gauntlet
+    position: {x: 501.6, y: 0}
+    facing: -1
+  - instanceId: xg1Launch
+    enemyId: gauntlet
+    position: {x: 531.6, y: 0}
+    facing: -1
+  - instanceId: xg2Phys
+    enemyId: gauntlet
+    position: {x: 561.6, y: 0}
+    facing: -1
+  - instanceId: xg2Magic
+    enemyId: gauntlet
+    position: {x: 591.6, y: 0}
+    facing: -1
+  - instanceId: xg2Parry
+    enemyId: gauntlet
+    position: {x: 621.6, y: 0}
+    facing: -1
+  - instanceId: xg2Simul
+    enemyId: gauntlet
+    position: {x: 651.6, y: 0}
+    facing: -1
+  - instanceId: xg2Launch
+    enemyId: gauntlet
+    position: {x: 681.6, y: 0}
+    facing: -1
+  - instanceId: xg3Phys
+    enemyId: gauntlet
+    position: {x: 711.6, y: 0}
+    facing: -1
+  - instanceId: xg3Magic
+    enemyId: gauntlet
+    position: {x: 741.6, y: 0}
+    facing: -1
+  - instanceId: xg3Parry
+    enemyId: gauntlet
+    position: {x: 771.6, y: 0}
+    facing: -1
+  - instanceId: xg3Simul
+    enemyId: gauntlet
+    position: {x: 801.6, y: 0}
+    facing: -1
+  - instanceId: xg3Launch
+    enemyId: gauntlet
+    position: {x: 831.6, y: 0}
+    facing: -1
+  - instanceId: uk
+    enemyId: hitter
+    position: {x: 891.2, y: 0}
+    facing: -1
+  - instanceId: ub
+    enemyId: bag
+    position: {x: 921.5, y: 0}
+    facing: -1
+  - instanceId: m1
+    enemyId: bag
+    position: {x: 951, y: 0}
+    facing: -1
+  - instanceId: m2
+    enemyId: bag
+    position: {x: 951, y: 0}
+    facing: -1
+  - instanceId: m3
+    enemyId: bag
+    position: {x: 951, y: 0}
+    facing: -1
+  - instanceId: m4
+    enemyId: bag
+    position: {x: 951, y: 0}
+    facing: -1
+  - instanceId: uc
+    enemyId: hitter
+    position: {x: 981.2, y: 0}
+    facing: -1
+  - instanceId: uw
+    enemyId: bag
+    position: {x: 1011, y: 0}
+    facing: -1
+  cameraMinX: 9
+  cameraMaxX: 1091
+  cameraY: 2.5
+  cameraFollowSharpness: 10
+  groundColor: {r: 0.38, g: 0.4, b: 0.37, a: 1}

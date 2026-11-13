@@ -79,7 +79,10 @@ namespace Corum2.Unity
         public const float TeleportDx = 1f;
         readonly Dictionary<EnemyActor, float> _lastRootX = new Dictionary<EnemyActor, float>();
 
-        public void Sync(CombatSystem c, float z)
+        /// <summary>WP-11 TC-UNITY-02: rendered vs judged enemy bodies per motion class.</summary>
+        public readonly ViewTrack Track = new ViewTrack();
+
+        public void Sync(CombatSystem c, float z, MapData map = null)
         {
             // enemies
             var alive = new HashSet<EnemyActor>(c.Enemies);
@@ -124,6 +127,16 @@ namespace Corum2.Unity
                     else { GroundStillSamples++; MaxZGroundStill = Mathf.Max(MaxZGroundStill, err); }
                 }
                 _lastRootX[e] = rx;
+                if (e.State != EnemyState.Gone)
+                {
+                    // WP-11 TC-UNITY-02: Down / Dead are drawn as a low pose on purpose; their size and centre are not compared.
+                    var posed = e.State == EnemyState.Down || e.State == EnemyState.Dead;
+                    var drawn = Aabb.FromCenterSize(v.root.position.x, v.root.position.y, v.root.localScale.x, v.root.localScale.y);
+                    var body = e.Body;
+                    var size = posed ? 0f : Mathf.Abs(drawn.Width - body.Width) + Mathf.Abs(drawn.Height - body.Height);
+                    var off = posed ? 0f : Mathf.Sqrt(Sq(drawn.MinX + drawn.Width * 0.5f - (body.MinX + body.Width * 0.5f)) + Sq(drawn.MinY + drawn.Height * 0.5f - (body.MinY + body.Height * 0.5f)));
+                    Track.Add(ViewTrack.EnemyClass(e), ViewTrack.MaxPenetration(map, drawn), ViewTrack.MaxPenetration(map, body), size, off, 0f);
+                }
                 var baseCol = _colors.TryGetValue(e.Def.Id, out var bc) ? bc : Color.red;
                 var stateCol = StateTint(e.State, baseCol);
                 if (v.mat.HasProperty("_BaseColor")) v.mat.SetColor("_BaseColor", stateCol);
@@ -153,6 +166,8 @@ namespace Corum2.Unity
             if (pb.HasValue) Place(_playerBox, pb.Value, z);
             else _playerBox.gameObject.SetActive(false);
         }
+
+        static float Sq(float v) => v * v;
 
         static Color StateTint(EnemyState s, Color b)
         {

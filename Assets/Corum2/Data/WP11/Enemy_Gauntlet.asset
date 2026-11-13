@@ -1,0 +1,306 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 125c746adf4ff87488a0826b46907adc, type: 3}
+  m_Name: Enemy_Gauntlet
+  m_EditorClassIdentifier: Corum2.Unity::Corum2.Unity.EnemyDefinitionAsset
+  meta:
+    domainId: enemy.gauntlet
+    schemaVersion: 1
+    dataVersion: wp11-1
+    status: experimental
+    policyIds:
+    - TEST-AI-01
+    - TEST-BOSS-11
+    relatedRIds:
+    - R-08-02
+    - R-08-05
+    - R-08-09
+    - R-08-12
+    changeRequestId: 
+  enemyId: gauntlet
+  maxHp: 1000
+  bodyWidth: 1.4
+  bodyHeight: 2.6
+  gravity: 30
+  staggerTime: 0.4
+  staggerResistance: 0
+  physicalKnockbackScale: 1
+  magicKnockbackScale: 1
+  launch: 0
+  launchResistScale: 0.5
+  juggleFallSpeed: 2
+  juggleSlowTime: 0.35
+  downTime: 1
+  wakeupTime: 0.6
+  deathTime: 0.8
+  vanishTime: 0.4
+  hasAttack: 0
+  attack:
+    id: gauntlet.atk
+    kind: 6
+    damageType: 0
+    startup: 0.3
+    active: 0.1
+    recovery: 0.3
+    offsetX: 0.8
+    offsetY: 0.9
+    width: 1.2
+    height: 1.2
+    testDamage: 10
+    hitstop: 0.04
+    knockback: 4
+    launchVelocity: 0
+    hitEvents: 1
+    unblockable: 0
+    guardBreak: 0
+    superArmor: 0
+    hitsDowned: 0
+  attackRange: 2
+  attackInterval: 1.2
+  firstAttackDelay: 0.5
+  ai:
+    type: 5
+    moveSpeed: 3
+    trackRange: 12
+    fleeSpeed: 3.5
+    fleeTime: 1.2
+    reapproachAfterFlee: 1
+    jumpMinDistance: 2.5
+    jumpMaxDistance: 5
+    jumpSpeedX: 5
+    jumpVelocityY: 9
+    jumpCooldown: 1.5
+    hasAirAttack: 0
+    airAttack:
+      id: 
+      kind: 6
+      damageType: 0
+      startup: 0.06
+      active: 0.08
+      recovery: 0.12
+      offsetX: 0.8
+      offsetY: 0.9
+      width: 1
+      height: 1.2
+      testDamage: 10
+      hitstop: 0.04
+      knockback: 1.5
+      launchVelocity: 0
+      hitEvents: 1
+      unblockable: 0
+      guardBreak: 0
+      superArmor: 0
+      hitsDowned: 0
+    airAttackRange: 1.6
+    hasProjectile: 0
+    projectile:
+      speed: 8
+      maxDistance: 12
+      width: 0.4
+      height: 0.4
+      spawnOffsetX: 0.6
+      spawnOffsetY: 1
+    retreatSpeed: 3
+    retreatTime: 0.8
+  boss:
+    startPhase: g1
+    phases:
+    - id: g1
+      patterns:
+      - id: g1.smash
+        attack:
+          id: g1.smash
+          kind: 6
+          damageType: 0
+          startup: 0.6
+          active: 0.1
+          recovery: 0.3
+          offsetX: 1.1
+          offsetY: 0.9
+          width: 1.6
+          height: 1.6
+          testDamage: 10
+          hitstop: 0.04
+          knockback: 4
+          launchVelocity: 0
+          hitEvents: 1
+          unblockable: 0
+          guardBreak: 0
+          superArmor: 0
+          hitsDowned: 0
+        hasProjectile: 0
+        projectile:
+          speed: 8
+          maxDistance: 12
+          width: 0.4
+          height: 0.4
+          spawnOffsetX: 0.6
+          spawnOffsetY: 1
+        minDistance: 0
+        maxDistance: 2.2
+        playerState: 0
+        priority: 0
+        special: 0
+      transitions:
+      - kind: 2
+        value: 0
+        patternId: 
+        count: 1
+        eventName: arm
+        targetPhase: g2
+      attackInterval: 2
+      approachSpeed: 2
+      retreatSpeed: 2
+      preferredMinDistance: 0.8
+      preferredMaxDistance: 1.6
+      jumpInterval: 0
+      jumpSpeedX: 5
+      jumpVelocityY: 9
+      superArmor: 0
+      staggerResistance: 0
+      launch: 0
+      attackSpeed: 1
+      guardFrequency: 0
+      guardTime: 0.6
+      evadeFrequency: 0
+      evadeTime: 0.3
+      evadeSpeed: 8
+      defenseRange: 3
+      transitionTime: 0
+      transitionAnimation: 
+      transitionVfx: 
+      transitionCamera: 
+    - id: g2
+      patterns:
+      - id: g2.smash
+        attack:
+          id: g2.smash
+          kind: 6
+          damageType: 0
+          startup: 0.6
+          active: 0.1
+          recovery: 0.3
+          offsetX: 1.1
+          offsetY: 0.9
+          width: 1.6
+          height: 1.6
+          testDamage: 10
+          hitstop: 0.04
+          knockback: 4
+          launchVelocity: 0
+          hitEvents: 1
+          unblockable: 0
+          guardBreak: 0
+          superArmor: 0
+          hitsDowned: 0
+        hasProjectile: 0
+        projectile:
+          speed: 8
+          maxDistance: 12
+          width: 0.4
+          height: 0.4
+          spawnOffsetX: 0.6
+          spawnOffsetY: 1
+        minDistance: 0
+        maxDistance: 2.2
+        playerState: 0
+        priority: 0
+        special: 0
+      transitions:
+      - kind: 2
+        value: 0
+        patternId: 
+        count: 1
+        eventName: lift
+        targetPhase: g3
+      attackInterval: 2
+      approachSpeed: 2
+      retreatSpeed: 2
+      preferredMinDistance: 0.8
+      preferredMaxDistance: 1.6
+      jumpInterval: 0
+      jumpSpeedX: 5
+      jumpVelocityY: 9
+      superArmor: 1
+      staggerResistance: 0
+      launch: 0
+      attackSpeed: 1
+      guardFrequency: 0
+      guardTime: 0.6
+      evadeFrequency: 0
+      evadeTime: 0.3
+      evadeSpeed: 8
+      defenseRange: 3
+      transitionTime: 0.5
+      transitionAnimation: warden.roar
+      transitionVfx: vfx.armorGlow
+      transitionCamera: cam.shakeSmall
+    - id: g3
+      patterns:
+      - id: g3.smash
+        attack:
+          id: g3.smash
+          kind: 6
+          damageType: 0
+          startup: 0.6
+          active: 0.1
+          recovery: 0.3
+          offsetX: 1.1
+          offsetY: 0.9
+          width: 1.6
+          height: 1.6
+          testDamage: 10
+          hitstop: 0.04
+          knockback: 4
+          launchVelocity: 0
+          hitEvents: 1
+          unblockable: 0
+          guardBreak: 0
+          superArmor: 0
+          hitsDowned: 0
+        hasProjectile: 0
+        projectile:
+          speed: 8
+          maxDistance: 12
+          width: 0.4
+          height: 0.4
+          spawnOffsetX: 0.6
+          spawnOffsetY: 1
+        minDistance: 0
+        maxDistance: 2.2
+        playerState: 0
+        priority: 0
+        special: 0
+      transitions: []
+      attackInterval: 2
+      approachSpeed: 2
+      retreatSpeed: 2
+      preferredMinDistance: 0.8
+      preferredMaxDistance: 1.6
+      jumpInterval: 0
+      jumpSpeedX: 5
+      jumpVelocityY: 9
+      superArmor: 0
+      staggerResistance: 0
+      launch: 2
+      attackSpeed: 1
+      guardFrequency: 0
+      guardTime: 0.6
+      evadeFrequency: 0
+      evadeTime: 0.3
+      evadeSpeed: 8
+      defenseRange: 3
+      transitionTime: 0.5
+      transitionAnimation: sentinel.shift
+      transitionVfx: vfx.blink
+      transitionCamera: cam.none
+  color: {r: 0.45, g: 0.35, b: 0.2, a: 1}

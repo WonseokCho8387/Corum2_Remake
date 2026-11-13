@@ -76,6 +76,8 @@ namespace Corum2.Unity
         Text _hud;
 
         Vector2 _prevPos, _currPos;
+        /// <summary>WP-11 TC-UNITY-02: rendered vs judged player body per motion class.</summary>
+        readonly ViewTrack _playerTrack = new ViewTrack();
         float _prevCamX, _currCamX;
         string _shownMap;
         readonly Queue<string> _recentInputs = new Queue<string>();
@@ -262,7 +264,18 @@ namespace Corum2.Unity
             var z = map.CombatPlaneZ;
             _playerView.Apply(new Vector3(p.x, p.y, z), Sim.Player.Height, Sim.Player.Facing, Sim.Player.State);
             // TC-01-01 / TC-UNITY-02: the rendered player must stay on the combat plane.
-            if (_combatView != null) _combatView.Sync(Sim.Combat, z);
+            if (_combatView != null) _combatView.Sync(Sim.Combat, z, map);
+            {
+                // WP-11 TC-UNITY-02: the drawn body (block-out cube, feet at p) against the judged body and the map solids.
+                var sp = Sim.Player;
+                var dead = sp.State == MotorState.Dead;
+                var drawn = Aabb.FromFeet(new Vec2(p.x, p.y), dead ? sp.Height : sp.Width, dead ? sp.Width : sp.Height);
+                var judged = sp.Bounds;
+                var size = dead ? 0f : Mathf.Abs(drawn.Width - judged.Width) + Mathf.Abs(drawn.Height - judged.Height);
+                var outside = ViewTrack.OutsideSegment(new Vec2(p.x, p.y), new Vec2(_prevPos.x, _prevPos.y), new Vec2(_currPos.x, _currPos.y));
+                _playerTrack.Add(ViewTrack.PlayerClass(sp.State, sp.VelX), ViewTrack.MaxPenetration(map, drawn), ViewTrack.MaxPenetration(map, judged), size, outside,
+                    Vector2.Distance(_prevPos, _currPos));
+            }
             if (_presentationView != null) _presentationView.Sync(Sim, z, Time.fixedDeltaTime);
             _viewFrames++;
             var pz = Mathf.Abs(_playerView.Root.position.z - z);
@@ -381,6 +394,10 @@ namespace Corum2.Unity
                         ("maxAbsZTeleport", cv.MaxZTeleport), ("maxAbsZGroundMoving", cv.MaxZGroundMoving), ("maxAbsZGroundStill", cv.MaxZGroundStill),
                         ("planeZ", Sim.CurrentMap.CombatPlaneZ));
                 }
+                // WP-11 TC-UNITY-02: per class frames/renderPenetration/simPenetration/sizeError/outsideTickSegment/maxStep
+                Sim.Log.Emit("view.trackCheck", "player", "", "", "", "RenderedVsJudgedPlayer(WP11)", ("classes", _playerTrack.Table()), ("map", Sim.CurrentMap.Id));
+                if (_combatView != null)
+                    Sim.Log.Emit("view.trackCheck", "enemies", "", "", "", "RenderedVsJudgedEnemies(WP11)", ("classes", _combatView.Track.Table()), ("map", Sim.CurrentMap.Id));
                 Sim.Log.Emit("run.end", "", "", "", "", "HostDestroyed", ("ticks", Sim.Tick), ("transitions", Sim.TransitionCount));
             }
             _sink?.Dispose();
@@ -586,7 +603,13 @@ namespace Corum2.Unity
                 case "spawn":
                     // spawn=<spawnId> on the current map (test setup)
                     var s = Sim.CurrentMap.FindSpawn(arg);
-                    if (s != null) Sim.Player.PlaceAt(Sim.CurrentMap, s, "ScriptSpawn");
+                    if (s != null)
+                    {
+                        Sim.Player.PlaceAt(Sim.CurrentMap, s, "ScriptSpawn");
+                        // WP-11 (TC-UNITY-02): a placement is not a movement; like a map switch, the view does not interpolate across it
+                        // (it drew the body for one frame on the line between the two places, through any wall in between).
+                        _prevPos = _currPos = ToV(Sim.Player.Position);
+                    }
                     break;
                 case "flush":
                     _sink?.Flush();
