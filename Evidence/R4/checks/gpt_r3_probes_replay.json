@@ -1,0 +1,280 @@
+{
+ "probes": [
+  {
+   "wp": "06",
+   "tc": "TC-05-01",
+   "case": "after-end Jump credited as AirDash",
+   "expected": false,
+   "actual": false,
+   "ok": true,
+   "mode": null,
+   "changes": [
+    {
+     "eventId": 7415,
+     "simulationTick": 5643,
+     "type": "air.use",
+     "actorId": "player",
+     "reason": "ExtraJump",
+     "inputEventId": 417,
+     "targetId": "",
+     "stateAfter": "jump=used,dash=used,dive=free"
+    },
+    {
+     "eventId": 7415,
+     "simulationTick": 5643,
+     "type": "air.use",
+     "actorId": "player",
+     "reason": "AirDash",
+     "inputEventId": 417,
+     "targetId": "",
+     "stateAfter": "jump=used,dash=used,dive=free"
+    }
+   ]
+  },
+  {
+   "wp": "07",
+   "tc": "TC-06-06",
+   "case": "R2 stripped discriminator with blocked hit",
+   "expected": false,
+   "actual": false,
+   "ok": true,
+   "mode": "R2 build 7a9ca55 (attribution required)",
+   "changes": {
+    "stripped": 58,
+    "wrongBlockedId": 4032,
+    "remainingFields": [
+     "velocitySets",
+     "firstSource",
+     "lastSource",
+     "firstAttackInstanceId",
+     "lastAttackInstanceId",
+     "aiMoveDuring",
+     "blocked"
+    ]
+   }
+  },
+  {
+   "wp": "08",
+   "tc": "TC-06-12",
+   "case": "R2 stripped discriminator with blocked hit",
+   "expected": false,
+   "actual": false,
+   "ok": true,
+   "mode": "R2 build 7a9ca55 (attribution required)",
+   "changes": {
+    "stripped": 23,
+    "wrongBlockedId": 4753,
+    "remainingFields": [
+     "velocitySets",
+     "firstSource",
+     "lastSource",
+     "firstAttackInstanceId",
+     "lastAttackInstanceId",
+     "aiMoveDuring",
+     "blocked"
+    ]
+   }
+  },
+  {
+   "wp": "08",
+   "tc": "WP08-F02-R1",
+   "case": "second attacker becomes active after ignored event in same tick",
+   "expected": false,
+   "actual": false,
+   "ok": true,
+   "mode": "R2 build 7a9ca55 (attribution required)",
+   "changes": {
+    "activeOldId": 6646,
+    "ignoredId": 6649,
+    "activeNewId": 6650,
+    "tick": 5382
+   }
+  },
+  {
+   "wp": "10",
+   "tc": "TC-INT-04",
+   "case": "R2 stripped discriminator with blocked hit",
+   "expected": false,
+   "actual": false,
+   "ok": true,
+   "mode": "R2 build 7a9ca55 (attribution required)",
+   "changes": {
+    "stripped": 28,
+    "wrongBlockedId": 2365,
+    "remainingFields": [
+     "velocitySets",
+     "firstSource",
+     "lastSource",
+     "firstAttackInstanceId",
+     "lastAttackInstanceId",
+     "aiMoveDuring",
+     "blocked"
+    ]
+   }
+  },
+  {
+   "wp": "10",
+   "tc": "TC-INT-04",
+   "case": "Dodge and both player HP samples missing",
+   "expected": false,
+   "actual": false,
+   "ok": true,
+   "mode": "R2 build 7a9ca55 (attribution required)",
+   "changes": {
+    "dodge": 2025,
+    "missingHpTicks": [
+     1155,
+     1156
+    ]
+   }
+  },
+  {
+   "wp": "10",
+   "tc": "TC-INT-06",
+   "case": "event with matching prefix but distinct name",
+   "expected": false,
+   "actual": false,
+   "ok": true,
+   "mode": "R2 build 7a9ca55 (attribution required)",
+   "changes": {
+    "eventId": 3469,
+    "simulationTick": 2058,
+    "type": "boss.event",
+    "actorId": "sn",
+    "reason": "Event:shift_other(R-08-10)",
+    "targetId": "",
+    "stateAfter": "s1"
+   }
+  },
+  {
+   "wp": "10",
+   "tc": "TC-INT-06",
+   "case": "threshold disagrees with recorded phase configuration",
+   "expected": false,
+   "actual": false,
+   "ok": true,
+   "mode": "R2 build 7a9ca55 (attribution required)",
+   "changes": {
+    "tick": 1959,
+    "before": "HpBelow:0.6",
+    "after": "HpBelow:0.99",
+    "ratio": 0.55
+   }
+  },
+  {
+   "wp": "10",
+   "tc": "TC-INT-06",
+   "case": "p2 shot2 preparation moved past p3 transition",
+   "expected": false,
+   "actual": false,
+   "ok": true,
+   "mode": "R2 build 7a9ca55 (attribution required)",
+   "changes": [
+    {
+     "eventId": 3407,
+     "simulationTick": 2009,
+     "type": "enemy.state",
+     "actorId": "wb2",
+     "reason": "Pattern:shot2",
+     "attackInstanceId": 50,
+     "targetId": "",
+     "stateAfter": "AttackStartup"
+    },
+    {
+     "eventId": 3784,
+     "simulationTick": 2229,
+     "type": "enemy.state",
+     "actorId": "wb2",
+     "reason": "Pattern:shot2",
+     "attackInstanceId": 50,
+     "targetId": "",
+     "stateAfter": "AttackStartup"
+    }
+   ]
+  },
+  {
+   "wp": "10",
+   "tc": "TC-INT-06",
+   "case": "at HP threshold (predicate isolation)",
+   "expected": true,
+   "actual": true,
+   "ok": true,
+   "mode": "R2 build 7a9ca55 (attribution required)",
+   "changes": {
+    "tick": 1959,
+    "condition": "HpBelow:0.6",
+    "ratio": 0.6,
+    "hp": 120,
+    "scope": "condition predicate only"
+   }
+  }
+ ],
+ "all_ok": true,
+ "originals": {
+  "06": {
+   "TC-04-04": true,
+   "TC-04-02": true,
+   "TC-04-06": true,
+   "TC-04-08": true,
+   "TC-04-03": true,
+   "TC-05-01": true,
+   "TC-05-06": true,
+   "TC-04-07": true,
+   "TC-05-03": true
+  },
+  "07": {
+   "TC-06-01": true,
+   "TC-06-02": true,
+   "TC-06-03-main": true,
+   "TC-06-04": true,
+   "TC-06-05": true,
+   "TC-06-06": true,
+   "TC-06-07": true,
+   "TC-06-08": true,
+   "TC-06-09": true,
+   "TC-06-10": true
+  },
+  "08": {
+   "TC-06-11": true,
+   "TC-06-12": true,
+   "TC-06-13": true,
+   "TC-06-14": true,
+   "TC-06-15": true,
+   "TC-06-16": true,
+   "TC-06-17": true,
+   "TC-06-18": true,
+   "TC-07-01": true,
+   "WP08-F02": true,
+   "WP08-F02-R1": true,
+   "TC-07-02": true,
+   "TC-OPS-02": true,
+   "TC-07-03": true,
+   "TC-07-04-main": true,
+   "TC-07-05": true,
+   "TC-07-06": true,
+   "TC-07-07": true
+  },
+  "10": {
+   "TC-INT-01": true,
+   "TC-INT-03": true,
+   "TC-INT-04": true,
+   "TC-INT-05": true,
+   "TC-INT-06": true
+  }
+ },
+ "legacyWP07R1_194039": {
+  "mode": "legacy build 4f02a15 (pre-7a9ca55, no attribution fields)",
+  "sections": {
+   "TC-06-01": true,
+   "TC-06-02": true,
+   "TC-06-03-main": true,
+   "TC-06-04": true,
+   "TC-06-05": true,
+   "TC-06-06": true,
+   "TC-06-07": true,
+   "TC-06-08": true,
+   "TC-06-09": true,
+   "TC-06-10": false
+  }
+ }
+}

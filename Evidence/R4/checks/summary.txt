@@ -1,0 +1,14 @@
+wp06_checks_TC-04-09.json  {'TC-04-09': True}
+   selftest 1 notRejected []
+wp06_checks_main.json  {'TC-04-04': True, 'TC-04-02': True, 'TC-04-06': True, 'TC-04-08': True, 'TC-04-03': True, 'TC-05-01': True, 'TC-05-06': True, 'TC-04-07': True, 'TC-05-03': True}
+   selftest 36 notRejected []
+wp07_checks_TC-06-03.json  {'TC-06-03': True}
+   selftest 0 notRejected []
+wp07_checks_main.json R2 build 7a9ca55 (attribution required) {'TC-06-01': True, 'TC-06-02': True, 'TC-06-03-main': True, 'TC-06-04': True, 'TC-06-05': True, 'TC-06-06': True, 'TC-06-07': True, 'TC-06-08': True, 'TC-06-09': True, 'TC-06-10': True}
+   selftest 40 notRejected []
+wp08_checks_TC-07-04.json  {'TC-07-04': True}
+   selftest 1 notRejected []
+wp08_checks_main.json R2 build 7a9ca55 (attribution required) {'TC-06-11': True, 'TC-06-12': True, 'TC-06-13': True, 'TC-06-14': True, 'TC-06-15': True, 'TC-06-16': True, 'TC-06-17': True, 'TC-06-18': True, 'TC-07-01': True, 'WP08-F02': True, 'WP08-F02-R1': True, 'TC-07-02': True, 'TC-OPS-02': True, 'TC-07-03': True, 'TC-07-04-main': True, 'TC-07-05': True, 'TC-07-06': True, 'TC-07-07': True}
+   selftest 53 notRejected []
+wp10_checks.json R2 build 7a9ca55 (attribution required) {'TC-INT-01': True, 'TC-INT-03': True, 'TC-INT-04': True, 'TC-INT-05': True, 'TC-INT-06': True, 'TC-INT-07': True, 'TC-INT-08': (False, True)}
+   selftest 38 notRejected []

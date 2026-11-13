@@ -1,0 +1,1112 @@
+{
+ "log": "D:/ProjectR/Corum2Remake/Evidence/WP-06-R2/runs/RUN-20261113-051441.ndjson",
+ "TC-04-04": {
+  "attacks": [
+   "ground1",
+   "ground2",
+   "ground3",
+   "ground4",
+   "launcher",
+   "air1",
+   "air2",
+   "air3",
+   "air4",
+   "dive"
+  ],
+  "perAttack(id,distinctTargets,hits)": [
+   [
+    "ground1",
+    10,
+    10
+   ],
+   [
+    "ground2",
+    10,
+    10
+   ],
+   [
+    "ground3",
+    10,
+    10
+   ],
+   [
+    "ground4",
+    10,
+    10
+   ],
+   [
+    "launcher",
+    10,
+    10
+   ],
+   [
+    "air1",
+    10,
+    10
+   ],
+   [
+    "air2",
+    10,
+    10
+   ],
+   [
+    "air3",
+    10,
+    10
+   ],
+   [
+    "air4",
+    10,
+    10
+   ],
+   [
+    "dive",
+    10,
+    10
+   ]
+  ],
+  "chains": [
+   1
+  ],
+  "jumps": 1,
+  "sameTenTargetsEveryAttack": true,
+  "everyHitEffective": true,
+  "countSequence1to100": true,
+  "fiveTargets": {
+   "attacks": 1,
+   "targets": [
+    "f0",
+    "f1",
+    "f2",
+    "f3",
+    "f4"
+   ],
+   "ticks": [
+    4276
+   ],
+   "counts": [
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
+   "comboEnd": 5,
+   "pass": true
+  },
+  "comboEnd": [
+   "Timeout",
+   10,
+   100
+  ],
+  "maxComboAfter": 100,
+  "pass": true
+ },
+ "TC-04-02": {
+  "launcherHits": [
+   [
+    "la",
+    "Launched:Launchable(R-06-08)"
+   ]
+  ],
+  "groundAttackHits": [
+   [
+    "lb",
+    "Stagger(R-06-04)"
+   ],
+   [
+    "lb",
+    "Stagger(R-06-04)"
+   ]
+  ],
+  "playerMaxY": 0,
+  "allTicksGrounded": true,
+  "jumps": 0,
+  "pass": true
+ },
+ "TC-04-06": {
+  "initial": {
+   "targets": [
+    "p1"
+   ],
+   "comboHits": 1,
+   "endTickAfterHit": 1
+  },
+  "pierce": {
+   "targets": [
+    "p1",
+    "p2",
+    "p3"
+   ],
+   "comboHits": 3
+  },
+  "pass": true,
+  "guardThenPierce(WP06-F01)": {
+   "first": [
+    [
+     "gp",
+     3977,
+     true,
+     0,
+     0
+    ]
+   ],
+   "later": [
+    [
+     "gq",
+     3989,
+     12,
+     0,
+     1
+    ]
+   ],
+   "guardEnd": [
+    [
+     3977,
+     "EnemyGuardCancel(R-04-03, EXP-COMBO-05)"
+    ]
+   ],
+   "reopen": [
+    3989
+   ],
+   "newChainComboHits": 1,
+   "pass": true
+  },
+  "noGuardControl": {
+   "first": [
+    [
+     "np",
+     4127,
+     1
+    ]
+   ],
+   "later": [
+    [
+     "nq",
+     4139,
+     2
+    ]
+   ],
+   "pass": true
+  }
+ },
+ "TC-04-08": {
+  "initial": [
+   [
+    "d1",
+    "Overlap"
+   ]
+  ],
+  "area": [
+   [
+    "d1",
+    "Overlap",
+    930
+   ],
+   [
+    "d2",
+    "DiveArea(R-04-08 upgraded)",
+    946
+   ],
+   [
+    "d3",
+    "DiveArea(R-04-08 upgraded)",
+    946
+   ]
+  ],
+  "landTick": 946,
+  "pass": true
+ },
+ "TC-04-03": {
+  "cases": [
+   {
+    "case": "EnemyGuardCancel",
+    "endReason": "EnemyGuardCancel(R-04-03, EXP-COMBO-05)",
+    "comboHits": 0,
+    "chain": 8,
+    "nextChain": 9,
+    "pass": true,
+    "guardDetail": {
+     "guardCancel": 2,
+     "guardedHits": [
+      [
+       "g1",
+       "BossGuard:GuardRule(R-08-11, EXP-BOSS-06)",
+       0
+      ]
+     ],
+     "attackEnd": "EnemyGuardCancel(R-04-03, EXP-COMBO-05)"
+    }
+   },
+   {
+    "case": "MissEndsChain",
+    "endReason": "Miss",
+    "comboHits": 0,
+    "chain": 10,
+    "nextChain": 11,
+    "pass": true
+   },
+   {
+    "case": "TimeoutEndsChain",
+    "endReason": "Timeout",
+    "comboHits": 1,
+    "chain": 11,
+    "nextChain": 12,
+    "pass": true,
+    "windowSeconds": 0.5,
+    "timeoutAfterAttackEnd": 0.4999998025596142
+   },
+   {
+    "case": "RbCancelEndsChain",
+    "endReason": "GuardCancel",
+    "comboHits": 1,
+    "chain": 12,
+    "nextChain": 13,
+    "pass": true,
+    "attackEnd": "GuardCancel",
+    "hitboxRemoved": true
+   }
+  ],
+  "pass": true
+ },
+ "TC-05-01": {
+  "attackTicks": 45,
+  "attackTicksWithRightHeld": 28,
+  "xPerAttackMotion": [
+   [
+    200
+   ],
+   [
+    200
+   ],
+   [
+    200.28
+   ]
+  ],
+  "walkTicksAfter": 13,
+  "jumpRejectedDuringAttack": 1,
+  "jumpAfterEnd": [
+   [
+    1539,
+    "Jump:Standing"
+   ]
+  ],
+  "pass": true,
+  "matrix": [
+   {
+    "case": "MoveGround+2",
+    "attack": "ground1",
+    "pressOffsetTicks": 1,
+    "motionTicks": 12,
+    "xDuringMotion": [
+     200
+    ],
+    "firstWalkAfterEnd": 1,
+    "pass": true
+   },
+   {
+    "case": "MoveGround+12",
+    "attack": "ground1",
+    "pressOffsetTicks": 6,
+    "motionTicks": 15,
+    "xDuringMotion": [
+     201.1901
+    ],
+    "firstWalkAfterEnd": 1,
+    "pass": true
+   },
+   {
+    "case": "MoveGround+22",
+    "attack": "ground1",
+    "pressOffsetTicks": 11,
+    "motionTicks": 12,
+    "xDuringMotion": [
+     202.1702
+    ],
+    "firstWalkAfterEnd": 1,
+    "pass": true
+   },
+   {
+    "case": "MoveRepressGround",
+    "attack": "ground1",
+    "pressOffsetTicks": 6,
+    "motionTicks": 12,
+    "xDuringMotion": [
+     203.3604
+    ],
+    "firstWalkAfterEnd": 13,
+    "repressAfterEnd": 13,
+    "pass": true
+   },
+   {
+    "case": "JumpGround+2",
+    "attack": "ground1",
+    "rejectOffsetTicks": 1,
+    "motionTicks": 12,
+    "jumpAfterEnd": 23,
+    "pass": true
+   },
+   {
+    "case": "JumpGround+12",
+    "attack": "ground1",
+    "rejectOffsetTicks": 6,
+    "motionTicks": 12,
+    "jumpAfterEnd": 23,
+    "pass": true
+   },
+   {
+    "case": "JumpGround+22",
+    "attack": "ground1",
+    "rejectOffsetTicks": 11,
+    "motionTicks": 12,
+    "jumpAfterEnd": 23,
+    "pass": true
+   },
+   {
+    "case": "MoveLauncher+2",
+    "attack": "launcher",
+    "pressOffsetTicks": 1,
+    "motionTicks": 12,
+    "xDuringMotion": [
+     200
+    ],
+    "firstWalkAfterEnd": 1,
+    "pass": true
+   },
+   {
+    "case": "MoveLauncher+12",
+    "attack": "launcher",
+    "pressOffsetTicks": 6,
+    "motionTicks": 17,
+    "xDuringMotion": [
+     201.1901
+    ],
+    "firstWalkAfterEnd": 1,
+    "pass": true
+   },
+   {
+    "case": "MoveLauncher+22",
+    "attack": "launcher",
+    "pressOffsetTicks": 11,
+    "motionTicks": 12,
+    "xDuringMotion": [
+     202.0302
+    ],
+    "firstWalkAfterEnd": 1,
+    "pass": true
+   },
+   {
+    "case": "MoveRepressLauncher",
+    "attack": "launcher",
+    "pressOffsetTicks": 6,
+    "motionTicks": 12,
+    "xDuringMotion": [
+     203.2203
+    ],
+    "firstWalkAfterEnd": 13,
+    "repressAfterEnd": 13,
+    "pass": true
+   },
+   {
+    "case": "JumpLauncher+2",
+    "attack": "launcher",
+    "rejectOffsetTicks": 1,
+    "motionTicks": 12,
+    "jumpAfterEnd": 23,
+    "pass": true
+   },
+   {
+    "case": "JumpLauncher+12",
+    "attack": "launcher",
+    "rejectOffsetTicks": 6,
+    "motionTicks": 12,
+    "jumpAfterEnd": 23,
+    "pass": true
+   },
+   {
+    "case": "JumpLauncher+22",
+    "attack": "launcher",
+    "rejectOffsetTicks": 11,
+    "motionTicks": 12,
+    "jumpAfterEnd": 23,
+    "pass": true
+   }
+  ],
+  "matrixPhasesCovered": true,
+  "airMatrix(R2)": [
+   {
+    "attack": "AirNormal",
+    "case": "Movestart",
+    "motionTicks": 12,
+    "sameAsControlDuringMotion": true,
+    "pressOffset": 1,
+    "heldLeftInMotion": true,
+    "steersAfterEndAtOffset": [
+     13
+    ],
+    "pass": true
+   },
+   {
+    "attack": "AirNormal",
+    "case": "Movemid",
+    "motionTicks": 12,
+    "sameAsControlDuringMotion": true,
+    "pressOffset": 6,
+    "heldLeftInMotion": true,
+    "steersAfterEndAtOffset": [
+     13
+    ],
+    "pass": true
+   },
+   {
+    "attack": "AirNormal",
+    "case": "Moveend",
+    "motionTicks": 12,
+    "sameAsControlDuringMotion": true,
+    "pressOffset": 10,
+    "heldLeftInMotion": true,
+    "steersAfterEndAtOffset": [
+     13
+    ],
+    "pass": true
+   },
+   {
+    "attack": "AirNormal",
+    "case": "Jumpstart",
+    "motionTicks": 12,
+    "sameAsControlDuringMotion": true,
+    "rejectOffset": 1,
+    "afterEnd": [
+     [
+      "air.use",
+      "ExtraJump",
+      4
+     ]
+    ],
+    "afterEndJumpKind": true,
+    "pass": true
+   },
+   {
+    "attack": "AirNormal",
+    "case": "Jumpmid",
+    "motionTicks": 12,
+    "sameAsControlDuringMotion": true,
+    "rejectOffset": 6,
+    "afterEnd": [
+     [
+      "air.use",
+      "ExtraJump",
+      4
+     ]
+    ],
+    "afterEndJumpKind": true,
+    "pass": true
+   },
+   {
+    "attack": "AirNormal",
+    "case": "Jumpend",
+    "motionTicks": 12,
+    "sameAsControlDuringMotion": true,
+    "rejectOffset": 10,
+    "afterEnd": [
+     [
+      "air.use",
+      "ExtraJump",
+      4
+     ]
+    ],
+    "afterEndJumpKind": true,
+    "pass": true
+   },
+   {
+    "attack": "AirNormal",
+    "case": "MovePhasesCovered",
+    "offsets": [
+     1,
+     6,
+     10
+    ],
+    "motionTicks": 12,
+    "pass": true
+   },
+   {
+    "attack": "AirNormal",
+    "case": "JumpPhasesCovered",
+    "offsets": [
+     1,
+     6,
+     10
+    ],
+    "motionTicks": 12,
+    "pass": true
+   },
+   {
+    "attack": "AirDash",
+    "case": "Movestart",
+    "motionTicks": 12,
+    "sameAsControlDuringMotion": true,
+    "pressOffset": 2,
+    "heldLeftInMotion": true,
+    "steersAfterEndAtOffset": [
+     13
+    ],
+    "pass": true
+   },
+   {
+    "attack": "AirDash",
+    "case": "Movemid",
+    "motionTicks": 12,
+    "sameAsControlDuringMotion": true,
+    "pressOffset": 6,
+    "heldLeftInMotion": true,
+    "steersAfterEndAtOffset": [
+     13
+    ],
+    "pass": true
+   },
+   {
+    "attack": "AirDash",
+    "case": "Moveend",
+    "motionTicks": 12,
+    "sameAsControlDuringMotion": true,
+    "pressOffset": 10,
+    "heldLeftInMotion": true,
+    "steersAfterEndAtOffset": [
+     13
+    ],
+    "pass": true
+   },
+   {
+    "attack": "AirDash",
+    "case": "Jumpstart",
+    "motionTicks": 12,
+    "sameAsControlDuringMotion": true,
+    "rejectOffset": 1,
+    "afterEnd": [
+     [
+      "air.use",
+      "ExtraJump",
+      4
+     ]
+    ],
+    "afterEndJumpKind": true,
+    "pass": true
+   },
+   {
+    "attack": "AirDash",
+    "case": "Jumpmid",
+    "motionTicks": 12,
+    "sameAsControlDuringMotion": true,
+    "rejectOffset": 6,
+    "afterEnd": [
+     [
+      "air.use",
+      "ExtraJump",
+      4
+     ]
+    ],
+    "afterEndJumpKind": true,
+    "pass": true
+   },
+   {
+    "attack": "AirDash",
+    "case": "Jumpend",
+    "motionTicks": 12,
+    "sameAsControlDuringMotion": true,
+    "rejectOffset": 10,
+    "afterEnd": [
+     [
+      "air.use",
+      "ExtraJump",
+      4
+     ]
+    ],
+    "afterEndJumpKind": true,
+    "pass": true
+   },
+   {
+    "attack": "AirDash",
+    "case": "MovePhasesCovered",
+    "offsets": [
+     2,
+     6,
+     10
+    ],
+    "motionTicks": 12,
+    "pass": true
+   },
+   {
+    "attack": "AirDash",
+    "case": "JumpPhasesCovered",
+    "offsets": [
+     1,
+     6,
+     10
+    ],
+    "motionTicks": 12,
+    "pass": true
+   },
+   {
+    "attack": "Dive",
+    "case": "Movestart",
+    "motionTicks": 9,
+    "sameAsControlDuringMotion": true,
+    "pressOffset": 2,
+    "heldLeftInMotion": true,
+    "steersAfterEndAtOffset": [
+     10
+    ],
+    "pass": true
+   },
+   {
+    "attack": "Dive",
+    "case": "Movemid",
+    "motionTicks": 9,
+    "sameAsControlDuringMotion": true,
+    "pressOffset": 4,
+    "heldLeftInMotion": true,
+    "steersAfterEndAtOffset": [
+     10
+    ],
+    "pass": true
+   },
+   {
+    "attack": "Dive",
+    "case": "Moveend",
+    "motionTicks": 9,
+    "sameAsControlDuringMotion": true,
+    "pressOffset": 7,
+    "heldLeftInMotion": true,
+    "steersAfterEndAtOffset": [
+     10
+    ],
+    "pass": true
+   },
+   {
+    "attack": "Dive",
+    "case": "Jumpstart",
+    "motionTicks": 9,
+    "sameAsControlDuringMotion": true,
+    "rejectOffset": 1,
+    "afterEnd": [
+     [
+      "motor.jump",
+      "Jump:Standing",
+      4
+     ]
+    ],
+    "afterEndJumpKind": true,
+    "pass": true
+   },
+   {
+    "attack": "Dive",
+    "case": "Jumpmid",
+    "motionTicks": 9,
+    "sameAsControlDuringMotion": true,
+    "rejectOffset": 4,
+    "afterEnd": [
+     [
+      "motor.jump",
+      "Jump:Standing",
+      4
+     ]
+    ],
+    "afterEndJumpKind": true,
+    "pass": true
+   },
+   {
+    "attack": "Dive",
+    "case": "Jumpend",
+    "motionTicks": 9,
+    "sameAsControlDuringMotion": true,
+    "rejectOffset": 7,
+    "afterEnd": [
+     [
+      "motor.jump",
+      "Jump:Standing",
+      4
+     ]
+    ],
+    "afterEndJumpKind": true,
+    "pass": true
+   },
+   {
+    "attack": "Dive",
+    "case": "MovePhasesCovered",
+    "offsets": [
+     2,
+     4,
+     7
+    ],
+    "motionTicks": 9,
+    "pass": true
+   },
+   {
+    "attack": "Dive",
+    "case": "JumpPhasesCovered",
+    "offsets": [
+     1,
+     4,
+     7
+    ],
+    "motionTicks": 9,
+    "pass": true
+   }
+  ]
+ },
+ "TC-05-06": {
+  "buffered": [
+   [
+    1624,
+    117
+   ]
+  ],
+  "bufferExecuted": [
+   [
+    1634,
+    117,
+    32.67998709529638
+   ]
+  ],
+  "afterWindow": {
+   "chains": [
+    18,
+    19
+   ],
+   "endsBetween": [
+    "Timeout",
+    "Miss"
+   ]
+  },
+  "reservation": [
+   [
+    1866,
+    135
+   ]
+  ],
+  "reservationExecuted": [
+   [
+    1898,
+    37.3199852630496,
+    37.95998501032591
+   ]
+  ],
+  "pass": true
+ },
+ "TC-04-07": {
+  "attacks": [
+   "launcher",
+   "air1",
+   "airDash",
+   "ground1"
+  ],
+  "airNormalAfterDash": 0,
+  "landTick": 1898,
+  "reservationExecTick": 1898,
+  "sameChain": true,
+  "pass": true
+ },
+ "TC-05-03": {
+  "cases": [
+   {
+    "case": "RbAtDashStart",
+    "guardPresses": 1,
+    "rejected": [
+     [
+      1978,
+      "ActionLock:AirDash"
+     ]
+    ],
+    "motionEnd": "AirDashEnd",
+    "pressPhase(0=start,1=end)": 0.06,
+    "pass": true
+   },
+   {
+    "case": "RbAtDashActive",
+    "guardPresses": 1,
+    "rejected": [
+     [
+      2082,
+      "ActionLock:AirDash"
+     ]
+    ],
+    "motionEnd": "AirDashEnd",
+    "pressPhase(0=start,1=end)": 0.31,
+    "pass": true
+   },
+   {
+    "case": "RbAtDashEnd",
+    "guardPresses": 1,
+    "rejected": [
+     [
+      2188,
+      "ActionLock:AirDash"
+     ]
+    ],
+    "motionEnd": "AirDashEnd",
+    "pressPhase(0=start,1=end)": 0.69,
+    "pass": true
+   },
+   {
+    "case": "RbAtDiveStart",
+    "guardPresses": 1,
+    "rejected": [
+     [
+      2280,
+      "ActionLock:Dive"
+     ]
+    ],
+    "motionEnd": "DiveEnd",
+    "pressPhase(0=start,1=end)": 0.0,
+    "pass": true
+   },
+   {
+    "case": "RbAtDiveMid",
+    "guardPresses": 1,
+    "rejected": [
+     [
+      2384,
+      "ActionLock:Dive"
+     ]
+    ],
+    "motionEnd": "DiveEnd",
+    "pressPhase(0=start,1=end)": 0.25,
+    "pass": true
+   }
+  ],
+  "pass": true
+ },
+ "selftest": [
+  {
+   "case": "original",
+   "pass": {
+    "TC-04-04": true,
+    "TC-04-02": true,
+    "TC-04-06": true,
+    "TC-04-08": true,
+    "TC-04-03": true,
+    "TC-05-01": true,
+    "TC-05-06": true,
+    "TC-04-07": true,
+    "TC-05-03": true
+   }
+  },
+  {
+   "case": "TC-04-04 duplicate target inside one attack",
+   "section": "TC-04-04",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-04-02 player rises after the launcher",
+   "section": "TC-04-02",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-04-06 initial dash hits a second target",
+   "section": "TC-04-06",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-04-03 guarded hit counted as combo",
+   "section": "TC-04-03",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-04-03 a miss does not end the chain",
+   "section": "TC-04-03",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-04-03 attack after an RB cancel keeps the old chain",
+   "section": "TC-04-03",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-05-01 player moves during the attack",
+   "section": "TC-05-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-05-03 RB cancels the dash",
+   "section": "TC-05-03",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-04-07 air normal after the dash",
+   "section": "TC-04-07",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-05-06 buffered press executed before the motion ends",
+   "section": "TC-05-06",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-04-08 upgraded dive hits one target",
+   "section": "TC-04-08",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "M01 TC-04-04 one target replaced by an id the other attacks never hit",
+   "section": "TC-04-04",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "M01 TC-04-04 first hit guarded with no damage, count kept",
+   "section": "TC-04-04",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "M01 TC-04-06 initial dash ends 1 tick before its hit",
+   "section": "TC-04-06",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "M01 TC-04-08 landing-area hits turned into contact hits",
+   "section": "TC-04-08",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "M01 TC-05-03 RB press and reject moved 2 ticks after the dive ended",
+   "section": "TC-05-03",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "M01 TC-05-06 execGameTime removed",
+   "section": "TC-05-06",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "M01 TC-04-02 ground hit moved before the launcher start",
+   "section": "TC-04-02",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "TC-04-03 attack after a miss (outside the marker) reuses the old chain",
+   "section": "TC-04-03",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "R1 WP06-F01 later effective hit not counted",
+   "section": "TC-04-06",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "R1 WP06-F01 guard does not end the chain",
+   "section": "TC-04-06",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "R1 TC-04-04 one attack reaches only 4 of 5",
+   "section": "TC-04-04",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "R1 TC-05-01 launcher moves after a middle press",
+   "section": "TC-05-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "R1 TC-05-01 jump executed during the motion",
+   "section": "TC-05-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "GPT R1 reopen claims a wrong guard tick",
+   "section": "TC-04-06",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "GPT R1 new chain never begins",
+   "section": "TC-04-06",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "GPT R1 jump after the end has another input id",
+   "section": "TC-05-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "R2 TC-05-01 air dash steered by Left during the motion",
+   "section": "TC-05-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "R2 TC-05-01 jump during the air normal executes",
+   "section": "TC-05-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "R2 TC-05-01 dive jump reject from another press",
+   "section": "TC-05-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "GPT-R2 TC-05-01 vertical excursion during the locked dive",
+   "section": "TC-05-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "R3 TC-05-01 air normal rises 1 cm during the motion",
+   "section": "TC-05-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "R2 TC-05-01 dive move pressed after the end",
+   "section": "TC-05-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "R2 TC-05-01 held Left never steers after the air normal",
+   "section": "TC-05-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "GPT-R3 05-01 after-end ExtraJump relabelled AirDash",
+   "section": "TC-05-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "R4 05-01 after the dive lands the press is an air ExtraJump",
+   "section": "TC-05-01",
+   "sectionPass": false,
+   "pass": true
+  }
+ ],
+ "selftest_all_pass": true
+}

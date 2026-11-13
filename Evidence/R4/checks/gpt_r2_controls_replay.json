@@ -1,0 +1,245 @@
+{
+ "06": {
+  "new_controls": [
+   {
+    "tc": "TC-05-01",
+    "section": "AirDive_Jumpmid",
+    "case": "vertical excursion during locked dive",
+    "expectedPass": false,
+    "actualPass": false
+   }
+  ],
+  "prior": [
+   {
+    "tc": "TC-04-06",
+    "case": "reopen_claims_wrong_guard_tick",
+    "expectedPass": false,
+    "actualPass": false
+   },
+   {
+    "tc": "TC-04-06",
+    "case": "no_new_chain_begin",
+    "expectedPass": false,
+    "actualPass": false
+   },
+   {
+    "tc": "TC-05-01",
+    "case": "jump_after_end_has_wrong_input_id",
+    "expectedPass": false,
+    "actualPass": false
+   }
+  ],
+  "priorAllRejected": true,
+  "newAllRejected": true
+ },
+ "07": {
+  "new_controls": [
+   {
+    "tc": "TC-06-06",
+    "section": "MagicWeak_mw",
+    "case": "missing attribution plus unrelated attack",
+    "expectedPass": false,
+    "actualPass": false
+   }
+  ],
+  "prior": [
+   {
+    "tc": "TC-06-05",
+    "case": "knock_record_starts_and_ends_same_x",
+    "expectedPass": false,
+    "actualPass": false
+   },
+   {
+    "tc": "TC-06-06",
+    "case": "wrong_initial_velocity",
+    "expectedPass": false,
+    "actualPass": false
+   },
+   {
+    "tc": "TC-06-10",
+    "case": "no_active_contact_before_first_wake",
+    "expectedPass": false,
+    "actualPass": false
+   },
+   {
+    "tc": "TC-06-10",
+    "case": "hit_after_attack_already_ended",
+    "expectedPass": false,
+    "actualPass": false
+   }
+  ],
+  "priorAllRejected": true,
+  "newAllRejected": true
+ },
+ "08": {
+  "new_controls": [
+   {
+    "tc": "TC-06-12",
+    "section": "ArmorWeakMagic",
+    "case": "blocked interval labelled SingleSource",
+    "expectedPass": false,
+    "actualPass": false
+   },
+   {
+    "tc": "WP08-F02-R1",
+    "section": "DoubleLethalHit",
+    "case": "unknown second attacker and forbidden reaction",
+    "expectedPass": false,
+    "actualPass": false
+   }
+  ],
+  "prior": [
+   {
+    "tc": "TC-06-12",
+    "case": "full_precision_record_zero_endpoint_delta",
+    "expectedPass": false,
+    "actualPass": false
+   },
+   {
+    "tc": "TC-06-12",
+    "case": "target_never_moves_on_any_tick",
+    "expectedPass": false,
+    "actualPass": false
+   },
+   {
+    "tc": "WP08-F02",
+    "case": "death_attributed_to_other_attacker",
+    "expectedPass": false,
+    "actualPass": false
+   },
+   {
+    "tc": "WP08-F02",
+    "case": "death_ui_never_begins",
+    "expectedPass": false,
+    "actualPass": false
+   }
+  ],
+  "priorAllRejected": true,
+  "newAllRejected": true
+ },
+ "10": {
+  "new_controls": [
+   {
+    "tc": "TC-INT-04",
+    "section": "BossArmorWeakMagic",
+    "case": "multiple velocity sets and conflicting source",
+    "expectedPass": false,
+    "actualPass": false
+   },
+   {
+    "tc": "TC-INT-06",
+    "section": "SentinelPhase2Pattern",
+    "case": "attack paid to an undeclared pattern",
+    "expectedPass": false,
+    "actualPass": false
+   },
+   {
+    "tc": "TC-INT-06",
+    "section": "TwoBossTransitions",
+    "case": "incorrect warden p3 trigger",
+    "expectedPass": false,
+    "actualPass": false
+   },
+   {
+    "tc": "TC-INT-04",
+    "case": "dodge names another attack instance",
+    "expectedPass": false,
+    "actualPass": false
+   },
+   {
+    "tc": "TC-INT-04",
+    "case": "player HP drops on the dodge tick",
+    "expectedPass": false,
+    "actualPass": false
+   }
+  ],
+  "prior": [
+   {
+    "tc": "TC-INT-01",
+    "case": "count_without_damage",
+    "expectedPass": false,
+    "actualPass": false
+   },
+   {
+    "tc": "TC-INT-01",
+    "case": "wrong_tenth_attack",
+    "expectedPass": false,
+    "actualPass": false
+   },
+   {
+    "tc": "TC-INT-03",
+    "case": "unrelated_reservation_id",
+    "expectedPass": false,
+    "actualPass": false
+   },
+   {
+    "tc": "TC-INT-03",
+    "case": "missing_landing_ground_attack",
+    "expectedPass": false,
+    "actualPass": false
+   },
+   {
+    "tc": "TC-INT-04",
+    "case": "zero_magic_knockback",
+    "expectedPass": false,
+    "actualPass": false
+   },
+   {
+    "tc": "TC-INT-04",
+    "case": "wrong_dodge_target",
+    "expectedPass": false,
+    "actualPass": false
+   },
+   {
+    "tc": "TC-INT-05",
+    "case": "all_parries_absent",
+    "expectedPass": false,
+    "actualPass": false
+   },
+   {
+    "tc": "TC-INT-06",
+    "case": "no_p2_to_p3_phase",
+    "expectedPass": false,
+    "actualPass": false
+   },
+   {
+    "tc": "TC-INT-06",
+    "case": "missing_presentation_end",
+    "expectedPass": false,
+    "actualPass": false
+   },
+   {
+    "tc": "TC-INT-07",
+    "case": "register_wrong_fixed_item",
+    "expectedPass": false,
+    "actualPass": false
+   },
+   {
+    "tc": "TC-INT-07",
+    "case": "non_quest_discard_count_grows",
+    "expectedPass": false,
+    "actualPass": false
+   },
+   {
+    "tc": "TC-INT-08",
+    "case": "revive_immunity_proof_missing",
+    "expectedPass": false,
+    "actualPass": false
+   },
+   {
+    "tc": "TC-INT-08",
+    "case": "feather_was_not_owned",
+    "expectedPass": false,
+    "actualPass": false
+   },
+   {
+    "tc": "TC-INT-08",
+    "case": "wakeup_skip_on_other_target",
+    "expectedPass": false,
+    "actualPass": false
+   }
+  ],
+  "priorAllRejected": true,
+  "newAllRejected": true
+ }
+}
