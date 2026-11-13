@@ -58,6 +58,8 @@ def link_rows(s, action, outcome):
         rows = []
         for p in presses(s, action, dev):
             o = outcome(s, p, used)
+            if o and o[0]["simulationTick"] < p["simulationTick"]:
+                o = None  # R2: the result must come on or after its press tick (GPT WP-09-R1 M02); ring results are logged just before their route record
             if o:
                 used.add(o[0]["eventId"])
             rows.append({"press": p["inputEventId"], "tick": p["simulationTick"], "outcomeTick": o[0]["simulationTick"] if o else None, "value": o[1] if o else None})
@@ -89,6 +91,8 @@ def quick_outcome(s, p, used):
     reqs = [e for e in of(s, "item.request") if e.get("requestId") == req["requestId"]]
     if len(reqs) != 1 or (req["reason"].startswith("Accepted") and len(uses) != 1):
         return None
+    if uses and uses[0].get("targetId") != req["targetId"]:
+        return None  # R2: request target = executed target (GPT WP-09-R1 M02)
     return req, (d, req["reason"].split(":")[0], req["targetId"], uses[0]["reason"].split(":")[0] if uses else None)
 
 
@@ -266,6 +270,9 @@ def plane_check(ev):
                  and p.get("airFrames", 0) > 0 and p.get("airMaxAbsZError") == 0
                  and en.get("samples", 0) > 0 and cls_sum == en.get("samples") and 0 < en.get("bossSamples", 0) <= en.get("samples", 0)
                  and 0 < en.get("bossMovingSamples", 0) <= en.get("bossSamples", 0)
+                 and p.get("airFrames", 0) <= p.get("frames", 0)
+                 and en.get("bossMovingSamples", 0) <= en.get("groundMovingSamples", 0) + en.get("airborneSamples", 0) + en.get("teleportSamples", 0)
+                 and 0 < en.get("propelledSamples", 0) <= en.get("samples", 0) - en.get("firstSamples", 0)
                  and en.get("groundMovingSamples", 0) > 0 and en.get("airborneSamples", 0) > 0 and all(z == 0 for z in zeros)
                  and len(jumps) > 0 and len(ai_jumps) > 0 and sum(ground_moves.values()) > 0 and sum(air_ticks.values()) > 0)
     return {"TC-01-01": r}
@@ -284,7 +291,9 @@ def dev_check(ev):
             fix = [e for e in of(s, "ring.mode", "TargetFixed") if any(within(e, p) for p in presses(s, "SpecialAttack", dev))]
             dp = presses(s, "Quick" + slot, dev)
             asg = [e for e in of(s, "quickslot.assign") if e.get("slot") == slot and any(within(e, p, 0, 0) and p.get("consumer") == "ring" for p in dp)]
+            rel = [e for e in of(s, "ring.release") if fix and asg and fix[0]["eventId"] < e["eventId"] < asg[0]["eventId"]]
             ok = len(op) == 1 and len(fix) == 1 and len(asg) == 1 and asg[0]["stateAfter"] == fix[0]["target"] and asg[0].get("stickReleasedSinceY") is True \
+                and len(rel) >= 1 \
                 and not [p for p in presses(s, "Quick" + slot) if p.get("device") != dev]
             if asg:
                 registered[slot] = asg[0]["stateAfter"]
@@ -309,7 +318,7 @@ def dev_check(ev):
         conf = [e for e in of(s, "ring.discard", "Confirmed") if any(within(e, p) and p.get("consumer") == "ring" for p in presses(s, "Jump", dev))]
         cl = [e for e in of(s, "ring.close", "Discarded") if conf and e["simulationTick"] == conf[0]["simulationTick"]]
         rows.append({"step": "Discard", "asked": [e["selectedItem"] for e in ask], "discarded": [(e["item"], e["countBefore"], e["countAfter"]) for e in conf],
-                     "pass": len(ask) == 1 and ask[0]["selectedItem"] != "" and len(conf) == 1 and conf[0]["item"] == ask[0]["target"]
+                     "pass": len(ask) == 1 and ask[0]["selectedItem"] != "" and len(conf) == 1 and conf[0]["item"] == ask[0]["target"] == ask[0]["selectedItem"]
                      and conf[0]["countAfter"] == conf[0]["countBefore"] - 1 and len(cl) == 1})
         all_req = [e["requestId"] for e in of(s, "item.request")]
         per[d] = {"steps": rows, "requestIdsUnique": len(req_ids) == len(set(req_ids)) == 4, "pass": all(r["pass"] for r in rows) and len(req_ids) == len(set(req_ids)) == 4}
@@ -331,17 +340,24 @@ def slide_check(ev):
         ends = [e for e in of(s, "motor.state", "SlideEnd")]
         slides = []
         for st in starts:
-            inp = next((e for e in of(s, "input") if e["simulationTick"] == st["simulationTick"] and e.get("edge") == "Press" and e.get("action") == "Jump"), None)
+            # R2: the slide's own inputEventId must be a Jump press received on or before the start (GPT WP-09-R1 M02)
+            inp = next((e for e in of(s, "input") if e.get("inputEventId") == st.get("inputEventId") and e.get("edge") == "Press" and e.get("action") == "Jump"
+                        and e["simulationTick"] <= st["simulationTick"]), None)
             en = next((e for e in ends if e["eventId"] > st["eventId"]), None)
             before = tk.get(st["simulationTick"] - 1, {})
+            traj = [tk.get(n, {}).get("x") for n in range(st["simulationTick"] - 1, en["simulationTick"] + 1)] if en else []
+            fc = tk.get(st["simulationTick"], {}).get("facing") or 0
+            traj_ok = bool(traj) and None not in traj and all((b - a) * fc >= 0 for a, b in zip(traj, traj[1:])) \
+                and abs(traj[-1] - en.get("position", [1e9])[0]) < 1e-4 and tk.get(en["simulationTick"], {}).get("stateAfter") == en.get("stateAfter")
             slides.append({"tick": st["simulationTick"], "facing": tk.get(st["simulationTick"], {}).get("facing"), "fromX": before.get("x"),
                            "device": inp and inp.get("device"), "heldDir": inp and inp.get("heldDir"),
-                           "end": en and en["reason"], "endX": en and en.get("position", [None])[0], "endTick": en and en["simulationTick"]})
+                           "end": en and en["reason"], "endX": en and en.get("position", [None])[0], "endTick": en and en["simulationTick"],
+                           "trajectoryTicks": len(traj), "trajectoryOk": traj_ok})
         left = [x for x in slides if x["facing"] == -1]
         enter = next((x for x in left if x["end"] == "SlideEnd:CeilingKeepsCrouch" and CEILING[0] - 0.5 <= x["endX"] <= CEILING[1] + 0.5 and x["fromX"] > CEILING[1]), None)
         exit_ = next((x for x in left if enter and x["tick"] > enter["tick"] and x["fromX"] == enter["endX"] and x["endX"] < CEILING[0] - 0.5 and x["end"] == "SlideEnd"), None)
         rows.append({"case": name, "slides": slides, "leftEnter": enter, "leftExit": exit_,
-                     "pass": enter is not None and exit_ is not None and all(x["device"] == dev and x["heldDir"] == "Down" for x in left)
+                     "pass": enter is not None and exit_ is not None and all(x["device"] == dev and x["heldDir"] == "Down" and x["trajectoryOk"] for x in left)
                      and all(tk.get(t, {}).get("facing") == -1 for t in range(enter["tick"], exit_["endTick"] + 1))})
     return {"TC-03-04": {"cases": rows, "note": "left-facing down + A into the low passage (M01 ceiling x 40..42); the right-facing pass is from WP-01-R1",
                          "pass": all(r["pass"] for r in rows)}}
@@ -416,6 +432,8 @@ def selftest(ev):
          lambda m, s: remove(m, s, lambda e: e["type"] == "motor.state" and e.get("stateAfter") == "Guard" and e["simulationTick"] == presses(s, "Guard", PAD)[0]["simulationTick"] + 1)),
         ("R1 TC-03-06 dash made on the ground", "TC-03-06", "AirDirAttack",
          lambda m, s: [e.__setitem__("grounded", True) for e in of(s, "tick") if e["simulationTick"] == of(s, "air.use")[0]["simulationTick"] - 1]),
+        # GPT WP-09-R1 review M02
+        ("GPT-R1 jump result before its own press", "TC-02-01", "MapJump", lambda m, s: first(s, "motor.jump").update(simulationTick=1)),
     ]
     return run_mutations(ev, check, cases, SCENARIOS)
 
@@ -436,6 +454,10 @@ def plane_selftest(ev):
         ("R1 a tick missing in the middle", "TC-01-01", None, lambda m, s: m.remove(next(x for x in m if x["type"] == "tick" and x["simulationTick"] == 500))),
         ("R1 enemies never move on the ground in the simulation", "TC-01-01", None,
          lambda m, s: [x.__setitem__("enemies", re.sub(r"@[-\d.]+,0\.00(?= )", "@1.00,0.00", x.get("enemies", ""))) for x in m if x["type"] == "tick"]),
+        # GPT WP-09-R1 review M02
+        ("GPT-R1 air frames exceed all frames", "TC-01-01", None, lambda m, s: pc(m, "RenderedPlayerDepth").update(airFrames=pc(m, "RenderedPlayerDepth")["frames"] + 1)),
+        ("GPT-R1 boss moving = all boss samples", "TC-01-01", None, lambda m, s: pc(m, "RenderedEnemyDepth").update(bossMovingSamples=pc(m, "RenderedEnemyDepth")["bossSamples"])),
+        ("GPT-R1 zero propelled despite walking AI", "TC-01-01", None, lambda m, s: pc(m, "RenderedEnemyDepth").update(propelledSamples=0)),
     ]
     return run_mutations(ev, plane_check, cases, [])
 
@@ -454,6 +476,11 @@ def dev_selftest(ev):
         ("keyboard B with no selection", "TC-02-01", "DevKb_Discard", lambda m, s: first(s, "ring.mode", lambda e: e["reason"].startswith("DiscardAsked")).update(selectedItem="")),
         ("pad registration without stick release", "TC-02-01", "DevPad_RegisterDown", lambda m, s: first(s, "quickslot.assign").__setitem__("stickReleasedSinceY", False)),
         ("keyboard up quickslot use removed", "TC-02-01", "DevKb_UseQuickslots", lambda m, s: remove(m, s, lambda e: e["type"] == "item.use" and e.get("targetId") == "potion")),
+        # GPT WP-09-R1 review M02
+        ("GPT-R1 assignment without a neutral event", "TC-02-01", "DevKb_RegisterUp", lambda m, s: m.remove(first(s, "ring.release"))),
+        ("GPT-R1 wrong item used under a valid request id", "TC-02-01", "DevPad_UseQuickslots", lambda m, s: first(s, "item.use").update(targetId="key")),
+        ("GPT-R1 discard asked for another selected item", "TC-02-01", "DevPad_Discard",
+         lambda m, s: first(s, "ring.mode", lambda e: "DiscardAsked" in e["reason"]).update(selectedItem="key")),
     ]
     return run_mutations(ev, dev_check, cases, DEV_SCENARIOS)
 
@@ -472,6 +499,11 @@ def slide_selftest(ev):
         ("pad left slide pressed on the keyboard", "TC-03-04", "SlideLeftPad",
          lambda m, s: [e for e in of(s, "input") if e.get("action") == "Jump" and e.get("edge") == "Press"][2].__setitem__("device", KB)),
         ("keyboard left slide never leaves the passage", "TC-03-04", "SlideLeftKb", lambda m, s: of(s, "motor.state", "SlideEnd")[-1].__setitem__("position", [40.9, 0])),
+        # GPT WP-09-R1 review M02
+        ("GPT-R1 slide claims an unrelated input id", "TC-03-04", "SlideLeftKb",
+         lambda m, s: first(s, "motor.state", lambda e: e["simulationTick"] == 325 and e.get("stateAfter") == "Slide").update(inputEventId=90000)),
+        ("GPT-R1 exit ticks never leave the ceiling", "TC-03-04", "SlideLeftKb",
+         lambda m, s: [e.update(x=40.65) for e in of(s, "tick") if 360 <= e["simulationTick"] <= 377]),
     ]
     return run_mutations(ev, slide_check, cases, SLIDE_SCENARIOS)
 
