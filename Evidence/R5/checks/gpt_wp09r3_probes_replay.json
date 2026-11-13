@@ -1,0 +1,180 @@
+{
+ "cases": [
+  {
+   "mode": "dev",
+   "tc": "TC-02-01",
+   "case": "ring .2 input .35 fully tilted by ring rule",
+   "expected": false,
+   "actual": false,
+   "ok": true,
+   "details": {
+    "ring": 0.2,
+    "input": 0.35,
+    "stick": 0.3
+   }
+  },
+  {
+   "mode": "dev",
+   "tc": "TC-02-01",
+   "case": "ring .5 input .35 neutral by ring rule",
+   "expected": true,
+   "actual": true,
+   "ok": true,
+   "details": {
+    "ring": 0.5,
+    "input": 0.35,
+    "stick": 0.4
+   }
+  },
+  {
+   "mode": "dev",
+   "tc": "TC-02-01",
+   "case": "equal radial boundary at exactly representable .5",
+   "expected": false,
+   "actual": false,
+   "ok": true,
+   "details": {
+    "ring": 0.5,
+    "input": 0.5,
+    "stick": 0.5
+   }
+  },
+  {
+   "mode": "dev",
+   "tc": "TC-02-01",
+   "case": "fixed item assigned after neutral then tilt",
+   "expected": true,
+   "actual": true,
+   "ok": true,
+   "details": {
+    "target": "potion",
+    "selected": "herb",
+    "assigned": "potion",
+    "releaseThenTilt": true
+   }
+  },
+  {
+   "mode": "dev",
+   "tc": "TC-02-01",
+   "case": "NextTick delayed via invented wait reason",
+   "expected": false,
+   "actual": false,
+   "ok": true,
+   "details": {
+    "request": 744,
+    "execTick": 746,
+    "waitedFor": "unsupported-wait",
+    "waitEvents": 0
+   }
+  },
+  {
+   "mode": "dev",
+   "tc": "TC-02-01",
+   "case": "absent post-discard snapshot treated as zero",
+   "expected": false,
+   "actual": false,
+   "ok": true,
+   "details": {
+    "id": 1337,
+    "key": "inventory",
+    "before": "potionx2,hipotionx1,herbx1,scrollx2,keyx1,breadx1,applex2,waterx1,elixirx1",
+    "after": null
+   }
+  },
+  {
+   "mode": "slide",
+   "tc": "TC-03-04",
+   "case": "deliveredTick contradicts consumed Jump start",
+   "expected": false,
+   "actual": false,
+   "ok": true,
+   "details": {
+    "id": 394,
+    "key": "deliveredTick",
+    "before": 360,
+    "after": 90000
+   }
+  },
+  {
+   "mode": "dev",
+   "tc": "TC-02-01",
+   "case": "legitimate item replenishment as next snapshot (predicate)",
+   "expected": true,
+   "actual": true,
+   "ok": true,
+   "details": {
+    "discarded": "elixir",
+    "firstLaterSnapshot": "TestSetItemCount",
+    "afterRestore": 1,
+    "scope": "discard-to-next-snapshot predicate"
+   }
+  }
+ ],
+ "cli": [
+  {
+   "mode": "dev",
+   "sidecar": "missing",
+   "snapshot": "missing",
+   "expected": false,
+   "actual": false,
+   "ok": true
+  },
+  {
+   "mode": "dev",
+   "sidecar": "different runId",
+   "snapshot": "runId mismatch",
+   "expected": false,
+   "actual": false,
+   "ok": true
+  },
+  {
+   "mode": "dev",
+   "sidecar": "snapshot edited after the manifest",
+   "snapshot": "manifest mismatch",
+   "expected": false,
+   "actual": false,
+   "ok": true
+  },
+  {
+   "mode": "dev",
+   "sidecar": "own snapshot + manifest",
+   "snapshot": "ok",
+   "expected": true,
+   "actual": true,
+   "ok": true
+  },
+  {
+   "mode": "slide",
+   "sidecar": "missing",
+   "snapshot": "missing",
+   "expected": false,
+   "actual": false,
+   "ok": true
+  },
+  {
+   "mode": "slide",
+   "sidecar": "different runId",
+   "snapshot": "runId mismatch",
+   "expected": false,
+   "actual": false,
+   "ok": true
+  },
+  {
+   "mode": "slide",
+   "sidecar": "snapshot edited after the manifest",
+   "snapshot": "manifest mismatch",
+   "expected": false,
+   "actual": false,
+   "ok": true
+  },
+  {
+   "mode": "slide",
+   "sidecar": "own snapshot + manifest",
+   "snapshot": "ok",
+   "expected": true,
+   "actual": true,
+   "ok": true
+  }
+ ],
+ "allMatch": true
+}

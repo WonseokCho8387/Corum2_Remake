@@ -1,0 +1,162 @@
+{
+ "original": {
+  "ops": {
+   "TC-OPS-01": true,
+   "TC-UNITY-03": true
+  },
+  "time": {
+   "TC-UNITY-05": true,
+   "TC-UNITY-06": true
+  }
+ },
+ "probes": [
+  {
+   "tc": "TC-OPS-01",
+   "case": "wrong cause for locked jump",
+   "run": "v1",
+   "change": [
+    266,
+    "reason",
+    "Locked:ExtraJump",
+    "ActionLock:HitStun"
+   ],
+   "expected": false,
+   "actual": false
+  },
+  {
+   "tc": "TC-OPS-01",
+   "case": "unrelated zone hit disconnected from its attack",
+   "run": "v5",
+   "change": [
+    1003,
+    "attackInstanceId",
+    6,
+    90000
+   ],
+   "expected": false,
+   "actual": false
+  },
+  {
+   "tc": "TC-OPS-01",
+   "case": "invented combo termination reason in twins",
+   "run": "v5",
+   "change": [
+    1038,
+    "reason",
+    "Timeout",
+    "EnemyGuardCancel"
+   ],
+   "expected": false,
+   "actual": false
+  },
+  {
+   "tc": "TC-UNITY-03",
+   "case": "second twin missing from one rerun tick",
+   "run": "base2",
+   "change": 1000,
+   "expected": false,
+   "actual": false
+  },
+  {
+   "tc": "TC-UNITY-06",
+   "case": "routed jump reaches game as different action",
+   "run": "s50",
+   "change": [
+    269,
+    "action",
+    "Jump",
+    "SpecialAttack"
+   ],
+   "expected": false,
+   "actual": false
+  },
+  {
+   "tc": "TC-UNITY-06",
+   "case": "delivery request time unrelated to route",
+   "run": "s60",
+   "change": [
+    275,
+    "requestTime",
+    147.49514719995204,
+    -1000
+   ],
+   "expected": false,
+   "actual": false
+  },
+  {
+   "tc": "TC-UNITY-06",
+   "case": "game delivery also claims ring ownership on route",
+   "run": "s50",
+   "change": [
+    265,
+    "consumer",
+    "game",
+    "ring"
+   ],
+   "expected": false,
+   "actual": false
+  },
+  {
+   "tc": "TC-UNITY-06",
+   "case": "delayed attack start linked to unrelated input",
+   "run": "s60",
+   "change": [
+    1116,
+    "inputEventId",
+    19,
+    90000
+   ],
+   "expected": false,
+   "actual": false
+  },
+  {
+   "tc": "TC-UNITY-06",
+   "case": "delayed attack linked to existing Jump id",
+   "run": "s60",
+   "change": [
+    1116,
+    "inputEventId",
+    19,
+    1
+   ],
+   "expected": false,
+   "actual": false
+  },
+  {
+   "tc": "TC-UNITY-05",
+   "case": "impossible negative simulation cost",
+   "run": "s50",
+   "change": [
+    252,
+    "simCostMs",
+    0.26,
+    -99
+   ],
+   "expected": false,
+   "actual": false
+  },
+  {
+   "tc": "TC-UNITY-05",
+   "case": "wrong fixed step only during slow phase",
+   "run": "s60",
+   "change": "slow fixed step -> .02",
+   "expected": false,
+   "actual": false
+  },
+  {
+   "tc": "TC-UNITY-05",
+   "case": "stop has a tick in its middle",
+   "run": "s50",
+   "change": [
+    765,
+    "ticksThisFrame",
+    0,
+    1
+   ],
+   "expected": false,
+   "actual": false
+  }
+ ],
+ "allRejected": true,
+ "originalAllPass": true
+}

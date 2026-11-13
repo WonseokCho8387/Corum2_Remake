@@ -1,0 +1,273 @@
+{
+ "log": "Evidence/WP-09-R1/runs/RUN-20261112-235043.ndjson",
+ "dataSnapshot": {
+  "sidecar": "Evidence/WP-09-R1/runs/RUN-20261112-235043.data.json",
+  "logRunId": "RUN-20261112-235043",
+  "dataRunId": "RUN-20261112-235043",
+  "manifest": "Evidence/WP-09-R1/runs/RUN-20261112-235043.manifest.yaml",
+  "manifestSha": "222a162f3327a103f6478689acfc94d056660b712bd11f04728a7a98169461dc",
+  "dataSha": "222a162f3327a103f6478689acfc94d056660b712bd11f04728a7a98169461dc",
+  "status": "ok"
+ },
+ "TC-03-04": {
+  "cases": [
+   {
+    "case": "SlideLeftKb",
+    "slides": [
+     {
+      "tick": 235,
+      "facing": 1,
+      "fromX": 37.55,
+      "device": "Corum2VirtualKeyboard",
+      "heldDir": "Down",
+      "end": "SlideEnd:CeilingKeepsCrouch",
+      "endX": 40.7900047,
+      "endTick": 252,
+      "trajectoryTicks": 19,
+      "maxStepM": 0.18000199999999467,
+      "stepLimitM": 0.18,
+      "runDt": 0.02,
+      "trajectoryOk": true
+     },
+     {
+      "tick": 270,
+      "facing": 1,
+      "fromX": 40.7900047,
+      "device": "Corum2VirtualKeyboard",
+      "heldDir": "Down",
+      "end": "SlideEnd",
+      "endX": 44.03001,
+      "endTick": 287,
+      "trajectoryTicks": 19,
+      "maxStepM": 0.1800019000000006,
+      "stepLimitM": 0.18,
+      "runDt": 0.02,
+      "trajectoryOk": true
+     },
+     {
+      "tick": 325,
+      "facing": -1,
+      "fromX": 43.89001,
+      "device": "Corum2VirtualKeyboard",
+      "heldDir": "Down",
+      "end": "SlideEnd:CeilingKeepsCrouch",
+      "endX": 40.6500053,
+      "endTick": 342,
+      "trajectoryTicks": 19,
+      "maxStepM": 0.1800019000000006,
+      "stepLimitM": 0.18,
+      "runDt": 0.02,
+      "trajectoryOk": true
+     },
+     {
+      "tick": 360,
+      "facing": -1,
+      "fromX": 40.6500053,
+      "device": "Corum2VirtualKeyboard",
+      "heldDir": "Down",
+      "end": "SlideEnd",
+      "endX": 37.41,
+      "endTick": 377,
+      "trajectoryTicks": 19,
+      "maxStepM": 0.18000199999999467,
+      "stepLimitM": 0.18,
+      "runDt": 0.02,
+      "trajectoryOk": true
+     }
+    ],
+    "leftEnter": {
+     "tick": 325,
+     "facing": -1,
+     "fromX": 43.89001,
+     "device": "Corum2VirtualKeyboard",
+     "heldDir": "Down",
+     "end": "SlideEnd:CeilingKeepsCrouch",
+     "endX": 40.6500053,
+     "endTick": 342,
+     "trajectoryTicks": 19,
+     "maxStepM": 0.1800019000000006,
+     "stepLimitM": 0.18,
+     "runDt": 0.02,
+     "trajectoryOk": true
+    },
+    "leftExit": {
+     "tick": 360,
+     "facing": -1,
+     "fromX": 40.6500053,
+     "device": "Corum2VirtualKeyboard",
+     "heldDir": "Down",
+     "end": "SlideEnd",
+     "endX": 37.41,
+     "endTick": 377,
+     "trajectoryTicks": 19,
+     "maxStepM": 0.18000199999999467,
+     "stepLimitM": 0.18,
+     "runDt": 0.02,
+     "trajectoryOk": true
+    },
+    "pass": true
+   },
+   {
+    "case": "SlideLeftPad",
+    "slides": [
+     {
+      "tick": 445,
+      "facing": 1,
+      "fromX": 37.55,
+      "device": "Corum2VirtualGamepad",
+      "heldDir": "Down",
+      "end": "SlideEnd:CeilingKeepsCrouch",
+      "endX": 40.7900047,
+      "endTick": 462,
+      "trajectoryTicks": 19,
+      "maxStepM": 0.18000199999999467,
+      "stepLimitM": 0.18,
+      "runDt": 0.02,
+      "trajectoryOk": true
+     },
+     {
+      "tick": 480,
+      "facing": 1,
+      "fromX": 40.7900047,
+      "device": "Corum2VirtualGamepad",
+      "heldDir": "Down",
+      "end": "SlideEnd",
+      "endX": 44.03001,
+      "endTick": 497,
+      "trajectoryTicks": 19,
+      "maxStepM": 0.1800019000000006,
+      "stepLimitM": 0.18,
+      "runDt": 0.02,
+      "trajectoryOk": true
+     },
+     {
+      "tick": 535,
+      "facing": -1,
+      "fromX": 43.89001,
+      "device": "Corum2VirtualGamepad",
+      "heldDir": "Down",
+      "end": "SlideEnd:CeilingKeepsCrouch",
+      "endX": 40.6500053,
+      "endTick": 552,
+      "trajectoryTicks": 19,
+      "maxStepM": 0.1800019000000006,
+      "stepLimitM": 0.18,
+      "runDt": 0.02,
+      "trajectoryOk": true
+     },
+     {
+      "tick": 570,
+      "facing": -1,
+      "fromX": 40.6500053,
+      "device": "Corum2VirtualGamepad",
+      "heldDir": "Down",
+      "end": "SlideEnd",
+      "endX": 37.41,
+      "endTick": 587,
+      "trajectoryTicks": 19,
+      "maxStepM": 0.18000199999999467,
+      "stepLimitM": 0.18,
+      "runDt": 0.02,
+      "trajectoryOk": true
+     }
+    ],
+    "leftEnter": {
+     "tick": 535,
+     "facing": -1,
+     "fromX": 43.89001,
+     "device": "Corum2VirtualGamepad",
+     "heldDir": "Down",
+     "end": "SlideEnd:CeilingKeepsCrouch",
+     "endX": 40.6500053,
+     "endTick": 552,
+     "trajectoryTicks": 19,
+     "maxStepM": 0.1800019000000006,
+     "stepLimitM": 0.18,
+     "runDt": 0.02,
+     "trajectoryOk": true
+    },
+    "leftExit": {
+     "tick": 570,
+     "facing": -1,
+     "fromX": 40.6500053,
+     "device": "Corum2VirtualGamepad",
+     "heldDir": "Down",
+     "end": "SlideEnd",
+     "endX": 37.41,
+     "endTick": 587,
+     "trajectoryTicks": 19,
+     "maxStepM": 0.18000199999999467,
+     "stepLimitM": 0.18,
+     "runDt": 0.02,
+     "trajectoryOk": true
+    },
+    "pass": true
+   }
+  ],
+  "note": "left-facing down + A into the low passage (M01 ceiling x 40..42); the right-facing pass is from WP-01-R1",
+  "pass": true
+ },
+ "selftest": [
+  {
+   "case": "original",
+   "pass": {
+    "TC-03-04": true
+   }
+  },
+  {
+   "case": "keyboard left slide faces right",
+   "section": "TC-03-04",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "pad left slide ends outside the ceiling",
+   "section": "TC-03-04",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "pad left slide pressed on the keyboard",
+   "section": "TC-03-04",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "keyboard left slide never leaves the passage",
+   "section": "TC-03-04",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "GPT-R1 slide claims an unrelated input id",
+   "section": "TC-03-04",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "GPT-R1 exit ticks never leave the ceiling",
+   "section": "TC-03-04",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "GPT-R2 exit slide reuses the entry press id",
+   "section": "TC-03-04",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "GPT-R2 exit slide teleports on its last tick",
+   "section": "TC-03-04",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "GPT-R3 exit Jump delivered on another tick",
+   "section": "TC-03-04",
+   "sectionPass": false,
+   "pass": true
+  }
+ ],
+ "selftest_all_pass": true
+}

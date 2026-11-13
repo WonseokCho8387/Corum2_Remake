@@ -1,0 +1,819 @@
+{
+ "logs": [
+  "Evidence/WP-11B/runs/RUN-20261113-120636.ndjson",
+  "Evidence/WP-11B/runs/RUN-20261113-120937.ndjson"
+ ],
+ "TC-UNITY-05": {
+  "status": "OBSERVED",
+  "policyVerdict": "BLOCKED_SPEC (U-06, CF-04/05, EXP-SIM-01)",
+  "rates": {
+   "50": {
+    "C_Normal": {
+     "frames": 100,
+     "ticksPerFrame": {
+      "1": 100
+     },
+     "timeScale": {
+      "1": 100
+     },
+     "simTicks": 99,
+     "realSeconds": 3.791,
+     "simCostMsPerTick": {
+      "mean": 0.5282,
+      "max": 7.7992
+     },
+     "fixedDeltaTime": 0.0199999921,
+     "inputs": [
+      {
+       "action": "Jump",
+       "edge": "Press",
+       "requestTime": 148.3002,
+       "deliveredTick": 230,
+       "latencyRealS": 0.1098
+      },
+      {
+       "action": "Jump",
+       "edge": "Release",
+       "requestTime": 148.3023,
+       "deliveredTick": 230,
+       "latencyRealS": 0.1077
+      },
+      {
+       "action": "Attack",
+       "edge": "Press",
+       "requestTime": 149.7558,
+       "deliveredTick": 275,
+       "latencyRealS": 0.0503
+      },
+      {
+       "action": "Attack",
+       "edge": "Release",
+       "requestTime": 149.7558,
+       "deliveredTick": 275,
+       "latencyRealS": 0.0503
+      },
+      {
+       "action": "Guard",
+       "edge": "Press",
+       "requestTime": 150.7368,
+       "deliveredTick": 300,
+       "latencyRealS": 0.0603
+      },
+      {
+       "action": "Guard",
+       "edge": "Release",
+       "requestTime": 151.2001,
+       "deliveredTick": 315,
+       "latencyRealS": 0.0697
+      }
+     ],
+     "attacks": [
+      {
+       "attackId": "ground1",
+       "ticks": 15,
+       "gameSeconds": 0.26
+      }
+     ],
+     "pauses": []
+    },
+    "C_Slow": {
+     "frames": 160,
+     "ticksPerFrame": {
+      "1": 75,
+      "0": 85
+     },
+     "timeScale": {
+      "1": 53,
+      "0.2": 107
+     },
+     "simTicks": 74,
+     "realSeconds": 4.813,
+     "simCostMsPerTick": {
+      "mean": 0.2169,
+      "max": 0.4403
+     },
+     "fixedDeltaTime": 0.0199999921,
+     "inputs": [
+      {
+       "action": "Attack",
+       "edge": "Press",
+       "requestTime": 151.6966,
+       "deliveredTick": 330,
+       "latencyRealS": 0.0503
+      },
+      {
+       "action": "Attack",
+       "edge": "Release",
+       "requestTime": 151.6966,
+       "deliveredTick": 330,
+       "latencyRealS": 0.0503
+      }
+     ],
+     "attacks": [
+      {
+       "attackId": "ground1",
+       "ticks": 15,
+       "gameSeconds": 0.26
+      }
+     ],
+     "pauses": []
+    },
+    "C_Pause": {
+     "frames": 100,
+     "ticksPerFrame": {
+      "1": 75,
+      "0": 25
+     },
+     "timeScale": {
+      "1": 75,
+      "0": 25
+     },
+     "simTicks": 74,
+     "realSeconds": 3.318,
+     "simCostMsPerTick": {
+      "mean": 0.2545,
+      "max": 0.8442
+     },
+     "fixedDeltaTime": 0.0199999921,
+     "inputs": [
+      {
+       "action": "Attack",
+       "edge": "Press",
+       "requestTime": 156.5492,
+       "deliveredTick": 405,
+       "latencyRealS": 0.0531
+      },
+      {
+       "action": "Attack",
+       "edge": "Release",
+       "requestTime": 156.5492,
+       "deliveredTick": 405,
+       "latencyRealS": 0.0531
+      },
+      {
+       "action": "Jump",
+       "edge": "Press",
+       "requestTime": 156.603,
+       "deliveredTick": 406,
+       "latencyRealS": 0.7849
+      },
+      {
+       "action": "Jump",
+       "edge": "Release",
+       "requestTime": 156.603,
+       "deliveredTick": 406,
+       "latencyRealS": 0.7849
+      }
+     ],
+     "attacks": [
+      {
+       "attackId": "ground1",
+       "ticks": 15,
+       "gameSeconds": 0.26
+      }
+     ],
+     "pauses": [
+      [
+       "PauseStart(test, U-06)",
+       405
+      ],
+      [
+       "PauseEnd(test, U-06)",
+       405
+      ]
+     ]
+    },
+    "C_Delay": {
+     "frames": 71,
+     "ticksPerFrame": {
+      "1": 70,
+      "5": 1
+     },
+     "timeScale": {
+      "1": 71
+     },
+     "simTicks": 74,
+     "realSeconds": 2.54,
+     "simCostMsPerTick": {
+      "mean": 0.3276,
+      "max": 2.7211
+     },
+     "fixedDeltaTime": 0.0199999921,
+     "inputs": [
+      {
+       "action": "MoveRight",
+       "edge": "Press",
+       "requestTime": 159.9377,
+       "deliveredTick": 480,
+       "latencyRealS": 0.0692
+      },
+      {
+       "action": "Attack",
+       "edge": "Press",
+       "requestTime": 160.2824,
+       "deliveredTick": 494,
+       "latencyRealS": 0.0709
+      },
+      {
+       "action": "Attack",
+       "edge": "Release",
+       "requestTime": 160.2825,
+       "deliveredTick": 494,
+       "latencyRealS": 0.0707
+      },
+      {
+       "action": "MoveRight",
+       "edge": "Release",
+       "requestTime": 160.8202,
+       "deliveredTick": 510,
+       "latencyRealS": 0.0673
+      }
+     ],
+     "attacks": [
+      {
+       "attackId": "ground1",
+       "ticks": 15,
+       "gameSeconds": 0.26
+      }
+     ],
+     "pauses": []
+    },
+    "C_RingTx": {
+     "frames": 171,
+     "ticksPerFrame": {
+      "1": 75,
+      "0": 96
+     },
+     "timeScale": {
+      "1": 51,
+      "0.2": 120
+     },
+     "simTicks": 74,
+     "realSeconds": 5.514,
+     "simCostMsPerTick": {
+      "mean": 0.2507,
+      "max": 0.5024
+     },
+     "fixedDeltaTime": 0.0199999921,
+     "inputs": [
+      {
+       "action": "Attack",
+       "edge": "Release",
+       "requestTime": 162.5152,
+       "deliveredTick": 555,
+       "latencyRealS": 0.1605
+      },
+      {
+       "action": "Jump",
+       "edge": "Press",
+       "requestTime": 166.4296,
+       "deliveredTick": 579,
+       "latencyRealS": 0.1015
+      },
+      {
+       "action": "Jump",
+       "edge": "Release",
+       "requestTime": 166.5317,
+       "deliveredTick": 581,
+       "latencyRealS": 0.0757
+      }
+     ],
+     "attacks": [],
+     "pauses": []
+    }
+   },
+   "60": {
+    "C_Normal": {
+     "frames": 119,
+     "ticksPerFrame": {
+      "1": 119
+     },
+     "timeScale": {
+      "1": 119
+     },
+     "simTicks": 118,
+     "realSeconds": 3.965,
+     "simCostMsPerTick": {
+      "mean": 0.4548,
+      "max": 8.6589
+     },
+     "fixedDeltaTime": 0.0166666955,
+     "inputs": [
+      {
+       "action": "Jump",
+       "edge": "Press",
+       "requestTime": 147.4951,
+       "deliveredTick": 232,
+       "latencyRealS": 0.1169
+      },
+      {
+       "action": "Jump",
+       "edge": "Release",
+       "requestTime": 147.4967,
+       "deliveredTick": 232,
+       "latencyRealS": 0.1154
+      },
+      {
+       "action": "Attack",
+       "edge": "Press",
+       "requestTime": 149.1568,
+       "deliveredTick": 286,
+       "latencyRealS": 0.0462
+      },
+      {
+       "action": "Attack",
+       "edge": "Release",
+       "requestTime": 149.1568,
+       "deliveredTick": 286,
+       "latencyRealS": 0.0462
+      },
+      {
+       "action": "Guard",
+       "edge": "Press",
+       "requestTime": 150.3998,
+       "deliveredTick": 316,
+       "latencyRealS": 0.0607
+      },
+      {
+       "action": "Guard",
+       "edge": "Release",
+       "requestTime": 150.892,
+       "deliveredTick": 334,
+       "latencyRealS": 0.0477
+      }
+     ],
+     "attacks": [
+      {
+       "attackId": "ground1",
+       "ticks": 18,
+       "gameSeconds": 0.2667
+      }
+     ],
+     "pauses": []
+    },
+    "C_Slow": {
+     "frames": 196,
+     "ticksPerFrame": {
+      "1": 90,
+      "0": 106
+     },
+     "timeScale": {
+      "1": 64,
+      "0.2": 132
+     },
+     "simTicks": 89,
+     "realSeconds": 5.774,
+     "simCostMsPerTick": {
+      "mean": 0.2176,
+      "max": 0.5154
+     },
+     "fixedDeltaTime": 0.0166666955,
+     "inputs": [
+      {
+       "action": "Attack",
+       "edge": "Press",
+       "requestTime": 151.3227,
+       "deliveredTick": 352,
+       "latencyRealS": 0.0508
+      },
+      {
+       "action": "Attack",
+       "edge": "Release",
+       "requestTime": 151.3227,
+       "deliveredTick": 352,
+       "latencyRealS": 0.0508
+      }
+     ],
+     "attacks": [
+      {
+       "attackId": "ground1",
+       "ticks": 18,
+       "gameSeconds": 0.2667
+      }
+     ],
+     "pauses": []
+    },
+    "C_Pause": {
+     "frames": 115,
+     "ticksPerFrame": {
+      "1": 90,
+      "0": 25
+     },
+     "timeScale": {
+      "1": 90,
+      "0": 25
+     },
+     "simTicks": 89,
+     "realSeconds": 3.415,
+     "simCostMsPerTick": {
+      "mean": 0.2353,
+      "max": 1.0938
+     },
+     "fixedDeltaTime": 0.0166666955,
+     "inputs": [
+      {
+       "action": "Attack",
+       "edge": "Press",
+       "requestTime": 157.2098,
+       "deliveredTick": 441,
+       "latencyRealS": 0.0543
+      },
+      {
+       "action": "Attack",
+       "edge": "Release",
+       "requestTime": 157.2098,
+       "deliveredTick": 441,
+       "latencyRealS": 0.0543
+      },
+      {
+       "action": "Jump",
+       "edge": "Press",
+       "requestTime": 157.2649,
+       "deliveredTick": 442,
+       "latencyRealS": 0.7896
+      },
+      {
+       "action": "Jump",
+       "edge": "Release",
+       "requestTime": 157.2649,
+       "deliveredTick": 442,
+       "latencyRealS": 0.7896
+      }
+     ],
+     "attacks": [
+      {
+       "attackId": "ground1",
+       "ticks": 18,
+       "gameSeconds": 0.2667
+      }
+     ],
+     "pauses": [
+      [
+       "PauseStart(test, U-06)",
+       441
+      ],
+      [
+       "PauseEnd(test, U-06)",
+       441
+      ]
+     ]
+    },
+    "C_Delay": {
+     "frames": 85,
+     "ticksPerFrame": {
+      "1": 84,
+      "6": 1
+     },
+     "timeScale": {
+      "1": 85
+     },
+     "simTicks": 89,
+     "realSeconds": 2.63,
+     "simCostMsPerTick": {
+      "mean": 0.2547,
+      "max": 2.1888
+     },
+     "fixedDeltaTime": 0.0166666955,
+     "inputs": [
+      {
+       "action": "MoveRight",
+       "edge": "Press",
+       "requestTime": 160.6827,
+       "deliveredTick": 531,
+       "latencyRealS": 0.0824
+      },
+      {
+       "action": "Attack",
+       "edge": "Press",
+       "requestTime": 161.1041,
+       "deliveredTick": 548,
+       "latencyRealS": 0.0487
+      },
+      {
+       "action": "Attack",
+       "edge": "Release",
+       "requestTime": 161.1041,
+       "deliveredTick": 548,
+       "latencyRealS": 0.0487
+      },
+      {
+       "action": "MoveRight",
+       "edge": "Release",
+       "requestTime": 161.6032,
+       "deliveredTick": 567,
+       "latencyRealS": 0.0577
+      }
+     ],
+     "attacks": [
+      {
+       "attackId": "ground1",
+       "ticks": 18,
+       "gameSeconds": 0.2667
+      }
+     ],
+     "pauses": []
+    },
+    "C_RingTx": {
+     "frames": 206,
+     "ticksPerFrame": {
+      "1": 90,
+      "0": 116
+     },
+     "timeScale": {
+      "1": 61,
+      "0.2": 145
+     },
+     "simTicks": 89,
+     "realSeconds": 5.95,
+     "simCostMsPerTick": {
+      "mean": 0.2242,
+      "max": 0.6902
+     },
+     "fixedDeltaTime": 0.0166666955,
+     "inputs": [
+      {
+       "action": "Attack",
+       "edge": "Release",
+       "requestTime": 163.2243,
+       "deliveredTick": 621,
+       "latencyRealS": 0.0511
+      },
+      {
+       "action": "Jump",
+       "edge": "Press",
+       "requestTime": 167.3658,
+       "deliveredTick": 650,
+       "latencyRealS": 0.0482
+      },
+      {
+       "action": "Jump",
+       "edge": "Release",
+       "requestTime": 167.4149,
+       "deliveredTick": 652,
+       "latencyRealS": 0.0456
+      }
+     ],
+     "attacks": [],
+     "pauses": []
+    }
+   }
+  },
+  "frameConsistency": {
+   "50": {
+    "frames": 602,
+    "bad": [],
+    "pass": true
+   },
+   "60": {
+    "frames": 721,
+    "bad": [],
+    "pass": true
+   }
+  },
+  "observationComplete": true,
+  "note": "observation only: frames, ticks per frame, time scale, input request/delivery, attack length, simulation cost per tick",
+  "pass": true
+ },
+ "TC-UNITY-06": {
+  "transport": {
+   "50": {
+    "routedEdges": 28,
+    "uniqueRouteIds": true,
+    "gameEdges": 19,
+    "gameDeliveredOnce": true,
+    "missing": [],
+    "duplicated": [],
+    "deliveredBeforeRouting": [],
+    "ownerAndTime": true,
+    "idGaps": [],
+    "routeDeliveryMismatch": [],
+    "pass": true
+   },
+   "60": {
+    "routedEdges": 28,
+    "uniqueRouteIds": true,
+    "gameEdges": 19,
+    "gameDeliveredOnce": true,
+    "missing": [],
+    "duplicated": [],
+    "deliveredBeforeRouting": [],
+    "ownerAndTime": true,
+    "idGaps": [],
+    "routeDeliveryMismatch": [],
+    "pass": true
+   }
+  },
+  "cases": {
+   "50": {
+    "pressReleaseSameFrame": [
+     [
+      "Press",
+      494
+     ],
+     [
+      "Release",
+      494
+     ]
+    ],
+    "multiTickFrame": 5,
+    "attackStartedOnce": true,
+    "ringTransitionRoutes": [
+     [
+      "RingToggle",
+      "Press",
+      "ring"
+     ],
+     [
+      "Attack",
+      "Press",
+      "ring"
+     ],
+     [
+      "RingToggle",
+      "Release",
+      "ring"
+     ],
+     [
+      "Attack",
+      "Release",
+      "game"
+     ],
+     [
+      "RingToggle",
+      "Press",
+      "ring"
+     ],
+     [
+      "Jump",
+      "Press",
+      "game"
+     ],
+     [
+      "RingToggle",
+      "Release",
+      "ring"
+     ],
+     [
+      "Jump",
+      "Release",
+      "game"
+     ]
+    ],
+    "pass": true
+   },
+   "60": {
+    "pressReleaseSameFrame": [
+     [
+      "Press",
+      548
+     ],
+     [
+      "Release",
+      548
+     ]
+    ],
+    "multiTickFrame": 6,
+    "attackStartedOnce": true,
+    "ringTransitionRoutes": [
+     [
+      "RingToggle",
+      "Press",
+      "ring"
+     ],
+     [
+      "Attack",
+      "Press",
+      "ring"
+     ],
+     [
+      "RingToggle",
+      "Release",
+      "ring"
+     ],
+     [
+      "Attack",
+      "Release",
+      "game"
+     ],
+     [
+      "RingToggle",
+      "Press",
+      "ring"
+     ],
+     [
+      "Jump",
+      "Press",
+      "game"
+     ],
+     [
+      "RingToggle",
+      "Release",
+      "ring"
+     ],
+     [
+      "Jump",
+      "Release",
+      "game"
+     ]
+    ],
+    "pass": true
+   }
+  },
+  "note": "an attack pressed on the frame the ring opens goes to the ring (its release to the game): the contention order is CF-01/07/08",
+  "pass": true
+ },
+ "selftest": [
+  {
+   "case": "original",
+   "pass": {
+    "TC-UNITY-05": true,
+    "TC-UNITY-06": true
+   }
+  },
+  {
+   "case": "game press delivered twice",
+   "section": "TC-UNITY-06",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "game release lost",
+   "section": "TC-UNITY-06",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "route without owner",
+   "section": "TC-UNITY-06",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "attack pressed on the long frame runs twice",
+   "section": "TC-UNITY-06",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "id allocated but never seen",
+   "section": "TC-UNITY-06",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "no stop frames observed at 60 Hz",
+   "section": "TC-UNITY-05",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "60 Hz run at 50 Hz step",
+   "section": "TC-UNITY-05",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "GPT routed jump delivered as another action",
+   "section": "TC-UNITY-06",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "GPT delivery request time unrelated to its route",
+   "section": "TC-UNITY-06",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "GPT delivered press routed to the ring",
+   "section": "TC-UNITY-06",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "GPT delayed attack linked to an existing Jump id",
+   "section": "TC-UNITY-06",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "GPT negative simulation cost",
+   "section": "TC-UNITY-05",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "GPT 50 Hz step only in the 60 Hz slow phase",
+   "section": "TC-UNITY-05",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "GPT a tick inside the pause",
+   "section": "TC-UNITY-05",
+   "sectionPass": false,
+   "pass": true
+  }
+ ],
+ "selftest_all_pass": true
+}
