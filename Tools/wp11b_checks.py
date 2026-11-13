@@ -23,7 +23,12 @@ VARIANTS = {  # name -> (asset file, field, baseline value, variant value, zones
     "v5": ("Assets/Corum2/Data/WP11/CombatConfig_Ops.asset", "comboWindow", "0.5", "0.3", {"O5Combo"}),
 }
 SKIP = {"runId", "realTime", "eventId", "gameTime", "dataVersion", "testCaseId", "requestTime", "latency", "unscaledTime", "startGameTime",
-        "effectGameTime", "requestGameTime", "execGameTime", "cooldownUntil", "file", "enemies"}
+        "effectGameTime", "requestGameTime", "execGameTime", "cooldownUntil", "file", "enemies", "pressTime"}
+# run-wide counters (chain / attack / projectile ids): they number events across the whole run, so a zone changed earlier shifts them
+COUNTERS = {"chainId", "attackInstanceId", "playerAttackInstanceId", "enemyAttackInstanceId", "hitEventId", "projectileId", "openCount", "transitionSerial",
+            "firstAttackInstanceId", "lastAttackInstanceId"}
+# records that echo the configured value itself (not behaviour): compared on their own, they must show the variant's value
+ECHO = {"upgrade", "window"}
 
 
 def load(path):
@@ -52,7 +57,7 @@ def norm(v):
     return v
 
 
-def signature(s):
+def signature(s, drop_combo=False):
     """Every simulation record of a zone, ticks relative to the zone marker, without wall-clock fields and input ids
     (ids are allocated per run). Player ticks keep position and state; enemy positions come with their own records."""
     if not s:
@@ -60,11 +65,14 @@ def signature(s):
     t0 = s[0]["simulationTick"]
     out = []
     for e in s:
-        if e["type"] in ("frame.sample",):
+        if e["type"] in ("frame.sample",) or (drop_combo and e["type"].startswith("combo.")):
             continue
-        d = {k: norm(v) for k, v in e.items() if k not in SKIP and "inputEventId" not in k and k != "sampleGroup" and k != "simulationTick"}
+        d = {k: norm(v) for k, v in e.items() if k not in SKIP and k not in COUNTERS and k not in ECHO and "inputEventId" not in k and k != "sampleGroup" and k != "simulationTick"}
+        for k in list(d):  # absolute ticks become ticks from the zone marker
+            if k.endswith("Tick") and isinstance(d[k], (int, float)):
+                d[k] = d[k] - t0
         if e["type"] == "tick":
-            d = {k: d.get(k) for k in ("type", "x", "y", "vx", "vy", "stateAfter", "grounded", "air", "chainId", "combo")}
+            d = {k: d.get(k) for k in ("type", "x", "y", "vx", "vy", "stateAfter", "grounded", "air") + (() if drop_combo else ("combo",))}
         out.append((e["simulationTick"] - t0, json.dumps(d, sort_keys=True, ensure_ascii=False)))
     return out
 
@@ -76,6 +84,13 @@ def first_diff(a, b):
     if len(a) != len(b):
         return {"index": min(len(a), len(b)), "base": a[len(b)] if len(a) > len(b) else None, "variant": b[len(a)] if len(b) > len(a) else None}
     return None
+
+
+def echoes(ev):
+    """Configured values the run itself reports: dash / dive upgrade flags on attack starts, the combo window when it opens."""
+    up = sorted({e.get("upgrade") for e in ev if e["type"] == "attack.start" and e.get("upgrade")})
+    win = sorted({e.get("window") for e in ev if e["type"] == "combo.window" and e.get("window") is not None})
+    return {"upgrade": up, "comboWindow": win}
 
 
 def patch_of(path):
@@ -143,6 +158,11 @@ def check_ops(paths, logs):
     rows = []
     for v, (asset, field, b0, b1, expect) in VARIANTS.items():
         changed = {z for z in ZONES if sig["base"][z] != sig[v][z]}
+        # the combo window governs every chain: in the other zones only the chain records (combo.*) and the tick's combo count may move;
+        # positions, states, attacks and hits must be identical there
+        chain_only = sorted(z for z in changed - expect if field == "comboWindow"
+                            and signature(seg["base"].get(z, []), True) == signature(seg[v].get(z, []), True))
+        changed -= set(chain_only)
         p = pb[v]
         one = p is not None and p["files"] == [asset] and len(p["minus"]) == 1 and len(p["plus"]) == 1 \
             and p["minus"][0] == f"{field}: {b0}" and p["plus"][0] == f"{field}: {b1}"
@@ -160,11 +180,19 @@ def check_ops(paths, logs):
             a0, a1 = bb["O5Combo"]["attacks"], bv["O5Combo"]["attacks"]
             spec = len(a0) == 2 == len(a1) and a0[1][0] == "ground2" and a0[1][1] == a0[0][1] and a1[1][0] == "ground1" and a1[1][1] != a1[0][1] \
                 and bb["O5Combo"]["gapTicks"] == bv["O5Combo"]["gapTicks"] and 15 < bb["O5Combo"]["gapTicks"] < 25
-        rows.append({"variant": v, "asset": asset, "field": field, "value": [b0, b1], "patchOneLine": one, "patch": p,
-                     "zonesChanged": sorted(changed), "zonesExpected": sorted(expect), "behaviour": {z: bv[z] for z in sorted(expect)},
+        eb, evv = echoes(runs["base"]), echoes(runs[v])
+        if field == "comboWindow":
+            echo_ok = eb["comboWindow"] == [float(b0)] and evv["comboWindow"] == [float(b1)] and eb["upgrade"] == evv["upgrade"]
+        elif field in ("dashPierce", "diveArea"):
+            key = "pierce" if field == "dashPierce" else "area"
+            echo_ok = any(f"{key}=False" in u for u in eb["upgrade"]) and any(f"{key}=True" in u for u in evv["upgrade"]) and eb["comboWindow"] == evv["comboWindow"]
+        else:  # air unlocks: logged by the refusal itself (Locked:...); a refused ability simply logs no upgrade flag of its own
+            echo_ok = set(evv["upgrade"]) <= set(eb["upgrade"]) and eb["comboWindow"] == evv["comboWindow"]
+        rows.append({"variant": v, "asset": asset, "field": field, "value": [b0, b1], "patchOneLine": one, "patch": p, "configEcho": {"base": eb, "variant": evv, "ok": echo_ok},
+                     "zonesChanged": sorted(changed), "zonesExpected": sorted(expect), "zonesChangedOnlyInChainRecords": chain_only, "behaviour": {z: bv[z] for z in sorted(expect)},
                      "baseBehaviour": {z: bb[z] for z in sorted(expect)},
                      "firstUnexpectedDiff": {z: first_diff(sig["base"][z], sig[v][z]) for z in sorted(changed - expect)},
-                     "pass": one and changed == expect and spec})
+                     "pass": one and changed == expect and spec and echo_ok})
     base_clean = pb["base"] is None and pb["base2"] is None
     out["TC-OPS-01"] = {"variants": rows, "baselineClean": base_clean, "baselineBehaviour": beh["base"],
                         "note": "each variant changes one Inspector value of the WP11_Ops fixtures; every other zone is identical to the baseline, record by record",
@@ -300,6 +328,8 @@ def selftest(mode, paths, logs):
         mutate("second twin damaged by the hit on the first", "TC-UNITY-03", 0,
                lambda m, s: [e.update(enemies=re.sub(r"(tb:\w+@[-\d.]+,[-\d.]+ hp)[\d.]+", lambda x: x.group(1) + "40", e["enemies"])) for e in of(s["O6Twins"], "tick")[-5:]])
         mutate("dash variant changes the jump zone too", "TC-OPS-01", 3, lambda m, s: first(s["O1Jump"], "tick").update(y=0.5))
+        mutate("combo variant also moves a hit in another zone", "TC-OPS-01", 6, lambda m, s: first(s["O6Twins"], "hit").update(targetId="tb"))
+        mutate("combo variant run with the base window", "TC-OPS-01", 6, lambda m, s: [e.update(window=0.5) for e in m if e["type"] == "combo.window"])
     else:
         mutate("game press delivered twice", "TC-UNITY-06", 0, lambda m, s: m.insert(m.index(first(s["C_Normal"], "input", lambda e: e.get("edge") == "Press")) + 1,
                                                                                     dict(first(s["C_Normal"], "input", lambda e: e.get("edge") == "Press"), simulationTick=first(s["C_Normal"], "input", lambda e: e.get("edge") == "Press")["simulationTick"] + 1)))
