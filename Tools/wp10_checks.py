@@ -297,7 +297,7 @@ def check_main(ev):
         # the same boss prepares that same pattern inside the phase stay (every boss attack has a startup; a projectile alone is not enough)
         return any(t <= e["simulationTick"] < end and e.get("actorId") == b and e["type"] == "enemy.state" and e.get("stateAfter") == "AttackStartup"
                    and e.get("reason") == "Pattern:" + str(pat) for e in ev)
-    def holds(tr, b, fr, t, hp, maxhp):
+    def holds(tr, b, fr, t, hp, maxhp, eid=None):
         k = tr.get("kind")
         if k == 0:
             return hp is not None and maxhp is not None and hp <= tr["value"] * maxhp + 1e-4
@@ -307,9 +307,13 @@ def check_main(ev):
                     and t0 is not None and t0 <= e["simulationTick"] <= t]
             return len(used) >= tr["count"]
         if k == 2:
-            t0 = entered(b, fr, t)
-            return any(e.get("actorId") == b and e.get("event") == tr["eventName"] and t0 is not None and t0 <= e["simulationTick"] <= t
-                       and str(e.get("reason", "")).startswith("Event:" + tr["eventName"] + "(") for e in of(ev, "boss.event"))
+            # R6 (GPT R4 review §3): Core keeps raised boss events in a per-boss held set across phases and removes a name only when an
+            # event transition uses it. So the event must be raised by this boss before this transition (event order) and after the last
+            # transition of this boss that consumed the same name.
+            name = tr["eventName"]
+            last_use = max((e["eventId"] for e in phases_of.get(b, []) if e.get("condition") == "Event:" + name and e["eventId"] < eid), default=-1)
+            return any(e.get("actorId") == b and e.get("event") == name and last_use < e["eventId"] < eid
+                       and str(e.get("reason", "")).startswith("Event:" + name + "(") for e in of(ev, "boss.event"))
         return False
     def cond_text(tr):
         k = tr.get("kind")
@@ -320,7 +324,7 @@ def check_main(ev):
         maxhp = (defs.get(spawn.get(b)) or {}).get("maxHp")
         if not pd or not isinstance(rec.get("hp"), (int, float)):
             return False
-        first_true = next((tr for tr in pd.get("transitions", []) if holds(tr, b, fr, t, rec["hp"], maxhp)), None)
+        first_true = next((tr for tr in pd.get("transitions", []) if holds(tr, b, fr, t, rec["hp"], maxhp, rec["eventId"])), None)
         if not first_true or first_true.get("targetPhase") != to:
             return False
         c, want = str(rec.get("condition")), cond_text(first_true)
@@ -549,6 +553,12 @@ def selftest(main, i7, i8):
     mutate("GPT-R3 INT-06 p2 shot2 startup moved past the p3 transition", "TC-INT-06", 0, p2_after_p3)
     mutate("R4 INT-06 warden p2 pattern table differs from the run data", "TC-INT-06", 0,
            lambda m: first(m, "TwoBossTransitions", "boss.phase", lambda e: e["stateAfter"] == "p2").update(patterns="shot2"))
+
+    def shift_after_transition(m):  # GPT R4 review §3: the event moved behind the transition on the same tick
+        e = next(x for x in m if x["type"] == "boss.event" and x.get("event") == "shift")
+        tr = next(x for x in m if x["type"] == "boss.phase" and x.get("actorId") == "sn" and x["stateAfter"] == "s2")
+        e["eventId"], tr["eventId"] = tr["eventId"], e["eventId"]
+    mutate("GPT-R4 INT-06 shift raised after the s1->s2 transition on the same tick", "TC-INT-06", 0, shift_after_transition)
 
     # Positive control (must PASS), GPT R3 review boundary: HP exactly at the threshold (120/200 = 0.6) satisfies HpBelow:0.6 as in Core
     m = copy.deepcopy(main)

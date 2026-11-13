@@ -1,0 +1,3 @@
+18414be56d8d0a9bd9ebc39b6bd3a97d7a4b46a73a292dafbcd7e273198514d1 *checks/wp10_checks.json
+f05b6c8282a8dce22af6abd5020c5e73750a4c6ff0041d5382c48fd1489cfce6 *wp10_checks.py
+4ab59da21265dbf122adbcbf02d5592ae6904a99695dff7b1caadcdb58d9b138 *README.md
