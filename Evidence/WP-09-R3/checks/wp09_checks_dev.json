@@ -1,0 +1,304 @@
+{
+ "log": "Evidence/WP-09-R1/runs/RUN-20261112-235402.ndjson",
+ "TC-02-01": {
+  "part": "device pairs (WP09 R1)",
+  "keyboard": {
+   "steps": [
+    {
+     "step": "RegisterUp",
+     "item": "potion",
+     "pass": true
+    },
+    {
+     "step": "RegisterRight",
+     "item": "herb",
+     "pass": true
+    },
+    {
+     "step": "RegisterDown",
+     "item": "bread",
+     "pass": true
+    },
+    {
+     "step": "RegisterLeft",
+     "item": "water",
+     "pass": true
+    },
+    {
+     "step": "UseUp",
+     "outcome": [
+      "Up",
+      "Accepted",
+      "potion",
+      "heal+20"
+     ],
+     "registered": "potion",
+     "pass": true
+    },
+    {
+     "step": "UseRight",
+     "outcome": [
+      "Right",
+      "Accepted",
+      "herb",
+      "heal+5"
+     ],
+     "registered": "herb",
+     "pass": true
+    },
+    {
+     "step": "UseDown",
+     "outcome": [
+      "Down",
+      "Accepted",
+      "bread",
+      "heal+10"
+     ],
+     "registered": "bread",
+     "pass": true
+    },
+    {
+     "step": "UseLeft",
+     "outcome": [
+      "Left",
+      "Accepted",
+      "water",
+      "heal+8"
+     ],
+     "registered": "water",
+     "pass": true
+    },
+    {
+     "step": "Pages",
+     "next": [
+      [
+       "0",
+       "1",
+       2
+      ]
+     ],
+     "prev": [
+      [
+       "1",
+       "0"
+      ]
+     ],
+     "pass": true
+    },
+    {
+     "step": "Discard",
+     "asked": [
+      "elixir"
+     ],
+     "discarded": [
+      [
+       "elixir",
+       1,
+       0
+      ]
+     ],
+     "pass": true
+    }
+   ],
+   "requestIdsUnique": true,
+   "pass": true
+  },
+  "pad": {
+   "steps": [
+    {
+     "step": "RegisterUp",
+     "item": "potion",
+     "pass": true
+    },
+    {
+     "step": "RegisterRight",
+     "item": "herb",
+     "pass": true
+    },
+    {
+     "step": "RegisterDown",
+     "item": "bread",
+     "pass": true
+    },
+    {
+     "step": "RegisterLeft",
+     "item": "apple",
+     "pass": true
+    },
+    {
+     "step": "UseUp",
+     "outcome": [
+      "Up",
+      "Accepted",
+      "potion",
+      "heal+20"
+     ],
+     "registered": "potion",
+     "pass": true
+    },
+    {
+     "step": "UseRight",
+     "outcome": [
+      "Right",
+      "Accepted",
+      "herb",
+      "heal+5"
+     ],
+     "registered": "herb",
+     "pass": true
+    },
+    {
+     "step": "UseDown",
+     "outcome": [
+      "Down",
+      "Accepted",
+      "bread",
+      "heal+10"
+     ],
+     "registered": "bread",
+     "pass": true
+    },
+    {
+     "step": "UseLeft",
+     "outcome": [
+      "Left",
+      "Accepted",
+      "apple",
+      "heal+3"
+     ],
+     "registered": "apple",
+     "pass": true
+    },
+    {
+     "step": "Pages",
+     "next": [
+      [
+       "0",
+       "1",
+       2
+      ]
+     ],
+     "prev": [
+      [
+       "1",
+       "0"
+      ]
+     ],
+     "pass": true
+    },
+    {
+     "step": "Discard",
+     "asked": [
+      "meat"
+     ],
+     "discarded": [
+      [
+       "meat",
+       1,
+       0
+      ]
+     ],
+     "pass": true
+    }
+   ],
+   "requestIdsUnique": true,
+   "pass": true
+  },
+  "requestIdsUniqueInRun": true,
+  "note": "virtual devices; real keyboard / pad / Steam Deck are BLOCKED_ENV",
+  "pass": true
+ },
+ "selftest": [
+  {
+   "case": "original",
+   "pass": {
+    "TC-02-01": true
+   }
+  },
+  {
+   "case": "pad page turn does not change the page",
+   "section": "TC-02-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "keyboard left quickslot press comes from the pad",
+   "section": "TC-02-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "pad up quickslot uses another item than registered",
+   "section": "TC-02-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "keyboard right quickslot reuses an earlier request id",
+   "section": "TC-02-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "pad discard confirms another item",
+   "section": "TC-02-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "keyboard B with no selection",
+   "section": "TC-02-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "pad registration without stick release",
+   "section": "TC-02-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "keyboard up quickslot use removed",
+   "section": "TC-02-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "GPT-R1 assignment without a neutral event",
+   "section": "TC-02-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "GPT-R1 wrong item used under a valid request id",
+   "section": "TC-02-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "GPT-R1 discard asked for another selected item",
+   "section": "TC-02-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "GPT-R2 keyboard up release with the stick held right",
+   "section": "TC-02-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "GPT-R2 pad request 5 executed a tick before it was made",
+   "section": "TC-02-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "GPT-R2 pad discard inventory still holds the item",
+   "section": "TC-02-01",
+   "sectionPass": false,
+   "pass": true
+  }
+ ],
+ "selftest_all_pass": true
+}

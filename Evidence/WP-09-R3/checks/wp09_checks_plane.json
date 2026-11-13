@@ -1,0 +1,159 @@
+{
+ "log": "Evidence/WP-09-R1/runs/RUN-20261112-234529.ndjson",
+ "TC-01-01": {
+  "player": {
+   "frames": 2128,
+   "maxAbsZError": 0,
+   "planeZ": 0,
+   "airFrames": 865,
+   "airMaxAbsZError": 0
+  },
+  "playerDirFrames": {
+   "None": 1128.0,
+   "Up": 75.0,
+   "UpRight": 150.0,
+   "Right": 200.0,
+   "DownRight": 75.0,
+   "Down": 75.0,
+   "DownLeft": 75.0,
+   "Left": 200.0,
+   "UpLeft": 150.0
+  },
+  "playerJumps": 20,
+  "enemies": {
+   "samples": 38304,
+   "bossSamples": 4256,
+   "bossMovingSamples": 233,
+   "firstSamples": 18,
+   "airborneSamples": 29,
+   "teleportSamples": 0,
+   "groundMovingSamples": 498,
+   "groundStillSamples": 37759,
+   "propelledSamples": 531,
+   "maxAbsZError": 0
+  },
+  "classSum": 38304,
+  "aiJumps": 1,
+  "simTicks": 1996,
+  "ticksContinuous": true,
+  "tickPlaneZ": [
+   0
+  ],
+  "simGroundMoveTicksByEnemy": {
+   "ch": 114,
+   "fl": 108,
+   "jp": 41,
+   "jq": 2,
+   "boss": 235
+  },
+  "simAirTicksByEnemy": {
+   "jp": 28
+  },
+  "pass": true
+ },
+ "selftest": [
+  {
+   "case": "original",
+   "pass": {
+    "TC-01-01": true
+   }
+  },
+  {
+   "case": "an enemy rendered off the plane",
+   "section": "TC-01-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "GPT no simulation ticks",
+   "section": "TC-01-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "GPT enemy plane differs from the player's",
+   "section": "TC-01-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "GPT boss samples exceed all samples",
+   "section": "TC-01-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "R1 no ground-moving samples (VelX-only count)",
+   "section": "TC-01-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "R1 classes do not add up",
+   "section": "TC-01-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "R1 ground-moving sample off the plane",
+   "section": "TC-01-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "R1 a direction never rendered",
+   "section": "TC-01-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "R1 player off the plane while holding up-left",
+   "section": "TC-01-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "R1 a tick missing in the middle",
+   "section": "TC-01-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "R1 enemies never move on the ground in the simulation",
+   "section": "TC-01-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "GPT-R1 air frames exceed all frames",
+   "section": "TC-01-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "GPT-R1 boss moving = all boss samples",
+   "section": "TC-01-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "GPT-R1 zero propelled despite walking AI",
+   "section": "TC-01-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "GPT-R2 boss moving counts a teleport sample",
+   "section": "TC-01-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "R3 propelled samples exceed all samples",
+   "section": "TC-01-01",
+   "sectionPass": false,
+   "pass": true
+  }
+ ],
+ "selftest_all_pass": true
+}
