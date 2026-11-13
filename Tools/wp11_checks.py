@@ -38,6 +38,50 @@ def attr_ok(k, source, inst):
         and k["aiMoveDuring"] is False and k["blocked"] is False
 
 
+def run_data(ev):
+    """R1: the run's own data snapshot (<runId>.data.json, next to the log or under Evidence / Diagnostics), or None."""
+    import pathlib
+    rid = next((e.get("runId") for e in ev if e.get("runId")), None)
+    f = globals().get("__file__")
+    repo = pathlib.Path(f).resolve().parents[1] if f else pathlib.Path("D:/ProjectR/Corum2Remake")
+    for d in [*DATA_DIRS, repo / "Evidence", repo / "Diagnostics"]:
+        d = pathlib.Path(d)
+        hit = d / (str(rid) + ".data.json")
+        if not hit.is_file():
+            hit = next(iter(sorted(d.rglob(str(rid) + ".data.json"))), None) if d.is_dir() else None
+        if hit:
+            return json.loads(hit.read_text(encoding="utf-8"))
+    return None
+
+
+DATA_DIRS = []
+
+
+def attack_defs(data):
+    """attackId -> (startup, active, recovery) from every attack definition in the run data."""
+    out = {}
+    def walk(o):
+        if isinstance(o, dict):
+            if isinstance(o.get("id"), str) and all(isinstance(o.get(k), (int, float)) for k in ("startup", "active", "recovery")):
+                out.setdefault(o["id"], (o["startup"], o["active"], o["recovery"]))
+            for v in o.values():
+                walk(v)
+        elif isinstance(o, list):
+            for v in o:
+                walk(v)
+    walk(data or {})
+    return out
+
+
+def knock_consistent(k, ev, eid):
+    """R1 (GPT WP-11A review #6/#7): the knockback record agrees with itself and with the logged positions:
+    displacement = endX - startX, its sign is the start velocity's, startX is the enemy x on the tick before startTick, endX on the record tick."""
+    tk = {e["simulationTick"]: e for e in ev if e["type"] == "tick" and e["simulationTick"] in (k.get("startTick", -9) - 1, k["simulationTick"])}
+    e0, e1 = enemy(tk.get(k.get("startTick", -9) - 1, {}), eid), enemy(tk.get(k["simulationTick"], {}), eid)
+    return e0 is not None and e1 is not None and abs(k["displacement"] - (k["endX"] - k["startX"])) <= 1e-4 \
+        and k["displacement"] * k.get("startVel", 0) > 0 and abs(k["startX"] - e0["x"]) <= 0.0051 and abs(k["endX"] - e1["x"]) <= 0.0051
+
+
 def load(path):
     with open(path, encoding="utf-8") as f:
         return [json.loads(l) for l in f if l.strip()]
@@ -117,7 +161,8 @@ def tc0504(seg):
                         res = [e for e in of(s, "motor.jump") if e.get("inputEventId") == a["inputEventId"]]
                     elif inp in ("Attack", "Special"):
                         aid = "ground1" if inp == "Attack" else "launcher"
-                        res = [e for e in of(s, "attack.start") if e.get("attackId") == aid and a["simulationTick"] <= e["simulationTick"] <= a["simulationTick"] + 1]
+                        res = [e for e in of(s, "attack.start") if e.get("attackId") == aid and a["simulationTick"] <= e["simulationTick"] <= a["simulationTick"] + 1
+                               and e.get("inputEventId") == a["inputEventId"]]  # R1 (GPT WP-11A review #1): executed by that press
                     else:
                         res = [e for e in of(s, "motor.state") if e.get("stateAfter") == "Guard" and a["simulationTick"] <= e["simulationTick"] <= a["simulationTick"] + 1]
                     row.update({"rejectedDuring": rej[0]["reason"] if rej else None, "startedDuringStun": len(started), "executedAfter": bool(res)})
@@ -161,7 +206,9 @@ def tc0802(seg):
             pstate = track[i - 1][1]
             if state == "Idle" and pstate in RESTRICTED and pstate != "Dead" and d <= RANGE:
                 atk = next((e for e in starts if e["simulationTick"] - t in (0, 1)), None)
-                blk = next((e for e in blocked if e["simulationTick"] - t in (0, 1)), None)
+                # R1 (GPT WP-11A review #2): the block is the re-attack wait itself, with the player in range and time left
+                blk = next((e for e in blocked if e["simulationTick"] - t in (0, 1) and str(e.get("reason", "")).startswith("Cooldown:ReattackInterval")
+                            and e.get("cooldown", 0) > 0 and e.get("distance", 99) <= e.get("attackRange", RANGE) + 1e-6), None)
                 later, past_end = None, False
                 if blk:
                     due = blk["simulationTick"] + round(blk.get("cooldown", 0) / DT)
@@ -217,10 +264,18 @@ def tc0805(seg):
                 apex[name] = max(en["y"] for t, en, px in arc)
                 air_dist = min(abs(px - en["x"]) for t, en, px in arc)
                 aa = [e for e in of(s, "ai.decide") if e.get("actorId") == eid and e["reason"].startswith("InAirAttackRange") and t0 <= e["simulationTick"] <= (land or 10 ** 9)]
+                # R1 (GPT WP-11A review #3): each decision has its own AirAttack startup (same tick or next) that becomes active
+                def realized(d):
+                    st = next((e for e in of(s, "enemy.state") if e.get("actorId") == eid and e.get("stateAfter") == "AttackStartup"
+                               and str(e.get("reason", "")).startswith("AirAttack") and 0 <= e["simulationTick"] - d["simulationTick"] <= 1), None)
+                    return st is not None and any(e.get("actorId") == eid and e.get("attackInstanceId") == st.get("attackInstanceId") and e.get("stateAfter") == "AttackActive"
+                                                  for e in of(s, "enemy.state"))
+                aa_real = all(realized(d) for d in aa)
                 row.update({"jumpTick": t0, "landTick": land, "apex": apex[name], "speedXMeasured": speed, "minDistanceInAir": round(air_dist, 2),
                             "airAttack": [(e["simulationTick"], round(e.get("distance", 0), 2)) for e in aa]})
+                row["airAttackRealized"] = aa_real
                 ok = land is not None and all(abs(v - sx) <= 0.5 for v in speed) and apex[name] > 0 \
-                    and (bool(aa) == (air_dist <= AIR_ATTACK_RANGE + 0.01)) and all(e.get("distance", 99) <= AIR_ATTACK_RANGE for e in aa)
+                    and (bool(aa) == (air_dist <= AIR_ATTACK_RANGE + 0.01)) and all(e.get("distance", 99) <= AIR_ATTACK_RANGE for e in aa) and aa_real
         else:
             row["distanceRange"] = [min(dists or [0]), max(dists or [0])]
             ok = not jumps and bool(dists) and all(not (lo <= d <= hi) for d in dists)
@@ -262,6 +317,8 @@ def tc0809(seg):
         en = enemy(last, eid) or {}
         row = {"case": name, "boss": eid, "transitions": got, "lowestHpAfterHit": low, "conditionsMet": conds, "phaseAtEnd": en.get("phase")}
         ok = got == expect and all(conds) and bool(hits)
+        if expect:  # R1 (GPT WP-11A review #4): the boss is still in the phase its last transition entered
+            ok = ok and en.get("phase") == expect[-1][1]
         if name == "B9Solo":  # one phase: even at 10 % HP (below every other boss's threshold) there is no transition
             ok = ok and low / 100.0 <= 0.1 and en.get("phase") == "a1"
         row["pass"] = ok
@@ -309,13 +366,15 @@ def tc0812(seg, ev):
                 # the case lands while the boss's own attack is in startup (or active for parry / simultaneous)
                 if typ == "hit":
                     ok = ok and res.get("stateBefore") == "AttackStartup" and res.get("stateAfter") == after
+                    # R1 (GPT WP-11A review #5): HP really drops, and the boss shows hpAfter on that tick
+                    ok = ok and res.get("hpAfter", 1e9) < res.get("hpBefore", -1) and en.get("hp") is not None and abs(en["hp"] - res["hpAfter"]) <= 0.01
                     acts = [e for e in of(ev, "enemy.state") if e.get("actorId") == b and e.get("attackInstanceId") == inst and e.get("stateAfter") == "AttackActive"]
                     row["bossAttackActiveAfter"] = bool(acts)
                     ok = ok and (bool(acts) == (after == "AttackStartup"))  # armor keeps the attack; every other result cancels it
                     if c == "Magic":
                         k = next((x for x in of(s, "enemy.knockback") if x.get("actorId") == b and x.get("startTick", -1) > t), None)
                         row["knockback"] = k and (k.get("startVel"), k.get("displacement"))
-                        ok = ok and k is not None and attr_ok(k, "Hit:magic.fire", res.get("attackInstanceId")) and k["displacement"] > 0
+                        ok = ok and k is not None and attr_ok(k, "Hit:magic.fire", res.get("attackInstanceId")) and k["displacement"] > 0 and knock_consistent(k, ev, b)
                     if c == "Launch":
                         ok = ok and res.get("attackId") == "launcher"
                 elif typ == "guard.parry":
@@ -390,11 +449,17 @@ def tcu02(seg, ev):
     row = {"case": "U2WallEnemy", "wallContactX": limit, "knockback": k and {f: k.get(f) for f in ("startX", "endX", "displacement", "startVel", "blocked", "attribution")}}
     # positive control for the R2 'blocked' flag: the wall stops the bag short of the free 0.468 m, and the record says so
     row["pass"] = k is not None and limit is not None and abs(k["endX"] - limit) <= 1e-3 and k["displacement"] < 0.4 and k.get("blocked") is True \
-        and k.get("attribution") == "Ambiguous" and k.get("velocitySets") == 1
+        and k.get("attribution") == "Ambiguous" and k.get("velocitySets") == 1 and knock_consistent(k, ev, "ub")  # R1 (GPT WP-11A review #7)
     rows.append(row)
     view = {"player": p, "enemies": en, "playerClassesPresent": [c for c in TRACK_PLAYER if p.get(c, {}).get("frames", 0) > 0],
             "enemyClassesPresent": [c for c in TRACK_ENEMY if en.get(c, {}).get("frames", 0) > 0]}
     view_ok = bool(p) and bool(en) and zero(p) and zero(en) and len(view["playerClassesPresent"]) == len(TRACK_PLAYER) and len(view["enemyClassesPresent"]) == len(TRACK_ENEMY)
+    # R1 (GPT WP-11A review #8): the rendered depth evidence is present: player and enemies on one plane with zero error
+    pc = {e["reason"].split("(")[0]: e for e in of(ev, "view.planeCheck")}
+    pp, pe = pc.get("RenderedPlayerDepth"), pc.get("RenderedEnemyDepth")
+    view["planeCheck"] = pp is not None and pe is not None and pp.get("frames", 0) > 0 and pe.get("samples", 0) > 0 \
+        and pp.get("maxAbsZError") == 0 and pe.get("maxAbsZError") == 0 and pp.get("planeZ") == pe.get("planeZ")
+    view_ok = view_ok and view["planeCheck"]
     return {"TC-UNITY-02": {"walls": rows, "view": view,
                             "note": "rendered vs judged body per motion class (view.trackCheck: penetration into solids, size, outside the tick segment); planeZ is TC-01-01",
                             "pass": all(r["pass"] for r in rows) and view_ok}}
@@ -411,6 +476,20 @@ def tcu07(seg, ev):
     alive = [e for e in hits if e["attackInstanceId"] in starts and e["attackInstanceId"] in ends
              and starts[e["attackInstanceId"]] <= e["simulationTick"] <= ends[e["attackInstanceId"]]["simulationTick"]]
     count_ok = all(ends[i].get("hits") == sum(1 for e in hits if e["attackInstanceId"] == i) for i in ends)
+    # R1 (GPT WP-11A review #9): a timed (not motor-driven, not magic) hit lies in its attack's active window from the run data, by the
+    # logged motion progress, and the tick count since the start agrees with that progress (one tick of slack)
+    defs = attack_defs(run_data(ev))
+    def in_window(h):
+        d = defs.get(h.get("attackId"))
+        if h.get("attackKind") in ("AirDash", "Dive") or h.get("damageType") == "Magic" or h.get("magicId"):
+            return True
+        if not d or h["attackInstanceId"] not in starts or not isinstance(h.get("motionProgress"), (int, float)):
+            return False
+        su, ac, rc = d
+        el = h["motionProgress"] * (su + ac + rc)
+        by_ticks = (h["simulationTick"] - starts[h["attackInstanceId"]] + 1) * DT
+        return su - 1e-3 <= el <= su + ac + 1e-3 and abs(el - by_ticks) <= DT + 1e-3
+    window = [e for e in hits if in_window(e)]
     skips = [e for e in of(ev, "hit.skip") if e.get("actorId") == "player"]
     skip_alive = all(e.get("attackInstanceId") in starts and e.get("attackInstanceId") in ends
                      and starts[e["attackInstanceId"]] <= e["simulationTick"] <= ends[e["attackInstanceId"]]["simulationTick"] for e in skips)
@@ -422,9 +501,10 @@ def tcu07(seg, ev):
         rec = [e for e in est.get(h.get("actorId"), []) if e.get("attackInstanceId") == h.get("enemyAttackInstanceId") and e["eventId"] < h["eventId"]]
         return bool(rec) and rec[-1].get("stateAfter") == "AttackActive"
     phit = of(ev, "hit.player")
-    glob = {"playerHits": len(hits), "uniqueHitKeys": len(set(keys)) == len(keys), "hitsWhileAttackAlive": len(alive), "endCountsMatch": count_ok,
+    glob = {"playerHits": len(hits), "uniqueHitKeys": len(set(keys)) == len(keys), "hitsWhileAttackAlive": len(alive), "hitsInActiveWindow": len(window), "endCountsMatch": count_ok,
             "skipsWhileAttackAlive": skip_alive, "enemyHitsOnPlayer": len(phit), "enemyHitsFromActiveInstance": sum(1 for h in phit if enemy_active(h))}
-    glob_ok = glob["uniqueHitKeys"] and len(alive) == len(hits) and count_ok and skip_alive and glob["enemyHitsFromActiveInstance"] == len(phit) and len(hits) > 0
+    glob_ok = glob["uniqueHitKeys"] and len(alive) == len(hits) and count_ok and skip_alive and glob["enemyHitsFromActiveInstance"] == len(phit) and len(hits) > 0 \
+        and len(window) == len(hits) and bool(defs)
     rows = []
     s = seg.get("U7Multi", [])
     a = next((e for e in of(s, "attack.start")), None)
@@ -441,7 +521,11 @@ def tcu07(seg, ev):
                  "end": end and (end["simulationTick"], end["reason"], end.get("hitboxRemoved")), "magicCancel": mc and (mc["simulationTick"], mc.get("effectApplied")),
                  "effectsOrHitsOfThatCast": len(late),
                  "pass": cast is not None and ph is not None and end is not None and end["simulationTick"] == ph["simulationTick"] and end.get("hitboxRemoved") is True
-                 and mc is not None and mc.get("effectApplied") is False and not late})
+                 and mc is not None and mc.get("effectApplied") is False and not late
+                 # R1 (GPT WP-11A review #10): the cancel is on the hit tick and names the hit as its cause; the core cancels first (attack.end,
+                 # magic.cancel) and then records that hit on the player, so the hit is the next hit.player after the cancel on the same tick
+                 and mc["simulationTick"] == ph["simulationTick"] == end["simulationTick"] and end["eventId"] < mc["eventId"] < ph["eventId"]
+                 and not [x for x in of(s, "hit.player") if mc["eventId"] < x["eventId"] < ph["eventId"]] and str(mc.get("reason", "")).startswith("PlayerHit")})
     s = seg.get("U7Wakeup", [])
     seq = [(e["type"], e.get("stateAfter") if e["type"] == "hit.skip" else e.get("stateBefore"), e["attackInstanceId"]) for e in s
            if e["type"] in ("hit", "hit.skip") and e.get("targetId") == "uw"]
@@ -591,11 +675,35 @@ def selftest(ev):
     mutate("U-07 end record counts another number of hits", "TC-UNITY-07", lambda m: first(m, "U7Multi", "attack.end").update(hits=3))
     mutate("U-07 enemy hit from an attack instance that is not active", "TC-UNITY-07", lambda m: first(m, "U7Cancel", "hit.player").update(enemyAttackInstanceId=-7))
     mutate("U-07 waking target hit", "TC-UNITY-07", lambda m: first(m, "U7Wakeup", "hit.skip", lambda e: e.get("stateAfter") == "Wakeup").update(type="hit", stateBefore="Wakeup"))
+    # GPT WP-11A review section 4 (#1-#10)
+    mutate("GPT-11A 05-04 accepted attack credited to an unrelated input", "TC-05-04", lambda m: first(m, "H5Kb_Attack", "attack.start").update(inputEventId=90000))
+    mutate("GPT-11A 08-02 cooldown block reason replaced", "TC-08-02", lambda m: first(m, "A2Ready", "ai.blocked").update(reason="OutOfRange"))
+    mutate("GPT-11A 08-05 air attack decision without startup", "TC-08-05",
+           lambda m: m.remove(first(m, "J5NearIn", "enemy.state", lambda e: e.get("actorId") == "jn1" and e.get("stateAfter") == "AttackStartup")))
+    def wrong_phase(m):
+        e = [x for x in segments(m)["B9Duo"] if x["type"] == "tick"][-1]
+        e["enemies"] = re.sub(r"(bb:[^|]+ ph:)b2", r"\g<1>b1", e["enemies"])
+    mutate("GPT-11A 08-09 last phase contradicts the transition", "TC-08-09", wrong_phase)
+    mutate("GPT-11A 08-12 armor hit claims no damage", "TC-08-12", lambda m: first(m, "Gg2Phys", "hit", lambda e: e["targetId"] == "xg2Phys").update(hpAfter=1000))
+    mutate("GPT-11A 08-12 magic knockback end x 0", "TC-08-12", lambda m: first(m, "Gg2Magic", "enemy.knockback", lambda e: e["actorId"] == "xg2Magic").update(endX=0))
+    mutate("GPT-11A U-02 wall knockback displacement -4", "TC-UNITY-02", lambda m: first(m, "U2WallEnemy", "enemy.knockback").update(displacement=-4))
+    mutate("GPT-11A U-02 rendered depth evidence removed", "TC-UNITY-02", lambda m: [m.remove(e) for e in [x for x in m if x["type"] == "view.planeCheck"]])
+    def startup_hit(m):
+        s = segments(m)["U7Multi"]
+        hit = next(e for e in s if e["type"] == "hit"); a = next(e for e in s if e["type"] == "attack.start")
+        hit["simulationTick"] = a["simulationTick"]; hit["motionProgress"] = 0
+        m.remove(hit); m.insert(m.index(a) + 1, hit)
+        for i, e in enumerate(m, m[0]["eventId"]):
+            e["eventId"] = i
+    mutate("GPT-11A U-07 a hit moved into startup", "TC-UNITY-07", startup_hit)
+    mutate("GPT-11A U-07 cancel record on another tick", "TC-UNITY-07", lambda m: first(m, "U7Cancel", "magic.cancel").update(simulationTick=10080))
     return res
 
 
 def main():
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
+    import os
+    DATA_DIRS[:] = [os.path.dirname(os.path.abspath(args[0]))]  # R1: the run data beside the log
     ev = load(args[0])
     out = {"log": args[0], **check(ev)}
     if "--selftest" in sys.argv:

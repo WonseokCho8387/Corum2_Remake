@@ -81,6 +81,18 @@ namespace Corum2.Unity
 
         /// <summary>WP-11 TC-UNITY-02: rendered vs judged enemy bodies per motion class.</summary>
         public readonly ViewTrack Track = new ViewTrack();
+        /// <summary>WP-11A-R1 TC-UNITY-02: the enemy box as the renderer draws it (MeshRenderer.bounds) against the box the judged state
+        /// asks for (the judged body; for Down / Dead the low pose 0.35 x height on the judged feet). Every class is measured.</summary>
+        public readonly ViewTrack BodyTrack = new ViewTrack();
+        /// <summary>Frames whose rendered enemy box departs from the expected box by more than 1 mm (first 60 kept).</summary>
+        public readonly List<string> BodyExcess = new List<string>();
+        public long BodyExcessCount;
+        /// <summary>Test-only negative control: shifts every drawn enemy box sideways.</summary>
+        public float FaultOffsetX;
+        readonly Dictionary<EnemyActor, Vector2> _lastRenderedFeet = new Dictionary<EnemyActor, Vector2>();
+
+        /// <summary>Simulation tick of the frame being drawn (set by the host; used to stamp BodyExcess samples).</summary>
+        public long SimTick;
 
         public void Sync(CombatSystem c, float z, MapData map = null)
         {
@@ -94,6 +106,7 @@ namespace Corum2.Unity
                 Object.Destroy(_enemies[e].root.gameObject);
                 _enemies.Remove(e);
                 _lastRootX.Remove(e);
+                _lastRenderedFeet.Remove(e);
             }
             var boxIndex = 0;
             foreach (var e in c.Enemies)
@@ -108,7 +121,7 @@ namespace Corum2.Unity
                 var visible = e.State != EnemyState.Gone && !(e.State == EnemyState.Dead && e.Vanishing && Mathf.Repeat(Time.time * 10f, 1f) > 0.5f);
                 v.root.gameObject.SetActive(visible);
                 var h = e.State == EnemyState.Down || e.State == EnemyState.Dead ? e.Def.BodyHeight * 0.35f : e.Def.BodyHeight;
-                v.root.position = new Vector3(e.Position.X, e.Position.Y + h * 0.5f, z);
+                v.root.position = new Vector3(e.Position.X + FaultOffsetX, e.Position.Y + h * 0.5f, z);
                 v.root.localScale = new Vector3(e.Def.BodyWidth, h, e.Def.BodyWidth);
                 // TC-01-01: rendered enemies and bosses stay on the combat plane (depth fixed).
                 EnemySamples++;
@@ -136,6 +149,29 @@ namespace Corum2.Unity
                     var size = posed ? 0f : Mathf.Abs(drawn.Width - body.Width) + Mathf.Abs(drawn.Height - body.Height);
                     var off = posed ? 0f : Mathf.Sqrt(Sq(drawn.MinX + drawn.Width * 0.5f - (body.MinX + body.Width * 0.5f)) + Sq(drawn.MinY + drawn.Height * 0.5f - (body.MinY + body.Height * 0.5f)));
                     Track.Add(ViewTrack.EnemyClass(e), ViewTrack.MaxPenetration(map, drawn), ViewTrack.MaxPenetration(map, body), size, off, 0f);
+                }
+                if (visible)
+                {
+                    // WP-11A-R1: what the renderer draws, read back from the mesh, against the box the judged state asks for
+                    var rb = v.root.GetComponent<MeshRenderer>().bounds;
+                    var rendered = new Aabb(rb.min.x, rb.min.y, rb.max.x, rb.max.y);
+                    var lowPose = e.State == EnemyState.Down || e.State == EnemyState.Dead;
+                    var expect = lowPose ? Aabb.FromFeet(e.Position, e.Def.BodyWidth, e.Def.BodyHeight * 0.35f) : e.Body;
+                    var bsize = Mathf.Abs(rendered.Width - expect.Width) + Mathf.Abs(rendered.Height - expect.Height);
+                    var feet = new Vector2((rendered.MinX + rendered.MaxX) * 0.5f, rendered.MinY);
+                    var boff = Vector2.Distance(feet, new Vector2(e.Position.X, e.Position.Y));
+                    var bstep = _lastRenderedFeet.TryGetValue(e, out var lf) ? Vector2.Distance(feet, lf) : 0f;
+                    _lastRenderedFeet[e] = feet;
+                    var bcls = lowPose ? (e.State == EnemyState.Down ? "down" : "dead") : ViewTrack.EnemyClass(e);
+                    var bpen = ViewTrack.MaxPenetration(map, rendered);
+                    BodyTrack.Add(bcls, bpen, ViewTrack.MaxPenetration(map, e.Body), bsize, boff, bstep);
+                    if (bsize > 1e-3f || boff > 1e-3f || bpen > 1e-3f)
+                    {
+                        BodyExcessCount++;
+                        if (BodyExcess.Count < 60)
+                            BodyExcess.Add(string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0}:{1}:{2:0.0000}/{3:0.0000}/{4:0.0000}@{5}",
+                                e.Id, bcls, bpen, bsize, boff, SimTick));
+                    }
                 }
                 var baseCol = _colors.TryGetValue(e.Def.Id, out var bc) ? bc : Color.red;
                 var stateCol = StateTint(e.State, baseCol);

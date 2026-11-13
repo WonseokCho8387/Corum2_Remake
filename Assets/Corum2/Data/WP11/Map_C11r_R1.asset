@@ -1,0 +1,150 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2cac156314ef0040a2f4f3ec32e56f9, type: 3}
+  m_Name: Map_C11r_R1
+  m_EditorClassIdentifier: Corum2.Unity::Corum2.Unity.MapDefinition
+  meta:
+    domainId: map.C11r
+    schemaVersion: 1
+    dataVersion: wp11-r1
+    status: experimental
+    policyIds: []
+    relatedRIds:
+    - R-08-02
+    - R-08-12
+    - R-00-03
+    - R-00-05
+    - R-06-01
+    changeRequestId: 
+  mapId: C11r
+  minX: 0
+  maxX: 400
+  killY: -10
+  combatPlaneZ: 0
+  solids:
+  - min: {x: -1, y: -2}
+    max: {x: 401, y: 0}
+  - min: {x: 235, y: 0}
+    max: {x: 236, y: 5}
+  spawns:
+  - id: Start
+    position: {x: 4, y: 0}
+    facing: 1
+  - id: A2R1Attack
+    position: {x: 20, y: 0}
+    facing: 1
+  - id: A2R1Wait
+    position: {x: 50, y: 0}
+    facing: 1
+  - id: A2R1Stagger
+    position: {x: 80, y: 0}
+    facing: 1
+  - id: A2R1Down
+    position: {x: 110, y: 0}
+    facing: 1
+  - id: GAirg1
+    position: {x: 140, y: 0}
+    facing: 1
+  - id: GAirg2
+    position: {x: 170, y: 0}
+    facing: 1
+  - id: GAirg3
+    position: {x: 200, y: 0}
+    facing: 1
+  - id: U2BodyMove
+    position: {x: 230, y: 0}
+    facing: 1
+  - id: U2BodyKnock
+    position: {x: 260, y: 0}
+    facing: 1
+  - id: U2BodyEnemy
+    position: {x: 290, y: 0}
+    facing: 1
+  - id: U7Late
+    position: {x: 320, y: 0}
+    facing: 1
+  - id: U7LateCast
+    position: {x: 350, y: 0}
+    facing: 1
+  left:
+    policy: 0
+    connectionId: 
+    targetMapId: 
+    targetSpawnId: 
+  right:
+    policy: 0
+    connectionId: 
+    targetMapId: 
+    targetSpawnId: 
+  points: []
+  enemies:
+  - instanceId: ra
+    enemyId: post
+    position: {x: 24, y: 0}
+    facing: -1
+  - instanceId: rw
+    enemyId: post
+    position: {x: 54, y: 0}
+    facing: -1
+  - instanceId: rs
+    enemyId: postStun
+    position: {x: 84, y: 0}
+    facing: -1
+  - instanceId: rd
+    enemyId: postDown
+    position: {x: 114, y: 0}
+    facing: -1
+  - instanceId: ag1
+    enemyId: gauntlet
+    position: {x: 141.6, y: 0}
+    facing: -1
+  - instanceId: ag2
+    enemyId: gauntlet
+    position: {x: 171.6, y: 0}
+    facing: -1
+  - instanceId: ag3
+    enemyId: gauntlet
+    position: {x: 201.6, y: 0}
+    facing: -1
+  - instanceId: bk
+    enemyId: hitter
+    position: {x: 261.2, y: 0}
+    facing: -1
+  - instanceId: bw
+    enemyId: hitter
+    position: {x: 295, y: 0}
+    facing: -1
+  - instanceId: bl
+    enemyId: bag
+    position: {x: 291.2, y: 0}
+    facing: -1
+  - instanceId: bx
+    enemyId: postWeak
+    position: {x: 292.6, y: 0}
+    facing: -1
+  - instanceId: lb
+    enemyId: bag
+    position: {x: 321, y: 0}
+    facing: -1
+  - instanceId: lf
+    enemyId: bag
+    position: {x: 325, y: 0}
+    facing: -1
+  - instanceId: lc
+    enemyId: hitter
+    position: {x: 351.2, y: 0}
+    facing: -1
+  cameraMinX: 9
+  cameraMaxX: 391
+  cameraY: 2.5
+  cameraFollowSharpness: 10
+  groundColor: {r: 0.4, g: 0.37, b: 0.36, a: 1}

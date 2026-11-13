@@ -101,6 +101,7 @@ namespace Corum2.Unity
     {
         public readonly Transform Root;
         readonly Transform _body;
+        readonly MeshRenderer _bodyRenderer;
         readonly Transform _nose;
         readonly Material _mat;
         readonly float _width;
@@ -112,6 +113,7 @@ namespace Corum2.Unity
             Root.SetParent(parent, false);
             _mat = world.MakeMaterial(Color.white);
             _body = Prim(Root, "Body", _mat).transform;
+            _bodyRenderer = _body.GetComponent<MeshRenderer>();
             _nose = Prim(Root, "Nose", world.MakeMaterial(new Color(0.1f, 0.1f, 0.1f))).transform;
         }
 
@@ -125,6 +127,12 @@ namespace Corum2.Unity
             return go;
         }
 
+        /// <summary>Test-only (WP-11A-R1 TC-UNITY-02 negative control): shifts the drawn body sideways inside the view root.</summary>
+        public float FaultOffsetX;
+
+        /// <summary>World-space bounds of the rendered body mesh (what the camera draws), read after Apply.</summary>
+        public Bounds BodyBounds => _bodyRenderer.bounds;
+
         public void Apply(Vector3 feet, float height, int facing, MotorState state)
         {
             Root.position = feet;
@@ -132,7 +140,7 @@ namespace Corum2.Unity
             var dead = state == MotorState.Dead;
             var h = dead ? _width : height;
             var w = dead ? height : _width;
-            _body.localPosition = new Vector3(0f, h * 0.5f, 0f);
+            _body.localPosition = new Vector3(FaultOffsetX, h * 0.5f, 0f);
             _body.localScale = new Vector3(w, h, _width);
             _nose.localPosition = new Vector3(facing * (_width * 0.5f + 0.08f), height * 0.75f, 0f);
             _nose.localScale = new Vector3(0.16f, 0.16f, 0.16f);

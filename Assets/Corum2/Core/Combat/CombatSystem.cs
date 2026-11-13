@@ -452,6 +452,7 @@ namespace Corum2.Core
             var a = Attack;
             if (a == null) return;
             Attack = null;
+            NoteAttackOver(a, "Cancelled:" + reason);
             Log.Emit("attack.end", Pl, "", "", P.State.ToString(), reason, ("attackInstanceId", a.InstanceId), ("attackId", a.Def.Id),
                 ("elapsed", a.Elapsed), ("hits", a.Hits), ("hitboxRemoved", true));
             if (a.Magic != null)
@@ -464,6 +465,7 @@ namespace Corum2.Core
         {
             var a = Attack;
             Attack = null;
+            NoteAttackOver(a, "Ended:" + reason);
             Log.Emit("attack.end", Pl, "", "", P.State.ToString(), reason, ("attackInstanceId", a.InstanceId), ("attackId", a.Def.Id),
                 ("elapsed", a.Elapsed), ("hits", a.Hits));
             if (P.State == MotorState.GroundAttack || P.State == MotorState.AirAttack) P.ReleaseLocked("AttackEnd");
@@ -846,12 +848,14 @@ namespace Corum2.Core
             // WP02-F01: capture the attack once. A Dodge cancels Attack; later candidates of this tick keep using this object.
             var atk = Attack;
             var box = playerFrozen ? null : ActivePlayerHitbox();
+            var hitEvent = 0;
             if (box.HasValue)
             {
                 var a = Attack;
                 var ev = 0;
                 if (!a.MotorDriven && a.Def.HitEvents > 1)
                     ev = Math.Min(a.Def.HitEvents - 1, (int)((a.Elapsed - a.Def.Startup) / (a.Def.Active / a.Def.HitEvents)));
+                hitEvent = ev;
                 EnemyActor first = null;
                 var firstD = float.MaxValue;
                 foreach (var en in Enemies)
@@ -906,6 +910,11 @@ namespace Corum2.Core
                     _ec.Add(en);
                 }
             }
+
+            // WP-11A-R1 diagnostics (TC-UNITY-07): what was collected this tick, and the verdict on any external / late signal.
+            // Neither changes the candidates below.
+            LogCandidates(atk, box, hitEvent);
+            if (!playerFrozen) JudgeExternalSignals(atk, box, hitEvent);
 
             // Simultaneous hit (same tick, EXP-DODGE-01 window; CF-05): Dodge for both sides (R-06-15/16).
             for (var i = _ec.Count - 1; i >= 0; i--)

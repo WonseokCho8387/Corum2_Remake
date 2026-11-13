@@ -41,6 +41,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Corum2/Scenes/WP11_Ops.unity
     guid: 309f6d6d89cfef245ae5903698d92528
+  - enabled: 1
+    path: Assets/Corum2/Scenes/WP11_R1.unity
+    guid: b8687f4ead544f7439077755b5c25eed
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

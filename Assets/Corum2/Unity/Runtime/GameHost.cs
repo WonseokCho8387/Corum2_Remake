@@ -85,6 +85,12 @@ namespace Corum2.Unity
         readonly System.Diagnostics.Stopwatch _stepWatch = new System.Diagnostics.Stopwatch();
         /// <summary>WP-11 TC-UNITY-02: rendered vs judged player body per motion class.</summary>
         readonly ViewTrack _playerTrack = new ViewTrack();
+        // WP-11A-R1 TC-UNITY-02: the player body as the renderer draws it (MeshRenderer.bounds after Apply) against the judged body
+        readonly ViewTrack _playerBodyTrack = new ViewTrack();
+        readonly List<string> _playerBodyExcess = new List<string>();
+        long _playerBodyExcessCount;
+        Vector2 _lastRenderedFeet;
+        bool _haveRenderedFeet;
         float _prevCamX, _currCamX;
         string _shownMap;
         readonly Queue<string> _recentInputs = new Queue<string>();
@@ -276,7 +282,11 @@ namespace Corum2.Unity
             var z = map.CombatPlaneZ;
             _playerView.Apply(new Vector3(p.x, p.y, z), Sim.Player.Height, Sim.Player.Facing, Sim.Player.State);
             // TC-01-01 / TC-UNITY-02: the rendered player must stay on the combat plane.
-            if (_combatView != null) _combatView.Sync(Sim.Combat, z, map);
+            if (_combatView != null)
+            {
+                _combatView.SimTick = Sim.Tick;
+                _combatView.Sync(Sim.Combat, z, map);
+            }
             {
                 // WP-11 TC-UNITY-02: the drawn body (block-out cube, feet at p) against the judged body and the map solids.
                 var sp = Sim.Player;
@@ -287,6 +297,30 @@ namespace Corum2.Unity
                 var outside = ViewTrack.OutsideSegment(new Vec2(p.x, p.y), new Vec2(_prevPos.x, _prevPos.y), new Vec2(_currPos.x, _currPos.y));
                 _playerTrack.Add(ViewTrack.PlayerClass(sp.State, sp.VelX), ViewTrack.MaxPenetration(map, drawn), ViewTrack.MaxPenetration(map, judged), size, outside,
                     Vector2.Distance(_prevPos, _currPos));
+
+                // WP-11A-R1 (GPT WP-11A review section 2): read the rendered mesh back instead of rebuilding it from p.
+                // size: rendered box vs the judged box (Dead: the judged box lying, width and height swapped);
+                // outside: the rendered feet (bottom centre of the mesh bounds) against the segment of the judged feet of the
+                // previous and the current tick; penetration: the rendered box against the map solids; step: rendered feet per frame.
+                var rb = _playerView.BodyBounds;
+                var rendered = new Aabb(rb.min.x, rb.min.y, rb.max.x, rb.max.y);
+                var expW = dead ? judged.Height : judged.Width;
+                var expH = dead ? judged.Width : judged.Height;
+                var bsize = Mathf.Abs(rendered.Width - expW) + Mathf.Abs(rendered.Height - expH);
+                var rfeet = new Vector2((rendered.MinX + rendered.MaxX) * 0.5f, rendered.MinY);
+                var bout = ViewTrack.OutsideSegment(new Vec2(rfeet.x, rfeet.y), new Vec2(_prevPos.x, _prevPos.y), new Vec2(_currPos.x, _currPos.y));
+                var bpen = ViewTrack.MaxPenetration(map, rendered);
+                var bstep = _haveRenderedFeet ? Vector2.Distance(rfeet, _lastRenderedFeet) : 0f;
+                _lastRenderedFeet = rfeet;
+                _haveRenderedFeet = true;
+                var bcls = dead ? "dead" : ViewTrack.PlayerClass(sp.State, sp.VelX);
+                _playerBodyTrack.Add(bcls, bpen, ViewTrack.MaxPenetration(map, judged), bsize, bout, bstep);
+                if (bsize > 1e-3f || bout > 1e-3f || bpen > 1e-3f)
+                {
+                    _playerBodyExcessCount++;
+                    if (_playerBodyExcess.Count < 60)
+                        _playerBodyExcess.Add(string.Format(CultureInfo.InvariantCulture, "{0}:{1:0.0000}/{2:0.0000}/{3:0.0000}@{4}", bcls, bpen, bsize, bout, Sim.Tick));
+                }
             }
             if (_presentationView != null) _presentationView.Sync(Sim, z, Time.fixedDeltaTime);
             _viewFrames++;
@@ -410,6 +444,13 @@ namespace Corum2.Unity
                 Sim.Log.Emit("view.trackCheck", "player", "", "", "", "RenderedVsJudgedPlayer(WP11)", ("classes", _playerTrack.Table()), ("map", Sim.CurrentMap.Id));
                 if (_combatView != null)
                     Sim.Log.Emit("view.trackCheck", "enemies", "", "", "", "RenderedVsJudgedEnemies(WP11)", ("classes", _combatView.Track.Table()), ("map", Sim.CurrentMap.Id));
+                // WP-11A-R1: rendered mesh bounds vs judged boxes; excess = frames over 1 mm (first 60 with their tick)
+                Sim.Log.Emit("view.bodyCheck", "player", "", "", "", "RenderedMeshVsJudgedPlayer(WP11A-R1)", ("classes", _playerBodyTrack.Table()),
+                    ("excessFrames", _playerBodyExcessCount), ("excess", string.Join(";", _playerBodyExcess)), ("faultOffsetX", _playerView.FaultOffsetX), ("map", Sim.CurrentMap.Id));
+                if (_combatView != null)
+                    Sim.Log.Emit("view.bodyCheck", "enemies", "", "", "", "RenderedMeshVsJudgedEnemies(WP11A-R1)", ("classes", _combatView.BodyTrack.Table()),
+                        ("excessFrames", _combatView.BodyExcessCount), ("excess", string.Join(";", _combatView.BodyExcess)), ("faultOffsetX", _combatView.FaultOffsetX),
+                        ("map", Sim.CurrentMap.Id));
                 Sim.Log.Emit("run.end", "", "", "", "", "HostDestroyed", ("ticks", Sim.Tick), ("transitions", Sim.TransitionCount));
             }
             _sink?.Dispose();
@@ -692,6 +733,29 @@ namespace Corum2.Unity
                     Virtual.Button(arg, true);
                     Virtual.Button(arg, false);
                     break;
+                case "bodyfault":
+                {
+                    // Test-only (WP-11A-R1 TC-UNITY-02 negative control): bodyfault=<player|enemy>:<dx> shifts the drawn body only.
+                    var kv = arg.Split(':');
+                    var dx = float.Parse(kv[1], CultureInfo.InvariantCulture);
+                    if (kv[0] == "player") _playerView.FaultOffsetX = dx;
+                    else if (_combatView != null) _combatView.FaultOffsetX = dx;
+                    Sim.Log.Emit("marker", kv[0], "", "", "", "TestBodyFault(view only)", ("faultOffsetX", dx));
+                    break;
+                }
+                case "hitsignal":
+                {
+                    // Test-only (WP-11A-R1 TC-UNITY-07): hitsignal=<current|last>:<targetId> sends an external hit signal for the current
+                    // player attack instance or the last one that ended / was cancelled, as a late collision callback would.
+                    var kv = arg.Split(':');
+                    var c = Sim.Combat;
+                    if (c != null)
+                    {
+                        var id = kv[0] == "last" ? c.LastEndedAttackInstanceId : (c.Attack?.InstanceId ?? 0);
+                        c.SubmitExternalHitSignal(id, kv[1], "script:" + kv[0]);
+                    }
+                    break;
+                }
                 case "framelog":
                     // Test-only (WP-11 Part C): one frame.sample record per rendered frame while on.
                     _frameLog = arg == "1";

@@ -228,6 +228,96 @@ namespace Corum2.EditorTools
             Debug.Log("[Corum2] WP-11 ops content built. Validation issues: " + issues.Count);
         }
 
+        public const string R1ScenePath = "Assets/Corum2/Scenes/WP11_R1.unity";
+
+        /// <summary>
+        /// WP-11A-R1 (GPT WP-11A review): TC-08-02 entries into a still chaser's range while it is attacking, in its re-attack wait,
+        /// staggered or down (the player leaves and comes back during that state); TC-08-12 the gauntlet boss parried in the air in
+        /// each state; TC-UNITY-02 moves for the rendered-mesh body check; TC-UNITY-07 late external hit signals.
+        /// Longer stagger / down times on two copies of the chaser give the player time to leave and re-enter (test data, TEST-AI-01).
+        /// </summary>
+        [MenuItem("Corum2/WP-11/Build R1 Content")]
+        public static void BuildR1()
+        {
+            Directory.CreateDirectory(Dir);
+            var post = AssetDatabase.LoadAssetAtPath<EnemyDefinitionAsset>(Dir + "/Enemy_Post.asset");
+            var postWeak = AssetDatabase.LoadAssetAtPath<EnemyDefinitionAsset>(Dir + "/Enemy_PostWeak.asset");
+            var gaunt = AssetDatabase.LoadAssetAtPath<EnemyDefinitionAsset>(Dir + "/Enemy_Gauntlet.asset");
+            var postStun = Enemy("Enemy_PostStun", "postStun", 1000f, new Color(0.8f, 0.5f, 0.35f), AiType.Chaser);
+            postStun.ai.moveSpeed = 0.01f;
+            postStun.staggerTime = 1.5f;
+            var postDown = Enemy("Enemy_PostDown", "postDown", 1000f, new Color(0.75f, 0.4f, 0.3f), AiType.Chaser);
+            postDown.ai.moveSpeed = 0.01f;
+            postDown.downTime = 2.5f;
+
+            var map = AssetDatabase.LoadAssetAtPath<MapDefinition>(Dir + "/Map_C11r_R1.asset") ?? Save(ScriptableObject.CreateInstance<MapDefinition>(), "Map_C11r_R1");
+            map.meta.domainId = "map.C11r";
+            map.meta.dataVersion = "wp11-r1";
+            map.meta.relatedRIds = new[] { "R-08-02", "R-08-12", "R-00-03", "R-00-05", "R-06-01" };
+            map.mapId = "C11r";
+            map.minX = 0;
+            map.maxX = 400;
+            map.cameraMinX = 9;
+            map.cameraMaxX = 391;
+            map.cameraY = 2.5f;
+            map.cameraFollowSharpness = 10f;
+            map.groundColor = new Color(0.4f, 0.37f, 0.36f);
+            map.solids = new List<BoxData> { new BoxData { min = new Vector2(-1, -2), max = new Vector2(401, 0) } };
+            map.spawns = new List<SpawnData> { Sp("Start", 4) };
+            map.enemies = new List<EnemySpawnData>();
+            var x = 20f;
+            void Z(string id, params (string inst, string def, float dx)[] es)
+            {
+                map.spawns.Add(Sp(id, x));
+                foreach (var e in es) map.enemies.Add(En(e.inst, e.def, x + e.dx));
+                x += 30f;
+            }
+            // TC-08-02: the player enters range, the chaser starts; the player leaves and re-enters while it is restricted
+            Z("A2R1Attack", ("ra", "post", 4f));        // re-enter while its attack is still running
+            Z("A2R1Wait", ("rw", "post", 4f));          // re-enter during its re-attack wait (attack interval 1.2 s)
+            Z("A2R1Stagger", ("rs", "postStun", 4f));   // re-enter while it is staggered (1.5 s)
+            Z("A2R1Down", ("rd", "postDown", 4f));      // re-enter while it is down (2.5 s)
+            // TC-08-12: gauntlet boss parried in the air, once per state
+            foreach (var st in new[] { "g1", "g2", "g3" }) Z("GAir" + st, ("a" + st, "gauntlet", 1.6f));
+            // TC-UNITY-02: run / jump / air dash / dive into a wall; knocked back; enemies walking, knocked back, launched, down, dead
+            BoxData Wall(float minX, float maxX) => new BoxData { min = new Vector2(minX, 0f), max = new Vector2(maxX, 5f) };
+            map.solids.Add(Wall(x + 5f, x + 6f));
+            Z("U2BodyMove");
+            Z("U2BodyKnock", ("bk", "hitter", 1.2f));
+            Z("U2BodyEnemy", ("bw", "hitter", 5f), ("bl", "bag", 1.2f), ("bx", "postWeak", 2.6f));
+            // TC-UNITY-07: late external hit signals for an attack that is starting, active, over, or a cast cancelled by a hit
+            Z("U7Late", ("lb", "bag", 1f), ("lf", "bag", 5f));
+            Z("U7LateCast", ("lc", "hitter", 1.2f));
+            map.left = new EdgeData { policy = EdgePolicy.Blocked };
+            map.right = new EdgeData { policy = EdgePolicy.Blocked };
+            map.points = new List<PointData>();
+
+            var world = Save(ScriptableObject.CreateInstance<WorldDefinition>(), "World_WP11R1");
+            world.maps = new List<MapDefinition> { map };
+            world.startMapId = "C11r";
+            world.startSpawnId = "Start";
+            var own = new List<EnemyDefinitionAsset> { post, postWeak, gaunt, postStun, postDown };
+            foreach (var o in own.Cast<Object>().Concat(new Object[] { map, world })) EditorUtility.SetDirty(o);
+            AssetDatabase.SaveAssets();
+
+            var move = AssetDatabase.LoadAssetAtPath<MovementConfig>(Wp01 + "/MovementConfig.asset");
+            var input = AssetDatabase.LoadAssetAtPath<InputProfileConfig>(Wp01 + "/InputProfile.asset");
+            var air = AssetDatabase.LoadAssetAtPath<AirUnlockFixture>(Wp01 + "/AirUnlocks_All.asset");
+            var combat = AssetDatabase.LoadAssetAtPath<CombatConfig>(Wp02 + "/CombatConfig.asset");
+            var cu = AssetDatabase.LoadAssetAtPath<CombatUnlockFixture>(Wp02 + "/CombatUnlocks_None.asset");
+            var enemies = new List<EnemyDefinitionAsset> { AssetDatabase.LoadAssetAtPath<EnemyDefinitionAsset>(Wp02 + "/Enemy_Hitter.asset"),
+                AssetDatabase.LoadAssetAtPath<EnemyDefinitionAsset>(Wp02 + "/Enemy_Bag.asset") };
+            enemies.AddRange(own);
+            var lib = AssetDatabase.LoadAssetAtPath<PresentationLibrary>(Wp04 + "/PresentationLibrary.asset");
+            var issues = DataValidator.Validate(world.ToCore(), move.ToCore(), input.ToCore(), air.ToCore());
+            issues.AddRange(DataValidator.ValidateCombat(combat.ToCore(), cu.ToCore(), enemies.Select(e => e.ToCore()).ToList(), world.ToCore()));
+            var presIssues = PresentationLibrary.Validate(lib, enemies.Where(e => e.ai.type == AiType.Boss).Select(e => e.ToCore().Boss).ToList());
+            foreach (var i in issues) Debug.LogError("[Corum2] " + i);
+            foreach (var i in presIssues) Debug.LogError("[Corum2] " + i);
+            BuildScene(world, move, input, air, combat, cu, enemies, lib, R1ScenePath);
+            Debug.Log("[Corum2] WP-11 R1 content built. Validation issues: " + (issues.Count + presIssues.Count));
+        }
+
         static T Copy<T>(string from, string name) where T : ScriptableObject
         {
             var path = Dir + "/" + name + ".asset";
