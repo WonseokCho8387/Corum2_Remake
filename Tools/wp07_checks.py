@@ -52,10 +52,30 @@ def knock_ok(s, eid, h, k):
     ok = x0 is not None and x1 is not None and abs(k["displacement"] - (k["endX"] - k["startX"])) <= 1e-4 \
         and abs(k["startVel"] - kv) <= 1e-4 and kv != 0 and k["displacement"] * kv > 0 \
         and abs(k["startX"] - x0) <= 0.0051 and abs(k["endX"] - x1) <= 0.0051
-    if "attribution" in k:
-        ok = ok and k["attribution"] == "SingleSource" and k.get("firstAttackInstanceId") == h.get("attackInstanceId") and k.get("velocitySets") == 1
+    ok = ok and attr_ok(k, h)  # R3: every attribution field, consistent with the hit
     return abs(k["displacement"]) if ok else -1.0
 ENEMY = re.compile(r"([^:|]+):([A-Za-z]+)@(-?[\d.]+),(-?[\d.]+) hp(-?[\d.]+)")
+
+# R3 (GPT R2 review §4 #2/#3/#5): knockback attribution, one rule for every checker.
+# On a log from the R2-diagnostics build (any enemy.knockback carries attribution, 7a9ca55+) every field is required;
+# a log from an earlier build is reported as legacy and checked without them.
+ATTR_FIELDS = ("attribution", "velocitySets", "firstSource", "lastSource", "firstAttackInstanceId", "lastAttackInstanceId", "aiMoveDuring", "blocked")
+DIAG = {"r2": False}
+
+
+def set_diag(ev):
+    DIAG["r2"] = any(e["type"] == "enemy.knockback" and "attribution" in e for e in ev)
+    return "R2 (attribution required)" if DIAG["r2"] else "legacy (pre-7a9ca55, no attribution fields)"
+
+
+def attr_ok(k, h):
+    if not DIAG["r2"]:
+        return True
+    src = "Hit:" + str(h.get("attackId"))
+    return all(f in k for f in ATTR_FIELDS) and k["attribution"] == "SingleSource" and k["velocitySets"] == 1 \
+        and k["firstSource"] == k["lastSource"] == src and k["firstAttackInstanceId"] == k["lastAttackInstanceId"] == h.get("attackInstanceId") \
+        and k["aiMoveDuring"] is False and k["blocked"] is False
+
 
 
 def load(path):
@@ -93,8 +113,9 @@ def hits_by_attack(s):
 
 
 def check(ev):
+    diag = set_diag(ev)
     seg = segments(ev)
-    out = {}
+    out = {"knockbackDiagnostics": diag}
 
     # ---- TC-06-01: one motion overlapping a target for several ticks hits it once; the next motion hits again (R-06-01)
     s = seg.get("SameMotionOverlap", [])
@@ -352,7 +373,7 @@ def hs_check(main, hs):
 
 def selftest(ev):
     base = check(ev)
-    res = [{"case": "original", "pass": {k: v["pass"] for k, v in base.items()}}]
+    res = [{"case": "original", "pass": {k: v["pass"] for k, v in base.items() if isinstance(v, dict)}}]
 
     def mutate(name, key, fn):
         m = copy.deepcopy(ev)
@@ -579,6 +600,14 @@ def selftest(ev):
     mutate("R2 TC-06-10 magic end: effect ended before the hit", "TC-06-10",
            lambda m: first_in(m, "MagicWakeupEndBoundary", "attack.end", lambda e: e.get("attackId") == "magic.fire").__setitem__(
                "simulationTick", first_in(m, "MagicWakeupEndBoundary", "hit", lambda e: e["targetId"] == "w4" and e.get("damageType") == "Magic")["simulationTick"] - 1))
+
+    # GPT R2 review §4 (#2)
+    def no_attr(m):
+        k = first_in(m, "MagicWeak_mw", "enemy.knockback"); k.pop("attribution"); k["firstAttackInstanceId"] = -999
+    mutate("GPT-R2 06-06 attribution removed and unrelated first attack", "TC-06-06", no_attr)
+    # R3 additions
+    mutate("R3 06-05 interval source names another attack", "TC-06-05", lambda m: first_in(m, "PhysEqual_pe", "enemy.knockback").update(firstSource="Hit:ground9", lastSource="Hit:ground9"))
+    mutate("R3 06-06 last attack instance differs", "TC-06-06", lambda m: first_in(m, "MagicWeak_mw", "enemy.knockback").update(lastAttackInstanceId=-3))
     return res
 
 

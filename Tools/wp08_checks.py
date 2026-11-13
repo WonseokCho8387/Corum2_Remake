@@ -63,6 +63,28 @@ def effective(h):
     return h.get("hpAfter") is not None and h["hpAfter"] < h["hpBefore"] and h.get("comboAfter") == h.get("comboBefore", -99) + 1
 
 
+
+# R3 (GPT R2 review §4 #2/#3/#5): knockback attribution, one rule for every checker.
+# On a log from the R2-diagnostics build (any enemy.knockback carries attribution, 7a9ca55+) every field is required;
+# a log from an earlier build is reported as legacy and checked without them.
+ATTR_FIELDS = ("attribution", "velocitySets", "firstSource", "lastSource", "firstAttackInstanceId", "lastAttackInstanceId", "aiMoveDuring", "blocked")
+DIAG = {"r2": False}
+
+
+def set_diag(ev):
+    DIAG["r2"] = any(e["type"] == "enemy.knockback" and "attribution" in e for e in ev)
+    return "R2 (attribution required)" if DIAG["r2"] else "legacy (pre-7a9ca55, no attribution fields)"
+
+
+def attr_ok(k, h):
+    if not DIAG["r2"]:
+        return True
+    src = "Hit:" + str(h.get("attackId"))
+    return all(f in k for f in ATTR_FIELDS) and k["attribution"] == "SingleSource" and k["velocitySets"] == 1 \
+        and k["firstSource"] == k["lastSource"] == src and k["firstAttackInstanceId"] == k["lastAttackInstanceId"] == h.get("attackInstanceId") \
+        and k["aiMoveDuring"] is False and k["blocked"] is False
+
+
 def press_of(s, action, before_tick, after_tick=-1):
     return [e for e in s if e["type"] == "input" and e.get("action") == action and e.get("edge") == "Press" and after_tick <= e["simulationTick"] <= before_tick]
 
@@ -80,8 +102,7 @@ def knock_disp(s, eid, h, ticks=40):
     ok = x0 is not None and x1 is not None and abs(k["displacement"] - (k["endX"] - k["startX"])) <= 1e-4 \
         and abs(k["startVel"] - kv) <= 1e-4 and kv != 0 and k["displacement"] * kv > 0 \
         and abs(k["startX"] - x0) <= 0.0051 and abs(k["endX"] - x1) <= 0.0051
-    if "attribution" in k:
-        ok = ok and k["attribution"] == "SingleSource" and k.get("firstAttackInstanceId") == h.get("attackInstanceId") and k.get("velocitySets") == 1
+    ok = ok and attr_ok(k, h)  # R3: every attribution field, consistent with the hit
     return abs(k["displacement"]) if ok else -1.0
 
 
@@ -106,8 +127,9 @@ def attack_start(s, eid):
 
 
 def check(ev):
+    diag = set_diag(ev)
     seg = segsegs = segments(ev)
-    out = {}
+    out = {"knockbackDiagnostics": diag}
 
     # ---- TC-06-11: physical hit during a super-armor attack: HP and combo go up, no stagger / knockback, the attack goes on (R-06-11)
     s = seg.get("ArmorPhysical", [])
@@ -292,15 +314,22 @@ def check(ev):
         first_hit = hits[0] if len(hits) == 1 else None
         attacker = (first_hit.get("targetId") if typ.startswith("guard") else first_hit.get("actorId")) if first_hit else None
         starts = [e for e in of(live, "attack.start") if d and e["eventId"] > d["eventId"]]
+        # R3 (GPT R2 review §4 #4): the ignored candidate is a real second attacker whose own attack instance is active on that tick
+        ig = ign[0] if len(ign) == 1 else None
+        ist = [e for e in sl if ig and e["type"] == "enemy.state" and e.get("actorId") == ig.get("actorId") and e.get("attackInstanceId") == ig.get("enemyAttackInstanceId")
+               and e["simulationTick"] <= ig["simulationTick"]]
+        ig_active = bool(ist) and ist[-1].get("stateAfter") == "AttackActive"
+        ig_ok = ig is not None and ig_active and ig.get("stateBefore") == ig.get("stateAfter") == "Dead" and ig.get("hp") == 0
         pr = [e for e in live if e["type"] == "input" and e.get("action") == "Attack" and e.get("edge") == "Press" and d and e["eventId"] > d["eventId"]]
         dbl.append({"case": name, "deaths": [(e["simulationTick"], e.get("targetId"), e.get("cause")) for e in dth],
                     "hits": [(e["type"], e["simulationTick"], e.get("actorId"), e.get("targetId")) for e in hits],
-                    "ignored": [(e["simulationTick"], e.get("actorId"), e.get("stateBefore")) for e in ign], "deathMotion": len(flow),
+                    "ignored": [(e["simulationTick"], e.get("actorId"), e.get("enemyAttackInstanceId"), e.get("stateBefore"), e.get("stateAfter"), e.get("hp")) for e in ign],
+                    "ignoredAttackActive": ig_active, "deathMotion": len(flow),
                     "attackPressesAfterDeath": len(pr), "attackStartsAfterDeath": len(starts),
                     "pass": d is not None and first_hit is not None and first_hit["type"] == typ and first_hit["simulationTick"] == d["simulationTick"]
                     and d.get("targetId") == attacker and d.get("cause") == cause and len(ign) == 1 and ign[0]["simulationTick"] == d["simulationTick"]
                     and ign[0]["eventId"] > d["eventId"] and ign[0].get("actorId") not in (None, attacker) and ign[0].get("stateBefore") == "Dead"
-                    and len(flow) == 1 and flow[0]["simulationTick"] == d["simulationTick"] and len(pr) >= 1 and not starts})
+                    and len(flow) == 1 and flow[0]["simulationTick"] == d["simulationTick"] and len(pr) >= 1 and not starts and ig_ok})
     out["WP08-F02-R1"] = {"cases": dbl, "pass": len(dbl) == 2 and all(r["pass"] for r in dbl)}
     out["TC-07-02"] = {"cases": rows, "pass": all(r["pass"] for r in rows)}
     out["TC-OPS-02"] = {"same": "TC-07-02 rows; D comes from the test supplier TEST-DMG-01 and is logged with each guard", "pass": out["TC-07-02"]["pass"]}
@@ -408,7 +437,7 @@ def pw_check(runs):
 
 def selftest(ev):
     base = check(ev)
-    res = [{"case": "original", "pass": {k: v["pass"] for k, v in base.items()}}]
+    res = [{"case": "original", "pass": {k: v["pass"] for k, v in base.items() if isinstance(v, dict)}}]
 
     def mutate(name, key, fn):
         m = copy.deepcopy(ev)
@@ -582,6 +611,16 @@ def selftest(ev):
     def kb_two_sources(m):
         k = first(m, "ArmorWeakMagic", "enemy.knockback"); k["attribution"] = "Ambiguous"; k["velocitySets"] = 2
     mutate("R2 06-12 weak armor magic interval fed by two sources", "TC-06-12", kb_two_sources)
+
+    # GPT R2 review §4 (#3, #4)
+    mutate("GPT-R2 06-12 SingleSource interval marked blocked", "TC-06-12", lambda m: first(m, "ArmorWeakMagic", "enemy.knockback").update(blocked=True))
+    mutate("GPT-R2 F02-R1 unknown second attacker and HitStun", "WP08-F02-R1",
+           lambda m: first(m, "DoubleLethalHit", "hit.player.ignored").update(actorId="never_spawned", stateAfter="HitStun"))
+    # R3 additions
+    mutate("R3 F02-R1 ignored names an attack instance that is not active", "WP08-F02-R1",
+           lambda m: first(m, "DoubleLethalGuard", "hit.player.ignored").update(enemyAttackInstanceId=-5))
+    mutate("R3 F02-R1 ignored candidate with HP left", "WP08-F02-R1", lambda m: first(m, "DoubleLethalHit", "hit.player.ignored").update(hp=3))
+    mutate("R3 06-12 AI moved during the interval", "TC-06-12", lambda m: first(m, "ArmorWeakMagic", "enemy.knockback").update(aiMoveDuring=True))
     return res
 
 

@@ -40,9 +40,32 @@ def enemies_at(t):
     return {m.group(1): (m.group(2), float(m.group(3)), float(m.group(5)), m.group(6)) for m in ENEMY.finditer(str(t.get("enemies", "")))}
 
 
+
+# R3 (GPT R2 review §4 #2/#3/#5): knockback attribution, one rule for every checker.
+# On a log from the R2-diagnostics build (any enemy.knockback carries attribution, 7a9ca55+) every field is required;
+# a log from an earlier build is reported as legacy and checked without them.
+ATTR_FIELDS = ("attribution", "velocitySets", "firstSource", "lastSource", "firstAttackInstanceId", "lastAttackInstanceId", "aiMoveDuring", "blocked")
+DIAG = {"r2": False}
+
+
+def set_diag(ev):
+    DIAG["r2"] = any(e["type"] == "enemy.knockback" and "attribution" in e for e in ev)
+    return "R2 (attribution required)" if DIAG["r2"] else "legacy (pre-7a9ca55, no attribution fields)"
+
+
+def attr_ok(k, h):
+    if not DIAG["r2"]:
+        return True
+    src = "Hit:" + str(h.get("attackId"))
+    return all(f in k for f in ATTR_FIELDS) and k["attribution"] == "SingleSource" and k["velocitySets"] == 1 \
+        and k["firstSource"] == k["lastSource"] == src and k["firstAttackInstanceId"] == k["lastAttackInstanceId"] == h.get("attackInstanceId") \
+        and k["aiMoveDuring"] is False and k["blocked"] is False
+
+
 def check_main(ev):
+    diag = set_diag(ev)
     seg = segments(ev)
-    out = {}
+    out = {"knockbackDiagnostics": diag}
 
     # ---- TC-INT-01: one chain on 10 mixed targets; only real hits count; dead targets end only their own link
     s = seg.get("TenMixedTargets", [])
@@ -108,7 +131,7 @@ def check_main(ev):
         kv = h.get("knockbackVel") or 0
         ok = x0 is not None and x1 is not None and abs(k["displacement"] - (k["endX"] - k["startX"])) <= 1e-4 and abs(k["startVel"] - kv) <= 1e-4 \
             and kv != 0 and k["displacement"] * kv > 0 and abs(k["startX"] - x0) <= 0.0051 and abs(k["endX"] - x1) <= 0.0051 \
-            and k.get("attribution") == "SingleSource" and k.get("firstAttackInstanceId") == h.get("attackInstanceId")
+            and attr_ok(k, h)  # R3 (GPT R2 review §4 #5): same attribution rule as WP-07/08
         return k, ok
     for case, scn, eid in (("magic", "BossArmorMagic", "wb3"), ("weakMagic(R1)", "BossArmorWeakMagic", "wb5")):
         s = seg.get(scn, [])
@@ -126,12 +149,20 @@ def check_main(ev):
     d = next(iter(of(s, "dodge")), None)
     # the startup can precede the segment marker (the script awaits it), so it is read from the whole log
     wb4_att = [e for e in of(ev, "enemy.state") if e.get("actorId") == "wb4" and e.get("stateAfter") == "AttackStartup" and d and e["eventId"] < d["eventId"]][-1:]
+    # R3 (GPT R2 review §4 #6/#7): the Dodge names wb4's own attack instance, active on that tick, and both HPs hold across the tick
+    inst = [e for e in of(ev, "enemy.state") if d and e.get("actorId") == "wb4" and e.get("attackInstanceId") == d.get("enemyAttackInstanceId")
+            and e["simulationTick"] <= d["simulationTick"] and e["eventId"] < d["eventId"]]
+    inst_ok = bool(inst) and inst[-1].get("stateAfter") == "AttackActive" and any(e.get("stateAfter") == "AttackStartup" for e in inst)
+    tk = {e["simulationTick"]: e for e in ev if e["type"] == "tick" and d and d["simulationTick"] - 1 <= e["simulationTick"] <= d["simulationTick"]}
+    hp_rows = [(t, tk[t].get("hp"), enemies_at(tk[t]).get("wb4", (None, None, None))[2]) for t in sorted(tk)]
+    hp_ok = d is not None and len(hp_rows) == 2 and all(r[1] == d.get("playerHp") and r[2] == d.get("enemyHp") for r in hp_rows)
     rows.append({"case": "simultaneous", "phase": phase_at(s, "wb4", d["simulationTick"]) if d else None,
+                 "enemyAttackInstance": d.get("enemyAttackInstanceId") if d else None, "instanceActive": inst_ok, "hpAcrossTick": hp_rows,
                  "dodge": (d["targetId"], d.get("damage"), d.get("enemyArmor")) if d else None,
                  "pass": d is not None and d.get("damage") == 0 and d.get("enemyArmor") is True and phase_at(s, "wb4", d["simulationTick"]) == "p2"
                  # R1 (GPT WP10-M01): the Dodge is with wb4, whose attack was running, and neither HP changes on that tick
                  and d.get("targetId") == "wb4" and bool(wb4_att) and wb4_att[0]["simulationTick"] <= d["simulationTick"]
-                 and phase_at(s, "wb4", d["simulationTick"]) is not None})
+                 and phase_at(s, "wb4", d["simulationTick"]) is not None and inst_ok and hp_ok})
     out["TC-INT-04"] = {"cases": rows, "note": "the magic case uses a warden copy whose p2 attacks at speed 0.5 (startup 0.7 s), test data",
                         "pass": all(r["pass"] for r in rows)}
 
@@ -170,16 +201,33 @@ def check_main(ev):
     ends = [(e["simulationTick"], e["actorId"], e.get("phase")) for e in of(s, "presentation.end")]
     # R1 (GPT WP10-M01 / INT-06): every transition of both bosses has its presentation start and end; warden p1->p2->p3;
     # after each transition the boss selects a pattern of the new phase AND that pattern really attacks (startup / projectile).
-    def attacked(b, t):
-        return any(e["simulationTick"] >= t and e.get("actorId") == b and (e["type"] == "projectile.spawn" or (e["type"] == "enemy.state" and e.get("stateAfter") == "AttackStartup"))
-                   for e in s)
+    # R3 (GPT R2 review §4 #8/#9): the selected pattern is in the new phase's table (the transition record's pattern list) and that same
+    # pattern is prepared or fired by the same boss; each transition's condition is checked against the log.
+    def attacked(b, t, pat):
+        # the same boss prepares that same pattern (every boss attack has a startup; a projectile alone is not enough)
+        return any(e["simulationTick"] >= t and e.get("actorId") == b and e["type"] == "enemy.state" and e.get("stateAfter") == "AttackStartup"
+                   and e.get("reason") == "Pattern:" + str(pat) for e in s)
+    def condition_met(rec):
+        c, b, t, fr = str(rec.get("condition")), rec["actorId"], rec["simulationTick"], rec["stateBefore"]
+        if c.startswith("HpBelow:"):
+            return rec.get("hpRatio") is not None and rec["hpRatio"] < float(c.split(":")[1])
+        if c.startswith("PatternUsed:"):
+            name, n = c.split(":")[1].rsplit("x", 1)
+            used = [e for e in of(s, "boss.pattern") if e["actorId"] == b and e["stateBefore"] == fr and e["stateAfter"] == name and e["simulationTick"] <= t]
+            return len(used) == int(n)
+        if c.startswith("Event:"):
+            return any(e.get("actorId") == b and str(e.get("reason", "")).startswith(c) and t - 1 <= e["simulationTick"] <= t for e in of(s, "boss.event"))
+        return False
     after = []
-    for (t, b, fr, to, c) in ph:
+    for rec in of(s, "boss.phase"):
+        t, b, fr, to = rec["simulationTick"], rec["actorId"], rec["stateBefore"], rec["stateAfter"]
+        table = [p for p in str(rec.get("patterns", "")).split(",") if p]
         end_t = next((r[0] for r in ends if r[1] == b and r[2] == to and r[0] >= t), None)
         sel = next((q for q in pats if q[1] == b and q[2] == to and end_t is not None and q[0] >= end_t), None)
-        after.append({"boss": b, "phase": to, "transitionTick": t, "presentationEnd": end_t, "pattern": sel[3] if sel else None,
-                      "attacked": bool(sel) and attacked(b, sel[0])})
-    after_ok = bool(after) and all(a["pattern"] is not None and a["attacked"] for a in after)
+        after.append({"boss": b, "phase": to, "transitionTick": t, "condition": rec.get("condition"), "conditionMet": condition_met(rec), "phaseTable": table,
+                      "presentationEnd": end_t, "pattern": sel[3] if sel else None, "patternInTable": bool(sel) and sel[3] in table,
+                      "attacked": bool(sel) and attacked(b, sel[0], sel[3])})
+    after_ok = bool(after) and all(a["pattern"] is not None and a["patternInTable"] and a["attacked"] and a["conditionMet"] for a in after)
     out["TC-INT-06"] = {"transitions": ph, "presentations": pres, "presentationEnds": ends, "afterTransition": after,
                         "pass": any(p[2] == "p1" and p[3] == "p2" and "Hp" in str(p[4]) for p in wb) and any(p[2] == "p2" and p[3] == "p3" for p in wb)
                         and any(p[2] == "s1" and p[3] == "s2" and "shift" in str(p[4]) for p in sn)
@@ -337,6 +385,23 @@ def selftest(main, i7, i8):
     mutate("R1 INT-06 sentinel never attacks in s2", "TC-INT-06", 0, lambda m: [drop(0, "SentinelPhase2Pattern", t, lambda e: e.get("actorId") == "sn" and
            (e["type"] == "projectile.spawn" or e.get("stateAfter") == "AttackStartup"))(m) for t in ("projectile.spawn", "enemy.state")])
     mutate("R1 INT-06 sentinel never selects an s2 pattern", "TC-INT-06", 0, drop(0, "SentinelPhase2Pattern", "boss.pattern", lambda e: e.get("actorId") == "sn"))
+
+    # GPT R2 review §4 (#5-#9)
+    mutate("GPT-R2 INT-04 weak magic: two sets and a Parry source", "TC-INT-04", 0,
+           lambda m: first(m, "BossArmorWeakMagic", "enemy.knockback").update(velocitySets=2, firstSource="Parry"))
+    mutate("GPT-R2 INT-04 Dodge names another enemy attack", "TC-INT-04", 0, lambda m: next(e for e in m if e["type"] == "dodge" and e["targetId"] == "wb4").update(enemyAttackInstanceId=90000))
+    def hp_loss(m):
+        d = next(e for e in m if e["type"] == "dodge" and e["targetId"] == "wb4")
+        t = next(e for e in m if e["type"] == "tick" and e["simulationTick"] == d["simulationTick"]); t["hp"] -= 20
+    mutate("GPT-R2 INT-04 player HP drops on the Dodge tick", "TC-INT-04", 0, hp_loss)
+    mutate("GPT-R2 INT-06 sentinel s2 selects an undeclared pattern", "TC-INT-06", 0,
+           lambda m: first(m, "SentinelPhase2Pattern", "boss.pattern", lambda e: e["actorId"] == "sn" and e["stateBefore"] == "s2").update(stateAfter="not_in_phase_table"))
+    mutate("GPT-R2 INT-06 warden p3 trigger is an unrelated event", "TC-INT-06", 0,
+           lambda m: first(m, "TwoBossTransitions", "boss.phase", lambda e: e["stateAfter"] == "p3").update(condition="Event:unrelated"))
+    # R3 additions
+    mutate("R3 INT-04 weak magic interval blocked", "TC-INT-04", 0, lambda m: first(m, "BossArmorWeakMagic", "enemy.knockback").update(blocked=True))
+    mutate("R3 INT-06 warden p2 fires a p3 pattern", "TC-INT-06", 0,
+           lambda m: [e.update(reason="Pattern:rush") for e in segments(m)["TwoBossTransitions"] if e["type"] == "enemy.state" and e.get("actorId") == "wb2" and e.get("reason") == "Pattern:shot2"])
     return res
 
 

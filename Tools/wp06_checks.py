@@ -310,20 +310,22 @@ def check(ev):
             e = next((x for x in of(sm, "attack.end") if a and x.get("attackInstanceId") == a["attackInstanceId"]), None)
             tk = {t["simulationTick"]: t for t in ticks(sm)}
             if not a or not e or a["simulationTick"] not in tk:
-                return sm, a, e, None, tk
-            x0 = tk[a["simulationTick"]]["x"]
+                return sm, a, e, None, tk, None
+            x0, y0 = tk[a["simulationTick"]]["x"], tk[a["simulationTick"]]["y"]
             d = [round(tk[k]["x"] - x0, 4) if k in tk else None for k in range(a["simulationTick"], e["simulationTick"] + 7)]
-            return sm, a, e, d, tk
-        _, ca, ce, cd, _ = motion("Control")
+            # R3 (GPT R2 review §4 #1): y relative to the attack start is compared too
+            dy = [round(tk[k]["y"] - y0, 4) if k in tk else None for k in range(a["simulationTick"], e["simulationTick"] + 1)]
+            return sm, a, e, d, tk, dy
+        _, ca, ce, cd, _, cdy = motion("Control")
         ctrl_ok = ca is not None and ce is not None and cd is not None and None not in cd and not of(seg.get(f"Air{atk}_Control", []), "input.reject")
         n = ce["simulationTick"] - ca["simulationTick"] if ctrl_ok else None
         offs = {"Move": [], "Jump": []}
         for case in ("Movestart", "Movemid", "Moveend", "Jumpstart", "Jumpmid", "Jumpend"):
-            sm, a, e, d, tk = motion(case)
+            sm, a, e, d, tk, dy = motion(case)
             row = {"attack": atk, "case": case}
             ok = ctrl_ok and a is not None and e is not None and d is not None and e["simulationTick"] - a["simulationTick"] == n
             if ok:
-                within = d[:n + 1] == cd[:n + 1]
+                within = d[:n + 1] == cd[:n + 1] and dy is not None and cdy is not None and None not in dy and dy == cdy
                 row.update({"motionTicks": n, "sameAsControlDuringMotion": within})
                 if case.startswith("Move"):
                     p = next((x for x in sm if x["type"] == "input" and x.get("action") == "MoveLeft" and x.get("edge") == "Press"), None)
@@ -626,6 +628,19 @@ def selftest(ev):
     mutate("R2 TC-05-01 jump during the air normal executes", "TC-05-01",
            lambda m: seg_first(m, "AirAirNormal_Jumpmid", "input.reject").update({"type": "air.use", "reason": "ExtraJump"}))
     mutate("R2 TC-05-01 dive jump reject from another press", "TC-05-01", lambda m: seg_first(m, "AirDive_Jumpend", "input.reject").__setitem__("inputEventId", 99999))
+    # GPT R2 review §4 (#1)
+    def dive_up(m):
+        s = segments(m)["AirDive_Jumpmid"]
+        a = next(e for e in s if e["type"] == "attack.start" and e.get("attackId") == "dive")
+        next(e for e in s if e["type"] == "tick" and e["simulationTick"] == a["simulationTick"] + 5)["y"] += 3
+    mutate("GPT-R2 TC-05-01 vertical excursion during the locked dive", "TC-05-01", dive_up)
+    # R3 addition
+    def air_lift(m):
+        s = segments(m)["AirAirNormal_Movemid"]
+        a = next(e for e in s if e["type"] == "attack.start" and e.get("attackId") == "air1")
+        for e in s:
+            if e["type"] == "tick" and a["simulationTick"] + 2 <= e["simulationTick"] <= a["simulationTick"] + 4: e["y"] += 0.01
+    mutate("R3 TC-05-01 air normal rises 1 cm during the motion", "TC-05-01", air_lift)
     mutate("R2 TC-05-01 dive move pressed after the end", "TC-05-01",
            lambda m: seg_first(m, "AirDive_Moveend", "input", lambda e: e.get("action") == "MoveLeft" and e.get("edge") == "Press").__setitem__(
                "simulationTick", seg_first(m, "AirDive_Moveend", "attack.end")["simulationTick"] + 1))
