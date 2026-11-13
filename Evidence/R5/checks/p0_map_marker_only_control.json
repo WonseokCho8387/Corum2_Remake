@@ -1,0 +1,21 @@
+{
+ "control": "one marker tagged TC-OPS-01, no manifest, no check result",
+ "expectedCategory": "TAGGED_ONLY",
+ "tc": "TC-OPS-01",
+ "category": "TAGGED_ONLY",
+ "runs": [
+  {
+   "run": "RUN-20991231-000000",
+   "manifest": null,
+   "provenance": "no manifest"
+  }
+ ],
+ "counts": {
+  "CHECKED": 0,
+  "OBSERVED": 0,
+  "CROSS": 0,
+  "TAGGED_ONLY": 1,
+  "NO_TAG": 107
+ },
+ "ok": true
+}

@@ -1,0 +1,3266 @@
+{
+ "tcs": [
+  {
+   "tc": "TC-00-01",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "WP-10"
+   ],
+   "taggedRuns": 0,
+   "checks": 0,
+   "category": "NO_TAG"
+  },
+  {
+   "tc": "TC-00-02",
+   "gptStatus": "HUMAN_REVIEW",
+   "gptBasis": [
+    "WP-10"
+   ],
+   "taggedRuns": 0,
+   "checks": 0,
+   "category": "NO_TAG"
+  },
+  {
+   "tc": "TC-00-03",
+   "gptStatus": "BLOCKED_ENV",
+   "gptBasis": [
+    "WP-09"
+   ],
+   "taggedRuns": 0,
+   "checks": 0,
+   "category": "NO_TAG"
+  },
+  {
+   "tc": "TC-01-01",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "WP-09-R1"
+   ],
+   "taggedRuns": 2,
+   "checks": 5,
+   "category": "CHECKED",
+   "check": "Evidence/R5/checks/wp09_checks_plane.json",
+   "checkKey": "TC-01-01",
+   "runs": [
+    {
+     "run": "RUN-20261112-234529",
+     "manifest": "Evidence/WP-09-R1/runs/RUN-20261112-234529.manifest.yaml",
+     "packet": "WP-09-R1",
+     "scene": "Assets/Corum2/Scenes/WP04_AI.unity",
+     "revision": "de757b8",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-09-R1/video/r1plane-RUN-20261112-234529.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-01-02",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "WP-09"
+   ],
+   "taggedRuns": 1,
+   "checks": 0,
+   "category": "TAGGED_ONLY",
+   "runs": [
+    {
+     "run": "RUN-20261110-011834",
+     "manifest": "Evidence/WP-01-R1/runs/RUN-20261110-011834.manifest.yaml",
+     "packet": "WP-01-R1",
+     "scene": "Assets/Corum2/Scenes/WP01_MapMovement.unity",
+     "revision": "1559584",
+     "dirty": false,
+     "provenance": "packet README (legacy manifest)",
+     "videos": [
+      "Evidence/WP-01-R1/video/main-RUN-20261110-011834.mp4",
+      "Evidence/WP-01-R1/video/main-RUN-20261110-011834_stills"
+     ]
+    }
+   ]
+  },
+  {
+   "tc": "TC-01-03",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "WP-09"
+   ],
+   "taggedRuns": 1,
+   "checks": 0,
+   "category": "TAGGED_ONLY",
+   "runs": [
+    {
+     "run": "RUN-20261110-011834",
+     "manifest": "Evidence/WP-01-R1/runs/RUN-20261110-011834.manifest.yaml",
+     "packet": "WP-01-R1",
+     "scene": "Assets/Corum2/Scenes/WP01_MapMovement.unity",
+     "revision": "1559584",
+     "dirty": false,
+     "provenance": "packet README (legacy manifest)",
+     "videos": [
+      "Evidence/WP-01-R1/video/main-RUN-20261110-011834.mp4",
+      "Evidence/WP-01-R1/video/main-RUN-20261110-011834_stills"
+     ]
+    }
+   ]
+  },
+  {
+   "tc": "TC-01-04",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "WP-09"
+   ],
+   "taggedRuns": 1,
+   "checks": 0,
+   "category": "TAGGED_ONLY",
+   "runs": [
+    {
+     "run": "RUN-20261110-011834",
+     "manifest": "Evidence/WP-01-R1/runs/RUN-20261110-011834.manifest.yaml",
+     "packet": "WP-01-R1",
+     "scene": "Assets/Corum2/Scenes/WP01_MapMovement.unity",
+     "revision": "1559584",
+     "dirty": false,
+     "provenance": "packet README (legacy manifest)",
+     "videos": [
+      "Evidence/WP-01-R1/video/main-RUN-20261110-011834.mp4",
+      "Evidence/WP-01-R1/video/main-RUN-20261110-011834_stills"
+     ]
+    }
+   ]
+  },
+  {
+   "tc": "TC-02-01",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "WP-09-R1"
+   ],
+   "taggedRuns": 4,
+   "checks": 12,
+   "category": "CHECKED",
+   "check": "Evidence/R5/checks/wp09_checks_main.json",
+   "checkKey": "TC-02-01",
+   "runs": [
+    {
+     "run": "RUN-20261112-234229",
+     "manifest": "Evidence/WP-09-R1/runs/RUN-20261112-234229.manifest.yaml",
+     "packet": "WP-09-R1",
+     "scene": "Assets/Corum2/Scenes/WP06_ComboState.unity",
+     "revision": "de757b8",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-09-R1/video/r1main-RUN-20261112-234229.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-02-02",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "WP-05-R3"
+   ],
+   "taggedRuns": 3,
+   "checks": 13,
+   "category": "CHECKED",
+   "check": "Evidence/WP-05-R3/checks/WP-05-R2_main_under_R3_checker.json",
+   "checkKey": "TC-02-02",
+   "runs": [
+    {
+     "run": "RUN-20261112-102835",
+     "manifest": "Evidence/WP-05-R2/runs/RUN-20261112-102835.manifest.yaml",
+     "packet": "WP-05-R2",
+     "scene": "Assets/Corum2/Scenes/WP05_MagicDeath.unity",
+     "revision": "5af26f0",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-05-R2/video/main-RUN-20261112-102835.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-02-03",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "WP-03"
+   ],
+   "taggedRuns": 1,
+   "checks": 0,
+   "category": "TAGGED_ONLY",
+   "runs": [
+    {
+     "run": "RUN-20261110-122933",
+     "manifest": "Evidence/WP-03/runs/RUN-20261110-122933.manifest.yaml",
+     "packet": "WP-03",
+     "scene": "Assets/Corum2/Scenes/WP03_Ring.unity",
+     "revision": "37929b8",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-03/video/main-RUN-20261110-122933.mp4",
+      "Evidence/WP-03/video/main-RUN-20261110-122933_stills"
+     ]
+    }
+   ]
+  },
+  {
+   "tc": "TC-02-04",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "WP-09"
+   ],
+   "taggedRuns": 0,
+   "checks": 0,
+   "category": "NO_TAG"
+  },
+  {
+   "tc": "TC-02-05",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "WP-09"
+   ],
+   "taggedRuns": 1,
+   "checks": 0,
+   "category": "TAGGED_ONLY",
+   "runs": [
+    {
+     "run": "RUN-20261110-122933",
+     "manifest": "Evidence/WP-03/runs/RUN-20261110-122933.manifest.yaml",
+     "packet": "WP-03",
+     "scene": "Assets/Corum2/Scenes/WP03_Ring.unity",
+     "revision": "37929b8",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-03/video/main-RUN-20261110-122933.mp4",
+      "Evidence/WP-03/video/main-RUN-20261110-122933_stills"
+     ]
+    }
+   ]
+  },
+  {
+   "tc": "TC-02-06",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "WP-03"
+   ],
+   "taggedRuns": 1,
+   "checks": 0,
+   "category": "TAGGED_ONLY",
+   "runs": [
+    {
+     "run": "RUN-20261110-122933",
+     "manifest": "Evidence/WP-03/runs/RUN-20261110-122933.manifest.yaml",
+     "packet": "WP-03",
+     "scene": "Assets/Corum2/Scenes/WP03_Ring.unity",
+     "revision": "37929b8",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-03/video/main-RUN-20261110-122933.mp4",
+      "Evidence/WP-03/video/main-RUN-20261110-122933_stills"
+     ]
+    }
+   ]
+  },
+  {
+   "tc": "TC-02-07",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "WP-09"
+   ],
+   "taggedRuns": 1,
+   "checks": 0,
+   "category": "TAGGED_ONLY",
+   "runs": [
+    {
+     "run": "RUN-20261110-122933",
+     "manifest": "Evidence/WP-03/runs/RUN-20261110-122933.manifest.yaml",
+     "packet": "WP-03",
+     "scene": "Assets/Corum2/Scenes/WP03_Ring.unity",
+     "revision": "37929b8",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-03/video/main-RUN-20261110-122933.mp4",
+      "Evidence/WP-03/video/main-RUN-20261110-122933_stills"
+     ]
+    }
+   ]
+  },
+  {
+   "tc": "TC-02-08",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "WP-03"
+   ],
+   "taggedRuns": 1,
+   "checks": 0,
+   "category": "TAGGED_ONLY",
+   "runs": [
+    {
+     "run": "RUN-20261110-122933",
+     "manifest": "Evidence/WP-03/runs/RUN-20261110-122933.manifest.yaml",
+     "packet": "WP-03",
+     "scene": "Assets/Corum2/Scenes/WP03_Ring.unity",
+     "revision": "37929b8",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-03/video/main-RUN-20261110-122933.mp4",
+      "Evidence/WP-03/video/main-RUN-20261110-122933_stills"
+     ]
+    }
+   ]
+  },
+  {
+   "tc": "TC-02-09",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "WP-09"
+   ],
+   "taggedRuns": 1,
+   "checks": 0,
+   "category": "TAGGED_ONLY",
+   "runs": [
+    {
+     "run": "RUN-20261110-122933",
+     "manifest": "Evidence/WP-03/runs/RUN-20261110-122933.manifest.yaml",
+     "packet": "WP-03",
+     "scene": "Assets/Corum2/Scenes/WP03_Ring.unity",
+     "revision": "37929b8",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-03/video/main-RUN-20261110-122933.mp4",
+      "Evidence/WP-03/video/main-RUN-20261110-122933_stills"
+     ]
+    }
+   ]
+  },
+  {
+   "tc": "TC-02-10",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "WP-05-R3"
+   ],
+   "taggedRuns": 4,
+   "checks": 13,
+   "category": "CHECKED",
+   "check": "Evidence/WP-05-R3/checks/WP-05-R2_main_under_R3_checker.json",
+   "checkKey": "TC-02-10",
+   "runs": [
+    {
+     "run": "RUN-20261112-102835",
+     "manifest": "Evidence/WP-05-R2/runs/RUN-20261112-102835.manifest.yaml",
+     "packet": "WP-05-R2",
+     "scene": "Assets/Corum2/Scenes/WP05_MagicDeath.unity",
+     "revision": "5af26f0",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-05-R2/video/main-RUN-20261112-102835.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-02-11",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "WP-09"
+   ],
+   "taggedRuns": 2,
+   "checks": 0,
+   "category": "TAGGED_ONLY",
+   "runs": [
+    {
+     "run": "RUN-20261110-122933",
+     "manifest": "Evidence/WP-03/runs/RUN-20261110-122933.manifest.yaml",
+     "packet": "WP-03",
+     "scene": "Assets/Corum2/Scenes/WP03_Ring.unity",
+     "revision": "37929b8",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-03/video/main-RUN-20261110-122933.mp4",
+      "Evidence/WP-03/video/main-RUN-20261110-122933_stills"
+     ]
+    },
+    {
+     "run": "RUN-20261110-131240",
+     "manifest": "Evidence/WP-03-R1/runs/RUN-20261110-131240.manifest.yaml",
+     "packet": "WP-03-R1",
+     "scene": "Assets/Corum2/Scenes/WP03_Ring.unity",
+     "revision": "0ff03b6",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-03-R1/video/main-RUN-20261110-131240.mp4",
+      "Evidence/WP-03-R1/video/main-RUN-20261110-131240_stills"
+     ]
+    }
+   ]
+  },
+  {
+   "tc": "TC-03-01",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "WP-09"
+   ],
+   "taggedRuns": 3,
+   "checks": 8,
+   "category": "CHECKED",
+   "check": "Evidence/R5/checks/wp09_checks_main.json",
+   "checkKey": "TC-03-01",
+   "runs": [
+    {
+     "run": "RUN-20261112-234229",
+     "manifest": "Evidence/WP-09-R1/runs/RUN-20261112-234229.manifest.yaml",
+     "packet": "WP-09-R1",
+     "scene": "Assets/Corum2/Scenes/WP06_ComboState.unity",
+     "revision": "de757b8",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-09-R1/video/r1main-RUN-20261112-234229.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-03-02",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "WP-09"
+   ],
+   "taggedRuns": 1,
+   "checks": 0,
+   "category": "TAGGED_ONLY",
+   "runs": [
+    {
+     "run": "RUN-20261110-011834",
+     "manifest": "Evidence/WP-01-R1/runs/RUN-20261110-011834.manifest.yaml",
+     "packet": "WP-01-R1",
+     "scene": "Assets/Corum2/Scenes/WP01_MapMovement.unity",
+     "revision": "1559584",
+     "dirty": false,
+     "provenance": "packet README (legacy manifest)",
+     "videos": [
+      "Evidence/WP-01-R1/video/main-RUN-20261110-011834.mp4",
+      "Evidence/WP-01-R1/video/main-RUN-20261110-011834_stills"
+     ]
+    }
+   ]
+  },
+  {
+   "tc": "TC-03-03",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "WP-09"
+   ],
+   "taggedRuns": 1,
+   "checks": 0,
+   "category": "TAGGED_ONLY",
+   "runs": [
+    {
+     "run": "RUN-20261110-012001",
+     "manifest": "Evidence/WP-01-R1/runs/RUN-20261110-012001.manifest.yaml",
+     "packet": "WP-01-R1",
+     "scene": "Assets/Corum2/Scenes/WP01_MapMovement.unity",
+     "revision": "1559584",
+     "dirty": false,
+     "provenance": "packet README (legacy manifest)",
+     "videos": [
+      "Evidence/WP-01-R1/video/locked-RUN-20261110-012001.mp4",
+      "Evidence/WP-01-R1/video/locked-RUN-20261110-012001_stills"
+     ]
+    }
+   ]
+  },
+  {
+   "tc": "TC-03-04",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "WP-09-R1"
+   ],
+   "taggedRuns": 2,
+   "checks": 4,
+   "category": "CHECKED",
+   "check": "Evidence/R5/checks/wp09_checks_slide.json",
+   "checkKey": "TC-03-04",
+   "runs": [
+    {
+     "run": "RUN-20261112-235043",
+     "manifest": "Evidence/WP-09-R1/runs/RUN-20261112-235043.manifest.yaml",
+     "packet": "WP-09-R1",
+     "scene": "Assets/Corum2/Scenes/WP01_MapMovement.unity",
+     "revision": "de757b8",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-09-R1/video/r1slide-RUN-20261112-235043.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-03-05",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "WP-09"
+   ],
+   "taggedRuns": 1,
+   "checks": 0,
+   "category": "TAGGED_ONLY",
+   "runs": [
+    {
+     "run": "RUN-20261110-011834",
+     "manifest": "Evidence/WP-01-R1/runs/RUN-20261110-011834.manifest.yaml",
+     "packet": "WP-01-R1",
+     "scene": "Assets/Corum2/Scenes/WP01_MapMovement.unity",
+     "revision": "1559584",
+     "dirty": false,
+     "provenance": "packet README (legacy manifest)",
+     "videos": [
+      "Evidence/WP-01-R1/video/main-RUN-20261110-011834.mp4",
+      "Evidence/WP-01-R1/video/main-RUN-20261110-011834_stills"
+     ]
+    }
+   ]
+  },
+  {
+   "tc": "TC-03-06",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "WP-09"
+   ],
+   "taggedRuns": 3,
+   "checks": 8,
+   "category": "CHECKED",
+   "check": "Evidence/R5/checks/wp09_checks_main.json",
+   "checkKey": "TC-03-06",
+   "runs": [
+    {
+     "run": "RUN-20261112-234229",
+     "manifest": "Evidence/WP-09-R1/runs/RUN-20261112-234229.manifest.yaml",
+     "packet": "WP-09-R1",
+     "scene": "Assets/Corum2/Scenes/WP06_ComboState.unity",
+     "revision": "de757b8",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-09-R1/video/r1main-RUN-20261112-234229.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-03-07",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "WP-09"
+   ],
+   "taggedRuns": 2,
+   "checks": 8,
+   "category": "CHECKED",
+   "check": "Evidence/R5/checks/wp09_checks_main.json",
+   "checkKey": "TC-03-07",
+   "runs": [
+    {
+     "run": "RUN-20261112-234229",
+     "manifest": "Evidence/WP-09-R1/runs/RUN-20261112-234229.manifest.yaml",
+     "packet": "WP-09-R1",
+     "scene": "Assets/Corum2/Scenes/WP06_ComboState.unity",
+     "revision": "de757b8",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-09-R1/video/r1main-RUN-20261112-234229.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-03-08",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "WP-09"
+   ],
+   "taggedRuns": 3,
+   "checks": 8,
+   "category": "CHECKED",
+   "check": "Evidence/R5/checks/wp09_checks_main.json",
+   "checkKey": "TC-03-08",
+   "runs": [
+    {
+     "run": "RUN-20261112-234229",
+     "manifest": "Evidence/WP-09-R1/runs/RUN-20261112-234229.manifest.yaml",
+     "packet": "WP-09-R1",
+     "scene": "Assets/Corum2/Scenes/WP06_ComboState.unity",
+     "revision": "de757b8",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-09-R1/video/r1main-RUN-20261112-234229.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-03-09",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "WP-09"
+   ],
+   "taggedRuns": 3,
+   "checks": 8,
+   "category": "CHECKED",
+   "check": "Evidence/R5/checks/wp09_checks_main.json",
+   "checkKey": "TC-03-09",
+   "runs": [
+    {
+     "run": "RUN-20261112-234229",
+     "manifest": "Evidence/WP-09-R1/runs/RUN-20261112-234229.manifest.yaml",
+     "packet": "WP-09-R1",
+     "scene": "Assets/Corum2/Scenes/WP06_ComboState.unity",
+     "revision": "de757b8",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-09-R1/video/r1main-RUN-20261112-234229.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-04-01",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "WP-10"
+   ],
+   "taggedRuns": 3,
+   "checks": 0,
+   "category": "TAGGED_ONLY",
+   "runs": [
+    {
+     "run": "RUN-20261110-020410",
+     "manifest": "Evidence/WP-02/runs/RUN-20261110-020410.manifest.yaml",
+     "packet": "WP-02",
+     "scene": "Assets/Corum2/Scenes/WP02_Combat.unity",
+     "revision": "4cf88ba",
+     "dirty": false,
+     "provenance": "packet README (legacy manifest)",
+     "videos": [
+      "Evidence/WP-02/video/main-RUN-20261110-020410.mp4",
+      "Evidence/WP-02/video/main-RUN-20261110-020410_stills"
+     ]
+    },
+    {
+     "run": "RUN-20261110-075442",
+     "manifest": "Evidence/WP-02-R1/runs/RUN-20261110-075442.manifest.yaml",
+     "packet": "WP-02-R1",
+     "scene": "Assets/Corum2/Scenes/WP02_Combat.unity",
+     "revision": "7f79776",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-02-R1/video/r1-RUN-20261110-075442.mp4",
+      "Evidence/WP-02-R1/video/r1-RUN-20261110-075442_stills"
+     ]
+    },
+    {
+     "run": "RUN-20261110-075540",
+     "manifest": "Evidence/WP-02-R1/runs/RUN-20261110-075540.manifest.yaml",
+     "packet": "WP-02-R1",
+     "scene": "Assets/Corum2/Scenes/WP02_Combat.unity",
+     "revision": "7f79776",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-02-R1/video/main-RUN-20261110-075540.mp4",
+      "Evidence/WP-02-R1/video/main-RUN-20261110-075540_stills"
+     ]
+    }
+   ]
+  },
+  {
+   "tc": "TC-04-02",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "R2 독립 검토",
+    "WP-06~08 R1"
+   ],
+   "taggedRuns": 3,
+   "checks": 5,
+   "category": "CHECKED",
+   "check": "Evidence/R4/checks/wp06_checks_main.json",
+   "checkKey": "TC-04-02",
+   "runs": [
+    {
+     "run": "RUN-20261113-051441",
+     "manifest": "Evidence/WP-06-R2/runs/RUN-20261113-051441.manifest.yaml",
+     "packet": "WP-06-R2",
+     "scene": "Assets/Corum2/Scenes/WP06_ComboState.unity",
+     "revision": "7a9ca55",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-06-R2/video/r2main-RUN-20261113-051441.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-04-03",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "R2 독립 검토",
+    "WP-06~08 R1"
+   ],
+   "taggedRuns": 3,
+   "checks": 5,
+   "category": "CHECKED",
+   "check": "Evidence/R4/checks/wp06_checks_main.json",
+   "checkKey": "TC-04-03",
+   "runs": [
+    {
+     "run": "RUN-20261113-051441",
+     "manifest": "Evidence/WP-06-R2/runs/RUN-20261113-051441.manifest.yaml",
+     "packet": "WP-06-R2",
+     "scene": "Assets/Corum2/Scenes/WP06_ComboState.unity",
+     "revision": "7a9ca55",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-06-R2/video/r2main-RUN-20261113-051441.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-04-04",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "R2 독립 검토"
+   ],
+   "taggedRuns": 5,
+   "checks": 5,
+   "category": "CHECKED",
+   "check": "Evidence/R4/checks/wp06_checks_main.json",
+   "checkKey": "TC-04-04",
+   "runs": [
+    {
+     "run": "RUN-20261113-051441",
+     "manifest": "Evidence/WP-06-R2/runs/RUN-20261113-051441.manifest.yaml",
+     "packet": "WP-06-R2",
+     "scene": "Assets/Corum2/Scenes/WP06_ComboState.unity",
+     "revision": "7a9ca55",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-06-R2/video/r2main-RUN-20261113-051441.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-04-05",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "WP-07"
+   ],
+   "taggedRuns": 2,
+   "checks": 0,
+   "category": "TAGGED_ONLY",
+   "runs": [
+    {
+     "run": "RUN-20261110-020410",
+     "manifest": "Evidence/WP-02/runs/RUN-20261110-020410.manifest.yaml",
+     "packet": "WP-02",
+     "scene": "Assets/Corum2/Scenes/WP02_Combat.unity",
+     "revision": "4cf88ba",
+     "dirty": false,
+     "provenance": "packet README (legacy manifest)",
+     "videos": [
+      "Evidence/WP-02/video/main-RUN-20261110-020410.mp4",
+      "Evidence/WP-02/video/main-RUN-20261110-020410_stills"
+     ]
+    },
+    {
+     "run": "RUN-20261110-075540",
+     "manifest": "Evidence/WP-02-R1/runs/RUN-20261110-075540.manifest.yaml",
+     "packet": "WP-02-R1",
+     "scene": "Assets/Corum2/Scenes/WP02_Combat.unity",
+     "revision": "7f79776",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-02-R1/video/main-RUN-20261110-075540.mp4",
+      "Evidence/WP-02-R1/video/main-RUN-20261110-075540_stills"
+     ]
+    }
+   ]
+  },
+  {
+   "tc": "TC-04-06",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "R2 독립 검토"
+   ],
+   "taggedRuns": 3,
+   "checks": 5,
+   "category": "CHECKED",
+   "check": "Evidence/R4/checks/wp06_checks_main.json",
+   "checkKey": "TC-04-06",
+   "runs": [
+    {
+     "run": "RUN-20261113-051441",
+     "manifest": "Evidence/WP-06-R2/runs/RUN-20261113-051441.manifest.yaml",
+     "packet": "WP-06-R2",
+     "scene": "Assets/Corum2/Scenes/WP06_ComboState.unity",
+     "revision": "7a9ca55",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-06-R2/video/r2main-RUN-20261113-051441.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-04-07",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "R2 독립 검토",
+    "WP-06~08 R1"
+   ],
+   "taggedRuns": 3,
+   "checks": 5,
+   "category": "CHECKED",
+   "check": "Evidence/R4/checks/wp06_checks_main.json",
+   "checkKey": "TC-04-07",
+   "runs": [
+    {
+     "run": "RUN-20261113-051441",
+     "manifest": "Evidence/WP-06-R2/runs/RUN-20261113-051441.manifest.yaml",
+     "packet": "WP-06-R2",
+     "scene": "Assets/Corum2/Scenes/WP06_ComboState.unity",
+     "revision": "7a9ca55",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-06-R2/video/r2main-RUN-20261113-051441.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-04-08",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "R2 독립 검토",
+    "WP-06~08 R1"
+   ],
+   "taggedRuns": 3,
+   "checks": 5,
+   "category": "CHECKED",
+   "check": "Evidence/R4/checks/wp06_checks_main.json",
+   "checkKey": "TC-04-08",
+   "runs": [
+    {
+     "run": "RUN-20261113-051441",
+     "manifest": "Evidence/WP-06-R2/runs/RUN-20261113-051441.manifest.yaml",
+     "packet": "WP-06-R2",
+     "scene": "Assets/Corum2/Scenes/WP06_ComboState.unity",
+     "revision": "7a9ca55",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-06-R2/video/r2main-RUN-20261113-051441.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-04-09",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "R2 독립 검토",
+    "WP-06~08 R1"
+   ],
+   "taggedRuns": 6,
+   "checks": 5,
+   "category": "CHECKED",
+   "check": "Evidence/R4/checks/wp06_checks_TC-04-09.json",
+   "checkKey": "TC-04-09",
+   "runs": [
+    {
+     "run": "RUN-20261113-052020",
+     "manifest": "Evidence/WP-06-R2/runs/RUN-20261113-052020.manifest.yaml",
+     "packet": "WP-06-R2",
+     "scene": "Assets/Corum2/Scenes/WP06_ComboState.unity",
+     "revision": "7a9ca55",
+     "dirty": true,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-06-R2/video/r2cw02-RUN-20261113-052020.mp4"
+     ]
+    },
+    {
+     "run": "RUN-20261113-052239",
+     "manifest": "Evidence/WP-06-R2/runs/RUN-20261113-052239.manifest.yaml",
+     "packet": "WP-06-R2",
+     "scene": "Assets/Corum2/Scenes/WP06_ComboState.unity",
+     "revision": "7a9ca55",
+     "dirty": true,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-06-R2/video/r2cw06-RUN-20261113-052239.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-04-10",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "WP-08"
+   ],
+   "taggedRuns": 0,
+   "checks": 0,
+   "category": "CROSS",
+   "via": [
+    {
+     "key": "TC-06-18",
+     "check": "Evidence/R4/checks/wp08_checks_main.json",
+     "runs": [
+      {
+       "run": "RUN-20261113-053139",
+       "manifest": "Evidence/WP-08-R2/runs/RUN-20261113-053139.manifest.yaml",
+       "packet": "WP-08-R2",
+       "scene": "Assets/Corum2/Scenes/WP08_Defense.unity",
+       "revision": "7a9ca55",
+       "dirty": false,
+       "provenance": "manifest",
+       "videos": [
+        "Evidence/WP-08-R2/video/r2main-RUN-20261113-053139.mp4"
+       ]
+      }
+     ]
+    },
+    {
+     "key": "TC-INT-01",
+     "check": "Evidence/R4/checks/wp10_checks.json",
+     "runs": [
+      {
+       "run": "RUN-20261113-054149",
+       "manifest": "Evidence/WP-10-R1/runs/RUN-20261113-054149.manifest.yaml",
+       "packet": "WP-10-R1",
+       "scene": "Assets/Corum2/Scenes/WP10_Integration.unity",
+       "revision": "7a9ca55",
+       "dirty": false,
+       "provenance": "manifest",
+       "videos": [
+        "Evidence/WP-10-R1/video/r1main-RUN-20261113-054149.mp4"
+       ]
+      },
+      {
+       "run": "RUN-20261113-054514",
+       "manifest": "Evidence/WP-10-R1/runs/RUN-20261113-054514.manifest.yaml",
+       "packet": "WP-10-R1",
+       "scene": "Assets/Corum2/Scenes/WP03_Ring.unity",
+       "revision": "7a9ca55",
+       "dirty": false,
+       "provenance": "manifest",
+       "videos": [
+        "Evidence/WP-10-R1/video/r1int07-RUN-20261113-054514.mp4"
+       ]
+      },
+      {
+       "run": "RUN-20261113-054756",
+       "manifest": "Evidence/WP-10-R1/runs/RUN-20261113-054756.manifest.yaml",
+       "packet": "WP-10-R1",
+       "scene": "Assets/Corum2/Scenes/WP05_MagicDeath.unity",
+       "revision": "7a9ca55",
+       "dirty": false,
+       "provenance": "manifest",
+       "videos": [
+        "Evidence/WP-10-R1/video/r1int08-RUN-20261113-054756.mp4"
+       ]
+      }
+     ]
+    }
+   ],
+   "reason": "the dead target's chain ends while each surviving target keeps its own (GPT WP-08 / INT-01)",
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-05-01",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "R2 독립 검토"
+   ],
+   "taggedRuns": 5,
+   "checks": 5,
+   "category": "CHECKED",
+   "check": "Evidence/R4/checks/wp06_checks_main.json",
+   "checkKey": "TC-05-01",
+   "runs": [
+    {
+     "run": "RUN-20261113-051441",
+     "manifest": "Evidence/WP-06-R2/runs/RUN-20261113-051441.manifest.yaml",
+     "packet": "WP-06-R2",
+     "scene": "Assets/Corum2/Scenes/WP06_ComboState.unity",
+     "revision": "7a9ca55",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-06-R2/video/r2main-RUN-20261113-051441.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-05-02",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "WP-08"
+   ],
+   "taggedRuns": 2,
+   "checks": 0,
+   "category": "TAGGED_ONLY",
+   "runs": [
+    {
+     "run": "RUN-20261110-020410",
+     "manifest": "Evidence/WP-02/runs/RUN-20261110-020410.manifest.yaml",
+     "packet": "WP-02",
+     "scene": "Assets/Corum2/Scenes/WP02_Combat.unity",
+     "revision": "4cf88ba",
+     "dirty": false,
+     "provenance": "packet README (legacy manifest)",
+     "videos": [
+      "Evidence/WP-02/video/main-RUN-20261110-020410.mp4",
+      "Evidence/WP-02/video/main-RUN-20261110-020410_stills"
+     ]
+    },
+    {
+     "run": "RUN-20261110-075540",
+     "manifest": "Evidence/WP-02-R1/runs/RUN-20261110-075540.manifest.yaml",
+     "packet": "WP-02-R1",
+     "scene": "Assets/Corum2/Scenes/WP02_Combat.unity",
+     "revision": "7f79776",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-02-R1/video/main-RUN-20261110-075540.mp4",
+      "Evidence/WP-02-R1/video/main-RUN-20261110-075540_stills"
+     ]
+    }
+   ]
+  },
+  {
+   "tc": "TC-05-03",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "R2 독립 검토",
+    "WP-06~08 R1"
+   ],
+   "taggedRuns": 3,
+   "checks": 5,
+   "category": "CHECKED",
+   "check": "Evidence/R4/checks/wp06_checks_main.json",
+   "checkKey": "TC-05-03",
+   "runs": [
+    {
+     "run": "RUN-20261113-051441",
+     "manifest": "Evidence/WP-06-R2/runs/RUN-20261113-051441.manifest.yaml",
+     "packet": "WP-06-R2",
+     "scene": "Assets/Corum2/Scenes/WP06_ComboState.unity",
+     "revision": "7a9ca55",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-06-R2/video/r2main-RUN-20261113-051441.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-05-04",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "WP-11A"
+   ],
+   "taggedRuns": 1,
+   "checks": 2,
+   "category": "CHECKED",
+   "check": "Evidence/WP-11A-R1/checks/wp11_checks_WP11A_main.json",
+   "checkKey": "TC-05-04",
+   "runs": [
+    {
+     "run": "RUN-20261113-111800",
+     "manifest": "Evidence/WP-11A/runs/RUN-20261113-111800.manifest.yaml",
+     "packet": "WP-11A",
+     "scene": "Assets/Corum2/Scenes/WP11_Evidence.unity",
+     "revision": "e088c32",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-11A/video/main-RUN-20261113-111800.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-05-05",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "WP-09"
+   ],
+   "taggedRuns": 1,
+   "checks": 0,
+   "category": "TAGGED_ONLY",
+   "runs": [
+    {
+     "run": "RUN-20261110-122933",
+     "manifest": "Evidence/WP-03/runs/RUN-20261110-122933.manifest.yaml",
+     "packet": "WP-03",
+     "scene": "Assets/Corum2/Scenes/WP03_Ring.unity",
+     "revision": "37929b8",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-03/video/main-RUN-20261110-122933.mp4",
+      "Evidence/WP-03/video/main-RUN-20261110-122933_stills"
+     ]
+    }
+   ]
+  },
+  {
+   "tc": "TC-05-06",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "R2 독립 검토",
+    "WP-06~08 R1"
+   ],
+   "taggedRuns": 3,
+   "checks": 5,
+   "category": "CHECKED",
+   "check": "Evidence/R4/checks/wp06_checks_main.json",
+   "checkKey": "TC-05-06",
+   "runs": [
+    {
+     "run": "RUN-20261113-051441",
+     "manifest": "Evidence/WP-06-R2/runs/RUN-20261113-051441.manifest.yaml",
+     "packet": "WP-06-R2",
+     "scene": "Assets/Corum2/Scenes/WP06_ComboState.unity",
+     "revision": "7a9ca55",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-06-R2/video/r2main-RUN-20261113-051441.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-06-01",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "R2 독립 검토",
+    "WP-06~08 R1"
+   ],
+   "taggedRuns": 3,
+   "checks": 5,
+   "category": "CHECKED",
+   "check": "Evidence/R4/checks/wp07_checks_main.json",
+   "checkKey": "TC-06-01",
+   "runs": [
+    {
+     "run": "RUN-20261113-052454",
+     "manifest": "Evidence/WP-07-R2/runs/RUN-20261113-052454.manifest.yaml",
+     "packet": "WP-07-R2",
+     "scene": "Assets/Corum2/Scenes/WP07_HitReaction.unity",
+     "revision": "7a9ca55",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-07-R2/video/r2main-RUN-20261113-052454.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-06-02",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "R2 독립 검토",
+    "WP-06~08 R1"
+   ],
+   "taggedRuns": 3,
+   "checks": 5,
+   "category": "CHECKED",
+   "check": "Evidence/R4/checks/wp07_checks_main.json",
+   "checkKey": "TC-06-02",
+   "runs": [
+    {
+     "run": "RUN-20261113-052454",
+     "manifest": "Evidence/WP-07-R2/runs/RUN-20261113-052454.manifest.yaml",
+     "packet": "WP-07-R2",
+     "scene": "Assets/Corum2/Scenes/WP07_HitReaction.unity",
+     "revision": "7a9ca55",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-07-R2/video/r2main-RUN-20261113-052454.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-06-03",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "R2 독립 검토",
+    "WP-06~08 R1"
+   ],
+   "taggedRuns": 7,
+   "checks": 10,
+   "category": "CHECKED",
+   "check": "Evidence/R4/checks/wp07_checks_main.json",
+   "checkKey": "TC-06-03",
+   "runs": [
+    {
+     "run": "RUN-20261113-052454",
+     "manifest": "Evidence/WP-07-R2/runs/RUN-20261113-052454.manifest.yaml",
+     "packet": "WP-07-R2",
+     "scene": "Assets/Corum2/Scenes/WP07_HitReaction.unity",
+     "revision": "7a9ca55",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-07-R2/video/r2main-RUN-20261113-052454.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-06-04",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "R2 독립 검토",
+    "WP-06~08 R1"
+   ],
+   "taggedRuns": 3,
+   "checks": 5,
+   "category": "CHECKED",
+   "check": "Evidence/R4/checks/wp07_checks_main.json",
+   "checkKey": "TC-06-04",
+   "runs": [
+    {
+     "run": "RUN-20261113-052454",
+     "manifest": "Evidence/WP-07-R2/runs/RUN-20261113-052454.manifest.yaml",
+     "packet": "WP-07-R2",
+     "scene": "Assets/Corum2/Scenes/WP07_HitReaction.unity",
+     "revision": "7a9ca55",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-07-R2/video/r2main-RUN-20261113-052454.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-06-05",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "R2 독립 검토"
+   ],
+   "taggedRuns": 2,
+   "checks": 5,
+   "category": "CHECKED",
+   "check": "Evidence/R4/checks/wp07_checks_main.json",
+   "checkKey": "TC-06-05",
+   "runs": [
+    {
+     "run": "RUN-20261113-052454",
+     "manifest": "Evidence/WP-07-R2/runs/RUN-20261113-052454.manifest.yaml",
+     "packet": "WP-07-R2",
+     "scene": "Assets/Corum2/Scenes/WP07_HitReaction.unity",
+     "revision": "7a9ca55",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-07-R2/video/r2main-RUN-20261113-052454.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-06-06",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "R2 독립 검토"
+   ],
+   "taggedRuns": 3,
+   "checks": 5,
+   "category": "CHECKED",
+   "check": "Evidence/R4/checks/wp07_checks_main.json",
+   "checkKey": "TC-06-06",
+   "runs": [
+    {
+     "run": "RUN-20261113-052454",
+     "manifest": "Evidence/WP-07-R2/runs/RUN-20261113-052454.manifest.yaml",
+     "packet": "WP-07-R2",
+     "scene": "Assets/Corum2/Scenes/WP07_HitReaction.unity",
+     "revision": "7a9ca55",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-07-R2/video/r2main-RUN-20261113-052454.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-06-07",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "R2 독립 검토",
+    "WP-06~08 R1"
+   ],
+   "taggedRuns": 3,
+   "checks": 5,
+   "category": "CHECKED",
+   "check": "Evidence/R4/checks/wp07_checks_main.json",
+   "checkKey": "TC-06-07",
+   "runs": [
+    {
+     "run": "RUN-20261113-052454",
+     "manifest": "Evidence/WP-07-R2/runs/RUN-20261113-052454.manifest.yaml",
+     "packet": "WP-07-R2",
+     "scene": "Assets/Corum2/Scenes/WP07_HitReaction.unity",
+     "revision": "7a9ca55",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-07-R2/video/r2main-RUN-20261113-052454.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-06-08",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "R2 독립 검토",
+    "WP-06~08 R1"
+   ],
+   "taggedRuns": 3,
+   "checks": 5,
+   "category": "CHECKED",
+   "check": "Evidence/R4/checks/wp07_checks_main.json",
+   "checkKey": "TC-06-08",
+   "runs": [
+    {
+     "run": "RUN-20261113-052454",
+     "manifest": "Evidence/WP-07-R2/runs/RUN-20261113-052454.manifest.yaml",
+     "packet": "WP-07-R2",
+     "scene": "Assets/Corum2/Scenes/WP07_HitReaction.unity",
+     "revision": "7a9ca55",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-07-R2/video/r2main-RUN-20261113-052454.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-06-09",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "R2 독립 검토",
+    "WP-06~08 R1"
+   ],
+   "taggedRuns": 5,
+   "checks": 5,
+   "category": "CHECKED",
+   "check": "Evidence/R4/checks/wp07_checks_main.json",
+   "checkKey": "TC-06-09",
+   "runs": [
+    {
+     "run": "RUN-20261113-052454",
+     "manifest": "Evidence/WP-07-R2/runs/RUN-20261113-052454.manifest.yaml",
+     "packet": "WP-07-R2",
+     "scene": "Assets/Corum2/Scenes/WP07_HitReaction.unity",
+     "revision": "7a9ca55",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-07-R2/video/r2main-RUN-20261113-052454.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-06-10",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "R2 독립 검토"
+   ],
+   "taggedRuns": 3,
+   "checks": 5,
+   "category": "CHECKED",
+   "check": "Evidence/R4/checks/wp07_checks_main.json",
+   "checkKey": "TC-06-10",
+   "runs": [
+    {
+     "run": "RUN-20261113-052454",
+     "manifest": "Evidence/WP-07-R2/runs/RUN-20261113-052454.manifest.yaml",
+     "packet": "WP-07-R2",
+     "scene": "Assets/Corum2/Scenes/WP07_HitReaction.unity",
+     "revision": "7a9ca55",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-07-R2/video/r2main-RUN-20261113-052454.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-06-11",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "R2 독립 검토",
+    "WP-06~08 R1"
+   ],
+   "taggedRuns": 5,
+   "checks": 5,
+   "category": "CHECKED",
+   "check": "Evidence/R4/checks/wp08_checks_main.json",
+   "checkKey": "TC-06-11",
+   "runs": [
+    {
+     "run": "RUN-20261113-053139",
+     "manifest": "Evidence/WP-08-R2/runs/RUN-20261113-053139.manifest.yaml",
+     "packet": "WP-08-R2",
+     "scene": "Assets/Corum2/Scenes/WP08_Defense.unity",
+     "revision": "7a9ca55",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-08-R2/video/r2main-RUN-20261113-053139.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-06-12",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "R2 독립 검토"
+   ],
+   "taggedRuns": 3,
+   "checks": 5,
+   "category": "CHECKED",
+   "check": "Evidence/R4/checks/wp08_checks_main.json",
+   "checkKey": "TC-06-12",
+   "runs": [
+    {
+     "run": "RUN-20261113-053139",
+     "manifest": "Evidence/WP-08-R2/runs/RUN-20261113-053139.manifest.yaml",
+     "packet": "WP-08-R2",
+     "scene": "Assets/Corum2/Scenes/WP08_Defense.unity",
+     "revision": "7a9ca55",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-08-R2/video/r2main-RUN-20261113-053139.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-06-13",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "R2 독립 검토",
+    "WP-06~08 R1"
+   ],
+   "taggedRuns": 3,
+   "checks": 5,
+   "category": "CHECKED",
+   "check": "Evidence/R4/checks/wp08_checks_main.json",
+   "checkKey": "TC-06-13",
+   "runs": [
+    {
+     "run": "RUN-20261113-053139",
+     "manifest": "Evidence/WP-08-R2/runs/RUN-20261113-053139.manifest.yaml",
+     "packet": "WP-08-R2",
+     "scene": "Assets/Corum2/Scenes/WP08_Defense.unity",
+     "revision": "7a9ca55",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-08-R2/video/r2main-RUN-20261113-053139.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-06-14",
+   "gptStatus": "HUMAN_REVIEW",
+   "gptBasis": [
+    "R2 독립 검토"
+   ],
+   "taggedRuns": 3,
+   "checks": 5,
+   "category": "CHECKED",
+   "check": "Evidence/R4/checks/wp08_checks_main.json",
+   "checkKey": "TC-06-14",
+   "runs": [
+    {
+     "run": "RUN-20261113-053139",
+     "manifest": "Evidence/WP-08-R2/runs/RUN-20261113-053139.manifest.yaml",
+     "packet": "WP-08-R2",
+     "scene": "Assets/Corum2/Scenes/WP08_Defense.unity",
+     "revision": "7a9ca55",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-08-R2/video/r2main-RUN-20261113-053139.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-06-15",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "R2 독립 검토",
+    "WP-06~08 R1"
+   ],
+   "taggedRuns": 5,
+   "checks": 5,
+   "category": "CHECKED",
+   "check": "Evidence/R4/checks/wp08_checks_main.json",
+   "checkKey": "TC-06-15",
+   "runs": [
+    {
+     "run": "RUN-20261113-053139",
+     "manifest": "Evidence/WP-08-R2/runs/RUN-20261113-053139.manifest.yaml",
+     "packet": "WP-08-R2",
+     "scene": "Assets/Corum2/Scenes/WP08_Defense.unity",
+     "revision": "7a9ca55",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-08-R2/video/r2main-RUN-20261113-053139.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-06-16",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "R2 독립 검토",
+    "WP-06~08 R1"
+   ],
+   "taggedRuns": 4,
+   "checks": 5,
+   "category": "CHECKED",
+   "check": "Evidence/R4/checks/wp08_checks_main.json",
+   "checkKey": "TC-06-16",
+   "runs": [
+    {
+     "run": "RUN-20261113-053139",
+     "manifest": "Evidence/WP-08-R2/runs/RUN-20261113-053139.manifest.yaml",
+     "packet": "WP-08-R2",
+     "scene": "Assets/Corum2/Scenes/WP08_Defense.unity",
+     "revision": "7a9ca55",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-08-R2/video/r2main-RUN-20261113-053139.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-06-17",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "R2 독립 검토",
+    "WP-06~08 R1"
+   ],
+   "taggedRuns": 5,
+   "checks": 5,
+   "category": "CHECKED",
+   "check": "Evidence/R4/checks/wp08_checks_main.json",
+   "checkKey": "TC-06-17",
+   "runs": [
+    {
+     "run": "RUN-20261113-053139",
+     "manifest": "Evidence/WP-08-R2/runs/RUN-20261113-053139.manifest.yaml",
+     "packet": "WP-08-R2",
+     "scene": "Assets/Corum2/Scenes/WP08_Defense.unity",
+     "revision": "7a9ca55",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-08-R2/video/r2main-RUN-20261113-053139.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-06-18",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "R2 독립 검토",
+    "WP-06~08 R1"
+   ],
+   "taggedRuns": 3,
+   "checks": 5,
+   "category": "CHECKED",
+   "check": "Evidence/R4/checks/wp08_checks_main.json",
+   "checkKey": "TC-06-18",
+   "runs": [
+    {
+     "run": "RUN-20261113-053139",
+     "manifest": "Evidence/WP-08-R2/runs/RUN-20261113-053139.manifest.yaml",
+     "packet": "WP-08-R2",
+     "scene": "Assets/Corum2/Scenes/WP08_Defense.unity",
+     "revision": "7a9ca55",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-08-R2/video/r2main-RUN-20261113-053139.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-06-19a",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "WP-05-R3"
+   ],
+   "taggedRuns": 6,
+   "checks": 13,
+   "category": "CHECKED",
+   "check": "Evidence/WP-05-R3/checks/WP-05-R2_nores_under_R3_checker.json",
+   "checkKey": "TC-06-19a",
+   "runs": [
+    {
+     "run": "RUN-20261112-103103",
+     "manifest": "Evidence/WP-05-R2/runs/RUN-20261112-103103.manifest.yaml",
+     "packet": "WP-05-R2",
+     "scene": "Assets/Corum2/Scenes/WP05_MagicDeath.unity",
+     "revision": "5af26f0",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-05-R2/video/nores-RUN-20261112-103103.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-06-19b",
+   "gptStatus": "BLOCKED_SPEC",
+   "gptBasis": [
+    "WP-05-R3"
+   ],
+   "taggedRuns": 0,
+   "checks": 13,
+   "category": "OBSERVED",
+   "check": "Evidence/WP-05-R3/checks/WP-05-R2_nores_under_R3_checker.json",
+   "checkKey": "TC-06-19b",
+   "runs": [
+    {
+     "run": "RUN-20261112-103103",
+     "manifest": "Evidence/WP-05-R2/runs/RUN-20261112-103103.manifest.yaml",
+     "packet": "WP-05-R2",
+     "scene": "Assets/Corum2/Scenes/WP05_MagicDeath.unity",
+     "revision": "5af26f0",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-05-R2/video/nores-RUN-20261112-103103.mp4"
+     ]
+    }
+   ],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-07-01",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "R2 독립 검토",
+    "WP-06~08 R1"
+   ],
+   "taggedRuns": 5,
+   "checks": 5,
+   "category": "CHECKED",
+   "check": "Evidence/R4/checks/wp08_checks_main.json",
+   "checkKey": "TC-07-01",
+   "runs": [
+    {
+     "run": "RUN-20261113-053139",
+     "manifest": "Evidence/WP-08-R2/runs/RUN-20261113-053139.manifest.yaml",
+     "packet": "WP-08-R2",
+     "scene": "Assets/Corum2/Scenes/WP08_Defense.unity",
+     "revision": "7a9ca55",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-08-R2/video/r2main-RUN-20261113-053139.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-07-02",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "R2 독립 검토"
+   ],
+   "taggedRuns": 3,
+   "checks": 5,
+   "category": "CHECKED",
+   "check": "Evidence/R4/checks/wp08_checks_main.json",
+   "checkKey": "TC-07-02",
+   "runs": [
+    {
+     "run": "RUN-20261113-053139",
+     "manifest": "Evidence/WP-08-R2/runs/RUN-20261113-053139.manifest.yaml",
+     "packet": "WP-08-R2",
+     "scene": "Assets/Corum2/Scenes/WP08_Defense.unity",
+     "revision": "7a9ca55",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-08-R2/video/r2main-RUN-20261113-053139.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-07-03",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "R2 독립 검토",
+    "WP-06~08 R1"
+   ],
+   "taggedRuns": 3,
+   "checks": 5,
+   "category": "CHECKED",
+   "check": "Evidence/R4/checks/wp08_checks_main.json",
+   "checkKey": "TC-07-03",
+   "runs": [
+    {
+     "run": "RUN-20261113-053139",
+     "manifest": "Evidence/WP-08-R2/runs/RUN-20261113-053139.manifest.yaml",
+     "packet": "WP-08-R2",
+     "scene": "Assets/Corum2/Scenes/WP08_Defense.unity",
+     "revision": "7a9ca55",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-08-R2/video/r2main-RUN-20261113-053139.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-07-04",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "R2 독립 검토",
+    "WP-06~08 R1"
+   ],
+   "taggedRuns": 12,
+   "checks": 10,
+   "category": "CHECKED",
+   "check": "Evidence/R4/checks/wp08_checks_main.json",
+   "checkKey": "TC-07-04",
+   "runs": [
+    {
+     "run": "RUN-20261113-053139",
+     "manifest": "Evidence/WP-08-R2/runs/RUN-20261113-053139.manifest.yaml",
+     "packet": "WP-08-R2",
+     "scene": "Assets/Corum2/Scenes/WP08_Defense.unity",
+     "revision": "7a9ca55",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-08-R2/video/r2main-RUN-20261113-053139.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-07-05",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "R2 독립 검토",
+    "WP-06~08 R1"
+   ],
+   "taggedRuns": 6,
+   "checks": 5,
+   "category": "CHECKED",
+   "check": "Evidence/R4/checks/wp08_checks_main.json",
+   "checkKey": "TC-07-05",
+   "runs": [
+    {
+     "run": "RUN-20261113-053139",
+     "manifest": "Evidence/WP-08-R2/runs/RUN-20261113-053139.manifest.yaml",
+     "packet": "WP-08-R2",
+     "scene": "Assets/Corum2/Scenes/WP08_Defense.unity",
+     "revision": "7a9ca55",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-08-R2/video/r2main-RUN-20261113-053139.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-07-06",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "R2 독립 검토",
+    "WP-06~08 R1"
+   ],
+   "taggedRuns": 3,
+   "checks": 5,
+   "category": "CHECKED",
+   "check": "Evidence/R4/checks/wp08_checks_main.json",
+   "checkKey": "TC-07-06",
+   "runs": [
+    {
+     "run": "RUN-20261113-053139",
+     "manifest": "Evidence/WP-08-R2/runs/RUN-20261113-053139.manifest.yaml",
+     "packet": "WP-08-R2",
+     "scene": "Assets/Corum2/Scenes/WP08_Defense.unity",
+     "revision": "7a9ca55",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-08-R2/video/r2main-RUN-20261113-053139.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-07-07",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "R2 독립 검토",
+    "WP-06~08 R1"
+   ],
+   "taggedRuns": 3,
+   "checks": 5,
+   "category": "CHECKED",
+   "check": "Evidence/R4/checks/wp08_checks_main.json",
+   "checkKey": "TC-07-07",
+   "runs": [
+    {
+     "run": "RUN-20261113-053139",
+     "manifest": "Evidence/WP-08-R2/runs/RUN-20261113-053139.manifest.yaml",
+     "packet": "WP-08-R2",
+     "scene": "Assets/Corum2/Scenes/WP08_Defense.unity",
+     "revision": "7a9ca55",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-08-R2/video/r2main-RUN-20261113-053139.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-08-01",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "WP-04"
+   ],
+   "taggedRuns": 9,
+   "checks": 6,
+   "category": "OBSERVED",
+   "check": "Evidence/WP-04-R5/checks/run_checks_main.json",
+   "checkKey": "TC-08-01",
+   "runs": [
+    {
+     "run": "RUN-20261110-235208",
+     "manifest": "Evidence/WP-04-R5/runs/RUN-20261110-235208.manifest.yaml",
+     "packet": "WP-04-R5",
+     "scene": "Assets/Corum2/Scenes/WP04_AI.unity",
+     "revision": "82175c6",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-04-R5/video/main-RUN-20261110-235208.mp4",
+      "Evidence/WP-04-R5/video/main-RUN-20261110-235208_stills"
+     ]
+    }
+   ],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-08-02",
+   "gptStatus": "INSUFFICIENT_EVIDENCE",
+   "gptBasis": [
+    "WP-11A"
+   ],
+   "taggedRuns": 2,
+   "checks": 9,
+   "category": "CHECKED",
+   "check": "Evidence/WP-11A-R1/checks/wp11r1_checks.json",
+   "checkKey": "TC-08-02",
+   "runs": [
+    {
+     "run": "RUN-20261113-231444",
+     "manifest": "Evidence/WP-11A-R1/runs/RUN-20261113-231444.manifest.yaml",
+     "packet": "WP-11A-R1",
+     "scene": "Assets/Corum2/Scenes/WP11_R1.unity",
+     "revision": "2c3112c",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-11A-R1/video/main-RUN-20261113-231444.mp4"
+     ]
+    },
+    {
+     "run": "RUN-20261113-231921",
+     "manifest": "Evidence/WP-11A-R1/runs/RUN-20261113-231921.manifest.yaml",
+     "packet": "WP-11A-R1",
+     "scene": "Assets/Corum2/Scenes/WP11_R1.unity",
+     "revision": "2c3112c",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-11A-R1/video/fault-RUN-20261113-231921.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-08-03",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "WP-04"
+   ],
+   "taggedRuns": 9,
+   "checks": 6,
+   "category": "OBSERVED",
+   "check": "Evidence/WP-04-R5/checks/run_checks_main.json",
+   "checkKey": "TC-08-03",
+   "runs": [
+    {
+     "run": "RUN-20261110-235208",
+     "manifest": "Evidence/WP-04-R5/runs/RUN-20261110-235208.manifest.yaml",
+     "packet": "WP-04-R5",
+     "scene": "Assets/Corum2/Scenes/WP04_AI.unity",
+     "revision": "82175c6",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-04-R5/video/main-RUN-20261110-235208.mp4",
+      "Evidence/WP-04-R5/video/main-RUN-20261110-235208_stills"
+     ]
+    }
+   ],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-08-04",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "WP-04"
+   ],
+   "taggedRuns": 9,
+   "checks": 6,
+   "category": "OBSERVED",
+   "check": "Evidence/WP-04-R5/checks/run_checks_main.json",
+   "checkKey": "TC-08-04",
+   "runs": [
+    {
+     "run": "RUN-20261110-235208",
+     "manifest": "Evidence/WP-04-R5/runs/RUN-20261110-235208.manifest.yaml",
+     "packet": "WP-04-R5",
+     "scene": "Assets/Corum2/Scenes/WP04_AI.unity",
+     "revision": "82175c6",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-04-R5/video/main-RUN-20261110-235208.mp4",
+      "Evidence/WP-04-R5/video/main-RUN-20261110-235208_stills"
+     ]
+    }
+   ],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-08-05",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "WP-11A"
+   ],
+   "taggedRuns": 10,
+   "checks": 8,
+   "category": "CHECKED",
+   "check": "Evidence/WP-11A-R1/checks/wp11_checks_WP11A_main.json",
+   "checkKey": "TC-08-05",
+   "runs": [
+    {
+     "run": "RUN-20261113-111800",
+     "manifest": "Evidence/WP-11A/runs/RUN-20261113-111800.manifest.yaml",
+     "packet": "WP-11A",
+     "scene": "Assets/Corum2/Scenes/WP11_Evidence.unity",
+     "revision": "e088c32",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-11A/video/main-RUN-20261113-111800.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-08-06",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "WP-04"
+   ],
+   "taggedRuns": 9,
+   "checks": 6,
+   "category": "OBSERVED",
+   "check": "Evidence/WP-04-R5/checks/run_checks_main.json",
+   "checkKey": "TC-08-06",
+   "runs": [
+    {
+     "run": "RUN-20261110-235208",
+     "manifest": "Evidence/WP-04-R5/runs/RUN-20261110-235208.manifest.yaml",
+     "packet": "WP-04-R5",
+     "scene": "Assets/Corum2/Scenes/WP04_AI.unity",
+     "revision": "82175c6",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-04-R5/video/main-RUN-20261110-235208.mp4",
+      "Evidence/WP-04-R5/video/main-RUN-20261110-235208_stills"
+     ]
+    }
+   ],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-08-07",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "WP-04-R1"
+   ],
+   "taggedRuns": 9,
+   "checks": 6,
+   "category": "OBSERVED",
+   "check": "Evidence/WP-04-R5/checks/run_checks_main.json",
+   "checkKey": "TC-08-07",
+   "runs": [
+    {
+     "run": "RUN-20261110-235208",
+     "manifest": "Evidence/WP-04-R5/runs/RUN-20261110-235208.manifest.yaml",
+     "packet": "WP-04-R5",
+     "scene": "Assets/Corum2/Scenes/WP04_AI.unity",
+     "revision": "82175c6",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-04-R5/video/main-RUN-20261110-235208.mp4",
+      "Evidence/WP-04-R5/video/main-RUN-20261110-235208_stills"
+     ]
+    }
+   ],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-08-08",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "WP-04"
+   ],
+   "taggedRuns": 9,
+   "checks": 6,
+   "category": "OBSERVED",
+   "check": "Evidence/WP-04-R5/checks/run_checks_main.json",
+   "checkKey": "TC-08-08",
+   "runs": [
+    {
+     "run": "RUN-20261110-235208",
+     "manifest": "Evidence/WP-04-R5/runs/RUN-20261110-235208.manifest.yaml",
+     "packet": "WP-04-R5",
+     "scene": "Assets/Corum2/Scenes/WP04_AI.unity",
+     "revision": "82175c6",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-04-R5/video/main-RUN-20261110-235208.mp4",
+      "Evidence/WP-04-R5/video/main-RUN-20261110-235208_stills"
+     ]
+    }
+   ],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-08-09",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "WP-11A"
+   ],
+   "taggedRuns": 1,
+   "checks": 8,
+   "category": "CHECKED",
+   "check": "Evidence/WP-11A-R1/checks/wp11_checks_WP11A_main.json",
+   "checkKey": "TC-08-09",
+   "runs": [
+    {
+     "run": "RUN-20261113-111800",
+     "manifest": "Evidence/WP-11A/runs/RUN-20261113-111800.manifest.yaml",
+     "packet": "WP-11A",
+     "scene": "Assets/Corum2/Scenes/WP11_Evidence.unity",
+     "revision": "e088c32",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-11A/video/main-RUN-20261113-111800.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-08-10",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "WP-04-R2"
+   ],
+   "taggedRuns": 9,
+   "checks": 6,
+   "category": "OBSERVED",
+   "check": "Evidence/WP-04-R5/checks/run_checks_main.json",
+   "checkKey": "TC-08-10",
+   "runs": [
+    {
+     "run": "RUN-20261110-235208",
+     "manifest": "Evidence/WP-04-R5/runs/RUN-20261110-235208.manifest.yaml",
+     "packet": "WP-04-R5",
+     "scene": "Assets/Corum2/Scenes/WP04_AI.unity",
+     "revision": "82175c6",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-04-R5/video/main-RUN-20261110-235208.mp4",
+      "Evidence/WP-04-R5/video/main-RUN-20261110-235208_stills"
+     ]
+    }
+   ],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-08-11",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "WP-04-R5"
+   ],
+   "taggedRuns": 8,
+   "checks": 6,
+   "category": "OBSERVED",
+   "check": "Evidence/WP-04-R5/checks/run_checks_main.json",
+   "checkKey": "TC-08-11",
+   "runs": [
+    {
+     "run": "RUN-20261110-235208",
+     "manifest": "Evidence/WP-04-R5/runs/RUN-20261110-235208.manifest.yaml",
+     "packet": "WP-04-R5",
+     "scene": "Assets/Corum2/Scenes/WP04_AI.unity",
+     "revision": "82175c6",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-04-R5/video/main-RUN-20261110-235208.mp4",
+      "Evidence/WP-04-R5/video/main-RUN-20261110-235208_stills"
+     ]
+    }
+   ],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-08-12",
+   "gptStatus": "INSUFFICIENT_EVIDENCE",
+   "gptBasis": [
+    "WP-11A"
+   ],
+   "taggedRuns": 11,
+   "checks": 9,
+   "category": "CHECKED",
+   "check": "Evidence/WP-11A-R1/checks/wp11r1_checks.json",
+   "checkKey": "TC-08-12",
+   "runs": [
+    {
+     "run": "RUN-20261113-231444",
+     "manifest": "Evidence/WP-11A-R1/runs/RUN-20261113-231444.manifest.yaml",
+     "packet": "WP-11A-R1",
+     "scene": "Assets/Corum2/Scenes/WP11_R1.unity",
+     "revision": "2c3112c",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-11A-R1/video/main-RUN-20261113-231444.mp4"
+     ]
+    },
+    {
+     "run": "RUN-20261113-231921",
+     "manifest": "Evidence/WP-11A-R1/runs/RUN-20261113-231921.manifest.yaml",
+     "packet": "WP-11A-R1",
+     "scene": "Assets/Corum2/Scenes/WP11_R1.unity",
+     "revision": "2c3112c",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-11A-R1/video/fault-RUN-20261113-231921.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-CF-01a",
+   "gptStatus": "BLOCKED_SPEC",
+   "gptBasis": [
+    "WP-10"
+   ],
+   "taggedRuns": 0,
+   "checks": 0,
+   "category": "NO_TAG"
+  },
+  {
+   "tc": "TC-CF-01b",
+   "gptStatus": "BLOCKED_SPEC",
+   "gptBasis": [
+    "WP-10"
+   ],
+   "taggedRuns": 0,
+   "checks": 0,
+   "category": "NO_TAG"
+  },
+  {
+   "tc": "TC-CF-01c",
+   "gptStatus": "BLOCKED_SPEC",
+   "gptBasis": [
+    "WP-10"
+   ],
+   "taggedRuns": 0,
+   "checks": 0,
+   "category": "NO_TAG"
+  },
+  {
+   "tc": "TC-CF-01d",
+   "gptStatus": "BLOCKED_SPEC",
+   "gptBasis": [
+    "WP-10"
+   ],
+   "taggedRuns": 0,
+   "checks": 0,
+   "category": "NO_TAG"
+  },
+  {
+   "tc": "TC-CF-08a",
+   "gptStatus": "BLOCKED_SPEC",
+   "gptBasis": [
+    "WP-10"
+   ],
+   "taggedRuns": 1,
+   "checks": 0,
+   "category": "TAGGED_ONLY",
+   "runs": [
+    {
+     "run": "RUN-20261110-122933",
+     "manifest": "Evidence/WP-03/runs/RUN-20261110-122933.manifest.yaml",
+     "packet": "WP-03",
+     "scene": "Assets/Corum2/Scenes/WP03_Ring.unity",
+     "revision": "37929b8",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-03/video/main-RUN-20261110-122933.mp4",
+      "Evidence/WP-03/video/main-RUN-20261110-122933_stills"
+     ]
+    }
+   ]
+  },
+  {
+   "tc": "TC-INT-01",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "R2 독립 검토"
+   ],
+   "taggedRuns": 2,
+   "checks": 4,
+   "category": "CHECKED",
+   "check": "Evidence/R4/checks/wp10_checks.json",
+   "checkKey": "TC-INT-01",
+   "runs": [
+    {
+     "run": "RUN-20261113-054149",
+     "manifest": "Evidence/WP-10-R1/runs/RUN-20261113-054149.manifest.yaml",
+     "packet": "WP-10-R1",
+     "scene": "Assets/Corum2/Scenes/WP10_Integration.unity",
+     "revision": "7a9ca55",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-10-R1/video/r1main-RUN-20261113-054149.mp4"
+     ]
+    },
+    {
+     "run": "RUN-20261113-054514",
+     "manifest": "Evidence/WP-10-R1/runs/RUN-20261113-054514.manifest.yaml",
+     "packet": "WP-10-R1",
+     "scene": "Assets/Corum2/Scenes/WP03_Ring.unity",
+     "revision": "7a9ca55",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-10-R1/video/r1int07-RUN-20261113-054514.mp4"
+     ]
+    },
+    {
+     "run": "RUN-20261113-054756",
+     "manifest": "Evidence/WP-10-R1/runs/RUN-20261113-054756.manifest.yaml",
+     "packet": "WP-10-R1",
+     "scene": "Assets/Corum2/Scenes/WP05_MagicDeath.unity",
+     "revision": "7a9ca55",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-10-R1/video/r1int08-RUN-20261113-054756.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-INT-02",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "WP-09"
+   ],
+   "taggedRuns": 1,
+   "checks": 0,
+   "category": "TAGGED_ONLY",
+   "runs": [
+    {
+     "run": "RUN-20261110-131240",
+     "manifest": "Evidence/WP-03-R1/runs/RUN-20261110-131240.manifest.yaml",
+     "packet": "WP-03-R1",
+     "scene": "Assets/Corum2/Scenes/WP03_Ring.unity",
+     "revision": "0ff03b6",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-03-R1/video/main-RUN-20261110-131240.mp4",
+      "Evidence/WP-03-R1/video/main-RUN-20261110-131240_stills"
+     ]
+    }
+   ]
+  },
+  {
+   "tc": "TC-INT-03",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "R2 독립 검토"
+   ],
+   "taggedRuns": 2,
+   "checks": 4,
+   "category": "CHECKED",
+   "check": "Evidence/R4/checks/wp10_checks.json",
+   "checkKey": "TC-INT-03",
+   "runs": [
+    {
+     "run": "RUN-20261113-054149",
+     "manifest": "Evidence/WP-10-R1/runs/RUN-20261113-054149.manifest.yaml",
+     "packet": "WP-10-R1",
+     "scene": "Assets/Corum2/Scenes/WP10_Integration.unity",
+     "revision": "7a9ca55",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-10-R1/video/r1main-RUN-20261113-054149.mp4"
+     ]
+    },
+    {
+     "run": "RUN-20261113-054514",
+     "manifest": "Evidence/WP-10-R1/runs/RUN-20261113-054514.manifest.yaml",
+     "packet": "WP-10-R1",
+     "scene": "Assets/Corum2/Scenes/WP03_Ring.unity",
+     "revision": "7a9ca55",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-10-R1/video/r1int07-RUN-20261113-054514.mp4"
+     ]
+    },
+    {
+     "run": "RUN-20261113-054756",
+     "manifest": "Evidence/WP-10-R1/runs/RUN-20261113-054756.manifest.yaml",
+     "packet": "WP-10-R1",
+     "scene": "Assets/Corum2/Scenes/WP05_MagicDeath.unity",
+     "revision": "7a9ca55",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-10-R1/video/r1int08-RUN-20261113-054756.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-INT-04",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "R2 독립 검토"
+   ],
+   "taggedRuns": 2,
+   "checks": 4,
+   "category": "CHECKED",
+   "check": "Evidence/R4/checks/wp10_checks.json",
+   "checkKey": "TC-INT-04",
+   "runs": [
+    {
+     "run": "RUN-20261113-054149",
+     "manifest": "Evidence/WP-10-R1/runs/RUN-20261113-054149.manifest.yaml",
+     "packet": "WP-10-R1",
+     "scene": "Assets/Corum2/Scenes/WP10_Integration.unity",
+     "revision": "7a9ca55",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-10-R1/video/r1main-RUN-20261113-054149.mp4"
+     ]
+    },
+    {
+     "run": "RUN-20261113-054514",
+     "manifest": "Evidence/WP-10-R1/runs/RUN-20261113-054514.manifest.yaml",
+     "packet": "WP-10-R1",
+     "scene": "Assets/Corum2/Scenes/WP03_Ring.unity",
+     "revision": "7a9ca55",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-10-R1/video/r1int07-RUN-20261113-054514.mp4"
+     ]
+    },
+    {
+     "run": "RUN-20261113-054756",
+     "manifest": "Evidence/WP-10-R1/runs/RUN-20261113-054756.manifest.yaml",
+     "packet": "WP-10-R1",
+     "scene": "Assets/Corum2/Scenes/WP05_MagicDeath.unity",
+     "revision": "7a9ca55",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-10-R1/video/r1int08-RUN-20261113-054756.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-INT-05",
+   "gptStatus": "HUMAN_REVIEW",
+   "gptBasis": [
+    "R2 독립 검토"
+   ],
+   "taggedRuns": 2,
+   "checks": 4,
+   "category": "CHECKED",
+   "check": "Evidence/R4/checks/wp10_checks.json",
+   "checkKey": "TC-INT-05",
+   "runs": [
+    {
+     "run": "RUN-20261113-054149",
+     "manifest": "Evidence/WP-10-R1/runs/RUN-20261113-054149.manifest.yaml",
+     "packet": "WP-10-R1",
+     "scene": "Assets/Corum2/Scenes/WP10_Integration.unity",
+     "revision": "7a9ca55",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-10-R1/video/r1main-RUN-20261113-054149.mp4"
+     ]
+    },
+    {
+     "run": "RUN-20261113-054514",
+     "manifest": "Evidence/WP-10-R1/runs/RUN-20261113-054514.manifest.yaml",
+     "packet": "WP-10-R1",
+     "scene": "Assets/Corum2/Scenes/WP03_Ring.unity",
+     "revision": "7a9ca55",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-10-R1/video/r1int07-RUN-20261113-054514.mp4"
+     ]
+    },
+    {
+     "run": "RUN-20261113-054756",
+     "manifest": "Evidence/WP-10-R1/runs/RUN-20261113-054756.manifest.yaml",
+     "packet": "WP-10-R1",
+     "scene": "Assets/Corum2/Scenes/WP05_MagicDeath.unity",
+     "revision": "7a9ca55",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-10-R1/video/r1int08-RUN-20261113-054756.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-INT-06",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "R2 독립 검토"
+   ],
+   "taggedRuns": 2,
+   "checks": 4,
+   "category": "CHECKED",
+   "check": "Evidence/R4/checks/wp10_checks.json",
+   "checkKey": "TC-INT-06",
+   "runs": [
+    {
+     "run": "RUN-20261113-054149",
+     "manifest": "Evidence/WP-10-R1/runs/RUN-20261113-054149.manifest.yaml",
+     "packet": "WP-10-R1",
+     "scene": "Assets/Corum2/Scenes/WP10_Integration.unity",
+     "revision": "7a9ca55",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-10-R1/video/r1main-RUN-20261113-054149.mp4"
+     ]
+    },
+    {
+     "run": "RUN-20261113-054514",
+     "manifest": "Evidence/WP-10-R1/runs/RUN-20261113-054514.manifest.yaml",
+     "packet": "WP-10-R1",
+     "scene": "Assets/Corum2/Scenes/WP03_Ring.unity",
+     "revision": "7a9ca55",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-10-R1/video/r1int07-RUN-20261113-054514.mp4"
+     ]
+    },
+    {
+     "run": "RUN-20261113-054756",
+     "manifest": "Evidence/WP-10-R1/runs/RUN-20261113-054756.manifest.yaml",
+     "packet": "WP-10-R1",
+     "scene": "Assets/Corum2/Scenes/WP05_MagicDeath.unity",
+     "revision": "7a9ca55",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-10-R1/video/r1int08-RUN-20261113-054756.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-INT-07",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "R2 독립 검토"
+   ],
+   "taggedRuns": 2,
+   "checks": 4,
+   "category": "CHECKED",
+   "check": "Evidence/R4/checks/wp10_checks.json",
+   "checkKey": "TC-INT-07",
+   "runs": [
+    {
+     "run": "RUN-20261113-054149",
+     "manifest": "Evidence/WP-10-R1/runs/RUN-20261113-054149.manifest.yaml",
+     "packet": "WP-10-R1",
+     "scene": "Assets/Corum2/Scenes/WP10_Integration.unity",
+     "revision": "7a9ca55",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-10-R1/video/r1main-RUN-20261113-054149.mp4"
+     ]
+    },
+    {
+     "run": "RUN-20261113-054514",
+     "manifest": "Evidence/WP-10-R1/runs/RUN-20261113-054514.manifest.yaml",
+     "packet": "WP-10-R1",
+     "scene": "Assets/Corum2/Scenes/WP03_Ring.unity",
+     "revision": "7a9ca55",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-10-R1/video/r1int07-RUN-20261113-054514.mp4"
+     ]
+    },
+    {
+     "run": "RUN-20261113-054756",
+     "manifest": "Evidence/WP-10-R1/runs/RUN-20261113-054756.manifest.yaml",
+     "packet": "WP-10-R1",
+     "scene": "Assets/Corum2/Scenes/WP05_MagicDeath.unity",
+     "revision": "7a9ca55",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-10-R1/video/r1int08-RUN-20261113-054756.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-INT-08",
+   "gptStatus": "BLOCKED_SPEC",
+   "gptBasis": [
+    "R2 독립 검토"
+   ],
+   "taggedRuns": 2,
+   "checks": 4,
+   "category": "CHECKED",
+   "check": "Evidence/WP-10/checks/wp10_checks.json",
+   "checkKey": "TC-INT-08",
+   "runs": [
+    {
+     "run": "RUN-20261112-160004",
+     "manifest": "Evidence/WP-10/runs/RUN-20261112-160004.manifest.yaml",
+     "packet": "WP-10",
+     "scene": "Assets/Corum2/Scenes/WP10_Integration.unity",
+     "revision": "45fa44e",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-10/video/main-RUN-20261112-160004.mp4"
+     ]
+    },
+    {
+     "run": "RUN-20261112-160228",
+     "manifest": "Evidence/WP-10/runs/RUN-20261112-160228.manifest.yaml",
+     "packet": "WP-10",
+     "scene": "Assets/Corum2/Scenes/WP03_Ring.unity",
+     "revision": "45fa44e",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-10/video/int07-RUN-20261112-160228.mp4"
+     ]
+    },
+    {
+     "run": "RUN-20261112-160422",
+     "manifest": "Evidence/WP-10/runs/RUN-20261112-160422.manifest.yaml",
+     "packet": "WP-10",
+     "scene": "Assets/Corum2/Scenes/WP05_MagicDeath.unity",
+     "revision": "45fa44e",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-10/video/int08-RUN-20261112-160422.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [
+    "Evidence/WP-10-R1/checks/wp10_checks.json",
+    "Evidence/R3/checks/wp10_checks.json",
+    "Evidence/R4/checks/wp10_checks.json"
+   ],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-OPS-01",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "WP-11B"
+   ],
+   "taggedRuns": 7,
+   "checks": 2,
+   "category": "CHECKED",
+   "check": "Evidence/R5/checks/wp11b_checks_ops.json",
+   "checkKey": "TC-OPS-01",
+   "runs": [
+    {
+     "run": "RUN-20261113-114535",
+     "manifest": "Evidence/WP-11B/runs/RUN-20261113-114535.manifest.yaml",
+     "packet": "WP-11B",
+     "scene": "Assets/Corum2/Scenes/WP11_Ops.unity",
+     "revision": "5de850e",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-11B/video/base-RUN-20261113-114535.mp4"
+     ]
+    },
+    {
+     "run": "RUN-20261113-114831",
+     "manifest": "Evidence/WP-11B/runs/RUN-20261113-114831.manifest.yaml",
+     "packet": "WP-11B",
+     "scene": "Assets/Corum2/Scenes/WP11_Ops.unity",
+     "revision": "5de850e",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-11B/video/base2-RUN-20261113-114831.mp4"
+     ]
+    },
+    {
+     "run": "RUN-20261113-115130",
+     "manifest": "Evidence/WP-11B/runs/RUN-20261113-115130.manifest.yaml",
+     "packet": "WP-11B",
+     "scene": "Assets/Corum2/Scenes/WP11_Ops.unity",
+     "revision": "5de850e",
+     "dirty": true,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-11B/video/v1-RUN-20261113-115130.mp4"
+     ]
+    },
+    {
+     "run": "RUN-20261113-115432",
+     "manifest": "Evidence/WP-11B/runs/RUN-20261113-115432.manifest.yaml",
+     "packet": "WP-11B",
+     "scene": "Assets/Corum2/Scenes/WP11_Ops.unity",
+     "revision": "5de850e",
+     "dirty": true,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-11B/video/v2-RUN-20261113-115432.mp4"
+     ]
+    },
+    {
+     "run": "RUN-20261113-115731",
+     "manifest": "Evidence/WP-11B/runs/RUN-20261113-115731.manifest.yaml",
+     "packet": "WP-11B",
+     "scene": "Assets/Corum2/Scenes/WP11_Ops.unity",
+     "revision": "5de850e",
+     "dirty": true,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-11B/video/v3-RUN-20261113-115731.mp4"
+     ]
+    },
+    {
+     "run": "RUN-20261113-120032",
+     "manifest": "Evidence/WP-11B/runs/RUN-20261113-120032.manifest.yaml",
+     "packet": "WP-11B",
+     "scene": "Assets/Corum2/Scenes/WP11_Ops.unity",
+     "revision": "5de850e",
+     "dirty": true,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-11B/video/v4-RUN-20261113-120032.mp4"
+     ]
+    },
+    {
+     "run": "RUN-20261113-120334",
+     "manifest": "Evidence/WP-11B/runs/RUN-20261113-120334.manifest.yaml",
+     "packet": "WP-11B",
+     "scene": "Assets/Corum2/Scenes/WP11_Ops.unity",
+     "revision": "5de850e",
+     "dirty": true,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-11B/video/v5-RUN-20261113-120334.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-OPS-02",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "R2 독립 검토",
+    "WP-06~08 R1"
+   ],
+   "taggedRuns": 0,
+   "checks": 5,
+   "category": "CHECKED",
+   "check": "Evidence/R4/checks/wp08_checks_main.json",
+   "checkKey": "TC-OPS-02",
+   "runs": [
+    {
+     "run": "RUN-20261113-053139",
+     "manifest": "Evidence/WP-08-R2/runs/RUN-20261113-053139.manifest.yaml",
+     "packet": "WP-08-R2",
+     "scene": "Assets/Corum2/Scenes/WP08_Defense.unity",
+     "revision": "7a9ca55",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-08-R2/video/r2main-RUN-20261113-053139.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-REG-01",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "R2 독립 검토"
+   ],
+   "taggedRuns": 0,
+   "checks": 0,
+   "category": "NO_TAG"
+  },
+  {
+   "tc": "TC-UI-12",
+   "gptStatus": "BLOCKED_SPEC",
+   "gptBasis": [
+    "WP-03-R1"
+   ],
+   "taggedRuns": 0,
+   "checks": 0,
+   "category": "NO_TAG"
+  },
+  {
+   "tc": "TC-UNITY-01",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "Unity 부록"
+   ],
+   "taggedRuns": 0,
+   "checks": 0,
+   "category": "NO_TAG"
+  },
+  {
+   "tc": "TC-UNITY-02",
+   "gptStatus": "INSUFFICIENT_EVIDENCE",
+   "gptBasis": [
+    "WP-11A"
+   ],
+   "taggedRuns": 3,
+   "checks": 3,
+   "category": "CHECKED",
+   "check": "Evidence/WP-11A-R1/checks/wp11r1_checks.json",
+   "checkKey": "TC-UNITY-02",
+   "runs": [
+    {
+     "run": "RUN-20261113-231444",
+     "manifest": "Evidence/WP-11A-R1/runs/RUN-20261113-231444.manifest.yaml",
+     "packet": "WP-11A-R1",
+     "scene": "Assets/Corum2/Scenes/WP11_R1.unity",
+     "revision": "2c3112c",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-11A-R1/video/main-RUN-20261113-231444.mp4"
+     ]
+    },
+    {
+     "run": "RUN-20261113-231921",
+     "manifest": "Evidence/WP-11A-R1/runs/RUN-20261113-231921.manifest.yaml",
+     "packet": "WP-11A-R1",
+     "scene": "Assets/Corum2/Scenes/WP11_R1.unity",
+     "revision": "2c3112c",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-11A-R1/video/fault-RUN-20261113-231921.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-UNITY-03",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "WP-11B"
+   ],
+   "taggedRuns": 2,
+   "checks": 2,
+   "category": "CHECKED",
+   "check": "Evidence/R5/checks/wp11b_checks_ops.json",
+   "checkKey": "TC-UNITY-03",
+   "runs": [
+    {
+     "run": "RUN-20261113-114535",
+     "manifest": "Evidence/WP-11B/runs/RUN-20261113-114535.manifest.yaml",
+     "packet": "WP-11B",
+     "scene": "Assets/Corum2/Scenes/WP11_Ops.unity",
+     "revision": "5de850e",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-11B/video/base-RUN-20261113-114535.mp4"
+     ]
+    },
+    {
+     "run": "RUN-20261113-114831",
+     "manifest": "Evidence/WP-11B/runs/RUN-20261113-114831.manifest.yaml",
+     "packet": "WP-11B",
+     "scene": "Assets/Corum2/Scenes/WP11_Ops.unity",
+     "revision": "5de850e",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-11B/video/base2-RUN-20261113-114831.mp4"
+     ]
+    },
+    {
+     "run": "RUN-20261113-115130",
+     "manifest": "Evidence/WP-11B/runs/RUN-20261113-115130.manifest.yaml",
+     "packet": "WP-11B",
+     "scene": "Assets/Corum2/Scenes/WP11_Ops.unity",
+     "revision": "5de850e",
+     "dirty": true,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-11B/video/v1-RUN-20261113-115130.mp4"
+     ]
+    },
+    {
+     "run": "RUN-20261113-115432",
+     "manifest": "Evidence/WP-11B/runs/RUN-20261113-115432.manifest.yaml",
+     "packet": "WP-11B",
+     "scene": "Assets/Corum2/Scenes/WP11_Ops.unity",
+     "revision": "5de850e",
+     "dirty": true,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-11B/video/v2-RUN-20261113-115432.mp4"
+     ]
+    },
+    {
+     "run": "RUN-20261113-115731",
+     "manifest": "Evidence/WP-11B/runs/RUN-20261113-115731.manifest.yaml",
+     "packet": "WP-11B",
+     "scene": "Assets/Corum2/Scenes/WP11_Ops.unity",
+     "revision": "5de850e",
+     "dirty": true,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-11B/video/v3-RUN-20261113-115731.mp4"
+     ]
+    },
+    {
+     "run": "RUN-20261113-120032",
+     "manifest": "Evidence/WP-11B/runs/RUN-20261113-120032.manifest.yaml",
+     "packet": "WP-11B",
+     "scene": "Assets/Corum2/Scenes/WP11_Ops.unity",
+     "revision": "5de850e",
+     "dirty": true,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-11B/video/v4-RUN-20261113-120032.mp4"
+     ]
+    },
+    {
+     "run": "RUN-20261113-120334",
+     "manifest": "Evidence/WP-11B/runs/RUN-20261113-120334.manifest.yaml",
+     "packet": "WP-11B",
+     "scene": "Assets/Corum2/Scenes/WP11_Ops.unity",
+     "revision": "5de850e",
+     "dirty": true,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-11B/video/v5-RUN-20261113-120334.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-UNITY-04",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "WP-01"
+   ],
+   "taggedRuns": 0,
+   "checks": 0,
+   "category": "NO_TAG"
+  },
+  {
+   "tc": "TC-UNITY-05",
+   "gptStatus": "BLOCKED_SPEC",
+   "gptBasis": [
+    "WP-11B"
+   ],
+   "taggedRuns": 2,
+   "checks": 2,
+   "category": "CHECKED",
+   "check": "Evidence/R5/checks/wp11b_checks_time.json",
+   "checkKey": "TC-UNITY-05",
+   "runs": [
+    {
+     "run": "RUN-20261113-120636",
+     "manifest": "Evidence/WP-11B/runs/RUN-20261113-120636.manifest.yaml",
+     "packet": "WP-11B",
+     "scene": "Assets/Corum2/Scenes/WP11_Ops.unity",
+     "revision": "5de850e",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-11B/video/s50-RUN-20261113-120636.mp4"
+     ]
+    },
+    {
+     "run": "RUN-20261113-120937",
+     "manifest": "Evidence/WP-11B/runs/RUN-20261113-120937.manifest.yaml",
+     "packet": "WP-11B",
+     "scene": "Assets/Corum2/Scenes/WP11_Ops.unity",
+     "revision": "5de850e",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-11B/video/s60-RUN-20261113-120937.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-UNITY-06",
+   "gptStatus": "PASS",
+   "gptBasis": [
+    "WP-11B"
+   ],
+   "taggedRuns": 3,
+   "checks": 2,
+   "category": "CHECKED",
+   "check": "Evidence/R5/checks/wp11b_checks_time.json",
+   "checkKey": "TC-UNITY-06",
+   "runs": [
+    {
+     "run": "RUN-20261113-120636",
+     "manifest": "Evidence/WP-11B/runs/RUN-20261113-120636.manifest.yaml",
+     "packet": "WP-11B",
+     "scene": "Assets/Corum2/Scenes/WP11_Ops.unity",
+     "revision": "5de850e",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-11B/video/s50-RUN-20261113-120636.mp4"
+     ]
+    },
+    {
+     "run": "RUN-20261113-120937",
+     "manifest": "Evidence/WP-11B/runs/RUN-20261113-120937.manifest.yaml",
+     "packet": "WP-11B",
+     "scene": "Assets/Corum2/Scenes/WP11_Ops.unity",
+     "revision": "5de850e",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-11B/video/s60-RUN-20261113-120937.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-UNITY-07",
+   "gptStatus": "INSUFFICIENT_EVIDENCE",
+   "gptBasis": [
+    "WP-11A"
+   ],
+   "taggedRuns": 2,
+   "checks": 3,
+   "category": "CHECKED",
+   "check": "Evidence/WP-11A-R1/checks/wp11r1_checks.json",
+   "checkKey": "TC-UNITY-07",
+   "runs": [
+    {
+     "run": "RUN-20261113-231444",
+     "manifest": "Evidence/WP-11A-R1/runs/RUN-20261113-231444.manifest.yaml",
+     "packet": "WP-11A-R1",
+     "scene": "Assets/Corum2/Scenes/WP11_R1.unity",
+     "revision": "2c3112c",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-11A-R1/video/main-RUN-20261113-231444.mp4"
+     ]
+    },
+    {
+     "run": "RUN-20261113-231921",
+     "manifest": "Evidence/WP-11A-R1/runs/RUN-20261113-231921.manifest.yaml",
+     "packet": "WP-11A-R1",
+     "scene": "Assets/Corum2/Scenes/WP11_R1.unity",
+     "revision": "2c3112c",
+     "dirty": false,
+     "provenance": "manifest",
+     "videos": [
+      "Evidence/WP-11A-R1/video/fault-RUN-20261113-231921.mp4"
+     ]
+    }
+   ],
+   "newerFailingCheck": [],
+   "provenanceComplete": true
+  },
+  {
+   "tc": "TC-UNITY-08",
+   "gptStatus": "INSUFFICIENT_EVIDENCE",
+   "gptBasis": [
+    "WP-11B"
+   ],
+   "taggedRuns": 0,
+   "checks": 0,
+   "category": "NO_TAG"
+  },
+  {
+   "tc": "TC-UNITY-09",
+   "gptStatus": "BLOCKED_ENV",
+   "gptBasis": [
+    "Unity 부록"
+   ],
+   "taggedRuns": 0,
+   "checks": 0,
+   "category": "NO_TAG"
+  }
+ ],
+ "counts": {
+  "CHECKED": 65,
+  "OBSERVED": 9,
+  "CROSS": 1,
+  "TAGGED_ONLY": 19,
+  "NO_TAG": 14
+ },
+ "runsScanned": 75,
+ "checkResults": 81,
+ "tcIdsInLogsNotInSpec": []
+}
