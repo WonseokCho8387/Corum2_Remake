@@ -76,6 +76,13 @@ namespace Corum2.Unity
         Text _hud;
 
         Vector2 _prevPos, _currPos;
+        // WP-11 Part C test hooks (TC-UNITY-05 / 06): per-frame samples, a held global stop, the fixed step of a 60 Hz run.
+        bool _frameLog;
+        long _frameIndex;
+        int _ticksThisFrame;
+        double _simCostMsThisFrame;
+        int _pauseFrames = -1;
+        readonly System.Diagnostics.Stopwatch _stepWatch = new System.Diagnostics.Stopwatch();
         /// <summary>WP-11 TC-UNITY-02: rendered vs judged player body per motion class.</summary>
         readonly ViewTrack _playerTrack = new ViewTrack();
         float _prevCamX, _currCamX;
@@ -231,7 +238,11 @@ namespace Corum2.Unity
                 _tick.Device = _collector.LastDevice;
                 _tick.RealTime = Time.realtimeSinceStartupAsDouble;
             }
+            _stepWatch.Restart();
             Sim.Step(_tick, Time.fixedDeltaTime);
+            _stepWatch.Stop();
+            _ticksThisFrame++;
+            _simCostMsThisFrame += _stepWatch.Elapsed.TotalMilliseconds;
 
             _currPos = ToV(Sim.Player.Position);
             _currCamX = Sim.Camera.X;
@@ -252,6 +263,7 @@ namespace Corum2.Unity
             }
             RunScript();
             RouteUi();
+            TimeHooks();
 
             var alpha = Mathf.Clamp01((float)((Time.timeAsDouble - Time.fixedTimeAsDouble) / Time.fixedDeltaTime));
             var map = Sim.CurrentMap;
@@ -505,6 +517,30 @@ namespace Corum2.Unity
             }
         }
 
+        /// <summary>WP-11 Part C: frame samples and the end of a test stop; runs once per rendered frame after input routing.</summary>
+        void TimeHooks()
+        {
+            if (_pauseFrames >= 0)
+            {
+                if (_pauseFrames == 0)
+                {
+                    _pauseFrames = -1;
+                    Time.timeScale = _gameTransport != null ? _appliedTimeScale : 1f;
+                    Sim.Log.Emit("time.pause", "", "", "0", Time.timeScale.ToString("0.###", CultureInfo.InvariantCulture), "PauseEnd(test, U-06)",
+                        ("unscaledTime", Time.unscaledTimeAsDouble), ("simTick", Sim.Tick));
+                }
+                else _pauseFrames--;
+            }
+            _frameIndex++;
+            if (_frameLog)
+                Sim.Log.Emit("frame.sample", "", "", "", "", "Frame(WP11, EXP-SIM-01)", ("frame", _frameIndex), ("realTime", Time.realtimeSinceStartupAsDouble),
+                    ("unscaledDeltaTime", Time.unscaledDeltaTime), ("deltaTime", Time.deltaTime), ("timeScale", Time.timeScale), ("ticksThisFrame", _ticksThisFrame),
+                    ("simTick", Sim.Tick), ("gameTime", Sim.GameTime), ("simCostMs", _simCostMsThisFrame), ("fixedDeltaTime", Time.fixedDeltaTime),
+                    ("paused", _pauseFrames >= 0));
+            _ticksThisFrame = 0;
+            _simCostMsThisFrame = 0;
+        }
+
         void Exec(string cmd)
         {
             var eq = cmd.IndexOf('=');
@@ -655,6 +691,26 @@ namespace Corum2.Unity
                 case "padtap":
                     Virtual.Button(arg, true);
                     Virtual.Button(arg, false);
+                    break;
+                case "framelog":
+                    // Test-only (WP-11 Part C): one frame.sample record per rendered frame while on.
+                    _frameLog = arg == "1";
+                    Sim.Log.Emit("marker", "", "", "", "", _frameLog ? "FrameLogOn" : "FrameLogOff", ("fixedDeltaTime", Time.fixedDeltaTime));
+                    break;
+                case "pause":
+                    // Test-only (WP-11 Part C, TC-UNITY-05 'stop'): Time.timeScale = 0 for N rendered frames, then back to the scale in force.
+                    // The script clock is game time and stops too, so the length is counted in rendered frames.
+                    _pauseFrames = int.Parse(arg, CultureInfo.InvariantCulture);
+                    Time.timeScale = 0f;
+                    Sim.Log.Emit("time.pause", "", "", _appliedTimeScale.ToString("0.###", CultureInfo.InvariantCulture), "0", "PauseStart(test, U-06)",
+                        ("frames", _pauseFrames), ("unscaledTime", Time.unscaledTimeAsDouble), ("simTick", Sim.Tick));
+                    break;
+                case "fixeddt":
+                    // Test-only (WP-11 Part C, EXP-SIM-01): fixed step for the 60 Hz comparison run; logged, set before the scenario starts.
+                    var fdBefore = Time.fixedDeltaTime;
+                    Time.fixedDeltaTime = float.Parse(arg, CultureInfo.InvariantCulture);
+                    Sim.Log.Emit("marker", "", "", fdBefore.ToString("0.######", CultureInfo.InvariantCulture), Time.fixedDeltaTime.ToString("0.######", CultureInfo.InvariantCulture),
+                        "FixedDeltaChanged(test, EXP-SIM-01)", ("fixedDeltaTime", Time.fixedDeltaTime));
                     break;
                 case "framedt":
                     // Test-only: frame length in game seconds (e.g. 0.1 = five fixed ticks per rendered frame).

@@ -151,6 +151,90 @@ namespace Corum2.EditorTools
             Debug.Log("[Corum2] WP-11 content built. Validation issues: " + (issues.Count + presIssues.Count));
         }
 
+        public const string OpsScenePath = "Assets/Corum2/Scenes/WP11_Ops.unity";
+
+        /// <summary>
+        /// WP-11 Part B (TC-OPS-01, TC-UNITY-03): one scene whose unlock / combat fixtures are its own copies, so a variant run changes
+        /// exactly one Inspector value without touching any other scene. Baseline: extra jump, air dash and dive unlocked; dash
+        /// pierce and dive area off; combo window 0.5 s (the WP-02 value).
+        /// </summary>
+        [MenuItem("Corum2/WP-11/Build Ops Content")]
+        public static void BuildOps()
+        {
+            Directory.CreateDirectory(Dir);
+            var air = Copy<AirUnlockFixture>(Wp01 + "/AirUnlocks_All.asset", "AirUnlocks_Ops");
+            air.meta.domainId = "unlock.AirUnlocks_Ops";
+            air.meta.dataVersion = Version;
+            air.extraJump = true;
+            air.airDash = true;
+            air.dive = true;
+            var cu = Copy<CombatUnlockFixture>(Wp02 + "/CombatUnlocks_None.asset", "CombatUnlocks_Ops");
+            cu.meta.domainId = "combat.CombatUnlocks_Ops";
+            cu.meta.dataVersion = Version;
+            cu.dashPierce = false;
+            cu.diveArea = false;
+            var combat = Copy<CombatConfig>(Wp02 + "/CombatConfig.asset", "CombatConfig_Ops");
+            combat.meta.domainId = "combat.player.ops";
+            combat.meta.dataVersion = Version;
+            combat.comboWindow = 0.5f;
+            foreach (var o in new Object[] { air, cu, combat }) EditorUtility.SetDirty(o);
+
+            var map = AssetDatabase.LoadAssetAtPath<MapDefinition>(Dir + "/Map_C11o_Ops.asset") ?? Save(ScriptableObject.CreateInstance<MapDefinition>(), "Map_C11o_Ops");
+            map.meta.domainId = "map.C11o";
+            map.meta.dataVersion = Version;
+            map.meta.relatedRIds = new[] { "R-03-03", "R-04-06", "R-04-08", "R-04-09" };
+            map.mapId = "C11o";
+            map.minX = 0;
+            map.maxX = 220;
+            map.cameraMinX = 9;
+            map.cameraMaxX = 211;
+            map.cameraY = 2.5f;
+            map.cameraFollowSharpness = 10f;
+            map.groundColor = new Color(0.36f, 0.38f, 0.42f);
+            map.solids = new List<BoxData> { new BoxData { min = new Vector2(-1, -2), max = new Vector2(221, 0) } };
+            map.spawns = new List<SpawnData> { Sp("Start", 4) };
+            map.enemies = new List<EnemySpawnData>();
+            var x = 20f;
+            void Z(string id, params (string inst, string def, float dx)[] es)
+            {
+                map.spawns.Add(Sp(id, x));
+                foreach (var e in es) map.enemies.Add(En(e.inst, e.def, x + e.dx));
+                x += 30f;
+            }
+            Z("O1Jump");                                                                     // jump, then a second jump in the air
+            Z("O2Dash");                                                                     // air dash, no target
+            Z("O3Pierce", ("pa", "bag", 1.4f), ("pb", "bag", 2.2f), ("pc", "bag", 3.0f));    // air dash through three bags in a line
+            Z("O4Dive", ("da", "bag", 2.2f), ("db", "bag", 2.2f), ("dc", "bag", 2.2f));      // dive onto three bags at one point
+            Z("O5Combo", ("cb", "bag", 1.0f));                                               // second attack 0.4 s after the first ends
+            Z("O6Twins", ("ta", "bag", 1.0f), ("tb", "bag", 6.0f));                          // two instances of one definition, only A hit
+            map.left = new EdgeData { policy = EdgePolicy.Blocked };
+            map.right = new EdgeData { policy = EdgePolicy.Blocked };
+            map.points = new List<PointData>();
+            var world = Save(ScriptableObject.CreateInstance<WorldDefinition>(), "World_WP11Ops");
+            world.maps = new List<MapDefinition> { map };
+            world.startMapId = "C11o";
+            world.startSpawnId = "Start";
+            foreach (var o in new Object[] { map, world }) EditorUtility.SetDirty(o);
+            AssetDatabase.SaveAssets();
+
+            var move = AssetDatabase.LoadAssetAtPath<MovementConfig>(Wp01 + "/MovementConfig.asset");
+            var input = AssetDatabase.LoadAssetAtPath<InputProfileConfig>(Wp01 + "/InputProfile.asset");
+            var enemies = new List<EnemyDefinitionAsset> { AssetDatabase.LoadAssetAtPath<EnemyDefinitionAsset>(Wp02 + "/Enemy_Bag.asset") };
+            var issues = DataValidator.Validate(world.ToCore(), move.ToCore(), input.ToCore(), air.ToCore());
+            issues.AddRange(DataValidator.ValidateCombat(combat.ToCore(), cu.ToCore(), enemies.Select(e => e.ToCore()).ToList(), world.ToCore()));
+            foreach (var i in issues) Debug.LogError("[Corum2] " + i);
+            var lib = AssetDatabase.LoadAssetAtPath<PresentationLibrary>(Wp04 + "/PresentationLibrary.asset");
+            BuildScene(world, move, input, air, combat, cu, enemies, lib, OpsScenePath);
+            Debug.Log("[Corum2] WP-11 ops content built. Validation issues: " + issues.Count);
+        }
+
+        static T Copy<T>(string from, string name) where T : ScriptableObject
+        {
+            var path = Dir + "/" + name + ".asset";
+            if (AssetDatabase.LoadAssetAtPath<T>(path) == null) AssetDatabase.CopyAsset(from, path);
+            return AssetDatabase.LoadAssetAtPath<T>(path);
+        }
+
         static BossPatternData SlowMelee(string id) => new BossPatternData
         {
             id = id, minDistance = 0f, maxDistance = 2.2f, playerState = PlayerAirCondition.Any, priority = 0,
@@ -215,7 +299,7 @@ namespace Corum2.EditorTools
         }
 
         static void BuildScene(WorldDefinition world, MovementConfig move, InputProfileConfig input, AirUnlockFixture air, CombatConfig combat,
-            CombatUnlockFixture cu, List<EnemyDefinitionAsset> enemies, PresentationLibrary lib)
+            CombatUnlockFixture cu, List<EnemyDefinitionAsset> enemies, PresentationLibrary lib, string scenePath = ScenePath)
         {
             var scene = EditorSceneManager.NewScene(NewSceneSetup.DefaultGameObjects, NewSceneMode.Single);
             var profile = AssetDatabase.LoadAssetAtPath<VolumeProfile>("Assets/Settings/SampleSceneProfile.asset");
@@ -241,9 +325,9 @@ namespace Corum2.EditorTools
             host.enemies = enemies;
             host.ring = AssetDatabase.LoadAssetAtPath<RingConfig>("Assets/Corum2/Data/WP05/RingConfig_WP05.asset"); // fireball command = test magic
             host.presentation = lib;
-            EditorSceneManager.SaveScene(scene, ScenePath);
-            var scenes = EditorBuildSettings.scenes.Where(s => s.path != ScenePath).ToList();
-            scenes.Add(new EditorBuildSettingsScene(ScenePath, true));
+            EditorSceneManager.SaveScene(scene, scenePath);
+            var scenes = EditorBuildSettings.scenes.Where(s => s.path != scenePath).ToList();
+            scenes.Add(new EditorBuildSettingsScene(scenePath, true));
             EditorBuildSettings.scenes = scenes.ToArray();
             AssetDatabase.SaveAssets();
         }
