@@ -1,0 +1,13 @@
+diff --git a/Assets/Corum2/Data/WP11/CombatConfig_Ops.asset b/Assets/Corum2/Data/WP11/CombatConfig_Ops.asset
+index cbca6d0..b09fd0f 100644
+--- a/Assets/Corum2/Data/WP11/CombatConfig_Ops.asset
++++ b/Assets/Corum2/Data/WP11/CombatConfig_Ops.asset
+@@ -264,7 +264,7 @@ MonoBehaviour:
+     guardBreak: 0
+     superArmor: 0
+     hitsDowned: 1
+-  comboWindow: 0.5
++  comboWindow: 0.3
+   airAttackFallSpeed: 1.5
+   parryWindow: 0.15
+   parryStunTime: 0.8

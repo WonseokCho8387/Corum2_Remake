@@ -1,0 +1,651 @@
+{
+ "logs": [
+  "Diagnostics/WP11B/base/RUN-20261113-114535.ndjson",
+  "Diagnostics/WP11B/base2/RUN-20261113-114831.ndjson",
+  "Diagnostics/WP11B/v1/RUN-20261113-115130.ndjson",
+  "Diagnostics/WP11B/v2/RUN-20261113-115432.ndjson",
+  "Diagnostics/WP11B/v3/RUN-20261113-115731.ndjson",
+  "Diagnostics/WP11B/v4/RUN-20261113-120032.ndjson",
+  "Diagnostics/WP11B/v5/RUN-20261113-120334.ndjson"
+ ],
+ "TC-OPS-01": {
+  "variants": [
+   {
+    "variant": "v1",
+    "asset": "Assets/Corum2/Data/WP11/AirUnlocks_Ops.asset",
+    "field": "extraJump",
+    "value": [
+     "1",
+     "0"
+    ],
+    "patchOneLine": true,
+    "patch": {
+     "files": [
+      "Assets/Corum2/Data/WP11/AirUnlocks_Ops.asset"
+     ],
+     "minus": [
+      "extraJump: 1"
+     ],
+     "plus": [
+      "extraJump: 0"
+     ]
+    },
+    "configEcho": {
+     "base": {
+      "upgrade": [
+       "area=False",
+       "pierce=False"
+      ],
+      "comboWindow": [
+       0.5
+      ]
+     },
+     "variant": {
+      "upgrade": [
+       "area=False",
+       "pierce=False"
+      ],
+      "comboWindow": [
+       0.5
+      ]
+     },
+     "ok": true
+    },
+    "zonesChanged": [
+     "O1Jump"
+    ],
+    "zonesExpected": [
+     "O1Jump"
+    ],
+    "zonesChangedOnlyInChainRecords": [],
+    "behaviour": {
+     "O1Jump": {
+      "extraJump": 0,
+      "rejected": [
+       "Locked:ExtraJump"
+      ]
+     }
+    },
+    "baseBehaviour": {
+     "O1Jump": {
+      "extraJump": 1,
+      "rejected": []
+     }
+    },
+    "firstUnexpectedDiff": {},
+    "pass": true
+   },
+   {
+    "variant": "v2",
+    "asset": "Assets/Corum2/Data/WP11/AirUnlocks_Ops.asset",
+    "field": "airDash",
+    "value": [
+     "1",
+     "0"
+    ],
+    "patchOneLine": true,
+    "patch": {
+     "files": [
+      "Assets/Corum2/Data/WP11/AirUnlocks_Ops.asset"
+     ],
+     "minus": [
+      "airDash: 1"
+     ],
+     "plus": [
+      "airDash: 0"
+     ]
+    },
+    "configEcho": {
+     "base": {
+      "upgrade": [
+       "area=False",
+       "pierce=False"
+      ],
+      "comboWindow": [
+       0.5
+      ]
+     },
+     "variant": {
+      "upgrade": [
+       "area=False"
+      ],
+      "comboWindow": [
+       0.5
+      ]
+     },
+     "ok": true
+    },
+    "zonesChanged": [
+     "O2Dash",
+     "O3Pierce"
+    ],
+    "zonesExpected": [
+     "O2Dash",
+     "O3Pierce"
+    ],
+    "zonesChangedOnlyInChainRecords": [],
+    "behaviour": {
+     "O2Dash": {
+      "dashes": 0,
+      "dashHits": [],
+      "rejected": [
+       "Locked:AirDash"
+      ]
+     },
+     "O3Pierce": {
+      "dashes": 0,
+      "dashHits": [],
+      "rejected": [
+       "Locked:AirDash"
+      ]
+     }
+    },
+    "baseBehaviour": {
+     "O2Dash": {
+      "dashes": 1,
+      "dashHits": [],
+      "rejected": []
+     },
+     "O3Pierce": {
+      "dashes": 1,
+      "dashHits": [
+       "pa"
+      ],
+      "rejected": []
+     }
+    },
+    "firstUnexpectedDiff": {},
+    "pass": true
+   },
+   {
+    "variant": "v3",
+    "asset": "Assets/Corum2/Data/WP11/CombatUnlocks_Ops.asset",
+    "field": "dashPierce",
+    "value": [
+     "0",
+     "1"
+    ],
+    "patchOneLine": true,
+    "patch": {
+     "files": [
+      "Assets/Corum2/Data/WP11/CombatUnlocks_Ops.asset"
+     ],
+     "minus": [
+      "dashPierce: 0"
+     ],
+     "plus": [
+      "dashPierce: 1"
+     ]
+    },
+    "configEcho": {
+     "base": {
+      "upgrade": [
+       "area=False",
+       "pierce=False"
+      ],
+      "comboWindow": [
+       0.5
+      ]
+     },
+     "variant": {
+      "upgrade": [
+       "area=False",
+       "pierce=True"
+      ],
+      "comboWindow": [
+       0.5
+      ]
+     },
+     "ok": true
+    },
+    "zonesChanged": [
+     "O3Pierce"
+    ],
+    "zonesExpected": [
+     "O3Pierce"
+    ],
+    "zonesChangedOnlyInChainRecords": [],
+    "behaviour": {
+     "O3Pierce": {
+      "dashes": 1,
+      "dashHits": [
+       "pa",
+       "pb",
+       "pc"
+      ],
+      "rejected": []
+     }
+    },
+    "baseBehaviour": {
+     "O3Pierce": {
+      "dashes": 1,
+      "dashHits": [
+       "pa"
+      ],
+      "rejected": []
+     }
+    },
+    "firstUnexpectedDiff": {},
+    "pass": true
+   },
+   {
+    "variant": "v4",
+    "asset": "Assets/Corum2/Data/WP11/CombatUnlocks_Ops.asset",
+    "field": "diveArea",
+    "value": [
+     "0",
+     "1"
+    ],
+    "patchOneLine": true,
+    "patch": {
+     "files": [
+      "Assets/Corum2/Data/WP11/CombatUnlocks_Ops.asset"
+     ],
+     "minus": [
+      "diveArea: 0"
+     ],
+     "plus": [
+      "diveArea: 1"
+     ]
+    },
+    "configEcho": {
+     "base": {
+      "upgrade": [
+       "area=False",
+       "pierce=False"
+      ],
+      "comboWindow": [
+       0.5
+      ]
+     },
+     "variant": {
+      "upgrade": [
+       "area=True",
+       "pierce=False"
+      ],
+      "comboWindow": [
+       0.5
+      ]
+     },
+     "ok": true
+    },
+    "zonesChanged": [
+     "O4Dive"
+    ],
+    "zonesExpected": [
+     "O4Dive"
+    ],
+    "zonesChangedOnlyInChainRecords": [],
+    "behaviour": {
+     "O4Dive": {
+      "diveHits": [
+       "da",
+       "db",
+       "dc"
+      ]
+     }
+    },
+    "baseBehaviour": {
+     "O4Dive": {
+      "diveHits": [
+       "da"
+      ]
+     }
+    },
+    "firstUnexpectedDiff": {},
+    "pass": true
+   },
+   {
+    "variant": "v5",
+    "asset": "Assets/Corum2/Data/WP11/CombatConfig_Ops.asset",
+    "field": "comboWindow",
+    "value": [
+     "0.5",
+     "0.3"
+    ],
+    "patchOneLine": true,
+    "patch": {
+     "files": [
+      "Assets/Corum2/Data/WP11/CombatConfig_Ops.asset"
+     ],
+     "minus": [
+      "comboWindow: 0.5"
+     ],
+     "plus": [
+      "comboWindow: 0.3"
+     ]
+    },
+    "configEcho": {
+     "base": {
+      "upgrade": [
+       "area=False",
+       "pierce=False"
+      ],
+      "comboWindow": [
+       0.5
+      ]
+     },
+     "variant": {
+      "upgrade": [
+       "area=False",
+       "pierce=False"
+      ],
+      "comboWindow": [
+       0.3
+      ]
+     },
+     "ok": true
+    },
+    "zonesChanged": [
+     "O5Combo"
+    ],
+    "zonesExpected": [
+     "O5Combo"
+    ],
+    "zonesChangedOnlyInChainRecords": [
+     "O3Pierce",
+     "O4Dive",
+     "O6Twins"
+    ],
+    "behaviour": {
+     "O5Combo": {
+      "attacks": [
+       [
+        "ground1",
+        4,
+        1
+       ],
+       [
+        "ground1",
+        5,
+        1
+       ]
+      ],
+      "gapTicks": 19
+     }
+    },
+    "baseBehaviour": {
+     "O5Combo": {
+      "attacks": [
+       [
+        "ground1",
+        4,
+        1
+       ],
+       [
+        "ground2",
+        4,
+        2
+       ]
+      ],
+      "gapTicks": 19
+     }
+    },
+    "firstUnexpectedDiff": {},
+    "pass": true
+   }
+  ],
+  "baselineClean": true,
+  "baselineBehaviour": {
+   "O1Jump": {
+    "extraJump": 1,
+    "rejected": []
+   },
+   "O2Dash": {
+    "dashes": 1,
+    "dashHits": [],
+    "rejected": []
+   },
+   "O3Pierce": {
+    "dashes": 1,
+    "dashHits": [
+     "pa"
+    ],
+    "rejected": []
+   },
+   "O4Dive": {
+    "diveHits": [
+     "da"
+    ]
+   },
+   "O5Combo": {
+    "attacks": [
+     [
+      "ground1",
+      4,
+      1
+     ],
+     [
+      "ground2",
+      4,
+      2
+     ]
+    ],
+    "gapTicks": 19
+   },
+   "O6Twins": {
+    "hitTargets": [
+     "ta"
+    ]
+   }
+  },
+  "note": "each variant changes one Inspector value of the WP11_Ops fixtures; every other zone is identical to the baseline, record by record",
+  "pass": true
+ },
+ "TC-UNITY-03": {
+  "rerunIdentical": {
+   "O1Jump": true,
+   "O2Dash": true,
+   "O3Pierce": true,
+   "O4Dive": true,
+   "O5Combo": true,
+   "O6Twins": true
+  },
+  "twins": {
+   "base": {
+    "taHp": [
+     990.0,
+     1000.0
+    ],
+    "tbHp": [
+     1000.0
+    ],
+    "tbStates": [
+     "Idle"
+    ],
+    "pass": true
+   },
+   "base2": {
+    "taHp": [
+     990.0,
+     1000.0
+    ],
+    "tbHp": [
+     1000.0
+    ],
+    "tbStates": [
+     "Idle"
+    ],
+    "pass": true
+   },
+   "v1": {
+    "taHp": [
+     990.0,
+     1000.0
+    ],
+    "tbHp": [
+     1000.0
+    ],
+    "tbStates": [
+     "Idle"
+    ],
+    "pass": true
+   },
+   "v2": {
+    "taHp": [
+     990.0,
+     1000.0
+    ],
+    "tbHp": [
+     1000.0
+    ],
+    "tbStates": [
+     "Idle"
+    ],
+    "pass": true
+   },
+   "v3": {
+    "taHp": [
+     990.0,
+     1000.0
+    ],
+    "tbHp": [
+     1000.0
+    ],
+    "tbStates": [
+     "Idle"
+    ],
+    "pass": true
+   },
+   "v4": {
+    "taHp": [
+     990.0,
+     1000.0
+    ],
+    "tbHp": [
+     1000.0
+    ],
+    "tbStates": [
+     "Idle"
+    ],
+    "pass": true
+   },
+   "v5": {
+    "taHp": [
+     990.0,
+     1000.0
+    ],
+    "tbHp": [
+     1000.0
+    ],
+    "tbStates": [
+     "Idle"
+    ],
+    "pass": true
+   }
+  },
+  "inspectorChanges": [
+   {
+    "variant": "v1",
+    "file": "Assets/Corum2/Data/WP11/AirUnlocks_Ops.asset",
+    "line": [
+     "extraJump: 1",
+     "extraJump: 0"
+    ],
+    "inPatch": true
+   },
+   {
+    "variant": "v2",
+    "file": "Assets/Corum2/Data/WP11/AirUnlocks_Ops.asset",
+    "line": [
+     "airDash: 1",
+     "airDash: 0"
+    ],
+    "inPatch": true
+   },
+   {
+    "variant": "v3",
+    "file": "Assets/Corum2/Data/WP11/CombatUnlocks_Ops.asset",
+    "line": [
+     "dashPierce: 0",
+     "dashPierce: 1"
+    ],
+    "inPatch": true
+   },
+   {
+    "variant": "v4",
+    "file": "Assets/Corum2/Data/WP11/CombatUnlocks_Ops.asset",
+    "line": [
+     "diveArea: 0",
+     "diveArea: 1"
+    ],
+    "inPatch": true
+   },
+   {
+    "variant": "v5",
+    "file": "Assets/Corum2/Data/WP11/CombatConfig_Ops.asset",
+    "line": [
+     "comboWindow: 0.5",
+     "comboWindow: 0.3"
+    ],
+    "inPatch": true
+   }
+  ],
+  "note": "value / file tracked by each run's manifest dirty patch (one line); runtime state isolated per instance; rerun identical",
+  "pass": true
+ },
+ "selftest": [
+  {
+   "case": "original",
+   "pass": {
+    "TC-OPS-01": true,
+    "TC-UNITY-03": true
+   }
+  },
+  {
+   "case": "pierce variant also changes the dive",
+   "section": "TC-OPS-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "extra jump still used with extraJump 0",
+   "section": "TC-OPS-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "combo variant keeps the chain",
+   "section": "TC-OPS-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "area variant hits only one",
+   "section": "TC-OPS-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "rerun differs in one tick",
+   "section": "TC-UNITY-03",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "second twin damaged by the hit on the first",
+   "section": "TC-UNITY-03",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "dash variant changes the jump zone too",
+   "section": "TC-OPS-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "combo variant also moves a hit in another zone",
+   "section": "TC-OPS-01",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "combo variant run with the base window",
+   "section": "TC-OPS-01",
+   "sectionPass": false,
+   "pass": true
+  }
+ ],
+ "selftest_all_pass": true
+}

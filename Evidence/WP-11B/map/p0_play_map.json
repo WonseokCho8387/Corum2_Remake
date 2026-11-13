@@ -1,0 +1,1770 @@
+{
+ "tcs": [
+  {
+   "tc": "TC-00-01",
+   "gptStatus": "PASS",
+   "playRuns": 0,
+   "latest": null,
+   "evidence": [],
+   "playMode": "NOT_RUN"
+  },
+  {
+   "tc": "TC-00-02",
+   "gptStatus": "HUMAN_REVIEW",
+   "playRuns": 0,
+   "latest": null,
+   "evidence": [],
+   "playMode": "NOT_RUN"
+  },
+  {
+   "tc": "TC-00-03",
+   "gptStatus": "BLOCKED_ENV",
+   "playRuns": 0,
+   "latest": null,
+   "evidence": [],
+   "playMode": "NOT_RUN"
+  },
+  {
+   "tc": "TC-01-01",
+   "gptStatus": "PASS",
+   "playRuns": 2,
+   "latest": {
+    "run": "RUN-20261112-234529",
+    "evidence": "Evidence/WP-09-R1",
+    "revision": "de757b8",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP04_AI.unity"
+   },
+   "evidence": [
+    "Evidence/WP-09",
+    "Evidence/WP-09-R1"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-01-02",
+   "gptStatus": "PASS",
+   "playRuns": 1,
+   "latest": {
+    "run": "RUN-20261110-011834",
+    "evidence": "Evidence/WP-01-R1",
+    "revision": "<packet",
+    "dirty": false,
+    "scene": null
+   },
+   "evidence": [
+    "Evidence/WP-01-R1"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-01-03",
+   "gptStatus": "PASS",
+   "playRuns": 1,
+   "latest": {
+    "run": "RUN-20261110-011834",
+    "evidence": "Evidence/WP-01-R1",
+    "revision": "<packet",
+    "dirty": false,
+    "scene": null
+   },
+   "evidence": [
+    "Evidence/WP-01-R1"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-01-04",
+   "gptStatus": "PASS",
+   "playRuns": 1,
+   "latest": {
+    "run": "RUN-20261110-011834",
+    "evidence": "Evidence/WP-01-R1",
+    "revision": "<packet",
+    "dirty": false,
+    "scene": null
+   },
+   "evidence": [
+    "Evidence/WP-01-R1"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-02-01",
+   "gptStatus": "PASS",
+   "playRuns": 4,
+   "latest": {
+    "run": "RUN-20261112-235402",
+    "evidence": "Evidence/WP-09-R1",
+    "revision": "de757b8",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP03_Ring.unity"
+   },
+   "evidence": [
+    "Evidence/WP-03",
+    "Evidence/WP-09",
+    "Evidence/WP-09-R1"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-02-02",
+   "gptStatus": "PASS",
+   "playRuns": 3,
+   "latest": {
+    "run": "RUN-20261112-102835",
+    "evidence": "Evidence/WP-05-R2",
+    "revision": "5af26f0",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP05_MagicDeath.unity"
+   },
+   "evidence": [
+    "Evidence/WP-05",
+    "Evidence/WP-05-R1",
+    "Evidence/WP-05-R2"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-02-03",
+   "gptStatus": "PASS",
+   "playRuns": 1,
+   "latest": {
+    "run": "RUN-20261110-122933",
+    "evidence": "Evidence/WP-03",
+    "revision": "37929b8",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP03_Ring.unity"
+   },
+   "evidence": [
+    "Evidence/WP-03"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-02-04",
+   "gptStatus": "PASS",
+   "playRuns": 0,
+   "latest": null,
+   "evidence": [],
+   "playMode": "NOT_RUN"
+  },
+  {
+   "tc": "TC-02-05",
+   "gptStatus": "PASS",
+   "playRuns": 1,
+   "latest": {
+    "run": "RUN-20261110-122933",
+    "evidence": "Evidence/WP-03",
+    "revision": "37929b8",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP03_Ring.unity"
+   },
+   "evidence": [
+    "Evidence/WP-03"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-02-06",
+   "gptStatus": "PASS",
+   "playRuns": 1,
+   "latest": {
+    "run": "RUN-20261110-122933",
+    "evidence": "Evidence/WP-03",
+    "revision": "37929b8",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP03_Ring.unity"
+   },
+   "evidence": [
+    "Evidence/WP-03"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-02-07",
+   "gptStatus": "PASS",
+   "playRuns": 1,
+   "latest": {
+    "run": "RUN-20261110-122933",
+    "evidence": "Evidence/WP-03",
+    "revision": "37929b8",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP03_Ring.unity"
+   },
+   "evidence": [
+    "Evidence/WP-03"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-02-08",
+   "gptStatus": "PASS",
+   "playRuns": 1,
+   "latest": {
+    "run": "RUN-20261110-122933",
+    "evidence": "Evidence/WP-03",
+    "revision": "37929b8",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP03_Ring.unity"
+   },
+   "evidence": [
+    "Evidence/WP-03"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-02-09",
+   "gptStatus": "PASS",
+   "playRuns": 1,
+   "latest": {
+    "run": "RUN-20261110-122933",
+    "evidence": "Evidence/WP-03",
+    "revision": "37929b8",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP03_Ring.unity"
+   },
+   "evidence": [
+    "Evidence/WP-03"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-02-10",
+   "gptStatus": "PASS",
+   "playRuns": 4,
+   "latest": {
+    "run": "RUN-20261112-102835",
+    "evidence": "Evidence/WP-05-R2",
+    "revision": "5af26f0",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP05_MagicDeath.unity"
+   },
+   "evidence": [
+    "Evidence/WP-03",
+    "Evidence/WP-05",
+    "Evidence/WP-05-R1",
+    "Evidence/WP-05-R2"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-02-11",
+   "gptStatus": "PASS",
+   "playRuns": 2,
+   "latest": {
+    "run": "RUN-20261110-131240",
+    "evidence": "Evidence/WP-03-R1",
+    "revision": "0ff03b6",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP03_Ring.unity"
+   },
+   "evidence": [
+    "Evidence/WP-03",
+    "Evidence/WP-03-R1"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-03-01",
+   "gptStatus": "PASS",
+   "playRuns": 3,
+   "latest": {
+    "run": "RUN-20261112-234229",
+    "evidence": "Evidence/WP-09-R1",
+    "revision": "de757b8",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP06_ComboState.unity"
+   },
+   "evidence": [
+    "Evidence/WP-01-R1",
+    "Evidence/WP-09",
+    "Evidence/WP-09-R1"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-03-02",
+   "gptStatus": "PASS",
+   "playRuns": 1,
+   "latest": {
+    "run": "RUN-20261110-011834",
+    "evidence": "Evidence/WP-01-R1",
+    "revision": "<packet",
+    "dirty": false,
+    "scene": null
+   },
+   "evidence": [
+    "Evidence/WP-01-R1"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-03-03",
+   "gptStatus": "PASS",
+   "playRuns": 1,
+   "latest": {
+    "run": "RUN-20261110-012001",
+    "evidence": "Evidence/WP-01-R1",
+    "revision": "<packet",
+    "dirty": false,
+    "scene": null
+   },
+   "evidence": [
+    "Evidence/WP-01-R1"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-03-04",
+   "gptStatus": "PASS",
+   "playRuns": 2,
+   "latest": {
+    "run": "RUN-20261112-235043",
+    "evidence": "Evidence/WP-09-R1",
+    "revision": "de757b8",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP01_MapMovement.unity"
+   },
+   "evidence": [
+    "Evidence/WP-01-R1",
+    "Evidence/WP-09-R1"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-03-05",
+   "gptStatus": "PASS",
+   "playRuns": 1,
+   "latest": {
+    "run": "RUN-20261110-011834",
+    "evidence": "Evidence/WP-01-R1",
+    "revision": "<packet",
+    "dirty": false,
+    "scene": null
+   },
+   "evidence": [
+    "Evidence/WP-01-R1"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-03-06",
+   "gptStatus": "PASS",
+   "playRuns": 3,
+   "latest": {
+    "run": "RUN-20261112-234229",
+    "evidence": "Evidence/WP-09-R1",
+    "revision": "de757b8",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP06_ComboState.unity"
+   },
+   "evidence": [
+    "Evidence/WP-01-R1",
+    "Evidence/WP-09",
+    "Evidence/WP-09-R1"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-03-07",
+   "gptStatus": "PASS",
+   "playRuns": 2,
+   "latest": {
+    "run": "RUN-20261112-234229",
+    "evidence": "Evidence/WP-09-R1",
+    "revision": "de757b8",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP06_ComboState.unity"
+   },
+   "evidence": [
+    "Evidence/WP-09",
+    "Evidence/WP-09-R1"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-03-08",
+   "gptStatus": "PASS",
+   "playRuns": 3,
+   "latest": {
+    "run": "RUN-20261112-234229",
+    "evidence": "Evidence/WP-09-R1",
+    "revision": "de757b8",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP06_ComboState.unity"
+   },
+   "evidence": [
+    "Evidence/WP-01-R1",
+    "Evidence/WP-09",
+    "Evidence/WP-09-R1"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-03-09",
+   "gptStatus": "PASS",
+   "playRuns": 3,
+   "latest": {
+    "run": "RUN-20261112-234229",
+    "evidence": "Evidence/WP-09-R1",
+    "revision": "de757b8",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP06_ComboState.unity"
+   },
+   "evidence": [
+    "Evidence/WP-01-R1",
+    "Evidence/WP-09",
+    "Evidence/WP-09-R1"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-04-01",
+   "gptStatus": "PASS",
+   "playRuns": 3,
+   "latest": {
+    "run": "RUN-20261110-075540",
+    "evidence": "Evidence/WP-02-R1",
+    "revision": "7f79776",
+    "dirty": false,
+    "scene": null
+   },
+   "evidence": [
+    "Evidence/WP-02",
+    "Evidence/WP-02-R1"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-04-02",
+   "gptStatus": "PASS",
+   "playRuns": 3,
+   "latest": {
+    "run": "RUN-20261113-051441",
+    "evidence": "Evidence/WP-06-R2",
+    "revision": "7a9ca55",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP06_ComboState.unity"
+   },
+   "evidence": [
+    "Evidence/WP-06",
+    "Evidence/WP-06-R1",
+    "Evidence/WP-06-R2"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-04-03",
+   "gptStatus": "PASS",
+   "playRuns": 3,
+   "latest": {
+    "run": "RUN-20261113-051441",
+    "evidence": "Evidence/WP-06-R2",
+    "revision": "7a9ca55",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP06_ComboState.unity"
+   },
+   "evidence": [
+    "Evidence/WP-06",
+    "Evidence/WP-06-R1",
+    "Evidence/WP-06-R2"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-04-04",
+   "gptStatus": "PASS",
+   "playRuns": 5,
+   "latest": {
+    "run": "RUN-20261113-051441",
+    "evidence": "Evidence/WP-06-R2",
+    "revision": "7a9ca55",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP06_ComboState.unity"
+   },
+   "evidence": [
+    "Evidence/WP-02",
+    "Evidence/WP-02-R1",
+    "Evidence/WP-06",
+    "Evidence/WP-06-R1",
+    "Evidence/WP-06-R2"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-04-05",
+   "gptStatus": "PASS",
+   "playRuns": 2,
+   "latest": {
+    "run": "RUN-20261110-075540",
+    "evidence": "Evidence/WP-02-R1",
+    "revision": "7f79776",
+    "dirty": false,
+    "scene": null
+   },
+   "evidence": [
+    "Evidence/WP-02",
+    "Evidence/WP-02-R1"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-04-06",
+   "gptStatus": "PASS",
+   "playRuns": 3,
+   "latest": {
+    "run": "RUN-20261113-051441",
+    "evidence": "Evidence/WP-06-R2",
+    "revision": "7a9ca55",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP06_ComboState.unity"
+   },
+   "evidence": [
+    "Evidence/WP-06",
+    "Evidence/WP-06-R1",
+    "Evidence/WP-06-R2"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-04-07",
+   "gptStatus": "PASS",
+   "playRuns": 3,
+   "latest": {
+    "run": "RUN-20261113-051441",
+    "evidence": "Evidence/WP-06-R2",
+    "revision": "7a9ca55",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP06_ComboState.unity"
+   },
+   "evidence": [
+    "Evidence/WP-06",
+    "Evidence/WP-06-R1",
+    "Evidence/WP-06-R2"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-04-08",
+   "gptStatus": "PASS",
+   "playRuns": 3,
+   "latest": {
+    "run": "RUN-20261113-051441",
+    "evidence": "Evidence/WP-06-R2",
+    "revision": "7a9ca55",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP06_ComboState.unity"
+   },
+   "evidence": [
+    "Evidence/WP-06",
+    "Evidence/WP-06-R1",
+    "Evidence/WP-06-R2"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-04-09",
+   "gptStatus": "PASS",
+   "playRuns": 6,
+   "latest": {
+    "run": "RUN-20261113-052239",
+    "evidence": "Evidence/WP-06-R2",
+    "revision": "7a9ca55",
+    "dirty": true,
+    "scene": "Assets/Corum2/Scenes/WP06_ComboState.unity"
+   },
+   "evidence": [
+    "Evidence/WP-06",
+    "Evidence/WP-06-R1",
+    "Evidence/WP-06-R2"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-04-10",
+   "gptStatus": "PASS",
+   "playRuns": 0,
+   "latest": null,
+   "evidence": [],
+   "playMode": "NOT_RUN"
+  },
+  {
+   "tc": "TC-05-01",
+   "gptStatus": "PASS",
+   "playRuns": 5,
+   "latest": {
+    "run": "RUN-20261113-051441",
+    "evidence": "Evidence/WP-06-R2",
+    "revision": "7a9ca55",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP06_ComboState.unity"
+   },
+   "evidence": [
+    "Evidence/WP-02",
+    "Evidence/WP-02-R1",
+    "Evidence/WP-06",
+    "Evidence/WP-06-R1",
+    "Evidence/WP-06-R2"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-05-02",
+   "gptStatus": "PASS",
+   "playRuns": 2,
+   "latest": {
+    "run": "RUN-20261110-075540",
+    "evidence": "Evidence/WP-02-R1",
+    "revision": "7f79776",
+    "dirty": false,
+    "scene": null
+   },
+   "evidence": [
+    "Evidence/WP-02",
+    "Evidence/WP-02-R1"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-05-03",
+   "gptStatus": "PASS",
+   "playRuns": 3,
+   "latest": {
+    "run": "RUN-20261113-051441",
+    "evidence": "Evidence/WP-06-R2",
+    "revision": "7a9ca55",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP06_ComboState.unity"
+   },
+   "evidence": [
+    "Evidence/WP-06",
+    "Evidence/WP-06-R1",
+    "Evidence/WP-06-R2"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-05-04",
+   "gptStatus": "INSUFFICIENT_EVIDENCE",
+   "playRuns": 1,
+   "latest": {
+    "run": "RUN-20261113-111800",
+    "evidence": "Evidence/WP-11A",
+    "revision": "e088c32",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP11_Evidence.unity"
+   },
+   "evidence": [
+    "Evidence/WP-11A"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-05-05",
+   "gptStatus": "PASS",
+   "playRuns": 1,
+   "latest": {
+    "run": "RUN-20261110-122933",
+    "evidence": "Evidence/WP-03",
+    "revision": "37929b8",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP03_Ring.unity"
+   },
+   "evidence": [
+    "Evidence/WP-03"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-05-06",
+   "gptStatus": "PASS",
+   "playRuns": 3,
+   "latest": {
+    "run": "RUN-20261113-051441",
+    "evidence": "Evidence/WP-06-R2",
+    "revision": "7a9ca55",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP06_ComboState.unity"
+   },
+   "evidence": [
+    "Evidence/WP-06",
+    "Evidence/WP-06-R1",
+    "Evidence/WP-06-R2"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-06-01",
+   "gptStatus": "PASS",
+   "playRuns": 3,
+   "latest": {
+    "run": "RUN-20261113-052454",
+    "evidence": "Evidence/WP-07-R2",
+    "revision": "7a9ca55",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP07_HitReaction.unity"
+   },
+   "evidence": [
+    "Evidence/WP-07",
+    "Evidence/WP-07-R1",
+    "Evidence/WP-07-R2"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-06-02",
+   "gptStatus": "PASS",
+   "playRuns": 3,
+   "latest": {
+    "run": "RUN-20261113-052454",
+    "evidence": "Evidence/WP-07-R2",
+    "revision": "7a9ca55",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP07_HitReaction.unity"
+   },
+   "evidence": [
+    "Evidence/WP-07",
+    "Evidence/WP-07-R1",
+    "Evidence/WP-07-R2"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-06-03",
+   "gptStatus": "PASS",
+   "playRuns": 7,
+   "latest": {
+    "run": "RUN-20261113-052923",
+    "evidence": "Evidence/WP-07-R2",
+    "revision": "7a9ca55",
+    "dirty": true,
+    "scene": "Assets/Corum2/Scenes/WP07_HitReaction.unity"
+   },
+   "evidence": [
+    "Evidence/WP-02-R1",
+    "Evidence/WP-07",
+    "Evidence/WP-07-R1",
+    "Evidence/WP-07-R2"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-06-04",
+   "gptStatus": "PASS",
+   "playRuns": 3,
+   "latest": {
+    "run": "RUN-20261113-052454",
+    "evidence": "Evidence/WP-07-R2",
+    "revision": "7a9ca55",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP07_HitReaction.unity"
+   },
+   "evidence": [
+    "Evidence/WP-07",
+    "Evidence/WP-07-R1",
+    "Evidence/WP-07-R2"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-06-05",
+   "gptStatus": "PASS",
+   "playRuns": 2,
+   "latest": {
+    "run": "RUN-20261113-052454",
+    "evidence": "Evidence/WP-07-R2",
+    "revision": "7a9ca55",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP07_HitReaction.unity"
+   },
+   "evidence": [
+    "Evidence/WP-07-R1",
+    "Evidence/WP-07-R2"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-06-06",
+   "gptStatus": "PASS",
+   "playRuns": 3,
+   "latest": {
+    "run": "RUN-20261113-052454",
+    "evidence": "Evidence/WP-07-R2",
+    "revision": "7a9ca55",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP07_HitReaction.unity"
+   },
+   "evidence": [
+    "Evidence/WP-07",
+    "Evidence/WP-07-R1",
+    "Evidence/WP-07-R2"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-06-07",
+   "gptStatus": "PASS",
+   "playRuns": 3,
+   "latest": {
+    "run": "RUN-20261113-052454",
+    "evidence": "Evidence/WP-07-R2",
+    "revision": "7a9ca55",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP07_HitReaction.unity"
+   },
+   "evidence": [
+    "Evidence/WP-07",
+    "Evidence/WP-07-R1",
+    "Evidence/WP-07-R2"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-06-08",
+   "gptStatus": "PASS",
+   "playRuns": 3,
+   "latest": {
+    "run": "RUN-20261113-052454",
+    "evidence": "Evidence/WP-07-R2",
+    "revision": "7a9ca55",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP07_HitReaction.unity"
+   },
+   "evidence": [
+    "Evidence/WP-07",
+    "Evidence/WP-07-R1",
+    "Evidence/WP-07-R2"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-06-09",
+   "gptStatus": "PASS",
+   "playRuns": 5,
+   "latest": {
+    "run": "RUN-20261113-052454",
+    "evidence": "Evidence/WP-07-R2",
+    "revision": "7a9ca55",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP07_HitReaction.unity"
+   },
+   "evidence": [
+    "Evidence/WP-02",
+    "Evidence/WP-02-R1",
+    "Evidence/WP-07",
+    "Evidence/WP-07-R1",
+    "Evidence/WP-07-R2"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-06-10",
+   "gptStatus": "PASS",
+   "playRuns": 3,
+   "latest": {
+    "run": "RUN-20261113-052454",
+    "evidence": "Evidence/WP-07-R2",
+    "revision": "7a9ca55",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP07_HitReaction.unity"
+   },
+   "evidence": [
+    "Evidence/WP-07",
+    "Evidence/WP-07-R1",
+    "Evidence/WP-07-R2"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-06-11",
+   "gptStatus": "PASS",
+   "playRuns": 5,
+   "latest": {
+    "run": "RUN-20261113-053139",
+    "evidence": "Evidence/WP-08-R2",
+    "revision": "7a9ca55",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP08_Defense.unity"
+   },
+   "evidence": [
+    "Evidence/WP-02",
+    "Evidence/WP-02-R1",
+    "Evidence/WP-08",
+    "Evidence/WP-08-R1",
+    "Evidence/WP-08-R2"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-06-12",
+   "gptStatus": "PASS",
+   "playRuns": 3,
+   "latest": {
+    "run": "RUN-20261113-053139",
+    "evidence": "Evidence/WP-08-R2",
+    "revision": "7a9ca55",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP08_Defense.unity"
+   },
+   "evidence": [
+    "Evidence/WP-08",
+    "Evidence/WP-08-R1",
+    "Evidence/WP-08-R2"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-06-13",
+   "gptStatus": "PASS",
+   "playRuns": 3,
+   "latest": {
+    "run": "RUN-20261113-053139",
+    "evidence": "Evidence/WP-08-R2",
+    "revision": "7a9ca55",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP08_Defense.unity"
+   },
+   "evidence": [
+    "Evidence/WP-08",
+    "Evidence/WP-08-R1",
+    "Evidence/WP-08-R2"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-06-14",
+   "gptStatus": "HUMAN_REVIEW",
+   "playRuns": 3,
+   "latest": {
+    "run": "RUN-20261113-053139",
+    "evidence": "Evidence/WP-08-R2",
+    "revision": "7a9ca55",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP08_Defense.unity"
+   },
+   "evidence": [
+    "Evidence/WP-08",
+    "Evidence/WP-08-R1",
+    "Evidence/WP-08-R2"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-06-15",
+   "gptStatus": "PASS",
+   "playRuns": 5,
+   "latest": {
+    "run": "RUN-20261113-053139",
+    "evidence": "Evidence/WP-08-R2",
+    "revision": "7a9ca55",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP08_Defense.unity"
+   },
+   "evidence": [
+    "Evidence/WP-02",
+    "Evidence/WP-02-R1",
+    "Evidence/WP-08",
+    "Evidence/WP-08-R1",
+    "Evidence/WP-08-R2"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-06-16",
+   "gptStatus": "PASS",
+   "playRuns": 4,
+   "latest": {
+    "run": "RUN-20261113-053139",
+    "evidence": "Evidence/WP-08-R2",
+    "revision": "7a9ca55",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP08_Defense.unity"
+   },
+   "evidence": [
+    "Evidence/WP-02-R1",
+    "Evidence/WP-08",
+    "Evidence/WP-08-R1",
+    "Evidence/WP-08-R2"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-06-17",
+   "gptStatus": "PASS",
+   "playRuns": 5,
+   "latest": {
+    "run": "RUN-20261113-053139",
+    "evidence": "Evidence/WP-08-R2",
+    "revision": "7a9ca55",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP08_Defense.unity"
+   },
+   "evidence": [
+    "Evidence/WP-02",
+    "Evidence/WP-02-R1",
+    "Evidence/WP-08",
+    "Evidence/WP-08-R1",
+    "Evidence/WP-08-R2"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-06-18",
+   "gptStatus": "PASS",
+   "playRuns": 3,
+   "latest": {
+    "run": "RUN-20261113-053139",
+    "evidence": "Evidence/WP-08-R2",
+    "revision": "7a9ca55",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP08_Defense.unity"
+   },
+   "evidence": [
+    "Evidence/WP-08",
+    "Evidence/WP-08-R1",
+    "Evidence/WP-08-R2"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-06-19a",
+   "gptStatus": "PASS",
+   "playRuns": 6,
+   "latest": {
+    "run": "RUN-20261112-103103",
+    "evidence": "Evidence/WP-05-R2",
+    "revision": "5af26f0",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP05_MagicDeath.unity"
+   },
+   "evidence": [
+    "Evidence/WP-05",
+    "Evidence/WP-05-R1",
+    "Evidence/WP-05-R2"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-06-19b",
+   "gptStatus": "BLOCKED_SPEC",
+   "playRuns": 0,
+   "latest": null,
+   "evidence": [],
+   "playMode": "NOT_RUN"
+  },
+  {
+   "tc": "TC-07-01",
+   "gptStatus": "PASS",
+   "playRuns": 5,
+   "latest": {
+    "run": "RUN-20261113-053139",
+    "evidence": "Evidence/WP-08-R2",
+    "revision": "7a9ca55",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP08_Defense.unity"
+   },
+   "evidence": [
+    "Evidence/WP-02",
+    "Evidence/WP-02-R1",
+    "Evidence/WP-08",
+    "Evidence/WP-08-R1",
+    "Evidence/WP-08-R2"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-07-02",
+   "gptStatus": "PASS",
+   "playRuns": 3,
+   "latest": {
+    "run": "RUN-20261113-053139",
+    "evidence": "Evidence/WP-08-R2",
+    "revision": "7a9ca55",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP08_Defense.unity"
+   },
+   "evidence": [
+    "Evidence/WP-08",
+    "Evidence/WP-08-R1",
+    "Evidence/WP-08-R2"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-07-03",
+   "gptStatus": "PASS",
+   "playRuns": 3,
+   "latest": {
+    "run": "RUN-20261113-053139",
+    "evidence": "Evidence/WP-08-R2",
+    "revision": "7a9ca55",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP08_Defense.unity"
+   },
+   "evidence": [
+    "Evidence/WP-08",
+    "Evidence/WP-08-R1",
+    "Evidence/WP-08-R2"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-07-04",
+   "gptStatus": "PASS",
+   "playRuns": 12,
+   "latest": {
+    "run": "RUN-20261113-053926",
+    "evidence": "Evidence/WP-08-R2",
+    "revision": "7a9ca55",
+    "dirty": true,
+    "scene": "Assets/Corum2/Scenes/WP08_Defense.unity"
+   },
+   "evidence": [
+    "Evidence/WP-02",
+    "Evidence/WP-02-R1",
+    "Evidence/WP-08",
+    "Evidence/WP-08-R1",
+    "Evidence/WP-08-R2"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-07-05",
+   "gptStatus": "PASS",
+   "playRuns": 6,
+   "latest": {
+    "run": "RUN-20261113-053139",
+    "evidence": "Evidence/WP-08-R2",
+    "revision": "7a9ca55",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP08_Defense.unity"
+   },
+   "evidence": [
+    "Evidence/WP-02",
+    "Evidence/WP-02-R1",
+    "Evidence/WP-08",
+    "Evidence/WP-08-R1",
+    "Evidence/WP-08-R2"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-07-06",
+   "gptStatus": "PASS",
+   "playRuns": 3,
+   "latest": {
+    "run": "RUN-20261113-053139",
+    "evidence": "Evidence/WP-08-R2",
+    "revision": "7a9ca55",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP08_Defense.unity"
+   },
+   "evidence": [
+    "Evidence/WP-08",
+    "Evidence/WP-08-R1",
+    "Evidence/WP-08-R2"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-07-07",
+   "gptStatus": "PASS",
+   "playRuns": 3,
+   "latest": {
+    "run": "RUN-20261113-053139",
+    "evidence": "Evidence/WP-08-R2",
+    "revision": "7a9ca55",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP08_Defense.unity"
+   },
+   "evidence": [
+    "Evidence/WP-08",
+    "Evidence/WP-08-R1",
+    "Evidence/WP-08-R2"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-08-01",
+   "gptStatus": "PASS",
+   "playRuns": 9,
+   "latest": {
+    "run": "RUN-20261110-235521",
+    "evidence": "Evidence/WP-04-R5",
+    "revision": "82175c6",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP04_AI.unity"
+   },
+   "evidence": [
+    "Evidence/WP-04",
+    "Evidence/WP-04-R1",
+    "Evidence/WP-04-R2",
+    "Evidence/WP-04-R3",
+    "Evidence/WP-04-R4",
+    "Evidence/WP-04-R5"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-08-02",
+   "gptStatus": "INSUFFICIENT_EVIDENCE",
+   "playRuns": 1,
+   "latest": {
+    "run": "RUN-20261113-111800",
+    "evidence": "Evidence/WP-11A",
+    "revision": "e088c32",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP11_Evidence.unity"
+   },
+   "evidence": [
+    "Evidence/WP-11A"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-08-03",
+   "gptStatus": "PASS",
+   "playRuns": 9,
+   "latest": {
+    "run": "RUN-20261110-235521",
+    "evidence": "Evidence/WP-04-R5",
+    "revision": "82175c6",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP04_AI.unity"
+   },
+   "evidence": [
+    "Evidence/WP-04",
+    "Evidence/WP-04-R1",
+    "Evidence/WP-04-R2",
+    "Evidence/WP-04-R3",
+    "Evidence/WP-04-R4",
+    "Evidence/WP-04-R5"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-08-04",
+   "gptStatus": "PASS",
+   "playRuns": 9,
+   "latest": {
+    "run": "RUN-20261110-235521",
+    "evidence": "Evidence/WP-04-R5",
+    "revision": "82175c6",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP04_AI.unity"
+   },
+   "evidence": [
+    "Evidence/WP-04",
+    "Evidence/WP-04-R1",
+    "Evidence/WP-04-R2",
+    "Evidence/WP-04-R3",
+    "Evidence/WP-04-R4",
+    "Evidence/WP-04-R5"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-08-05",
+   "gptStatus": "INSUFFICIENT_EVIDENCE",
+   "playRuns": 10,
+   "latest": {
+    "run": "RUN-20261113-111800",
+    "evidence": "Evidence/WP-11A",
+    "revision": "e088c32",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP11_Evidence.unity"
+   },
+   "evidence": [
+    "Evidence/WP-04",
+    "Evidence/WP-04-R1",
+    "Evidence/WP-04-R2",
+    "Evidence/WP-04-R3",
+    "Evidence/WP-04-R4",
+    "Evidence/WP-04-R5",
+    "Evidence/WP-11A"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-08-06",
+   "gptStatus": "PASS",
+   "playRuns": 9,
+   "latest": {
+    "run": "RUN-20261110-235521",
+    "evidence": "Evidence/WP-04-R5",
+    "revision": "82175c6",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP04_AI.unity"
+   },
+   "evidence": [
+    "Evidence/WP-04",
+    "Evidence/WP-04-R1",
+    "Evidence/WP-04-R2",
+    "Evidence/WP-04-R3",
+    "Evidence/WP-04-R4",
+    "Evidence/WP-04-R5"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-08-07",
+   "gptStatus": "PASS",
+   "playRuns": 9,
+   "latest": {
+    "run": "RUN-20261110-235521",
+    "evidence": "Evidence/WP-04-R5",
+    "revision": "82175c6",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP04_AI.unity"
+   },
+   "evidence": [
+    "Evidence/WP-04",
+    "Evidence/WP-04-R1",
+    "Evidence/WP-04-R2",
+    "Evidence/WP-04-R3",
+    "Evidence/WP-04-R4",
+    "Evidence/WP-04-R5"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-08-08",
+   "gptStatus": "PASS",
+   "playRuns": 9,
+   "latest": {
+    "run": "RUN-20261110-235521",
+    "evidence": "Evidence/WP-04-R5",
+    "revision": "82175c6",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP04_AI.unity"
+   },
+   "evidence": [
+    "Evidence/WP-04",
+    "Evidence/WP-04-R1",
+    "Evidence/WP-04-R2",
+    "Evidence/WP-04-R3",
+    "Evidence/WP-04-R4",
+    "Evidence/WP-04-R5"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-08-09",
+   "gptStatus": "INSUFFICIENT_EVIDENCE",
+   "playRuns": 1,
+   "latest": {
+    "run": "RUN-20261113-111800",
+    "evidence": "Evidence/WP-11A",
+    "revision": "e088c32",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP11_Evidence.unity"
+   },
+   "evidence": [
+    "Evidence/WP-11A"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-08-10",
+   "gptStatus": "PASS",
+   "playRuns": 9,
+   "latest": {
+    "run": "RUN-20261110-235521",
+    "evidence": "Evidence/WP-04-R5",
+    "revision": "82175c6",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP04_AI.unity"
+   },
+   "evidence": [
+    "Evidence/WP-04",
+    "Evidence/WP-04-R1",
+    "Evidence/WP-04-R2",
+    "Evidence/WP-04-R3",
+    "Evidence/WP-04-R4",
+    "Evidence/WP-04-R5"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-08-11",
+   "gptStatus": "PASS",
+   "playRuns": 8,
+   "latest": {
+    "run": "RUN-20261110-235521",
+    "evidence": "Evidence/WP-04-R5",
+    "revision": "82175c6",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP04_AI.unity"
+   },
+   "evidence": [
+    "Evidence/WP-04-R1",
+    "Evidence/WP-04-R2",
+    "Evidence/WP-04-R3",
+    "Evidence/WP-04-R4",
+    "Evidence/WP-04-R5"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-08-12",
+   "gptStatus": "INSUFFICIENT_EVIDENCE",
+   "playRuns": 10,
+   "latest": {
+    "run": "RUN-20261113-111800",
+    "evidence": "Evidence/WP-11A",
+    "revision": "e088c32",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP11_Evidence.unity"
+   },
+   "evidence": [
+    "Evidence/WP-04",
+    "Evidence/WP-04-R1",
+    "Evidence/WP-04-R2",
+    "Evidence/WP-04-R3",
+    "Evidence/WP-04-R4",
+    "Evidence/WP-04-R5",
+    "Evidence/WP-11A"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-CF-01a",
+   "gptStatus": "BLOCKED_SPEC",
+   "playRuns": 0,
+   "latest": null,
+   "evidence": [],
+   "playMode": "NOT_RUN"
+  },
+  {
+   "tc": "TC-CF-01b",
+   "gptStatus": "BLOCKED_SPEC",
+   "playRuns": 0,
+   "latest": null,
+   "evidence": [],
+   "playMode": "NOT_RUN"
+  },
+  {
+   "tc": "TC-CF-01c",
+   "gptStatus": "BLOCKED_SPEC",
+   "playRuns": 0,
+   "latest": null,
+   "evidence": [],
+   "playMode": "NOT_RUN"
+  },
+  {
+   "tc": "TC-CF-01d",
+   "gptStatus": "BLOCKED_SPEC",
+   "playRuns": 0,
+   "latest": null,
+   "evidence": [],
+   "playMode": "NOT_RUN"
+  },
+  {
+   "tc": "TC-CF-08a",
+   "gptStatus": "BLOCKED_SPEC",
+   "playRuns": 1,
+   "latest": {
+    "run": "RUN-20261110-122933",
+    "evidence": "Evidence/WP-03",
+    "revision": "37929b8",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP03_Ring.unity"
+   },
+   "evidence": [
+    "Evidence/WP-03"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-INT-01",
+   "gptStatus": "PASS",
+   "playRuns": 2,
+   "latest": {
+    "run": "RUN-20261113-054149",
+    "evidence": "Evidence/WP-10-R1",
+    "revision": "7a9ca55",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP10_Integration.unity"
+   },
+   "evidence": [
+    "Evidence/WP-10",
+    "Evidence/WP-10-R1"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-INT-02",
+   "gptStatus": "PASS",
+   "playRuns": 1,
+   "latest": {
+    "run": "RUN-20261110-131240",
+    "evidence": "Evidence/WP-03-R1",
+    "revision": "0ff03b6",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP03_Ring.unity"
+   },
+   "evidence": [
+    "Evidence/WP-03-R1"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-INT-03",
+   "gptStatus": "PASS",
+   "playRuns": 2,
+   "latest": {
+    "run": "RUN-20261113-054149",
+    "evidence": "Evidence/WP-10-R1",
+    "revision": "7a9ca55",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP10_Integration.unity"
+   },
+   "evidence": [
+    "Evidence/WP-10",
+    "Evidence/WP-10-R1"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-INT-04",
+   "gptStatus": "PASS",
+   "playRuns": 2,
+   "latest": {
+    "run": "RUN-20261113-054149",
+    "evidence": "Evidence/WP-10-R1",
+    "revision": "7a9ca55",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP10_Integration.unity"
+   },
+   "evidence": [
+    "Evidence/WP-10",
+    "Evidence/WP-10-R1"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-INT-05",
+   "gptStatus": "HUMAN_REVIEW",
+   "playRuns": 2,
+   "latest": {
+    "run": "RUN-20261113-054149",
+    "evidence": "Evidence/WP-10-R1",
+    "revision": "7a9ca55",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP10_Integration.unity"
+   },
+   "evidence": [
+    "Evidence/WP-10",
+    "Evidence/WP-10-R1"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-INT-06",
+   "gptStatus": "PASS",
+   "playRuns": 2,
+   "latest": {
+    "run": "RUN-20261113-054149",
+    "evidence": "Evidence/WP-10-R1",
+    "revision": "7a9ca55",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP10_Integration.unity"
+   },
+   "evidence": [
+    "Evidence/WP-10",
+    "Evidence/WP-10-R1"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-INT-07",
+   "gptStatus": "PASS",
+   "playRuns": 2,
+   "latest": {
+    "run": "RUN-20261113-054514",
+    "evidence": "Evidence/WP-10-R1",
+    "revision": "7a9ca55",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP03_Ring.unity"
+   },
+   "evidence": [
+    "Evidence/WP-10",
+    "Evidence/WP-10-R1"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-INT-08",
+   "gptStatus": "BLOCKED_SPEC",
+   "playRuns": 2,
+   "latest": {
+    "run": "RUN-20261113-054756",
+    "evidence": "Evidence/WP-10-R1",
+    "revision": "7a9ca55",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP05_MagicDeath.unity"
+   },
+   "evidence": [
+    "Evidence/WP-10",
+    "Evidence/WP-10-R1"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-OPS-01",
+   "gptStatus": "INSUFFICIENT_EVIDENCE",
+   "playRuns": 7,
+   "latest": {
+    "run": "RUN-20261113-120334",
+    "evidence": "Evidence/WP-11B",
+    "revision": "5de850e",
+    "dirty": true,
+    "scene": "Assets/Corum2/Scenes/WP11_Ops.unity"
+   },
+   "evidence": [
+    "Evidence/WP-11B"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-OPS-02",
+   "gptStatus": "PASS",
+   "playRuns": 0,
+   "latest": null,
+   "evidence": [],
+   "playMode": "NOT_RUN"
+  },
+  {
+   "tc": "TC-REG-01",
+   "gptStatus": "PASS",
+   "playRuns": 0,
+   "latest": null,
+   "evidence": [],
+   "playMode": "NOT_RUN"
+  },
+  {
+   "tc": "TC-UI-12",
+   "gptStatus": "BLOCKED_SPEC",
+   "playRuns": 0,
+   "latest": null,
+   "evidence": [],
+   "playMode": "NOT_RUN"
+  },
+  {
+   "tc": "TC-UNITY-01",
+   "gptStatus": "PASS",
+   "playRuns": 0,
+   "latest": null,
+   "evidence": [],
+   "playMode": "NOT_RUN"
+  },
+  {
+   "tc": "TC-UNITY-02",
+   "gptStatus": "INSUFFICIENT_EVIDENCE",
+   "playRuns": 1,
+   "latest": {
+    "run": "RUN-20261113-111800",
+    "evidence": "Evidence/WP-11A",
+    "revision": "e088c32",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP11_Evidence.unity"
+   },
+   "evidence": [
+    "Evidence/WP-11A"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-UNITY-03",
+   "gptStatus": "INSUFFICIENT_EVIDENCE",
+   "playRuns": 2,
+   "latest": {
+    "run": "RUN-20261110-012133",
+    "evidence": "Evidence/WP-01-R1",
+    "revision": "<packet",
+    "dirty": false,
+    "scene": null
+   },
+   "evidence": [
+    "Evidence/WP-01-R1"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-UNITY-04",
+   "gptStatus": "PASS",
+   "playRuns": 0,
+   "latest": null,
+   "evidence": [],
+   "playMode": "NOT_RUN"
+  },
+  {
+   "tc": "TC-UNITY-05",
+   "gptStatus": "NOT_RUN",
+   "playRuns": 2,
+   "latest": {
+    "run": "RUN-20261113-120937",
+    "evidence": "Evidence/WP-11B",
+    "revision": "5de850e",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP11_Ops.unity"
+   },
+   "evidence": [
+    "Evidence/WP-11B"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-UNITY-06",
+   "gptStatus": "INSUFFICIENT_EVIDENCE",
+   "playRuns": 3,
+   "latest": {
+    "run": "RUN-20261113-120937",
+    "evidence": "Evidence/WP-11B",
+    "revision": "5de850e",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP11_Ops.unity"
+   },
+   "evidence": [
+    "Evidence/WP-01-R1",
+    "Evidence/WP-11B"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-UNITY-07",
+   "gptStatus": "INSUFFICIENT_EVIDENCE",
+   "playRuns": 1,
+   "latest": {
+    "run": "RUN-20261113-111800",
+    "evidence": "Evidence/WP-11A",
+    "revision": "e088c32",
+    "dirty": false,
+    "scene": "Assets/Corum2/Scenes/WP11_Evidence.unity"
+   },
+   "evidence": [
+    "Evidence/WP-11A"
+   ],
+   "playMode": "RUN"
+  },
+  {
+   "tc": "TC-UNITY-08",
+   "gptStatus": "INSUFFICIENT_EVIDENCE",
+   "playRuns": 0,
+   "latest": null,
+   "evidence": [],
+   "playMode": "NOT_RUN"
+  },
+  {
+   "tc": "TC-UNITY-09",
+   "gptStatus": "BLOCKED_ENV",
+   "playRuns": 0,
+   "latest": null,
+   "evidence": [],
+   "playMode": "NOT_RUN"
+  }
+ ],
+ "runsScanned": 73,
+ "tcIdsInLogsNotInSpec": []
+}

@@ -1,0 +1,11 @@
+diff --git a/Assets/Corum2/Data/WP11/CombatUnlocks_Ops.asset b/Assets/Corum2/Data/WP11/CombatUnlocks_Ops.asset
+index 7d96379..ace9895 100644
+--- a/Assets/Corum2/Data/WP11/CombatUnlocks_Ops.asset
++++ b/Assets/Corum2/Data/WP11/CombatUnlocks_Ops.asset
+@@ -22,5 +22,5 @@ MonoBehaviour:
+     - R-04-06
+     - R-04-08
+     changeRequestId: 
+-  dashPierce: 0
++  dashPierce: 1
+   diveArea: 0

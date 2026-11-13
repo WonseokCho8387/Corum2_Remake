@@ -1,0 +1,11 @@
+diff --git a/Assets/Corum2/Data/WP11/AirUnlocks_Ops.asset b/Assets/Corum2/Data/WP11/AirUnlocks_Ops.asset
+index f4ecb83..751c1af 100644
+--- a/Assets/Corum2/Data/WP11/AirUnlocks_Ops.asset
++++ b/Assets/Corum2/Data/WP11/AirUnlocks_Ops.asset
+@@ -22,5 +22,5 @@ MonoBehaviour:
+     - R-03-03
+     changeRequestId: 
+   extraJump: 1
+-  airDash: 1
++  airDash: 0
+   dive: 1
