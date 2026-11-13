@@ -1,0 +1,1233 @@
+{
+ "log": "Diagnostics/WP11/main/RUN-20261113-111800.ndjson",
+ "TC-05-04": {
+  "cases": [
+   {
+    "device": "Kb",
+    "input": "None",
+    "hitTick": 326,
+    "stunEnd": 347,
+    "stunTicks": 21,
+    "pass": true
+   },
+   {
+    "device": "Kb",
+    "input": "Move",
+    "hitTick": 535,
+    "stunEnd": 556,
+    "stunTicks": 21,
+    "pressDuring": 539,
+    "pressAfter": 560,
+    "heldLeftDuringStun": true,
+    "sameAsControl": true,
+    "walkAfter": true,
+    "pass": true
+   },
+   {
+    "device": "Kb",
+    "input": "Jump",
+    "hitTick": 744,
+    "stunEnd": 765,
+    "stunTicks": 21,
+    "pressDuring": 748,
+    "pressAfter": 769,
+    "rejectedDuring": "ActionLock:HitStun",
+    "startedDuringStun": 0,
+    "executedAfter": true,
+    "pass": true
+   },
+   {
+    "device": "Kb",
+    "input": "Attack",
+    "hitTick": 953,
+    "stunEnd": 974,
+    "stunTicks": 21,
+    "pressDuring": 957,
+    "pressAfter": 978,
+    "rejectedDuring": "ActionLock:HitStun",
+    "startedDuringStun": 0,
+    "executedAfter": true,
+    "pass": true
+   },
+   {
+    "device": "Kb",
+    "input": "Special",
+    "hitTick": 1162,
+    "stunEnd": 1183,
+    "stunTicks": 21,
+    "pressDuring": 1166,
+    "pressAfter": 1187,
+    "rejectedDuring": "ActionLock:HitStun",
+    "startedDuringStun": 0,
+    "executedAfter": true,
+    "pass": true
+   },
+   {
+    "device": "Kb",
+    "input": "Guard",
+    "hitTick": 1371,
+    "stunEnd": 1392,
+    "stunTicks": 21,
+    "pressDuring": 1375,
+    "pressAfter": 1396,
+    "rejectedDuring": "ActionLock:HitStun",
+    "startedDuringStun": 0,
+    "executedAfter": true,
+    "pass": true
+   },
+   {
+    "device": "Kb",
+    "input": "Ring",
+    "hitTick": 1580,
+    "stunEnd": 1601,
+    "stunTicks": 21,
+    "pressDuring": 1584,
+    "pressAfter": 1605,
+    "ringOpenedDuringStun": true,
+    "ringOpenedAfter": true,
+    "pass": true
+   },
+   {
+    "device": "Pad",
+    "input": "None",
+    "hitTick": 1793,
+    "stunEnd": 1814,
+    "stunTicks": 21,
+    "pass": true
+   },
+   {
+    "device": "Pad",
+    "input": "Move",
+    "hitTick": 2002,
+    "stunEnd": 2023,
+    "stunTicks": 21,
+    "pressDuring": 2006,
+    "pressAfter": 2028,
+    "heldLeftDuringStun": true,
+    "sameAsControl": true,
+    "walkAfter": true,
+    "pass": true
+   },
+   {
+    "device": "Pad",
+    "input": "Jump",
+    "hitTick": 2211,
+    "stunEnd": 2232,
+    "stunTicks": 21,
+    "pressDuring": 2215,
+    "pressAfter": 2237,
+    "rejectedDuring": "ActionLock:HitStun",
+    "startedDuringStun": 0,
+    "executedAfter": true,
+    "pass": true
+   },
+   {
+    "device": "Pad",
+    "input": "Attack",
+    "hitTick": 2420,
+    "stunEnd": 2441,
+    "stunTicks": 21,
+    "pressDuring": 2424,
+    "pressAfter": 2446,
+    "rejectedDuring": "ActionLock:HitStun",
+    "startedDuringStun": 0,
+    "executedAfter": true,
+    "pass": true
+   },
+   {
+    "device": "Pad",
+    "input": "Special",
+    "hitTick": 2629,
+    "stunEnd": 2650,
+    "stunTicks": 21,
+    "pressDuring": 2633,
+    "pressAfter": 2655,
+    "rejectedDuring": "ActionLock:HitStun",
+    "startedDuringStun": 0,
+    "executedAfter": true,
+    "pass": true
+   },
+   {
+    "device": "Pad",
+    "input": "Guard",
+    "hitTick": 2838,
+    "stunEnd": 2859,
+    "stunTicks": 21,
+    "pressDuring": 2842,
+    "pressAfter": 2864,
+    "rejectedDuring": "ActionLock:HitStun",
+    "startedDuringStun": 0,
+    "executedAfter": true,
+    "pass": true
+   },
+   {
+    "device": "Pad",
+    "input": "Ring",
+    "hitTick": 3047,
+    "stunEnd": 3068,
+    "stunTicks": 21,
+    "pressDuring": 3051,
+    "pressAfter": 3073,
+    "ringOpenedDuringStun": true,
+    "ringOpenedAfter": true,
+    "pass": true
+   }
+  ],
+  "note": "virtual keyboard and pad; HitStun = WP-02 player reaction; Move compares x with the no-input control",
+  "pass": true
+ },
+ "TC-08-02": {
+  "cases": [
+   {
+    "case": "A2Ready",
+    "enemy": "pr",
+    "firstInRangeTick": 3205,
+    "attackStarts": [
+     3205,
+     3301,
+     3397
+    ],
+    "inRangeTicksByRestrictedState": {
+     "AttackStartup": 45,
+     "AttackActive": 15,
+     "AttackRecovery": 33
+    },
+    "redecisions": [
+     {
+      "idleTick": 3240,
+      "after": "AttackRecovery",
+      "attack": null,
+      "blocked": "Cooldown:ReattackInterval(R-08-07)(R-08-02)",
+      "attackWhenCooldownEnds": 3301,
+      "cooldownPastSegmentEnd": false,
+      "ok": true
+     },
+     {
+      "idleTick": 3336,
+      "after": "AttackRecovery",
+      "attack": null,
+      "blocked": "Cooldown:ReattackInterval(R-08-07)(R-08-02)",
+      "attackWhenCooldownEnds": 3397,
+      "cooldownPastSegmentEnd": false,
+      "ok": true
+     }
+    ],
+    "pass": true
+   },
+   {
+    "case": "A2Stagger",
+    "enemy": "ps",
+    "firstInRangeTick": 3465,
+    "attackStarts": [
+     3465,
+     3493
+    ],
+    "inRangeTicksByRestrictedState": {
+     "AttackStartup": 19,
+     "Stagger": 23,
+     "AttackActive": 2
+    },
+    "redecisions": [
+     {
+      "idleTick": 3492,
+      "after": "Stagger",
+      "attack": 3493,
+      "blocked": null,
+      "attackWhenCooldownEnds": null,
+      "cooldownPastSegmentEnd": false,
+      "ok": true
+     }
+    ],
+    "pass": true
+   },
+   {
+    "case": "A2Down",
+    "enemy": "pd",
+    "firstInRangeTick": 3700,
+    "attackStarts": [
+     3700,
+     3896,
+     3992
+    ],
+    "inRangeTicksByRestrictedState": {
+     "AttackStartup": 34,
+     "Launched": 51,
+     "Down": 50,
+     "Wakeup": 30,
+     "AttackActive": 10,
+     "AttackRecovery": 30
+    },
+    "redecisions": [
+     {
+      "idleTick": 3835,
+      "after": "Wakeup",
+      "attack": null,
+      "blocked": "Cooldown:ReattackInterval(R-08-07)(R-08-02)",
+      "attackWhenCooldownEnds": 3896,
+      "cooldownPastSegmentEnd": false,
+      "ok": true
+     },
+     {
+      "idleTick": 3931,
+      "after": "AttackRecovery",
+      "attack": null,
+      "blocked": "Cooldown:ReattackInterval(R-08-07)(R-08-02)",
+      "attackWhenCooldownEnds": 3992,
+      "cooldownPastSegmentEnd": false,
+      "ok": true
+     },
+     {
+      "idleTick": 4027,
+      "after": "AttackRecovery",
+      "attack": null,
+      "blocked": "Cooldown:ReattackInterval(R-08-07)(R-08-02)",
+      "attackWhenCooldownEnds": null,
+      "cooldownPastSegmentEnd": true,
+      "ok": true
+     }
+    ],
+    "pass": true
+   },
+   {
+    "case": "A2Dead",
+    "enemy": "px",
+    "firstInRangeTick": 4085,
+    "attackStarts": [
+     4085
+    ],
+    "inRangeTicksByRestrictedState": {
+     "AttackStartup": 4,
+     "Stagger": 16,
+     "Dead": 40
+    },
+    "redecisions": [],
+    "deathTick": 4105,
+    "leftAndReentered": true,
+    "attacksAfterDeath": [],
+    "pass": true
+   }
+  ],
+  "note": "still chaser (0.01 m/s), range 1.6, re-attack interval 1.2 s (test data)",
+  "pass": true
+ },
+ "TC-08-05": {
+  "cases": [
+   {
+    "case": "J5NearIn",
+    "enemy": "jn1",
+    "window": [
+     3.0,
+     5.0
+    ],
+    "jumps": [
+     [
+      4305,
+      4,
+      5,
+      9
+     ]
+    ],
+    "jumpTick": 4305,
+    "landTick": 4333,
+    "apex": 1.26,
+    "speedXMeasured": [
+     5.0,
+     5.0,
+     5.0,
+     5.0,
+     5.0
+    ],
+    "minDistanceInAir": 2.2,
+    "airAttack": [
+     [
+      4323,
+      2.2
+     ]
+    ],
+    "pass": true
+   },
+   {
+    "case": "J5NearOut",
+    "enemy": "jn2",
+    "window": [
+     3.0,
+     5.0
+    ],
+    "jumps": [],
+    "distanceRange": [
+     5.97,
+     6.0
+    ],
+    "pass": true
+   },
+   {
+    "case": "J5FarIn",
+    "enemy": "jf1",
+    "window": [
+     5.0,
+     7.0
+    ],
+    "jumps": [
+     [
+      4605,
+      6,
+      7,
+      6
+     ]
+    ],
+    "jumpTick": 4605,
+    "landTick": 4623,
+    "apex": 0.54,
+    "speedXMeasured": [
+     7.0,
+     7.0,
+     7.0,
+     7.0,
+     7.0
+    ],
+    "minDistanceInAir": 3.34,
+    "airAttack": [],
+    "pass": true
+   },
+   {
+    "case": "J5FarOut",
+    "enemy": "jf2",
+    "window": [
+     5.0,
+     7.0
+    ],
+    "jumps": [],
+    "distanceRange": [
+     3.97,
+     4.0
+    ],
+    "pass": true
+   }
+  ],
+  "apexRatioNearToFar": 2.333,
+  "expectedApexRatio": 2.25,
+  "heightFollowsConfig": true,
+  "airAttackMetAndNotMet": true,
+  "pass": true
+ },
+ "TC-08-09": {
+  "cases": [
+   {
+    "case": "B9Solo",
+    "boss": "ba",
+    "transitions": [],
+    "lowestHpAfterHit": 10,
+    "conditionsMet": [],
+    "phaseAtEnd": "a1",
+    "pass": true
+   },
+   {
+    "case": "B9Duo",
+    "boss": "bb",
+    "transitions": [
+     [
+      "b1",
+      "b2",
+      "HpBelow:0.5"
+     ]
+    ],
+    "lowestHpAfterHit": 45,
+    "conditionsMet": [
+     true
+    ],
+    "phaseAtEnd": "b2",
+    "pass": true
+   },
+   {
+    "case": "B9Warden",
+    "boss": "bc",
+    "transitions": [
+     [
+      "p1",
+      "p2",
+      "HpBelow:0.6"
+     ],
+     [
+      "p2",
+      "p3",
+      "PatternUsed:crushx2"
+     ]
+    ],
+    "lowestHpAfterHit": 115,
+    "conditionsMet": [
+     true,
+     true
+    ],
+    "phaseAtEnd": "p3",
+    "pass": true
+   }
+  ],
+  "hpThresholds": [
+   "HpBelow:0.5",
+   "HpBelow:0.6"
+  ],
+  "note": "phase count and transitions per boss data (A 1, B 2, C 3); thresholds differ per boss (no common value)",
+  "pass": true
+ },
+ "TC-08-12": {
+  "cases": [
+   {
+    "case": "Gg1Phys",
+    "phase": "g1",
+    "phaseSuperArmor": false,
+    "phaseLaunch": "Launchable",
+    "result": [
+     "hit",
+     5822,
+     "Stagger(R-06-04)",
+     "Stagger"
+    ],
+    "phaseOnTick": "g1",
+    "bossAttackActiveAfter": false,
+    "pass": true
+   },
+   {
+    "case": "Gg1Magic",
+    "phase": "g1",
+    "phaseSuperArmor": false,
+    "phaseLaunch": "Launchable",
+    "result": [
+     "hit",
+     6104,
+     "MagicStagger+Knockback(R-06-06)",
+     "Stagger"
+    ],
+    "phaseOnTick": "g1",
+    "bossAttackActiveAfter": false,
+    "knockback": [
+     5,
+     0.468017578
+    ],
+    "pass": true
+   },
+   {
+    "case": "Gg1Parry",
+    "phase": "g1",
+    "phaseSuperArmor": false,
+    "phaseLaunch": "Launchable",
+    "result": [
+     "guard.parry",
+     6388,
+     "Parry(R-07-04/05)",
+     "Guard"
+    ],
+    "phaseOnTick": "g1",
+    "knockback": [
+     6,
+     0.660003662
+    ],
+    "bossOnTick": "Stagger",
+    "attackRecoveredAfter": false,
+    "pass": true
+   },
+   {
+    "case": "Gg1Simul",
+    "phase": "g1",
+    "phaseSuperArmor": false,
+    "phaseLaunch": "Launchable",
+    "result": [
+     "dodge",
+     6659,
+     "SimultaneousHit(R-06-15)",
+     "DodgeReact"
+    ],
+    "phaseOnTick": "g1",
+    "damage": 0,
+    "hpBeforeAfter": [
+     [
+      99475,
+      1000.0
+     ],
+     [
+      99475,
+      1000.0
+     ]
+    ],
+    "pass": true
+   },
+   {
+    "case": "Gg1Launch",
+    "phase": "g1",
+    "phaseSuperArmor": false,
+    "phaseLaunch": "Launchable",
+    "result": [
+     "hit",
+     6906,
+     "Launched:Launchable(R-06-08)",
+     "Launched"
+    ],
+    "phaseOnTick": "g1",
+    "bossAttackActiveAfter": false,
+    "pass": true
+   },
+   {
+    "case": "Gg2Phys",
+    "phase": "g2",
+    "phaseSuperArmor": true,
+    "phaseLaunch": "Launchable",
+    "result": [
+     "hit",
+     7102,
+     "SuperArmor:DamageOnly(R-06-11)",
+     "AttackStartup"
+    ],
+    "phaseOnTick": "g2",
+    "bossAttackActiveAfter": true,
+    "pass": true
+   },
+   {
+    "case": "Gg2Magic",
+    "phase": "g2",
+    "phaseSuperArmor": true,
+    "phaseLaunch": "Launchable",
+    "result": [
+     "hit",
+     7309,
+     "MagicBreaksArmor:Stagger+Knockback+Cancel(R-06-12)",
+     "Stagger"
+    ],
+    "phaseOnTick": "g2",
+    "bossAttackActiveAfter": false,
+    "knockback": [
+     5,
+     0.468017578
+    ],
+    "pass": true
+   },
+   {
+    "case": "Gg2Parry",
+    "phase": "g2",
+    "phaseSuperArmor": true,
+    "phaseLaunch": "Launchable",
+    "result": [
+     "guard.parry",
+     7518,
+     "Parry(R-07-04/05)",
+     "Guard"
+    ],
+    "phaseOnTick": "g2",
+    "knockback": [
+     6,
+     0.659973145
+    ],
+    "bossOnTick": "Stagger",
+    "attackRecoveredAfter": false,
+    "pass": true
+   },
+   {
+    "case": "Gg2Simul",
+    "phase": "g2",
+    "phaseSuperArmor": true,
+    "phaseLaunch": "Launchable",
+    "result": [
+     "dodge",
+     7714,
+     "SimultaneousHit(R-06-15)",
+     "DodgeReact"
+    ],
+    "phaseOnTick": "g2",
+    "damage": 0,
+    "hpBeforeAfter": [
+     [
+      99384,
+      1000.0
+     ],
+     [
+      99384,
+      1000.0
+     ]
+    ],
+    "pass": true
+   },
+   {
+    "case": "Gg2Launch",
+    "phase": "g2",
+    "phaseSuperArmor": true,
+    "phaseLaunch": "Launchable",
+    "result": [
+     "hit",
+     7886,
+     "SuperArmor:DamageOnly(R-06-11)",
+     "AttackStartup"
+    ],
+    "phaseOnTick": "g2",
+    "bossAttackActiveAfter": true,
+    "pass": true
+   },
+   {
+    "case": "Gg3Phys",
+    "phase": "g3",
+    "phaseSuperArmor": false,
+    "phaseLaunch": "Immune",
+    "result": [
+     "hit",
+     8107,
+     "Stagger(R-06-04)",
+     "Stagger"
+    ],
+    "phaseOnTick": "g3",
+    "bossAttackActiveAfter": false,
+    "pass": true
+   },
+   {
+    "case": "Gg3Magic",
+    "phase": "g3",
+    "phaseSuperArmor": false,
+    "phaseLaunch": "Immune",
+    "result": [
+     "hit",
+     8339,
+     "MagicStagger+Knockback(R-06-06)",
+     "Stagger"
+    ],
+    "phaseOnTick": "g3",
+    "bossAttackActiveAfter": false,
+    "knockback": [
+     5,
+     0.468017578
+    ],
+    "pass": true
+   },
+   {
+    "case": "Gg3Parry",
+    "phase": "g3",
+    "phaseSuperArmor": false,
+    "phaseLaunch": "Immune",
+    "result": [
+     "guard.parry",
+     8573,
+     "Parry(R-07-04/05)",
+     "Guard"
+    ],
+    "phaseOnTick": "g3",
+    "knockback": [
+     6,
+     0.659973145
+    ],
+    "bossOnTick": "Stagger",
+    "attackRecoveredAfter": false,
+    "pass": true
+   },
+   {
+    "case": "Gg3Simul",
+    "phase": "g3",
+    "phaseSuperArmor": false,
+    "phaseLaunch": "Immune",
+    "result": [
+     "dodge",
+     8794,
+     "SimultaneousHit(R-06-15)",
+     "DodgeReact"
+    ],
+    "phaseOnTick": "g3",
+    "damage": 0,
+    "hpBeforeAfter": [
+     [
+      99283,
+      1000.0
+     ],
+     [
+      99283,
+      1000.0
+     ]
+    ],
+    "pass": true
+   },
+   {
+    "case": "Gg3Launch",
+    "phase": "g3",
+    "phaseSuperArmor": false,
+    "phaseLaunch": "Immune",
+    "result": [
+     "hit",
+     8991,
+     "LaunchImmune:DamageAndCount(R-04-04)",
+     "Stagger"
+    ],
+    "phaseOnTick": "g3",
+    "bossAttackActiveAfter": false,
+    "pass": true
+   }
+  ],
+  "note": "gauntlet test boss: g1 normal (launchable), g2 super armor, g3 launch immune; transitions by events only (CF-09 not exercised)",
+  "pass": true
+ },
+ "TC-UNITY-02": {
+  "walls": [
+   {
+    "case": "U2WallRun",
+    "wallContactX": 864.7,
+    "maxX": 864.6999,
+    "contactTicksInMotion": 77,
+    "motionStarted": true,
+    "pass": true
+   },
+   {
+    "case": "U2WallDash",
+    "wallContactX": 864.7,
+    "maxX": 864.6999,
+    "contactTicksInMotion": 8,
+    "motionStarted": true,
+    "pass": true
+   },
+   {
+    "case": "U2WallDive",
+    "wallContactX": 864.7,
+    "maxX": 864.6999,
+    "contactTicksInMotion": 3,
+    "motionStarted": true,
+    "pass": true
+   },
+   {
+    "case": "U2WallKnock",
+    "wallContactX": 889.9499999999999,
+    "minX": 889.950134,
+    "knockbackTicksAtWall": 62,
+    "pass": true
+   },
+   {
+    "case": "U2WallEnemy",
+    "wallContactX": 921.6,
+    "knockback": {
+     "startX": 921.5,
+     "endX": 921.5999,
+     "displacement": 0.09991455,
+     "startVel": 5,
+     "blocked": true,
+     "attribution": "Ambiguous"
+    },
+    "pass": true
+   }
+  ],
+  "view": {
+   "player": {
+    "air": {
+     "frames": 108,
+     "renderPen": 0.0,
+     "simPen": 0.0,
+     "size": 0.0,
+     "outside": 0.0,
+     "step": 0.2345
+    },
+    "airDash": {
+     "frames": 12,
+     "renderPen": 0.0,
+     "simPen": 0.0,
+     "size": 0.0,
+     "outside": 0.0,
+     "step": 0.24
+    },
+    "dive": {
+     "frames": 7,
+     "renderPen": 0.0,
+     "simPen": 0.0,
+     "size": 0.0,
+     "outside": 0.0,
+     "step": 0.28
+    },
+    "hitStun": {
+     "frames": 1128,
+     "renderPen": 0.0,
+     "simPen": 0.0,
+     "size": 0.0,
+     "outside": 0.0,
+     "step": 0.0499
+    },
+    "knockback": {
+     "frames": 548,
+     "renderPen": 0.0,
+     "simPen": 0.0,
+     "size": 0.0,
+     "outside": 0.0,
+     "step": 0.07
+    },
+    "other": {
+     "frames": 589,
+     "renderPen": 0.0,
+     "simPen": 0.0,
+     "size": 0.0,
+     "outside": 0.0,
+     "step": 0.088
+    },
+    "still": {
+     "frames": 8011,
+     "renderPen": 0.0,
+     "simPen": 0.0,
+     "size": 0.0,
+     "outside": 0.0,
+     "step": 0.1043
+    },
+    "walkRun": {
+     "frames": 470,
+     "renderPen": 0.0,
+     "simPen": 0.0,
+     "size": 0.0,
+     "outside": 0.0,
+     "step": 0.14
+    }
+   },
+   "enemies": {
+    "air": {
+     "frames": 226,
+     "renderPen": 0.0,
+     "simPen": 0.0,
+     "size": 0.0,
+     "outside": 0.0,
+     "step": 0.0
+    },
+    "knockback": {
+     "frames": 189,
+     "renderPen": 0.0,
+     "simPen": 0.0,
+     "size": 0.0,
+     "outside": 0.0,
+     "step": 0.0
+    },
+    "still": {
+     "frames": 384263,
+     "renderPen": 0.0,
+     "simPen": 0.0,
+     "size": 0.0,
+     "outside": 0.0,
+     "step": 0.0
+    },
+    "walk": {
+     "frames": 262,
+     "renderPen": 0.0,
+     "simPen": 0.0,
+     "size": 0.0,
+     "outside": 0.0,
+     "step": 0.0
+    }
+   },
+   "playerClassesPresent": [
+    "walkRun",
+    "air",
+    "airDash",
+    "dive",
+    "knockback"
+   ],
+   "enemyClassesPresent": [
+    "air",
+    "knockback"
+   ]
+  },
+  "note": "rendered vs judged body per motion class (view.trackCheck: penetration into solids, size, outside the tick segment); planeZ is TC-01-01",
+  "pass": true
+ },
+ "TC-UNITY-07": {
+  "wholeRun": {
+   "playerHits": 25,
+   "uniqueHitKeys": true,
+   "hitsWhileAttackAlive": 25,
+   "endCountsMatch": true,
+   "skipsWhileAttackAlive": true,
+   "enemyHitsOnPlayer": 78,
+   "enemyHitsFromActiveInstance": 78
+  },
+  "cases": [
+   {
+    "case": "U7Multi",
+    "targets": [
+     "m1",
+     "m2",
+     "m3",
+     "m4"
+    ],
+    "endHits": 4,
+    "pass": true
+   },
+   {
+    "case": "U7Cancel",
+    "castTick": 10085,
+    "hitOnPlayerTick": 10090,
+    "end": [
+     10090,
+     "PlayerHit",
+     true
+    ],
+    "magicCancel": [
+     10090,
+     false
+    ],
+    "effectsOrHitsOfThatCast": 0,
+    "pass": true
+   },
+   {
+    "case": "U7Wakeup",
+    "sequence": [
+     [
+      "hit",
+      "Idle",
+      127
+     ],
+     [
+      "hit.skip",
+      "Down",
+      128
+     ],
+     [
+      "hit.skip",
+      "Wakeup",
+      129
+     ],
+     [
+      "hit",
+      "Idle",
+      130
+     ]
+    ],
+    "pass": true
+   }
+  ],
+  "pass": true
+ },
+ "selftest": [
+  {
+   "case": "original",
+   "pass": {
+    "TC-05-04": true,
+    "TC-08-02": true,
+    "TC-08-05": true,
+    "TC-08-09": true,
+    "TC-08-12": true,
+    "TC-UNITY-02": true,
+    "TC-UNITY-07": true
+   }
+  },
+  {
+   "case": "05-04 jump during HitStun executes",
+   "section": "TC-05-04",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "05-04 pad attack refused with another lock",
+   "section": "TC-05-04",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "05-04 refusal names another press",
+   "section": "TC-05-04",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "05-04 held Left moves the player during HitStun",
+   "section": "TC-05-04",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "05-04 ring does not open during HitStun",
+   "section": "TC-05-04",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "05-04 special never executes after the end",
+   "section": "TC-05-04",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "05-04 keyboard case pressed on the pad",
+   "section": "TC-05-04",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "05-04 stun ends early (a free tick inside)",
+   "section": "TC-05-04",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "08-02 ready enemy waits after entering range",
+   "section": "TC-08-02",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "08-02 attack starts during stagger",
+   "section": "TC-08-02",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "08-02 no re-decision after wakeup",
+   "section": "TC-08-02",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "08-02 dead enemy attacks",
+   "section": "TC-08-02",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "08-05 jump outside the window",
+   "section": "TC-08-05",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "08-05 jump speed differs from the data",
+   "section": "TC-08-05",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "08-05 air attack out of its range",
+   "section": "TC-08-05",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "08-05 near jump as low as the far one",
+   "section": "TC-08-05",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "08-09 one-phase boss transitions",
+   "section": "TC-08-09",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "08-09 two-phase boss uses the warden threshold",
+   "section": "TC-08-09",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "08-09 warden p3 without two crushes",
+   "section": "TC-08-09",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "08-12 armor phase physical hit staggers",
+   "section": "TC-08-12",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "08-12 launch-immune boss launched",
+   "section": "TC-08-12",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "08-12 normal boss magic knockback from two sources",
+   "section": "TC-08-12",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "08-12 parry on another attack",
+   "section": "TC-08-12",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "08-12 simultaneous hit costs HP",
+   "section": "TC-08-12",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "08-12 case in the wrong phase",
+   "section": "TC-08-12",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "08-12 armor keeps its attack after magic",
+   "section": "TC-08-12",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "U-02 drawn player enters the wall during the dash",
+   "section": "TC-UNITY-02",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "U-02 drawn player outside its tick segment in knockback",
+   "section": "TC-UNITY-02",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "U-02 no enemy knockback frames",
+   "section": "TC-UNITY-02",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "U-02 air dash passes the wall",
+   "section": "TC-UNITY-02",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "U-02 wall-blocked bag knockback not flagged",
+   "section": "TC-UNITY-02",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "U-02 knockback stops short of the wall",
+   "section": "TC-UNITY-02",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "U-07 same target hit twice in one motion",
+   "section": "TC-UNITY-07",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "U-07 hit after its attack ended",
+   "section": "TC-UNITY-07",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "U-07 cancelled cast still applies its effect",
+   "section": "TC-UNITY-07",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "U-07 end record counts another number of hits",
+   "section": "TC-UNITY-07",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "U-07 enemy hit from an attack instance that is not active",
+   "section": "TC-UNITY-07",
+   "sectionPass": false,
+   "pass": true
+  },
+  {
+   "case": "U-07 waking target hit",
+   "section": "TC-UNITY-07",
+   "sectionPass": false,
+   "pass": true
+  }
+ ],
+ "selftest_all_pass": true
+}

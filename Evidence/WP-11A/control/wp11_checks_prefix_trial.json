@@ -1,0 +1,166 @@
+{
+ "log": "Evidence/WP-11A/control/RUN-20261113-110356.ndjson",
+ "TC-UNITY-02": {
+  "walls": [
+   {
+    "case": "U2WallRun",
+    "wallContactX": 864.7,
+    "maxX": 864.6999,
+    "contactTicksInMotion": 77,
+    "motionStarted": true,
+    "pass": true
+   },
+   {
+    "case": "U2WallDash",
+    "wallContactX": 864.7,
+    "maxX": 864.6999,
+    "contactTicksInMotion": 8,
+    "motionStarted": true,
+    "pass": true
+   },
+   {
+    "case": "U2WallDive",
+    "wallContactX": 864.7,
+    "maxX": 864.6999,
+    "contactTicksInMotion": 3,
+    "motionStarted": true,
+    "pass": true
+   },
+   {
+    "case": "U2WallKnock",
+    "wallContactX": 889.9499999999999,
+    "minX": 889.950134,
+    "knockbackTicksAtWall": 62,
+    "pass": true
+   },
+   {
+    "case": "U2WallEnemy",
+    "wallContactX": 921.6,
+    "knockback": {
+     "startX": 921.5,
+     "endX": 921.5999,
+     "displacement": 0.09991455,
+     "startVel": 5,
+     "blocked": true,
+     "attribution": "Ambiguous"
+    },
+    "pass": true
+   }
+  ],
+  "view": {
+   "player": {
+    "air": {
+     "frames": 108,
+     "renderPen": 0.0,
+     "simPen": 0.0,
+     "size": 0.0,
+     "outside": 0.0,
+     "step": 0.2345
+    },
+    "airDash": {
+     "frames": 12,
+     "renderPen": 0.0,
+     "simPen": 0.0,
+     "size": 0.0,
+     "outside": 0.0,
+     "step": 0.24
+    },
+    "dive": {
+     "frames": 7,
+     "renderPen": 0.0,
+     "simPen": 0.0,
+     "size": 0.0,
+     "outside": 0.0,
+     "step": 0.28
+    },
+    "hitStun": {
+     "frames": 1130,
+     "renderPen": 0.0,
+     "simPen": 0.0,
+     "size": 0.0,
+     "outside": 0.0,
+     "step": 0.0499
+    },
+    "knockback": {
+     "frames": 546,
+     "renderPen": 0.0,
+     "simPen": 0.0,
+     "size": 0.0,
+     "outside": 0.0,
+     "step": 0.07
+    },
+    "other": {
+     "frames": 589,
+     "renderPen": 0.0,
+     "simPen": 0.0,
+     "size": 0.0,
+     "outside": 0.0,
+     "step": 0.088
+    },
+    "still": {
+     "frames": 8018,
+     "renderPen": 0.2726,
+     "simPen": 0.0,
+     "size": 0.0,
+     "outside": 0.0,
+     "step": 31.596
+    },
+    "walkRun": {
+     "frames": 470,
+     "renderPen": 0.0,
+     "simPen": 0.0,
+     "size": 0.0,
+     "outside": 0.0,
+     "step": 0.14
+    }
+   },
+   "enemies": {
+    "air": {
+     "frames": 226,
+     "renderPen": 0.0,
+     "simPen": 0.0,
+     "size": 0.0,
+     "outside": 0.0,
+     "step": 0.0
+    },
+    "knockback": {
+     "frames": 189,
+     "renderPen": 0.0,
+     "simPen": 0.0,
+     "size": 0.0,
+     "outside": 0.0,
+     "step": 0.0
+    },
+    "still": {
+     "frames": 384504,
+     "renderPen": 0.0,
+     "simPen": 0.0,
+     "size": 0.0,
+     "outside": 0.0,
+     "step": 0.0
+    },
+    "walk": {
+     "frames": 262,
+     "renderPen": 0.0,
+     "simPen": 0.0,
+     "size": 0.0,
+     "outside": 0.0,
+     "step": 0.0
+    }
+   },
+   "playerClassesPresent": [
+    "walkRun",
+    "air",
+    "airDash",
+    "dive",
+    "knockback"
+   ],
+   "enemyClassesPresent": [
+    "air",
+    "knockback"
+   ]
+  },
+  "note": "rendered vs judged body per motion class (view.trackCheck: penetration into solids, size, outside the tick segment); planeZ is TC-01-01",
+  "pass": false
+ }
+}

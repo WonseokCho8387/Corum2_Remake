@@ -1,0 +1,3436 @@
+{
+"runId":"RUN-20261113-111800",
+"movement":{
+    "meta": {
+        "domainId": "movement.player",
+        "schemaVersion": 1,
+        "dataVersion": "wp01-r1",
+        "status": "experimental",
+        "policyIds": [
+            "EXP-MOVE-01"
+        ],
+        "relatedRIds": [
+            "R-03-01",
+            "R-03-02",
+            "R-03-04",
+            "R-03-05",
+            "R-03-06"
+        ],
+        "changeRequestId": ""
+    },
+    "walkSpeed": 3.5,
+    "runSpeed": 7.0,
+    "gravity": 30.0,
+    "jumpHeight": 2.200000047683716,
+    "extraJumpHeight": 1.7999999523162842,
+    "airControlSpeed": 3.5,
+    "airAcceleration": 18.0,
+    "maxFallSpeed": 22.0,
+    "slideSpeed": 9.0,
+    "slideDuration": 0.3499999940395355,
+    "rollSpeed": 7.0,
+    "rollDuration": 0.4000000059604645,
+    "dashSpeed": 12.0,
+    "dashDuration": 0.25,
+    "dashEndSpeed": 3.5,
+    "diveSpeed": 14.0,
+    "diveAngleDeg": 45.0,
+    "bodyWidth": 0.6000000238418579,
+    "standHeight": 1.7999999523162842,
+    "crouchHeight": 0.8999999761581421
+},
+"input":{
+    "meta": {
+        "domainId": "input.profile",
+        "schemaVersion": 1,
+        "dataVersion": "wp03-1",
+        "status": "experimental",
+        "policyIds": [
+            "EXP-INPUT-01",
+            "EXP-INPUT-02",
+            "EXP-INPUT-03",
+            "EXP-TIME-01",
+            "EXP-INPUT-04"
+        ],
+        "relatedRIds": [
+            "R-02-01",
+            "R-03-01"
+        ],
+        "changeRequestId": ""
+    },
+    "stickDeadzone": 0.3499999940395355,
+    "doubleTapWindow": 0.25,
+    "moveStickPaths": [
+        "<Gamepad>/leftStick"
+    ],
+    "moveKeyComposites": [
+        "<Keyboard>/w,<Keyboard>/s,<Keyboard>/a,<Keyboard>/d",
+        "<Keyboard>/upArrow,<Keyboard>/downArrow,<Keyboard>/leftArrow,<Keyboard>/rightArrow"
+    ],
+    "buttons": [
+        {
+            "action": 4,
+            "paths": [
+                "<Gamepad>/buttonSouth",
+                "<Keyboard>/space"
+            ],
+            "policy": "keyboard key EXP-INPUT-02"
+        },
+        {
+            "action": 5,
+            "paths": [
+                "<Gamepad>/buttonWest",
+                "<Keyboard>/j"
+            ],
+            "policy": "keyboard key EXP-INPUT-02"
+        },
+        {
+            "action": 6,
+            "paths": [
+                "<Gamepad>/buttonNorth",
+                "<Keyboard>/k"
+            ],
+            "policy": "EXP-INPUT-01"
+        },
+        {
+            "action": 7,
+            "paths": [
+                "<Gamepad>/rightShoulder",
+                "<Keyboard>/l"
+            ],
+            "policy": "keyboard key EXP-INPUT-02"
+        },
+        {
+            "action": 8,
+            "paths": [
+                "<Gamepad>/leftShoulder",
+                "<Keyboard>/q"
+            ],
+            "policy": "keyboard key EXP-INPUT-02"
+        },
+        {
+            "action": 9,
+            "paths": [
+                "<Gamepad>/dpad/up",
+                "<Keyboard>/1"
+            ],
+            "policy": "EXP-INPUT-02"
+        },
+        {
+            "action": 12,
+            "paths": [
+                "<Gamepad>/dpad/right",
+                "<Keyboard>/2"
+            ],
+            "policy": "EXP-INPUT-02"
+        },
+        {
+            "action": 10,
+            "paths": [
+                "<Gamepad>/dpad/down",
+                "<Keyboard>/3"
+            ],
+            "policy": "EXP-INPUT-02"
+        },
+        {
+            "action": 11,
+            "paths": [
+                "<Gamepad>/dpad/left",
+                "<Keyboard>/4"
+            ],
+            "policy": "EXP-INPUT-02"
+        },
+        {
+            "action": 13,
+            "paths": [
+                "<Gamepad>/buttonEast",
+                "<Keyboard>/e"
+            ],
+            "policy": "EXP-INPUT-04"
+        },
+        {
+            "action": 14,
+            "paths": [
+                "<Gamepad>/leftTrigger",
+                "<Keyboard>/z"
+            ],
+            "policy": "EXP-INPUT-04"
+        },
+        {
+            "action": 15,
+            "paths": [
+                "<Gamepad>/rightTrigger",
+                "<Keyboard>/c"
+            ],
+            "policy": "EXP-INPUT-04"
+        }
+    ]
+},
+"unlocks":{
+    "meta": {
+        "domainId": "unlock.AirUnlocks_All",
+        "schemaVersion": 1,
+        "dataVersion": "wp01-r1",
+        "status": "experimental",
+        "policyIds": [],
+        "relatedRIds": [
+            "R-03-03"
+        ],
+        "changeRequestId": ""
+    },
+    "extraJump": true,
+    "airDash": true,
+    "dive": true
+},
+"world":{"startMapId":"C11","startSpawnId":"Start","maps":[
+{
+    "meta": {
+        "domainId": "map.C11",
+        "schemaVersion": 1,
+        "dataVersion": "wp11-1",
+        "status": "experimental",
+        "policyIds": [],
+        "relatedRIds": [
+            "R-05-04",
+            "R-08-02",
+            "R-08-05",
+            "R-08-09",
+            "R-08-12",
+            "R-00-03",
+            "R-00-05",
+            "R-06-01",
+            "R-06-10"
+        ],
+        "changeRequestId": ""
+    },
+    "mapId": "C11",
+    "minX": 0.0,
+    "maxX": 1100.0,
+    "killY": -10.0,
+    "combatPlaneZ": 0.0,
+    "solids": [
+        {
+            "min": {
+                "x": -1.0,
+                "y": -2.0
+            },
+            "max": {
+                "x": 1101.0,
+                "y": 0.0
+            }
+        },
+        {
+            "min": {
+                "x": 865.0,
+                "y": 0.0
+            },
+            "max": {
+                "x": 866.0,
+                "y": 5.0
+            }
+        },
+        {
+            "min": {
+                "x": 888.6500244140625,
+                "y": 0.0
+            },
+            "max": {
+                "x": 889.6500244140625,
+                "y": 5.0
+            }
+        },
+        {
+            "min": {
+                "x": 922.0,
+                "y": 0.0
+            },
+            "max": {
+                "x": 923.0,
+                "y": 5.0
+            }
+        }
+    ],
+    "spawns": [
+        {
+            "id": "Start",
+            "position": {
+                "x": 4.0,
+                "y": 0.0
+            },
+            "facing": 1
+        },
+        {
+            "id": "H5Kb",
+            "position": {
+                "x": 20.0,
+                "y": 0.0
+            },
+            "facing": 1
+        },
+        {
+            "id": "H5Pad",
+            "position": {
+                "x": 50.0,
+                "y": 0.0
+            },
+            "facing": 1
+        },
+        {
+            "id": "A2Ready",
+            "position": {
+                "x": 80.0,
+                "y": 0.0
+            },
+            "facing": 1
+        },
+        {
+            "id": "A2Stagger",
+            "position": {
+                "x": 110.0,
+                "y": 0.0
+            },
+            "facing": 1
+        },
+        {
+            "id": "A2Down",
+            "position": {
+                "x": 140.0,
+                "y": 0.0
+            },
+            "facing": 1
+        },
+        {
+            "id": "A2Dead",
+            "position": {
+                "x": 170.0,
+                "y": 0.0
+            },
+            "facing": 1
+        },
+        {
+            "id": "J5NearIn",
+            "position": {
+                "x": 200.0,
+                "y": 0.0
+            },
+            "facing": 1
+        },
+        {
+            "id": "J5NearOut",
+            "position": {
+                "x": 230.0,
+                "y": 0.0
+            },
+            "facing": 1
+        },
+        {
+            "id": "J5FarIn",
+            "position": {
+                "x": 260.0,
+                "y": 0.0
+            },
+            "facing": 1
+        },
+        {
+            "id": "J5FarOut",
+            "position": {
+                "x": 290.0,
+                "y": 0.0
+            },
+            "facing": 1
+        },
+        {
+            "id": "B9Solo",
+            "position": {
+                "x": 320.0,
+                "y": 0.0
+            },
+            "facing": 1
+        },
+        {
+            "id": "B9Duo",
+            "position": {
+                "x": 350.0,
+                "y": 0.0
+            },
+            "facing": 1
+        },
+        {
+            "id": "B9Warden",
+            "position": {
+                "x": 380.0,
+                "y": 0.0
+            },
+            "facing": 1
+        },
+        {
+            "id": "Gg1Phys",
+            "position": {
+                "x": 410.0,
+                "y": 0.0
+            },
+            "facing": 1
+        },
+        {
+            "id": "Gg1Magic",
+            "position": {
+                "x": 440.0,
+                "y": 0.0
+            },
+            "facing": 1
+        },
+        {
+            "id": "Gg1Parry",
+            "position": {
+                "x": 470.0,
+                "y": 0.0
+            },
+            "facing": 1
+        },
+        {
+            "id": "Gg1Simul",
+            "position": {
+                "x": 500.0,
+                "y": 0.0
+            },
+            "facing": 1
+        },
+        {
+            "id": "Gg1Launch",
+            "position": {
+                "x": 530.0,
+                "y": 0.0
+            },
+            "facing": 1
+        },
+        {
+            "id": "Gg2Phys",
+            "position": {
+                "x": 560.0,
+                "y": 0.0
+            },
+            "facing": 1
+        },
+        {
+            "id": "Gg2Magic",
+            "position": {
+                "x": 590.0,
+                "y": 0.0
+            },
+            "facing": 1
+        },
+        {
+            "id": "Gg2Parry",
+            "position": {
+                "x": 620.0,
+                "y": 0.0
+            },
+            "facing": 1
+        },
+        {
+            "id": "Gg2Simul",
+            "position": {
+                "x": 650.0,
+                "y": 0.0
+            },
+            "facing": 1
+        },
+        {
+            "id": "Gg2Launch",
+            "position": {
+                "x": 680.0,
+                "y": 0.0
+            },
+            "facing": 1
+        },
+        {
+            "id": "Gg3Phys",
+            "position": {
+                "x": 710.0,
+                "y": 0.0
+            },
+            "facing": 1
+        },
+        {
+            "id": "Gg3Magic",
+            "position": {
+                "x": 740.0,
+                "y": 0.0
+            },
+            "facing": 1
+        },
+        {
+            "id": "Gg3Parry",
+            "position": {
+                "x": 770.0,
+                "y": 0.0
+            },
+            "facing": 1
+        },
+        {
+            "id": "Gg3Simul",
+            "position": {
+                "x": 800.0,
+                "y": 0.0
+            },
+            "facing": 1
+        },
+        {
+            "id": "Gg3Launch",
+            "position": {
+                "x": 830.0,
+                "y": 0.0
+            },
+            "facing": 1
+        },
+        {
+            "id": "U2WallMove",
+            "position": {
+                "x": 860.0,
+                "y": 0.0
+            },
+            "facing": 1
+        },
+        {
+            "id": "U2WallKnock",
+            "position": {
+                "x": 890.0,
+                "y": 0.0
+            },
+            "facing": 1
+        },
+        {
+            "id": "U2WallEnemy",
+            "position": {
+                "x": 920.0,
+                "y": 0.0
+            },
+            "facing": 1
+        },
+        {
+            "id": "U7Multi",
+            "position": {
+                "x": 950.0,
+                "y": 0.0
+            },
+            "facing": 1
+        },
+        {
+            "id": "U7Cancel",
+            "position": {
+                "x": 980.0,
+                "y": 0.0
+            },
+            "facing": 1
+        },
+        {
+            "id": "U7Wakeup",
+            "position": {
+                "x": 1010.0,
+                "y": 0.0
+            },
+            "facing": 1
+        }
+    ],
+    "left": {
+        "policy": 0,
+        "connectionId": "",
+        "targetMapId": "",
+        "targetSpawnId": ""
+    },
+    "right": {
+        "policy": 0,
+        "connectionId": "",
+        "targetMapId": "",
+        "targetSpawnId": ""
+    },
+    "points": [],
+    "enemies": [
+        {
+            "instanceId": "hk",
+            "enemyId": "hitter",
+            "position": {
+                "x": 21.200000762939454,
+                "y": 0.0
+            },
+            "facing": -1
+        },
+        {
+            "instanceId": "hp",
+            "enemyId": "hitter",
+            "position": {
+                "x": 51.20000076293945,
+                "y": 0.0
+            },
+            "facing": -1
+        },
+        {
+            "instanceId": "pr",
+            "enemyId": "post",
+            "position": {
+                "x": 84.0,
+                "y": 0.0
+            },
+            "facing": -1
+        },
+        {
+            "instanceId": "ps",
+            "enemyId": "post",
+            "position": {
+                "x": 114.0,
+                "y": 0.0
+            },
+            "facing": -1
+        },
+        {
+            "instanceId": "pd",
+            "enemyId": "post",
+            "position": {
+                "x": 144.0,
+                "y": 0.0
+            },
+            "facing": -1
+        },
+        {
+            "instanceId": "px",
+            "enemyId": "postWeak",
+            "position": {
+                "x": 174.0,
+                "y": 0.0
+            },
+            "facing": -1
+        },
+        {
+            "instanceId": "jn1",
+            "enemyId": "jumperStill",
+            "position": {
+                "x": 204.0,
+                "y": 0.0
+            },
+            "facing": -1
+        },
+        {
+            "instanceId": "jn2",
+            "enemyId": "jumperStill",
+            "position": {
+                "x": 236.0,
+                "y": 0.0
+            },
+            "facing": -1
+        },
+        {
+            "instanceId": "jf1",
+            "enemyId": "jumperFar",
+            "position": {
+                "x": 266.0,
+                "y": 0.0
+            },
+            "facing": -1
+        },
+        {
+            "instanceId": "jf2",
+            "enemyId": "jumperFar",
+            "position": {
+                "x": 294.0,
+                "y": 0.0
+            },
+            "facing": -1
+        },
+        {
+            "instanceId": "ba",
+            "enemyId": "bossSolo",
+            "position": {
+                "x": 321.6000061035156,
+                "y": 0.0
+            },
+            "facing": -1
+        },
+        {
+            "instanceId": "bb",
+            "enemyId": "bossDuo",
+            "position": {
+                "x": 351.6000061035156,
+                "y": 0.0
+            },
+            "facing": -1
+        },
+        {
+            "instanceId": "bc",
+            "enemyId": "warden",
+            "position": {
+                "x": 381.6000061035156,
+                "y": 0.0
+            },
+            "facing": -1
+        },
+        {
+            "instanceId": "xg1Phys",
+            "enemyId": "gauntlet",
+            "position": {
+                "x": 411.6000061035156,
+                "y": 0.0
+            },
+            "facing": -1
+        },
+        {
+            "instanceId": "xg1Magic",
+            "enemyId": "gauntlet",
+            "position": {
+                "x": 441.6000061035156,
+                "y": 0.0
+            },
+            "facing": -1
+        },
+        {
+            "instanceId": "xg1Parry",
+            "enemyId": "gauntlet",
+            "position": {
+                "x": 471.6000061035156,
+                "y": 0.0
+            },
+            "facing": -1
+        },
+        {
+            "instanceId": "xg1Simul",
+            "enemyId": "gauntlet",
+            "position": {
+                "x": 501.6000061035156,
+                "y": 0.0
+            },
+            "facing": -1
+        },
+        {
+            "instanceId": "xg1Launch",
+            "enemyId": "gauntlet",
+            "position": {
+                "x": 531.5999755859375,
+                "y": 0.0
+            },
+            "facing": -1
+        },
+        {
+            "instanceId": "xg2Phys",
+            "enemyId": "gauntlet",
+            "position": {
+                "x": 561.5999755859375,
+                "y": 0.0
+            },
+            "facing": -1
+        },
+        {
+            "instanceId": "xg2Magic",
+            "enemyId": "gauntlet",
+            "position": {
+                "x": 591.5999755859375,
+                "y": 0.0
+            },
+            "facing": -1
+        },
+        {
+            "instanceId": "xg2Parry",
+            "enemyId": "gauntlet",
+            "position": {
+                "x": 621.5999755859375,
+                "y": 0.0
+            },
+            "facing": -1
+        },
+        {
+            "instanceId": "xg2Simul",
+            "enemyId": "gauntlet",
+            "position": {
+                "x": 651.5999755859375,
+                "y": 0.0
+            },
+            "facing": -1
+        },
+        {
+            "instanceId": "xg2Launch",
+            "enemyId": "gauntlet",
+            "position": {
+                "x": 681.5999755859375,
+                "y": 0.0
+            },
+            "facing": -1
+        },
+        {
+            "instanceId": "xg3Phys",
+            "enemyId": "gauntlet",
+            "position": {
+                "x": 711.5999755859375,
+                "y": 0.0
+            },
+            "facing": -1
+        },
+        {
+            "instanceId": "xg3Magic",
+            "enemyId": "gauntlet",
+            "position": {
+                "x": 741.5999755859375,
+                "y": 0.0
+            },
+            "facing": -1
+        },
+        {
+            "instanceId": "xg3Parry",
+            "enemyId": "gauntlet",
+            "position": {
+                "x": 771.5999755859375,
+                "y": 0.0
+            },
+            "facing": -1
+        },
+        {
+            "instanceId": "xg3Simul",
+            "enemyId": "gauntlet",
+            "position": {
+                "x": 801.5999755859375,
+                "y": 0.0
+            },
+            "facing": -1
+        },
+        {
+            "instanceId": "xg3Launch",
+            "enemyId": "gauntlet",
+            "position": {
+                "x": 831.5999755859375,
+                "y": 0.0
+            },
+            "facing": -1
+        },
+        {
+            "instanceId": "uk",
+            "enemyId": "hitter",
+            "position": {
+                "x": 891.2000122070313,
+                "y": 0.0
+            },
+            "facing": -1
+        },
+        {
+            "instanceId": "ub",
+            "enemyId": "bag",
+            "position": {
+                "x": 921.5,
+                "y": 0.0
+            },
+            "facing": -1
+        },
+        {
+            "instanceId": "m1",
+            "enemyId": "bag",
+            "position": {
+                "x": 951.0,
+                "y": 0.0
+            },
+            "facing": -1
+        },
+        {
+            "instanceId": "m2",
+            "enemyId": "bag",
+            "position": {
+                "x": 951.0,
+                "y": 0.0
+            },
+            "facing": -1
+        },
+        {
+            "instanceId": "m3",
+            "enemyId": "bag",
+            "position": {
+                "x": 951.0,
+                "y": 0.0
+            },
+            "facing": -1
+        },
+        {
+            "instanceId": "m4",
+            "enemyId": "bag",
+            "position": {
+                "x": 951.0,
+                "y": 0.0
+            },
+            "facing": -1
+        },
+        {
+            "instanceId": "uc",
+            "enemyId": "hitter",
+            "position": {
+                "x": 981.2000122070313,
+                "y": 0.0
+            },
+            "facing": -1
+        },
+        {
+            "instanceId": "uw",
+            "enemyId": "bag",
+            "position": {
+                "x": 1011.0,
+                "y": 0.0
+            },
+            "facing": -1
+        }
+    ],
+    "cameraMinX": 9.0,
+    "cameraMaxX": 1091.0,
+    "cameraY": 2.5,
+    "cameraFollowSharpness": 10.0,
+    "groundColor": {
+        "r": 0.3799999952316284,
+        "g": 0.4000000059604645,
+        "b": 0.3700000047683716,
+        "a": 1.0
+    }
+}]},
+"extra":[
+{"asset":"CombatConfig","type":"CombatConfig","data":{
+    "meta": {
+        "domainId": "combat.player",
+        "schemaVersion": 1,
+        "dataVersion": "wp02-r1",
+        "status": "experimental",
+        "policyIds": [
+            "EXP-ATK-00",
+            "TEST-DMG-01"
+        ],
+        "relatedRIds": [
+            "R-04-01",
+            "R-05-02",
+            "R-06-01",
+            "R-07-02"
+        ],
+        "changeRequestId": ""
+    },
+    "playerMaxHp": 100.0,
+    "deathMotionTime": 1.2000000476837159,
+    "reviveHpRatio": 0.5,
+    "reviveInvulnTime": 1.5,
+    "groundNormals": [
+        {
+            "id": "ground1",
+            "kind": 0,
+            "damageType": 0,
+            "startup": 0.05999999865889549,
+            "active": 0.07999999821186066,
+            "recovery": 0.11999999731779099,
+            "offsetX": 0.800000011920929,
+            "offsetY": 0.8999999761581421,
+            "width": 1.0,
+            "height": 1.2000000476837159,
+            "testDamage": 10.0,
+            "hitstop": 0.03999999910593033,
+            "knockback": 1.5,
+            "launchVelocity": 0.0,
+            "hitEvents": 1,
+            "unblockable": false,
+            "guardBreak": false,
+            "superArmor": false,
+            "hitsDowned": false
+        },
+        {
+            "id": "ground2",
+            "kind": 0,
+            "damageType": 0,
+            "startup": 0.05999999865889549,
+            "active": 0.07999999821186066,
+            "recovery": 0.11999999731779099,
+            "offsetX": 0.800000011920929,
+            "offsetY": 0.8999999761581421,
+            "width": 1.0,
+            "height": 1.2000000476837159,
+            "testDamage": 10.0,
+            "hitstop": 0.03999999910593033,
+            "knockback": 1.5,
+            "launchVelocity": 0.0,
+            "hitEvents": 1,
+            "unblockable": false,
+            "guardBreak": false,
+            "superArmor": false,
+            "hitsDowned": false
+        },
+        {
+            "id": "ground3",
+            "kind": 0,
+            "damageType": 0,
+            "startup": 0.05999999865889549,
+            "active": 0.07999999821186066,
+            "recovery": 0.11999999731779099,
+            "offsetX": 0.800000011920929,
+            "offsetY": 0.8999999761581421,
+            "width": 1.0,
+            "height": 1.2000000476837159,
+            "testDamage": 10.0,
+            "hitstop": 0.03999999910593033,
+            "knockback": 1.5,
+            "launchVelocity": 0.0,
+            "hitEvents": 1,
+            "unblockable": false,
+            "guardBreak": false,
+            "superArmor": false,
+            "hitsDowned": false
+        },
+        {
+            "id": "ground4",
+            "kind": 0,
+            "damageType": 0,
+            "startup": 0.05999999865889549,
+            "active": 0.07999999821186066,
+            "recovery": 0.11999999731779099,
+            "offsetX": 0.800000011920929,
+            "offsetY": 0.8999999761581421,
+            "width": 1.0,
+            "height": 1.2000000476837159,
+            "testDamage": 10.0,
+            "hitstop": 0.03999999910593033,
+            "knockback": 1.5,
+            "launchVelocity": 0.0,
+            "hitEvents": 1,
+            "unblockable": false,
+            "guardBreak": false,
+            "superArmor": false,
+            "hitsDowned": false
+        }
+    ],
+    "launcher": {
+        "id": "launcher",
+        "kind": 1,
+        "damageType": 0,
+        "startup": 0.05999999865889549,
+        "active": 0.07999999821186066,
+        "recovery": 0.11999999731779099,
+        "offsetX": 0.800000011920929,
+        "offsetY": 0.8999999761581421,
+        "width": 1.0,
+        "height": 1.2000000476837159,
+        "testDamage": 12.0,
+        "hitstop": 0.07999999821186066,
+        "knockback": 0.0,
+        "launchVelocity": 14.0,
+        "hitEvents": 1,
+        "unblockable": false,
+        "guardBreak": false,
+        "superArmor": false,
+        "hitsDowned": false
+    },
+    "airNormals": [
+        {
+            "id": "air1",
+            "kind": 2,
+            "damageType": 0,
+            "startup": 0.05999999865889549,
+            "active": 0.07999999821186066,
+            "recovery": 0.11999999731779099,
+            "offsetX": 0.699999988079071,
+            "offsetY": 0.8999999761581421,
+            "width": 1.2000000476837159,
+            "height": 1.7999999523162842,
+            "testDamage": 8.0,
+            "hitstop": 0.03999999910593033,
+            "knockback": 1.5,
+            "launchVelocity": 0.0,
+            "hitEvents": 1,
+            "unblockable": false,
+            "guardBreak": false,
+            "superArmor": false,
+            "hitsDowned": false
+        },
+        {
+            "id": "air2",
+            "kind": 2,
+            "damageType": 0,
+            "startup": 0.05999999865889549,
+            "active": 0.07999999821186066,
+            "recovery": 0.11999999731779099,
+            "offsetX": 0.699999988079071,
+            "offsetY": 0.8999999761581421,
+            "width": 1.2000000476837159,
+            "height": 1.7999999523162842,
+            "testDamage": 8.0,
+            "hitstop": 0.03999999910593033,
+            "knockback": 1.5,
+            "launchVelocity": 0.0,
+            "hitEvents": 1,
+            "unblockable": false,
+            "guardBreak": false,
+            "superArmor": false,
+            "hitsDowned": false
+        },
+        {
+            "id": "air3",
+            "kind": 2,
+            "damageType": 0,
+            "startup": 0.05999999865889549,
+            "active": 0.07999999821186066,
+            "recovery": 0.11999999731779099,
+            "offsetX": 0.699999988079071,
+            "offsetY": 0.8999999761581421,
+            "width": 1.2000000476837159,
+            "height": 1.7999999523162842,
+            "testDamage": 8.0,
+            "hitstop": 0.03999999910593033,
+            "knockback": 1.5,
+            "launchVelocity": 0.0,
+            "hitEvents": 1,
+            "unblockable": false,
+            "guardBreak": false,
+            "superArmor": false,
+            "hitsDowned": false
+        },
+        {
+            "id": "air4",
+            "kind": 2,
+            "damageType": 0,
+            "startup": 0.05999999865889549,
+            "active": 0.07999999821186066,
+            "recovery": 0.11999999731779099,
+            "offsetX": 0.699999988079071,
+            "offsetY": 0.8999999761581421,
+            "width": 1.2000000476837159,
+            "height": 1.7999999523162842,
+            "testDamage": 8.0,
+            "hitstop": 0.03999999910593033,
+            "knockback": 1.5,
+            "launchVelocity": 0.0,
+            "hitEvents": 1,
+            "unblockable": false,
+            "guardBreak": false,
+            "superArmor": false,
+            "hitsDowned": false
+        }
+    ],
+    "airDash": {
+        "id": "airDash",
+        "kind": 3,
+        "damageType": 0,
+        "startup": 0.05999999865889549,
+        "active": 0.07999999821186066,
+        "recovery": 0.11999999731779099,
+        "offsetX": 0.4000000059604645,
+        "offsetY": 0.8999999761581421,
+        "width": 1.2000000476837159,
+        "height": 1.7999999523162842,
+        "testDamage": 12.0,
+        "hitstop": 0.05999999865889549,
+        "knockback": 3.0,
+        "launchVelocity": 0.0,
+        "hitEvents": 1,
+        "unblockable": false,
+        "guardBreak": false,
+        "superArmor": false,
+        "hitsDowned": false
+    },
+    "dive": {
+        "id": "dive",
+        "kind": 4,
+        "damageType": 0,
+        "startup": 0.05999999865889549,
+        "active": 0.07999999821186066,
+        "recovery": 0.11999999731779099,
+        "offsetX": 0.0,
+        "offsetY": 0.6000000238418579,
+        "width": 1.0,
+        "height": 1.399999976158142,
+        "testDamage": 20.0,
+        "hitstop": 0.11999999731779099,
+        "knockback": 2.0,
+        "launchVelocity": 0.0,
+        "hitEvents": 1,
+        "unblockable": false,
+        "guardBreak": false,
+        "superArmor": false,
+        "hitsDowned": true
+    },
+    "downAttack": {
+        "id": "downAttack",
+        "kind": 5,
+        "damageType": 0,
+        "startup": 0.05999999865889549,
+        "active": 0.07999999821186066,
+        "recovery": 0.11999999731779099,
+        "offsetX": 0.8999999761581421,
+        "offsetY": 0.30000001192092898,
+        "width": 1.399999976158142,
+        "height": 0.800000011920929,
+        "testDamage": 15.0,
+        "hitstop": 0.05999999865889549,
+        "knockback": 0.0,
+        "launchVelocity": 0.0,
+        "hitEvents": 1,
+        "unblockable": false,
+        "guardBreak": false,
+        "superArmor": false,
+        "hitsDowned": true
+    },
+    "comboWindow": 0.5,
+    "airAttackFallSpeed": 1.5,
+    "parryWindow": 0.15000000596046449,
+    "parryStunTime": 0.800000011920929,
+    "parryKnockback": 6.0,
+    "dodgeReactionTime": 0.3499999940395355,
+    "dodgeKnockback": 5.0,
+    "playerHitstun": 0.4000000059604645,
+    "knockbackDecel": 30.0,
+    "rollInvulnStart": 0.05000000074505806,
+    "rollInvulnEnd": 0.30000001192092898,
+    "diveAreaRadius": 2.5,
+    "downAttackRange": 2.5
+}},
+{"asset":"CombatUnlocks_None","type":"CombatUnlockFixture","data":{
+    "meta": {
+        "domainId": "combat.CombatUnlocks_None",
+        "schemaVersion": 1,
+        "dataVersion": "wp02-r1",
+        "status": "experimental",
+        "policyIds": [],
+        "relatedRIds": [
+            "R-04-06",
+            "R-04-08"
+        ],
+        "changeRequestId": ""
+    },
+    "dashPierce": false,
+    "diveArea": false
+}},
+{"asset":"Enemy_Hitter","type":"EnemyDefinitionAsset","data":{
+    "meta": {
+        "domainId": "enemy.hitter",
+        "schemaVersion": 1,
+        "dataVersion": "wp02-r1",
+        "status": "experimental",
+        "policyIds": [],
+        "relatedRIds": [
+            "R-06-04",
+            "R-06-05",
+            "R-06-06",
+            "R-06-08"
+        ],
+        "changeRequestId": ""
+    },
+    "enemyId": "hitter",
+    "maxHp": 1000.0,
+    "bodyWidth": 0.800000011920929,
+    "bodyHeight": 1.600000023841858,
+    "gravity": 30.0,
+    "staggerTime": 0.4000000059604645,
+    "staggerResistance": 0.0,
+    "physicalKnockbackScale": 1.0,
+    "magicKnockbackScale": 1.0,
+    "launch": 0,
+    "launchResistScale": 0.5,
+    "juggleFallSpeed": 2.0,
+    "juggleSlowTime": 0.3499999940395355,
+    "downTime": 1.0,
+    "wakeupTime": 0.6000000238418579,
+    "deathTime": 0.800000011920929,
+    "vanishTime": 0.4000000059604645,
+    "hasAttack": true,
+    "attack": {
+        "id": "hitter.attack",
+        "kind": 6,
+        "damageType": 0,
+        "startup": 0.30000001192092898,
+        "active": 0.10000000149011612,
+        "recovery": 0.30000001192092898,
+        "offsetX": 0.800000011920929,
+        "offsetY": 0.8999999761581421,
+        "width": 1.2000000476837159,
+        "height": 1.2000000476837159,
+        "testDamage": 10.0,
+        "hitstop": 0.03999999910593033,
+        "knockback": 4.0,
+        "launchVelocity": 0.0,
+        "hitEvents": 1,
+        "unblockable": false,
+        "guardBreak": false,
+        "superArmor": false,
+        "hitsDowned": false
+    },
+    "attackRange": 1.600000023841858,
+    "attackInterval": 1.0,
+    "firstAttackDelay": 0.20000000298023225,
+    "ai": {
+        "type": 0,
+        "moveSpeed": 2.0,
+        "trackRange": 12.0,
+        "fleeSpeed": 3.5,
+        "fleeTime": 1.2000000476837159,
+        "reapproachAfterFlee": true,
+        "jumpMinDistance": 2.5,
+        "jumpMaxDistance": 5.0,
+        "jumpSpeedX": 5.0,
+        "jumpVelocityY": 9.0,
+        "jumpCooldown": 1.5,
+        "hasAirAttack": false,
+        "airAttack": {
+            "id": "",
+            "kind": 6,
+            "damageType": 0,
+            "startup": 0.05999999865889549,
+            "active": 0.07999999821186066,
+            "recovery": 0.11999999731779099,
+            "offsetX": 0.800000011920929,
+            "offsetY": 0.8999999761581421,
+            "width": 1.0,
+            "height": 1.2000000476837159,
+            "testDamage": 10.0,
+            "hitstop": 0.03999999910593033,
+            "knockback": 1.5,
+            "launchVelocity": 0.0,
+            "hitEvents": 1,
+            "unblockable": false,
+            "guardBreak": false,
+            "superArmor": false,
+            "hitsDowned": false
+        },
+        "airAttackRange": 1.600000023841858,
+        "hasProjectile": false,
+        "projectile": {
+            "speed": 8.0,
+            "maxDistance": 12.0,
+            "width": 0.4000000059604645,
+            "height": 0.4000000059604645,
+            "spawnOffsetX": 0.6000000238418579,
+            "spawnOffsetY": 1.0
+        },
+        "retreatSpeed": 3.0,
+        "retreatTime": 0.800000011920929
+    },
+    "boss": {
+        "startPhase": "",
+        "phases": []
+    },
+    "color": {
+        "r": 0.8500000238418579,
+        "g": 0.25,
+        "b": 0.25,
+        "a": 1.0
+    }
+}},
+{"asset":"Enemy_Bag","type":"EnemyDefinitionAsset","data":{
+    "meta": {
+        "domainId": "enemy.bag",
+        "schemaVersion": 1,
+        "dataVersion": "wp02-r1",
+        "status": "experimental",
+        "policyIds": [],
+        "relatedRIds": [
+            "R-06-04",
+            "R-06-05",
+            "R-06-06",
+            "R-06-08"
+        ],
+        "changeRequestId": ""
+    },
+    "enemyId": "bag",
+    "maxHp": 1000.0,
+    "bodyWidth": 0.800000011920929,
+    "bodyHeight": 1.600000023841858,
+    "gravity": 30.0,
+    "staggerTime": 0.4000000059604645,
+    "staggerResistance": 0.0,
+    "physicalKnockbackScale": 1.0,
+    "magicKnockbackScale": 1.0,
+    "launch": 0,
+    "launchResistScale": 0.5,
+    "juggleFallSpeed": 2.0,
+    "juggleSlowTime": 0.3499999940395355,
+    "downTime": 1.0,
+    "wakeupTime": 0.6000000238418579,
+    "deathTime": 0.800000011920929,
+    "vanishTime": 0.4000000059604645,
+    "hasAttack": false,
+    "attack": {
+        "id": "",
+        "kind": 6,
+        "damageType": 0,
+        "startup": 0.05999999865889549,
+        "active": 0.07999999821186066,
+        "recovery": 0.11999999731779099,
+        "offsetX": 0.800000011920929,
+        "offsetY": 0.8999999761581421,
+        "width": 1.0,
+        "height": 1.2000000476837159,
+        "testDamage": 10.0,
+        "hitstop": 0.03999999910593033,
+        "knockback": 1.5,
+        "launchVelocity": 0.0,
+        "hitEvents": 1,
+        "unblockable": false,
+        "guardBreak": false,
+        "superArmor": false,
+        "hitsDowned": false
+    },
+    "attackRange": 1.600000023841858,
+    "attackInterval": 1.5,
+    "firstAttackDelay": 1.0,
+    "ai": {
+        "type": 0,
+        "moveSpeed": 2.0,
+        "trackRange": 12.0,
+        "fleeSpeed": 3.5,
+        "fleeTime": 1.2000000476837159,
+        "reapproachAfterFlee": true,
+        "jumpMinDistance": 2.5,
+        "jumpMaxDistance": 5.0,
+        "jumpSpeedX": 5.0,
+        "jumpVelocityY": 9.0,
+        "jumpCooldown": 1.5,
+        "hasAirAttack": false,
+        "airAttack": {
+            "id": "",
+            "kind": 6,
+            "damageType": 0,
+            "startup": 0.05999999865889549,
+            "active": 0.07999999821186066,
+            "recovery": 0.11999999731779099,
+            "offsetX": 0.800000011920929,
+            "offsetY": 0.8999999761581421,
+            "width": 1.0,
+            "height": 1.2000000476837159,
+            "testDamage": 10.0,
+            "hitstop": 0.03999999910593033,
+            "knockback": 1.5,
+            "launchVelocity": 0.0,
+            "hitEvents": 1,
+            "unblockable": false,
+            "guardBreak": false,
+            "superArmor": false,
+            "hitsDowned": false
+        },
+        "airAttackRange": 1.600000023841858,
+        "hasProjectile": false,
+        "projectile": {
+            "speed": 8.0,
+            "maxDistance": 12.0,
+            "width": 0.4000000059604645,
+            "height": 0.4000000059604645,
+            "spawnOffsetX": 0.6000000238418579,
+            "spawnOffsetY": 1.0
+        },
+        "retreatSpeed": 3.0,
+        "retreatTime": 0.800000011920929
+    },
+    "boss": {
+        "startPhase": "",
+        "phases": []
+    },
+    "color": {
+        "r": 0.8500000238418579,
+        "g": 0.5,
+        "b": 0.25,
+        "a": 1.0
+    }
+}},
+{"asset":"Enemy_Warden","type":"EnemyDefinitionAsset","data":{
+    "meta": {
+        "domainId": "enemy.warden",
+        "schemaVersion": 1,
+        "dataVersion": "wp04-3",
+        "status": "experimental",
+        "policyIds": [
+            "TEST-AI-01"
+        ],
+        "relatedRIds": [
+            "R-08-01",
+            "R-08-02",
+            "R-08-03",
+            "R-08-04",
+            "R-08-05",
+            "R-08-06",
+            "R-08-07",
+            "R-08-08",
+            "R-08-09",
+            "R-08-10",
+            "R-08-11",
+            "R-08-12"
+        ],
+        "changeRequestId": ""
+    },
+    "enemyId": "warden",
+    "maxHp": 200.0,
+    "bodyWidth": 1.399999976158142,
+    "bodyHeight": 2.5999999046325685,
+    "gravity": 30.0,
+    "staggerTime": 0.4000000059604645,
+    "staggerResistance": 0.0,
+    "physicalKnockbackScale": 1.0,
+    "magicKnockbackScale": 1.0,
+    "launch": 2,
+    "launchResistScale": 0.5,
+    "juggleFallSpeed": 2.0,
+    "juggleSlowTime": 0.3499999940395355,
+    "downTime": 1.0,
+    "wakeupTime": 0.6000000238418579,
+    "deathTime": 0.800000011920929,
+    "vanishTime": 0.4000000059604645,
+    "hasAttack": false,
+    "attack": {
+        "id": "warden.atk",
+        "kind": 6,
+        "damageType": 0,
+        "startup": 0.30000001192092898,
+        "active": 0.10000000149011612,
+        "recovery": 0.30000001192092898,
+        "offsetX": 0.800000011920929,
+        "offsetY": 0.8999999761581421,
+        "width": 1.2000000476837159,
+        "height": 1.2000000476837159,
+        "testDamage": 10.0,
+        "hitstop": 0.03999999910593033,
+        "knockback": 4.0,
+        "launchVelocity": 0.0,
+        "hitEvents": 1,
+        "unblockable": false,
+        "guardBreak": false,
+        "superArmor": false,
+        "hitsDowned": false
+    },
+    "attackRange": 2.0,
+    "attackInterval": 1.2000000476837159,
+    "firstAttackDelay": 0.5,
+    "ai": {
+        "type": 5,
+        "moveSpeed": 3.0,
+        "trackRange": 12.0,
+        "fleeSpeed": 3.5,
+        "fleeTime": 1.2000000476837159,
+        "reapproachAfterFlee": true,
+        "jumpMinDistance": 2.5,
+        "jumpMaxDistance": 5.0,
+        "jumpSpeedX": 5.0,
+        "jumpVelocityY": 9.0,
+        "jumpCooldown": 1.5,
+        "hasAirAttack": false,
+        "airAttack": {
+            "id": "",
+            "kind": 6,
+            "damageType": 0,
+            "startup": 0.05999999865889549,
+            "active": 0.07999999821186066,
+            "recovery": 0.11999999731779099,
+            "offsetX": 0.800000011920929,
+            "offsetY": 0.8999999761581421,
+            "width": 1.0,
+            "height": 1.2000000476837159,
+            "testDamage": 10.0,
+            "hitstop": 0.03999999910593033,
+            "knockback": 1.5,
+            "launchVelocity": 0.0,
+            "hitEvents": 1,
+            "unblockable": false,
+            "guardBreak": false,
+            "superArmor": false,
+            "hitsDowned": false
+        },
+        "airAttackRange": 1.600000023841858,
+        "hasProjectile": false,
+        "projectile": {
+            "speed": 8.0,
+            "maxDistance": 12.0,
+            "width": 0.4000000059604645,
+            "height": 0.4000000059604645,
+            "spawnOffsetX": 0.6000000238418579,
+            "spawnOffsetY": 1.0
+        },
+        "retreatSpeed": 3.0,
+        "retreatTime": 0.800000011920929
+    },
+    "boss": {
+        "startPhase": "p1",
+        "phases": [
+            {
+                "id": "p1",
+                "patterns": [
+                    {
+                        "id": "slam",
+                        "attack": {
+                            "id": "warden.slam",
+                            "kind": 6,
+                            "damageType": 0,
+                            "startup": 0.3499999940395355,
+                            "active": 0.10000000149011612,
+                            "recovery": 0.30000001192092898,
+                            "offsetX": 1.100000023841858,
+                            "offsetY": 0.8999999761581421,
+                            "width": 1.600000023841858,
+                            "height": 1.600000023841858,
+                            "testDamage": 10.0,
+                            "hitstop": 0.03999999910593033,
+                            "knockback": 4.0,
+                            "launchVelocity": 0.0,
+                            "hitEvents": 1,
+                            "unblockable": false,
+                            "guardBreak": false,
+                            "superArmor": false,
+                            "hitsDowned": false
+                        },
+                        "hasProjectile": false,
+                        "projectile": {
+                            "speed": 8.0,
+                            "maxDistance": 12.0,
+                            "width": 0.4000000059604645,
+                            "height": 0.4000000059604645,
+                            "spawnOffsetX": 0.6000000238418579,
+                            "spawnOffsetY": 1.0
+                        },
+                        "minDistance": 0.0,
+                        "maxDistance": 2.200000047683716,
+                        "playerState": 1,
+                        "priority": 0,
+                        "special": false
+                    },
+                    {
+                        "id": "shot",
+                        "attack": {
+                            "id": "warden.shot",
+                            "kind": 6,
+                            "damageType": 0,
+                            "startup": 0.30000001192092898,
+                            "active": 0.10000000149011612,
+                            "recovery": 0.30000001192092898,
+                            "offsetX": 0.800000011920929,
+                            "offsetY": 0.8999999761581421,
+                            "width": 1.2000000476837159,
+                            "height": 1.2000000476837159,
+                            "testDamage": 8.0,
+                            "hitstop": 0.03999999910593033,
+                            "knockback": 4.0,
+                            "launchVelocity": 0.0,
+                            "hitEvents": 1,
+                            "unblockable": false,
+                            "guardBreak": false,
+                            "superArmor": false,
+                            "hitsDowned": false
+                        },
+                        "hasProjectile": true,
+                        "projectile": {
+                            "speed": 9.0,
+                            "maxDistance": 10.0,
+                            "width": 0.4000000059604645,
+                            "height": 0.4000000059604645,
+                            "spawnOffsetX": 0.6000000238418579,
+                            "spawnOffsetY": 1.399999976158142
+                        },
+                        "minDistance": 3.0,
+                        "maxDistance": 9.0,
+                        "playerState": 0,
+                        "priority": 0,
+                        "special": false
+                    },
+                    {
+                        "id": "antiair",
+                        "attack": {
+                            "id": "warden.antiair",
+                            "kind": 6,
+                            "damageType": 0,
+                            "startup": 0.15000000596046449,
+                            "active": 0.10000000149011612,
+                            "recovery": 0.30000001192092898,
+                            "offsetX": 0.800000011920929,
+                            "offsetY": 1.2000000476837159,
+                            "width": 1.2000000476837159,
+                            "height": 2.4000000953674318,
+                            "testDamage": 9.0,
+                            "hitstop": 0.03999999910593033,
+                            "knockback": 4.0,
+                            "launchVelocity": 0.0,
+                            "hitEvents": 1,
+                            "unblockable": false,
+                            "guardBreak": false,
+                            "superArmor": false,
+                            "hitsDowned": false
+                        },
+                        "hasProjectile": false,
+                        "projectile": {
+                            "speed": 8.0,
+                            "maxDistance": 12.0,
+                            "width": 0.4000000059604645,
+                            "height": 0.4000000059604645,
+                            "spawnOffsetX": 0.6000000238418579,
+                            "spawnOffsetY": 1.0
+                        },
+                        "minDistance": 0.0,
+                        "maxDistance": 3.0,
+                        "playerState": 2,
+                        "priority": 2,
+                        "special": false
+                    }
+                ],
+                "transitions": [
+                    {
+                        "kind": 0,
+                        "value": 0.6000000238418579,
+                        "patternId": "",
+                        "count": 1,
+                        "eventName": "",
+                        "targetPhase": "p2"
+                    }
+                ],
+                "attackInterval": 1.2000000476837159,
+                "approachSpeed": 2.0,
+                "retreatSpeed": 2.0,
+                "preferredMinDistance": 0.800000011920929,
+                "preferredMaxDistance": 1.600000023841858,
+                "jumpInterval": 0.0,
+                "jumpSpeedX": 5.0,
+                "jumpVelocityY": 9.0,
+                "superArmor": false,
+                "staggerResistance": 0.0,
+                "launch": 2,
+                "attackSpeed": 1.0,
+                "guardFrequency": 0.0,
+                "guardTime": 0.6000000238418579,
+                "evadeFrequency": 0.0,
+                "evadeTime": 0.30000001192092898,
+                "evadeSpeed": 8.0,
+                "defenseRange": 3.0,
+                "transitionTime": 0.0,
+                "transitionAnimation": "",
+                "transitionVfx": "",
+                "transitionCamera": ""
+            },
+            {
+                "id": "p2",
+                "patterns": [
+                    {
+                        "id": "crush",
+                        "attack": {
+                            "id": "warden.crush",
+                            "kind": 6,
+                            "damageType": 0,
+                            "startup": 0.3499999940395355,
+                            "active": 0.10000000149011612,
+                            "recovery": 0.30000001192092898,
+                            "offsetX": 1.100000023841858,
+                            "offsetY": 0.8999999761581421,
+                            "width": 1.600000023841858,
+                            "height": 1.600000023841858,
+                            "testDamage": 12.0,
+                            "hitstop": 0.03999999910593033,
+                            "knockback": 4.0,
+                            "launchVelocity": 0.0,
+                            "hitEvents": 1,
+                            "unblockable": false,
+                            "guardBreak": false,
+                            "superArmor": false,
+                            "hitsDowned": false
+                        },
+                        "hasProjectile": false,
+                        "projectile": {
+                            "speed": 8.0,
+                            "maxDistance": 12.0,
+                            "width": 0.4000000059604645,
+                            "height": 0.4000000059604645,
+                            "spawnOffsetX": 0.6000000238418579,
+                            "spawnOffsetY": 1.0
+                        },
+                        "minDistance": 0.0,
+                        "maxDistance": 2.200000047683716,
+                        "playerState": 0,
+                        "priority": 0,
+                        "special": false
+                    },
+                    {
+                        "id": "shot2",
+                        "attack": {
+                            "id": "warden.shot2",
+                            "kind": 6,
+                            "damageType": 0,
+                            "startup": 0.30000001192092898,
+                            "active": 0.10000000149011612,
+                            "recovery": 0.30000001192092898,
+                            "offsetX": 0.800000011920929,
+                            "offsetY": 0.8999999761581421,
+                            "width": 1.2000000476837159,
+                            "height": 1.2000000476837159,
+                            "testDamage": 8.0,
+                            "hitstop": 0.03999999910593033,
+                            "knockback": 4.0,
+                            "launchVelocity": 0.0,
+                            "hitEvents": 1,
+                            "unblockable": false,
+                            "guardBreak": false,
+                            "superArmor": false,
+                            "hitsDowned": false
+                        },
+                        "hasProjectile": true,
+                        "projectile": {
+                            "speed": 11.0,
+                            "maxDistance": 10.0,
+                            "width": 0.4000000059604645,
+                            "height": 0.4000000059604645,
+                            "spawnOffsetX": 0.6000000238418579,
+                            "spawnOffsetY": 1.399999976158142
+                        },
+                        "minDistance": 3.0,
+                        "maxDistance": 9.0,
+                        "playerState": 0,
+                        "priority": 0,
+                        "special": false
+                    }
+                ],
+                "transitions": [
+                    {
+                        "kind": 1,
+                        "value": 0.0,
+                        "patternId": "crush",
+                        "count": 2,
+                        "eventName": "",
+                        "targetPhase": "p3"
+                    }
+                ],
+                "attackInterval": 0.8999999761581421,
+                "approachSpeed": 3.0,
+                "retreatSpeed": 2.0,
+                "preferredMinDistance": 0.800000011920929,
+                "preferredMaxDistance": 1.600000023841858,
+                "jumpInterval": 0.0,
+                "jumpSpeedX": 5.0,
+                "jumpVelocityY": 9.0,
+                "superArmor": true,
+                "staggerResistance": 0.5,
+                "launch": 2,
+                "attackSpeed": 1.5,
+                "guardFrequency": 0.0,
+                "guardTime": 0.6000000238418579,
+                "evadeFrequency": 0.0,
+                "evadeTime": 0.30000001192092898,
+                "evadeSpeed": 8.0,
+                "defenseRange": 3.0,
+                "transitionTime": 1.0,
+                "transitionAnimation": "warden.roar",
+                "transitionVfx": "vfx.armorGlow",
+                "transitionCamera": "cam.shakeSmall"
+            },
+            {
+                "id": "p3",
+                "patterns": [
+                    {
+                        "id": "rush",
+                        "attack": {
+                            "id": "warden.rush",
+                            "kind": 6,
+                            "damageType": 0,
+                            "startup": 0.30000001192092898,
+                            "active": 0.10000000149011612,
+                            "recovery": 0.30000001192092898,
+                            "offsetX": 1.100000023841858,
+                            "offsetY": 0.8999999761581421,
+                            "width": 1.7999999523162842,
+                            "height": 1.600000023841858,
+                            "testDamage": 14.0,
+                            "hitstop": 0.03999999910593033,
+                            "knockback": 4.0,
+                            "launchVelocity": 0.0,
+                            "hitEvents": 1,
+                            "unblockable": false,
+                            "guardBreak": false,
+                            "superArmor": false,
+                            "hitsDowned": false
+                        },
+                        "hasProjectile": false,
+                        "projectile": {
+                            "speed": 8.0,
+                            "maxDistance": 12.0,
+                            "width": 0.4000000059604645,
+                            "height": 0.4000000059604645,
+                            "spawnOffsetX": 0.6000000238418579,
+                            "spawnOffsetY": 1.0
+                        },
+                        "minDistance": 0.0,
+                        "maxDistance": 2.4000000953674318,
+                        "playerState": 0,
+                        "priority": 0,
+                        "special": true
+                    }
+                ],
+                "transitions": [
+                    {
+                        "kind": 2,
+                        "value": 0.0,
+                        "patternId": "",
+                        "count": 1,
+                        "eventName": "calm",
+                        "targetPhase": "p1"
+                    }
+                ],
+                "attackInterval": 0.6000000238418579,
+                "approachSpeed": 3.5,
+                "retreatSpeed": 2.0,
+                "preferredMinDistance": 0.800000011920929,
+                "preferredMaxDistance": 1.600000023841858,
+                "jumpInterval": 2.0,
+                "jumpSpeedX": 5.0,
+                "jumpVelocityY": 8.0,
+                "superArmor": false,
+                "staggerResistance": 0.0,
+                "launch": 2,
+                "attackSpeed": 2.0,
+                "guardFrequency": 0.0,
+                "guardTime": 0.6000000238418579,
+                "evadeFrequency": 0.0,
+                "evadeTime": 0.30000001192092898,
+                "evadeSpeed": 8.0,
+                "defenseRange": 3.0,
+                "transitionTime": 1.0,
+                "transitionAnimation": "warden.rage",
+                "transitionVfx": "vfx.redAura",
+                "transitionCamera": "cam.zoomIn"
+            }
+        ]
+    },
+    "color": {
+        "r": 0.3499999940395355,
+        "g": 0.30000001192092898,
+        "b": 0.44999998807907107,
+        "a": 1.0
+    }
+}},
+{"asset":"Enemy_Post","type":"EnemyDefinitionAsset","data":{
+    "meta": {
+        "domainId": "enemy.post",
+        "schemaVersion": 1,
+        "dataVersion": "wp11-1",
+        "status": "experimental",
+        "policyIds": [
+            "TEST-AI-01",
+            "TEST-BOSS-11"
+        ],
+        "relatedRIds": [
+            "R-08-02",
+            "R-08-05",
+            "R-08-09",
+            "R-08-12"
+        ],
+        "changeRequestId": ""
+    },
+    "enemyId": "post",
+    "maxHp": 1000.0,
+    "bodyWidth": 0.800000011920929,
+    "bodyHeight": 1.600000023841858,
+    "gravity": 30.0,
+    "staggerTime": 0.4000000059604645,
+    "staggerResistance": 0.0,
+    "physicalKnockbackScale": 1.0,
+    "magicKnockbackScale": 1.0,
+    "launch": 0,
+    "launchResistScale": 0.5,
+    "juggleFallSpeed": 2.0,
+    "juggleSlowTime": 0.3499999940395355,
+    "downTime": 1.0,
+    "wakeupTime": 0.6000000238418579,
+    "deathTime": 0.800000011920929,
+    "vanishTime": 0.4000000059604645,
+    "hasAttack": true,
+    "attack": {
+        "id": "post.atk",
+        "kind": 6,
+        "damageType": 0,
+        "startup": 0.30000001192092898,
+        "active": 0.10000000149011612,
+        "recovery": 0.30000001192092898,
+        "offsetX": 0.800000011920929,
+        "offsetY": 0.8999999761581421,
+        "width": 1.2000000476837159,
+        "height": 1.2000000476837159,
+        "testDamage": 10.0,
+        "hitstop": 0.03999999910593033,
+        "knockback": 4.0,
+        "launchVelocity": 0.0,
+        "hitEvents": 1,
+        "unblockable": false,
+        "guardBreak": false,
+        "superArmor": false,
+        "hitsDowned": false
+    },
+    "attackRange": 1.600000023841858,
+    "attackInterval": 1.2000000476837159,
+    "firstAttackDelay": 0.0,
+    "ai": {
+        "type": 1,
+        "moveSpeed": 0.009999999776482582,
+        "trackRange": 8.0,
+        "fleeSpeed": 3.5,
+        "fleeTime": 1.2000000476837159,
+        "reapproachAfterFlee": true,
+        "jumpMinDistance": 2.5,
+        "jumpMaxDistance": 5.0,
+        "jumpSpeedX": 5.0,
+        "jumpVelocityY": 9.0,
+        "jumpCooldown": 1.5,
+        "hasAirAttack": false,
+        "airAttack": {
+            "id": "",
+            "kind": 6,
+            "damageType": 0,
+            "startup": 0.05999999865889549,
+            "active": 0.07999999821186066,
+            "recovery": 0.11999999731779099,
+            "offsetX": 0.800000011920929,
+            "offsetY": 0.8999999761581421,
+            "width": 1.0,
+            "height": 1.2000000476837159,
+            "testDamage": 10.0,
+            "hitstop": 0.03999999910593033,
+            "knockback": 1.5,
+            "launchVelocity": 0.0,
+            "hitEvents": 1,
+            "unblockable": false,
+            "guardBreak": false,
+            "superArmor": false,
+            "hitsDowned": false
+        },
+        "airAttackRange": 1.600000023841858,
+        "hasProjectile": false,
+        "projectile": {
+            "speed": 8.0,
+            "maxDistance": 12.0,
+            "width": 0.4000000059604645,
+            "height": 0.4000000059604645,
+            "spawnOffsetX": 0.6000000238418579,
+            "spawnOffsetY": 1.0
+        },
+        "retreatSpeed": 3.0,
+        "retreatTime": 0.800000011920929
+    },
+    "boss": {
+        "startPhase": "",
+        "phases": []
+    },
+    "color": {
+        "r": 0.8500000238418579,
+        "g": 0.44999998807907107,
+        "b": 0.25,
+        "a": 1.0
+    }
+}},
+{"asset":"Enemy_PostWeak","type":"EnemyDefinitionAsset","data":{
+    "meta": {
+        "domainId": "enemy.postWeak",
+        "schemaVersion": 1,
+        "dataVersion": "wp11-1",
+        "status": "experimental",
+        "policyIds": [
+            "TEST-AI-01",
+            "TEST-BOSS-11"
+        ],
+        "relatedRIds": [
+            "R-08-02",
+            "R-08-05",
+            "R-08-09",
+            "R-08-12"
+        ],
+        "changeRequestId": ""
+    },
+    "enemyId": "postWeak",
+    "maxHp": 12.0,
+    "bodyWidth": 0.800000011920929,
+    "bodyHeight": 1.600000023841858,
+    "gravity": 30.0,
+    "staggerTime": 0.4000000059604645,
+    "staggerResistance": 0.0,
+    "physicalKnockbackScale": 1.0,
+    "magicKnockbackScale": 1.0,
+    "launch": 0,
+    "launchResistScale": 0.5,
+    "juggleFallSpeed": 2.0,
+    "juggleSlowTime": 0.3499999940395355,
+    "downTime": 1.0,
+    "wakeupTime": 0.6000000238418579,
+    "deathTime": 0.800000011920929,
+    "vanishTime": 0.4000000059604645,
+    "hasAttack": true,
+    "attack": {
+        "id": "postWeak.atk",
+        "kind": 6,
+        "damageType": 0,
+        "startup": 0.30000001192092898,
+        "active": 0.10000000149011612,
+        "recovery": 0.30000001192092898,
+        "offsetX": 0.800000011920929,
+        "offsetY": 0.8999999761581421,
+        "width": 1.2000000476837159,
+        "height": 1.2000000476837159,
+        "testDamage": 10.0,
+        "hitstop": 0.03999999910593033,
+        "knockback": 4.0,
+        "launchVelocity": 0.0,
+        "hitEvents": 1,
+        "unblockable": false,
+        "guardBreak": false,
+        "superArmor": false,
+        "hitsDowned": false
+    },
+    "attackRange": 1.600000023841858,
+    "attackInterval": 1.2000000476837159,
+    "firstAttackDelay": 0.0,
+    "ai": {
+        "type": 1,
+        "moveSpeed": 0.009999999776482582,
+        "trackRange": 8.0,
+        "fleeSpeed": 3.5,
+        "fleeTime": 1.2000000476837159,
+        "reapproachAfterFlee": true,
+        "jumpMinDistance": 2.5,
+        "jumpMaxDistance": 5.0,
+        "jumpSpeedX": 5.0,
+        "jumpVelocityY": 9.0,
+        "jumpCooldown": 1.5,
+        "hasAirAttack": false,
+        "airAttack": {
+            "id": "",
+            "kind": 6,
+            "damageType": 0,
+            "startup": 0.05999999865889549,
+            "active": 0.07999999821186066,
+            "recovery": 0.11999999731779099,
+            "offsetX": 0.800000011920929,
+            "offsetY": 0.8999999761581421,
+            "width": 1.0,
+            "height": 1.2000000476837159,
+            "testDamage": 10.0,
+            "hitstop": 0.03999999910593033,
+            "knockback": 1.5,
+            "launchVelocity": 0.0,
+            "hitEvents": 1,
+            "unblockable": false,
+            "guardBreak": false,
+            "superArmor": false,
+            "hitsDowned": false
+        },
+        "airAttackRange": 1.600000023841858,
+        "hasProjectile": false,
+        "projectile": {
+            "speed": 8.0,
+            "maxDistance": 12.0,
+            "width": 0.4000000059604645,
+            "height": 0.4000000059604645,
+            "spawnOffsetX": 0.6000000238418579,
+            "spawnOffsetY": 1.0
+        },
+        "retreatSpeed": 3.0,
+        "retreatTime": 0.800000011920929
+    },
+    "boss": {
+        "startPhase": "",
+        "phases": []
+    },
+    "color": {
+        "r": 0.949999988079071,
+        "g": 0.75,
+        "b": 0.3499999940395355,
+        "a": 1.0
+    }
+}},
+{"asset":"Enemy_JumperFar","type":"EnemyDefinitionAsset","data":{
+    "meta": {
+        "domainId": "enemy.jumperFar",
+        "schemaVersion": 1,
+        "dataVersion": "wp11-1",
+        "status": "experimental",
+        "policyIds": [
+            "TEST-AI-01",
+            "TEST-BOSS-11"
+        ],
+        "relatedRIds": [
+            "R-08-02",
+            "R-08-05",
+            "R-08-09",
+            "R-08-12"
+        ],
+        "changeRequestId": ""
+    },
+    "enemyId": "jumperFar",
+    "maxHp": 60.0,
+    "bodyWidth": 0.800000011920929,
+    "bodyHeight": 1.600000023841858,
+    "gravity": 30.0,
+    "staggerTime": 0.4000000059604645,
+    "staggerResistance": 0.0,
+    "physicalKnockbackScale": 1.0,
+    "magicKnockbackScale": 1.0,
+    "launch": 0,
+    "launchResistScale": 0.5,
+    "juggleFallSpeed": 2.0,
+    "juggleSlowTime": 0.3499999940395355,
+    "downTime": 1.0,
+    "wakeupTime": 0.6000000238418579,
+    "deathTime": 0.800000011920929,
+    "vanishTime": 0.4000000059604645,
+    "hasAttack": true,
+    "attack": {
+        "id": "jumperFar.atk",
+        "kind": 6,
+        "damageType": 0,
+        "startup": 0.30000001192092898,
+        "active": 0.10000000149011612,
+        "recovery": 0.30000001192092898,
+        "offsetX": 0.800000011920929,
+        "offsetY": 0.8999999761581421,
+        "width": 1.2000000476837159,
+        "height": 1.2000000476837159,
+        "testDamage": 10.0,
+        "hitstop": 0.03999999910593033,
+        "knockback": 4.0,
+        "launchVelocity": 0.0,
+        "hitEvents": 1,
+        "unblockable": false,
+        "guardBreak": false,
+        "superArmor": false,
+        "hitsDowned": false
+    },
+    "attackRange": 1.600000023841858,
+    "attackInterval": 1.2000000476837159,
+    "firstAttackDelay": 0.0,
+    "ai": {
+        "type": 3,
+        "moveSpeed": 0.009999999776482582,
+        "trackRange": 8.0,
+        "fleeSpeed": 3.5,
+        "fleeTime": 1.2000000476837159,
+        "reapproachAfterFlee": true,
+        "jumpMinDistance": 5.0,
+        "jumpMaxDistance": 7.0,
+        "jumpSpeedX": 7.0,
+        "jumpVelocityY": 6.0,
+        "jumpCooldown": 2.5,
+        "hasAirAttack": true,
+        "airAttack": {
+            "id": "jumperFar.air",
+            "kind": 6,
+            "damageType": 0,
+            "startup": 0.05999999865889549,
+            "active": 0.10000000149011612,
+            "recovery": 0.30000001192092898,
+            "offsetX": 0.800000011920929,
+            "offsetY": 0.8999999761581421,
+            "width": 1.2000000476837159,
+            "height": 1.2000000476837159,
+            "testDamage": 8.0,
+            "hitstop": 0.03999999910593033,
+            "knockback": 4.0,
+            "launchVelocity": 0.0,
+            "hitEvents": 1,
+            "unblockable": false,
+            "guardBreak": false,
+            "superArmor": false,
+            "hitsDowned": false
+        },
+        "airAttackRange": 2.200000047683716,
+        "hasProjectile": false,
+        "projectile": {
+            "speed": 8.0,
+            "maxDistance": 12.0,
+            "width": 0.4000000059604645,
+            "height": 0.4000000059604645,
+            "spawnOffsetX": 0.6000000238418579,
+            "spawnOffsetY": 1.0
+        },
+        "retreatSpeed": 3.0,
+        "retreatTime": 0.800000011920929
+    },
+    "boss": {
+        "startPhase": "",
+        "phases": []
+    },
+    "color": {
+        "r": 0.30000001192092898,
+        "g": 0.6499999761581421,
+        "b": 0.25,
+        "a": 1.0
+    }
+}},
+{"asset":"Enemy_JumperStill","type":"EnemyDefinitionAsset","data":{
+    "meta": {
+        "domainId": "enemy.jumperStill",
+        "schemaVersion": 1,
+        "dataVersion": "wp11-1",
+        "status": "experimental",
+        "policyIds": [
+            "TEST-AI-01",
+            "TEST-BOSS-11"
+        ],
+        "relatedRIds": [
+            "R-08-02",
+            "R-08-05",
+            "R-08-09",
+            "R-08-12"
+        ],
+        "changeRequestId": ""
+    },
+    "enemyId": "jumperStill",
+    "maxHp": 60.0,
+    "bodyWidth": 0.800000011920929,
+    "bodyHeight": 1.600000023841858,
+    "gravity": 30.0,
+    "staggerTime": 0.4000000059604645,
+    "staggerResistance": 0.0,
+    "physicalKnockbackScale": 1.0,
+    "magicKnockbackScale": 1.0,
+    "launch": 0,
+    "launchResistScale": 0.5,
+    "juggleFallSpeed": 2.0,
+    "juggleSlowTime": 0.3499999940395355,
+    "downTime": 1.0,
+    "wakeupTime": 0.6000000238418579,
+    "deathTime": 0.800000011920929,
+    "vanishTime": 0.4000000059604645,
+    "hasAttack": true,
+    "attack": {
+        "id": "jumperStill.atk",
+        "kind": 6,
+        "damageType": 0,
+        "startup": 0.30000001192092898,
+        "active": 0.10000000149011612,
+        "recovery": 0.30000001192092898,
+        "offsetX": 0.800000011920929,
+        "offsetY": 0.8999999761581421,
+        "width": 1.2000000476837159,
+        "height": 1.2000000476837159,
+        "testDamage": 10.0,
+        "hitstop": 0.03999999910593033,
+        "knockback": 4.0,
+        "launchVelocity": 0.0,
+        "hitEvents": 1,
+        "unblockable": false,
+        "guardBreak": false,
+        "superArmor": false,
+        "hitsDowned": false
+    },
+    "attackRange": 1.600000023841858,
+    "attackInterval": 1.2000000476837159,
+    "firstAttackDelay": 0.0,
+    "ai": {
+        "type": 3,
+        "moveSpeed": 0.009999999776482582,
+        "trackRange": 8.0,
+        "fleeSpeed": 3.5,
+        "fleeTime": 1.2000000476837159,
+        "reapproachAfterFlee": true,
+        "jumpMinDistance": 3.0,
+        "jumpMaxDistance": 5.0,
+        "jumpSpeedX": 5.0,
+        "jumpVelocityY": 9.0,
+        "jumpCooldown": 2.5,
+        "hasAirAttack": true,
+        "airAttack": {
+            "id": "jumperStill.air",
+            "kind": 6,
+            "damageType": 0,
+            "startup": 0.05999999865889549,
+            "active": 0.10000000149011612,
+            "recovery": 0.30000001192092898,
+            "offsetX": 0.800000011920929,
+            "offsetY": 0.8999999761581421,
+            "width": 1.2000000476837159,
+            "height": 1.2000000476837159,
+            "testDamage": 8.0,
+            "hitstop": 0.03999999910593033,
+            "knockback": 4.0,
+            "launchVelocity": 0.0,
+            "hitEvents": 1,
+            "unblockable": false,
+            "guardBreak": false,
+            "superArmor": false,
+            "hitsDowned": false
+        },
+        "airAttackRange": 2.200000047683716,
+        "hasProjectile": false,
+        "projectile": {
+            "speed": 8.0,
+            "maxDistance": 12.0,
+            "width": 0.4000000059604645,
+            "height": 0.4000000059604645,
+            "spawnOffsetX": 0.6000000238418579,
+            "spawnOffsetY": 1.0
+        },
+        "retreatSpeed": 3.0,
+        "retreatTime": 0.800000011920929
+    },
+    "boss": {
+        "startPhase": "",
+        "phases": []
+    },
+    "color": {
+        "r": 0.44999998807907107,
+        "g": 0.8500000238418579,
+        "b": 0.3499999940395355,
+        "a": 1.0
+    }
+}},
+{"asset":"Enemy_BossSolo","type":"EnemyDefinitionAsset","data":{
+    "meta": {
+        "domainId": "enemy.bossSolo",
+        "schemaVersion": 1,
+        "dataVersion": "wp11-1",
+        "status": "experimental",
+        "policyIds": [
+            "TEST-AI-01",
+            "TEST-BOSS-11"
+        ],
+        "relatedRIds": [
+            "R-08-02",
+            "R-08-05",
+            "R-08-09",
+            "R-08-12"
+        ],
+        "changeRequestId": ""
+    },
+    "enemyId": "bossSolo",
+    "maxHp": 100.0,
+    "bodyWidth": 1.399999976158142,
+    "bodyHeight": 2.5999999046325685,
+    "gravity": 30.0,
+    "staggerTime": 0.4000000059604645,
+    "staggerResistance": 0.0,
+    "physicalKnockbackScale": 1.0,
+    "magicKnockbackScale": 1.0,
+    "launch": 2,
+    "launchResistScale": 0.5,
+    "juggleFallSpeed": 2.0,
+    "juggleSlowTime": 0.3499999940395355,
+    "downTime": 1.0,
+    "wakeupTime": 0.6000000238418579,
+    "deathTime": 0.800000011920929,
+    "vanishTime": 0.4000000059604645,
+    "hasAttack": false,
+    "attack": {
+        "id": "bossSolo.atk",
+        "kind": 6,
+        "damageType": 0,
+        "startup": 0.30000001192092898,
+        "active": 0.10000000149011612,
+        "recovery": 0.30000001192092898,
+        "offsetX": 0.800000011920929,
+        "offsetY": 0.8999999761581421,
+        "width": 1.2000000476837159,
+        "height": 1.2000000476837159,
+        "testDamage": 10.0,
+        "hitstop": 0.03999999910593033,
+        "knockback": 4.0,
+        "launchVelocity": 0.0,
+        "hitEvents": 1,
+        "unblockable": false,
+        "guardBreak": false,
+        "superArmor": false,
+        "hitsDowned": false
+    },
+    "attackRange": 2.0,
+    "attackInterval": 1.2000000476837159,
+    "firstAttackDelay": 0.5,
+    "ai": {
+        "type": 5,
+        "moveSpeed": 3.0,
+        "trackRange": 12.0,
+        "fleeSpeed": 3.5,
+        "fleeTime": 1.2000000476837159,
+        "reapproachAfterFlee": true,
+        "jumpMinDistance": 2.5,
+        "jumpMaxDistance": 5.0,
+        "jumpSpeedX": 5.0,
+        "jumpVelocityY": 9.0,
+        "jumpCooldown": 1.5,
+        "hasAirAttack": false,
+        "airAttack": {
+            "id": "",
+            "kind": 6,
+            "damageType": 0,
+            "startup": 0.05999999865889549,
+            "active": 0.07999999821186066,
+            "recovery": 0.11999999731779099,
+            "offsetX": 0.800000011920929,
+            "offsetY": 0.8999999761581421,
+            "width": 1.0,
+            "height": 1.2000000476837159,
+            "testDamage": 10.0,
+            "hitstop": 0.03999999910593033,
+            "knockback": 1.5,
+            "launchVelocity": 0.0,
+            "hitEvents": 1,
+            "unblockable": false,
+            "guardBreak": false,
+            "superArmor": false,
+            "hitsDowned": false
+        },
+        "airAttackRange": 1.600000023841858,
+        "hasProjectile": false,
+        "projectile": {
+            "speed": 8.0,
+            "maxDistance": 12.0,
+            "width": 0.4000000059604645,
+            "height": 0.4000000059604645,
+            "spawnOffsetX": 0.6000000238418579,
+            "spawnOffsetY": 1.0
+        },
+        "retreatSpeed": 3.0,
+        "retreatTime": 0.800000011920929
+    },
+    "boss": {
+        "startPhase": "a1",
+        "phases": [
+            {
+                "id": "a1",
+                "patterns": [
+                    {
+                        "id": "a1.smash",
+                        "attack": {
+                            "id": "a1.smash",
+                            "kind": 6,
+                            "damageType": 0,
+                            "startup": 0.6000000238418579,
+                            "active": 0.10000000149011612,
+                            "recovery": 0.30000001192092898,
+                            "offsetX": 1.100000023841858,
+                            "offsetY": 0.8999999761581421,
+                            "width": 1.600000023841858,
+                            "height": 1.600000023841858,
+                            "testDamage": 10.0,
+                            "hitstop": 0.03999999910593033,
+                            "knockback": 4.0,
+                            "launchVelocity": 0.0,
+                            "hitEvents": 1,
+                            "unblockable": false,
+                            "guardBreak": false,
+                            "superArmor": false,
+                            "hitsDowned": false
+                        },
+                        "hasProjectile": false,
+                        "projectile": {
+                            "speed": 8.0,
+                            "maxDistance": 12.0,
+                            "width": 0.4000000059604645,
+                            "height": 0.4000000059604645,
+                            "spawnOffsetX": 0.6000000238418579,
+                            "spawnOffsetY": 1.0
+                        },
+                        "minDistance": 0.0,
+                        "maxDistance": 2.200000047683716,
+                        "playerState": 0,
+                        "priority": 0,
+                        "special": false
+                    }
+                ],
+                "transitions": [],
+                "attackInterval": 2.0,
+                "approachSpeed": 2.0,
+                "retreatSpeed": 2.0,
+                "preferredMinDistance": 0.800000011920929,
+                "preferredMaxDistance": 1.600000023841858,
+                "jumpInterval": 0.0,
+                "jumpSpeedX": 5.0,
+                "jumpVelocityY": 9.0,
+                "superArmor": false,
+                "staggerResistance": 0.0,
+                "launch": 2,
+                "attackSpeed": 1.0,
+                "guardFrequency": 0.0,
+                "guardTime": 0.6000000238418579,
+                "evadeFrequency": 0.0,
+                "evadeTime": 0.30000001192092898,
+                "evadeSpeed": 8.0,
+                "defenseRange": 3.0,
+                "transitionTime": 0.0,
+                "transitionAnimation": "",
+                "transitionVfx": "",
+                "transitionCamera": ""
+            }
+        ]
+    },
+    "color": {
+        "r": 0.4000000059604645,
+        "g": 0.30000001192092898,
+        "b": 0.30000001192092898,
+        "a": 1.0
+    }
+}},
+{"asset":"Enemy_BossDuo","type":"EnemyDefinitionAsset","data":{
+    "meta": {
+        "domainId": "enemy.bossDuo",
+        "schemaVersion": 1,
+        "dataVersion": "wp11-1",
+        "status": "experimental",
+        "policyIds": [
+            "TEST-AI-01",
+            "TEST-BOSS-11"
+        ],
+        "relatedRIds": [
+            "R-08-02",
+            "R-08-05",
+            "R-08-09",
+            "R-08-12"
+        ],
+        "changeRequestId": ""
+    },
+    "enemyId": "bossDuo",
+    "maxHp": 100.0,
+    "bodyWidth": 1.399999976158142,
+    "bodyHeight": 2.5999999046325685,
+    "gravity": 30.0,
+    "staggerTime": 0.4000000059604645,
+    "staggerResistance": 0.0,
+    "physicalKnockbackScale": 1.0,
+    "magicKnockbackScale": 1.0,
+    "launch": 2,
+    "launchResistScale": 0.5,
+    "juggleFallSpeed": 2.0,
+    "juggleSlowTime": 0.3499999940395355,
+    "downTime": 1.0,
+    "wakeupTime": 0.6000000238418579,
+    "deathTime": 0.800000011920929,
+    "vanishTime": 0.4000000059604645,
+    "hasAttack": false,
+    "attack": {
+        "id": "bossDuo.atk",
+        "kind": 6,
+        "damageType": 0,
+        "startup": 0.30000001192092898,
+        "active": 0.10000000149011612,
+        "recovery": 0.30000001192092898,
+        "offsetX": 0.800000011920929,
+        "offsetY": 0.8999999761581421,
+        "width": 1.2000000476837159,
+        "height": 1.2000000476837159,
+        "testDamage": 10.0,
+        "hitstop": 0.03999999910593033,
+        "knockback": 4.0,
+        "launchVelocity": 0.0,
+        "hitEvents": 1,
+        "unblockable": false,
+        "guardBreak": false,
+        "superArmor": false,
+        "hitsDowned": false
+    },
+    "attackRange": 2.0,
+    "attackInterval": 1.2000000476837159,
+    "firstAttackDelay": 0.5,
+    "ai": {
+        "type": 5,
+        "moveSpeed": 3.0,
+        "trackRange": 12.0,
+        "fleeSpeed": 3.5,
+        "fleeTime": 1.2000000476837159,
+        "reapproachAfterFlee": true,
+        "jumpMinDistance": 2.5,
+        "jumpMaxDistance": 5.0,
+        "jumpSpeedX": 5.0,
+        "jumpVelocityY": 9.0,
+        "jumpCooldown": 1.5,
+        "hasAirAttack": false,
+        "airAttack": {
+            "id": "",
+            "kind": 6,
+            "damageType": 0,
+            "startup": 0.05999999865889549,
+            "active": 0.07999999821186066,
+            "recovery": 0.11999999731779099,
+            "offsetX": 0.800000011920929,
+            "offsetY": 0.8999999761581421,
+            "width": 1.0,
+            "height": 1.2000000476837159,
+            "testDamage": 10.0,
+            "hitstop": 0.03999999910593033,
+            "knockback": 1.5,
+            "launchVelocity": 0.0,
+            "hitEvents": 1,
+            "unblockable": false,
+            "guardBreak": false,
+            "superArmor": false,
+            "hitsDowned": false
+        },
+        "airAttackRange": 1.600000023841858,
+        "hasProjectile": false,
+        "projectile": {
+            "speed": 8.0,
+            "maxDistance": 12.0,
+            "width": 0.4000000059604645,
+            "height": 0.4000000059604645,
+            "spawnOffsetX": 0.6000000238418579,
+            "spawnOffsetY": 1.0
+        },
+        "retreatSpeed": 3.0,
+        "retreatTime": 0.800000011920929
+    },
+    "boss": {
+        "startPhase": "b1",
+        "phases": [
+            {
+                "id": "b1",
+                "patterns": [
+                    {
+                        "id": "b1.smash",
+                        "attack": {
+                            "id": "b1.smash",
+                            "kind": 6,
+                            "damageType": 0,
+                            "startup": 0.6000000238418579,
+                            "active": 0.10000000149011612,
+                            "recovery": 0.30000001192092898,
+                            "offsetX": 1.100000023841858,
+                            "offsetY": 0.8999999761581421,
+                            "width": 1.600000023841858,
+                            "height": 1.600000023841858,
+                            "testDamage": 10.0,
+                            "hitstop": 0.03999999910593033,
+                            "knockback": 4.0,
+                            "launchVelocity": 0.0,
+                            "hitEvents": 1,
+                            "unblockable": false,
+                            "guardBreak": false,
+                            "superArmor": false,
+                            "hitsDowned": false
+                        },
+                        "hasProjectile": false,
+                        "projectile": {
+                            "speed": 8.0,
+                            "maxDistance": 12.0,
+                            "width": 0.4000000059604645,
+                            "height": 0.4000000059604645,
+                            "spawnOffsetX": 0.6000000238418579,
+                            "spawnOffsetY": 1.0
+                        },
+                        "minDistance": 0.0,
+                        "maxDistance": 2.200000047683716,
+                        "playerState": 0,
+                        "priority": 0,
+                        "special": false
+                    }
+                ],
+                "transitions": [
+                    {
+                        "kind": 0,
+                        "value": 0.5,
+                        "patternId": "",
+                        "count": 1,
+                        "eventName": "",
+                        "targetPhase": "b2"
+                    }
+                ],
+                "attackInterval": 2.0,
+                "approachSpeed": 2.0,
+                "retreatSpeed": 2.0,
+                "preferredMinDistance": 0.800000011920929,
+                "preferredMaxDistance": 1.600000023841858,
+                "jumpInterval": 0.0,
+                "jumpSpeedX": 5.0,
+                "jumpVelocityY": 9.0,
+                "superArmor": false,
+                "staggerResistance": 0.0,
+                "launch": 2,
+                "attackSpeed": 1.0,
+                "guardFrequency": 0.0,
+                "guardTime": 0.6000000238418579,
+                "evadeFrequency": 0.0,
+                "evadeTime": 0.30000001192092898,
+                "evadeSpeed": 8.0,
+                "defenseRange": 3.0,
+                "transitionTime": 0.0,
+                "transitionAnimation": "",
+                "transitionVfx": "",
+                "transitionCamera": ""
+            },
+            {
+                "id": "b2",
+                "patterns": [
+                    {
+                        "id": "b2.smash",
+                        "attack": {
+                            "id": "b2.smash",
+                            "kind": 6,
+                            "damageType": 0,
+                            "startup": 0.6000000238418579,
+                            "active": 0.10000000149011612,
+                            "recovery": 0.30000001192092898,
+                            "offsetX": 1.100000023841858,
+                            "offsetY": 0.8999999761581421,
+                            "width": 1.600000023841858,
+                            "height": 1.600000023841858,
+                            "testDamage": 10.0,
+                            "hitstop": 0.03999999910593033,
+                            "knockback": 4.0,
+                            "launchVelocity": 0.0,
+                            "hitEvents": 1,
+                            "unblockable": false,
+                            "guardBreak": false,
+                            "superArmor": false,
+                            "hitsDowned": false
+                        },
+                        "hasProjectile": false,
+                        "projectile": {
+                            "speed": 8.0,
+                            "maxDistance": 12.0,
+                            "width": 0.4000000059604645,
+                            "height": 0.4000000059604645,
+                            "spawnOffsetX": 0.6000000238418579,
+                            "spawnOffsetY": 1.0
+                        },
+                        "minDistance": 0.0,
+                        "maxDistance": 2.200000047683716,
+                        "playerState": 0,
+                        "priority": 0,
+                        "special": false
+                    }
+                ],
+                "transitions": [],
+                "attackInterval": 2.0,
+                "approachSpeed": 2.0,
+                "retreatSpeed": 2.0,
+                "preferredMinDistance": 0.800000011920929,
+                "preferredMaxDistance": 1.600000023841858,
+                "jumpInterval": 0.0,
+                "jumpSpeedX": 5.0,
+                "jumpVelocityY": 9.0,
+                "superArmor": false,
+                "staggerResistance": 0.0,
+                "launch": 2,
+                "attackSpeed": 1.0,
+                "guardFrequency": 0.0,
+                "guardTime": 0.6000000238418579,
+                "evadeFrequency": 0.0,
+                "evadeTime": 0.30000001192092898,
+                "evadeSpeed": 8.0,
+                "defenseRange": 3.0,
+                "transitionTime": 0.5,
+                "transitionAnimation": "warden.roar",
+                "transitionVfx": "vfx.armorGlow",
+                "transitionCamera": "cam.shakeSmall"
+            }
+        ]
+    },
+    "color": {
+        "r": 0.30000001192092898,
+        "g": 0.4000000059604645,
+        "b": 0.30000001192092898,
+        "a": 1.0
+    }
+}},
+{"asset":"Enemy_Gauntlet","type":"EnemyDefinitionAsset","data":{
+    "meta": {
+        "domainId": "enemy.gauntlet",
+        "schemaVersion": 1,
+        "dataVersion": "wp11-1",
+        "status": "experimental",
+        "policyIds": [
+            "TEST-AI-01",
+            "TEST-BOSS-11"
+        ],
+        "relatedRIds": [
+            "R-08-02",
+            "R-08-05",
+            "R-08-09",
+            "R-08-12"
+        ],
+        "changeRequestId": ""
+    },
+    "enemyId": "gauntlet",
+    "maxHp": 1000.0,
+    "bodyWidth": 1.399999976158142,
+    "bodyHeight": 2.5999999046325685,
+    "gravity": 30.0,
+    "staggerTime": 0.4000000059604645,
+    "staggerResistance": 0.0,
+    "physicalKnockbackScale": 1.0,
+    "magicKnockbackScale": 1.0,
+    "launch": 0,
+    "launchResistScale": 0.5,
+    "juggleFallSpeed": 2.0,
+    "juggleSlowTime": 0.3499999940395355,
+    "downTime": 1.0,
+    "wakeupTime": 0.6000000238418579,
+    "deathTime": 0.800000011920929,
+    "vanishTime": 0.4000000059604645,
+    "hasAttack": false,
+    "attack": {
+        "id": "gauntlet.atk",
+        "kind": 6,
+        "damageType": 0,
+        "startup": 0.30000001192092898,
+        "active": 0.10000000149011612,
+        "recovery": 0.30000001192092898,
+        "offsetX": 0.800000011920929,
+        "offsetY": 0.8999999761581421,
+        "width": 1.2000000476837159,
+        "height": 1.2000000476837159,
+        "testDamage": 10.0,
+        "hitstop": 0.03999999910593033,
+        "knockback": 4.0,
+        "launchVelocity": 0.0,
+        "hitEvents": 1,
+        "unblockable": false,
+        "guardBreak": false,
+        "superArmor": false,
+        "hitsDowned": false
+    },
+    "attackRange": 2.0,
+    "attackInterval": 1.2000000476837159,
+    "firstAttackDelay": 0.5,
+    "ai": {
+        "type": 5,
+        "moveSpeed": 3.0,
+        "trackRange": 12.0,
+        "fleeSpeed": 3.5,
+        "fleeTime": 1.2000000476837159,
+        "reapproachAfterFlee": true,
+        "jumpMinDistance": 2.5,
+        "jumpMaxDistance": 5.0,
+        "jumpSpeedX": 5.0,
+        "jumpVelocityY": 9.0,
+        "jumpCooldown": 1.5,
+        "hasAirAttack": false,
+        "airAttack": {
+            "id": "",
+            "kind": 6,
+            "damageType": 0,
+            "startup": 0.05999999865889549,
+            "active": 0.07999999821186066,
+            "recovery": 0.11999999731779099,
+            "offsetX": 0.800000011920929,
+            "offsetY": 0.8999999761581421,
+            "width": 1.0,
+            "height": 1.2000000476837159,
+            "testDamage": 10.0,
+            "hitstop": 0.03999999910593033,
+            "knockback": 1.5,
+            "launchVelocity": 0.0,
+            "hitEvents": 1,
+            "unblockable": false,
+            "guardBreak": false,
+            "superArmor": false,
+            "hitsDowned": false
+        },
+        "airAttackRange": 1.600000023841858,
+        "hasProjectile": false,
+        "projectile": {
+            "speed": 8.0,
+            "maxDistance": 12.0,
+            "width": 0.4000000059604645,
+            "height": 0.4000000059604645,
+            "spawnOffsetX": 0.6000000238418579,
+            "spawnOffsetY": 1.0
+        },
+        "retreatSpeed": 3.0,
+        "retreatTime": 0.800000011920929
+    },
+    "boss": {
+        "startPhase": "g1",
+        "phases": [
+            {
+                "id": "g1",
+                "patterns": [
+                    {
+                        "id": "g1.smash",
+                        "attack": {
+                            "id": "g1.smash",
+                            "kind": 6,
+                            "damageType": 0,
+                            "startup": 0.6000000238418579,
+                            "active": 0.10000000149011612,
+                            "recovery": 0.30000001192092898,
+                            "offsetX": 1.100000023841858,
+                            "offsetY": 0.8999999761581421,
+                            "width": 1.600000023841858,
+                            "height": 1.600000023841858,
+                            "testDamage": 10.0,
+                            "hitstop": 0.03999999910593033,
+                            "knockback": 4.0,
+                            "launchVelocity": 0.0,
+                            "hitEvents": 1,
+                            "unblockable": false,
+                            "guardBreak": false,
+                            "superArmor": false,
+                            "hitsDowned": false
+                        },
+                        "hasProjectile": false,
+                        "projectile": {
+                            "speed": 8.0,
+                            "maxDistance": 12.0,
+                            "width": 0.4000000059604645,
+                            "height": 0.4000000059604645,
+                            "spawnOffsetX": 0.6000000238418579,
+                            "spawnOffsetY": 1.0
+                        },
+                        "minDistance": 0.0,
+                        "maxDistance": 2.200000047683716,
+                        "playerState": 0,
+                        "priority": 0,
+                        "special": false
+                    }
+                ],
+                "transitions": [
+                    {
+                        "kind": 2,
+                        "value": 0.0,
+                        "patternId": "",
+                        "count": 1,
+                        "eventName": "arm",
+                        "targetPhase": "g2"
+                    }
+                ],
+                "attackInterval": 2.0,
+                "approachSpeed": 2.0,
+                "retreatSpeed": 2.0,
+                "preferredMinDistance": 0.800000011920929,
+                "preferredMaxDistance": 1.600000023841858,
+                "jumpInterval": 0.0,
+                "jumpSpeedX": 5.0,
+                "jumpVelocityY": 9.0,
+                "superArmor": false,
+                "staggerResistance": 0.0,
+                "launch": 0,
+                "attackSpeed": 1.0,
+                "guardFrequency": 0.0,
+                "guardTime": 0.6000000238418579,
+                "evadeFrequency": 0.0,
+                "evadeTime": 0.30000001192092898,
+                "evadeSpeed": 8.0,
+                "defenseRange": 3.0,
+                "transitionTime": 0.0,
+                "transitionAnimation": "",
+                "transitionVfx": "",
+                "transitionCamera": ""
+            },
+            {
+                "id": "g2",
+                "patterns": [
+                    {
+                        "id": "g2.smash",
+                        "attack": {
+                            "id": "g2.smash",
+                            "kind": 6,
+                            "damageType": 0,
+                            "startup": 0.6000000238418579,
+                            "active": 0.10000000149011612,
+                            "recovery": 0.30000001192092898,
+                            "offsetX": 1.100000023841858,
+                            "offsetY": 0.8999999761581421,
+                            "width": 1.600000023841858,
+                            "height": 1.600000023841858,
+                            "testDamage": 10.0,
+                            "hitstop": 0.03999999910593033,
+                            "knockback": 4.0,
+                            "launchVelocity": 0.0,
+                            "hitEvents": 1,
+                            "unblockable": false,
+                            "guardBreak": false,
+                            "superArmor": false,
+                            "hitsDowned": false
+                        },
+                        "hasProjectile": false,
+                        "projectile": {
+                            "speed": 8.0,
+                            "maxDistance": 12.0,
+                            "width": 0.4000000059604645,
+                            "height": 0.4000000059604645,
+                            "spawnOffsetX": 0.6000000238418579,
+                            "spawnOffsetY": 1.0
+                        },
+                        "minDistance": 0.0,
+                        "maxDistance": 2.200000047683716,
+                        "playerState": 0,
+                        "priority": 0,
+                        "special": false
+                    }
+                ],
+                "transitions": [
+                    {
+                        "kind": 2,
+                        "value": 0.0,
+                        "patternId": "",
+                        "count": 1,
+                        "eventName": "lift",
+                        "targetPhase": "g3"
+                    }
+                ],
+                "attackInterval": 2.0,
+                "approachSpeed": 2.0,
+                "retreatSpeed": 2.0,
+                "preferredMinDistance": 0.800000011920929,
+                "preferredMaxDistance": 1.600000023841858,
+                "jumpInterval": 0.0,
+                "jumpSpeedX": 5.0,
+                "jumpVelocityY": 9.0,
+                "superArmor": true,
+                "staggerResistance": 0.0,
+                "launch": 0,
+                "attackSpeed": 1.0,
+                "guardFrequency": 0.0,
+                "guardTime": 0.6000000238418579,
+                "evadeFrequency": 0.0,
+                "evadeTime": 0.30000001192092898,
+                "evadeSpeed": 8.0,
+                "defenseRange": 3.0,
+                "transitionTime": 0.5,
+                "transitionAnimation": "warden.roar",
+                "transitionVfx": "vfx.armorGlow",
+                "transitionCamera": "cam.shakeSmall"
+            },
+            {
+                "id": "g3",
+                "patterns": [
+                    {
+                        "id": "g3.smash",
+                        "attack": {
+                            "id": "g3.smash",
+                            "kind": 6,
+                            "damageType": 0,
+                            "startup": 0.6000000238418579,
+                            "active": 0.10000000149011612,
+                            "recovery": 0.30000001192092898,
+                            "offsetX": 1.100000023841858,
+                            "offsetY": 0.8999999761581421,
+                            "width": 1.600000023841858,
+                            "height": 1.600000023841858,
+                            "testDamage": 10.0,
+                            "hitstop": 0.03999999910593033,
+                            "knockback": 4.0,
+                            "launchVelocity": 0.0,
+                            "hitEvents": 1,
+                            "unblockable": false,
+                            "guardBreak": false,
+                            "superArmor": false,
+                            "hitsDowned": false
+                        },
+                        "hasProjectile": false,
+                        "projectile": {
+                            "speed": 8.0,
+                            "maxDistance": 12.0,
+                            "width": 0.4000000059604645,
+                            "height": 0.4000000059604645,
+                            "spawnOffsetX": 0.6000000238418579,
+                            "spawnOffsetY": 1.0
+                        },
+                        "minDistance": 0.0,
+                        "maxDistance": 2.200000047683716,
+                        "playerState": 0,
+                        "priority": 0,
+                        "special": false
+                    }
+                ],
+                "transitions": [],
+                "attackInterval": 2.0,
+                "approachSpeed": 2.0,
+                "retreatSpeed": 2.0,
+                "preferredMinDistance": 0.800000011920929,
+                "preferredMaxDistance": 1.600000023841858,
+                "jumpInterval": 0.0,
+                "jumpSpeedX": 5.0,
+                "jumpVelocityY": 9.0,
+                "superArmor": false,
+                "staggerResistance": 0.0,
+                "launch": 2,
+                "attackSpeed": 1.0,
+                "guardFrequency": 0.0,
+                "guardTime": 0.6000000238418579,
+                "evadeFrequency": 0.0,
+                "evadeTime": 0.30000001192092898,
+                "evadeSpeed": 8.0,
+                "defenseRange": 3.0,
+                "transitionTime": 0.5,
+                "transitionAnimation": "sentinel.shift",
+                "transitionVfx": "vfx.blink",
+                "transitionCamera": "cam.none"
+            }
+        ]
+    },
+    "color": {
+        "r": 0.44999998807907107,
+        "g": 0.3499999940395355,
+        "b": 0.20000000298023225,
+        "a": 1.0
+    }
+}},
+{"asset":"RingConfig_WP05","type":"RingConfig","data":{
+    "meta": {
+        "domainId": "ring.config.wp05",
+        "schemaVersion": 1,
+        "dataVersion": "wp05-1",
+        "status": "experimental",
+        "policyIds": [
+            "EXP-RING-01",
+            "EXP-RING-02",
+            "EXP-ITEM-02",
+            "TEST-ITEM-01",
+            "TEST-MAGIC-01",
+            "EXP-CMD-01",
+            "EXP-CMD-02",
+            "EXP-DEATH-05"
+        ],
+        "relatedRIds": [
+            "R-02-02",
+            "R-02-06",
+            "R-02-10",
+            "R-06-19"
+        ],
+        "changeRequestId": ""
+    },
+    "slowScale": 0.20000000298023225,
+    "slotsPerPage": 8,
+    "cursorDeadzone": 0.3499999940395355,
+    "magics": [
+        {
+            "id": "fire",
+            "effect": 0,
+            "power": 30.0,
+            "castTime": 0.20000000298023225,
+            "recovery": 0.25,
+            "active": 0.10000000149011612,
+            "hitboxOffsetX": 1.399999976158142,
+            "hitboxOffsetY": 0.8999999761581421,
+            "hitboxWidth": 2.200000047683716,
+            "hitboxHeight": 1.600000023841858,
+            "knockback": 5.0,
+            "hitstop": 0.05000000074505806,
+            "buffDuration": 5.0
+        },
+        {
+            "id": "cure",
+            "effect": 1,
+            "power": 25.0,
+            "castTime": 0.25,
+            "recovery": 0.20000000298023225,
+            "active": 0.10000000149011612,
+            "hitboxOffsetX": 1.399999976158142,
+            "hitboxOffsetY": 0.8999999761581421,
+            "hitboxWidth": 2.200000047683716,
+            "hitboxHeight": 1.600000023841858,
+            "knockback": 4.0,
+            "hitstop": 0.03999999910593033,
+            "buffDuration": 5.0
+        },
+        {
+            "id": "might",
+            "effect": 2,
+            "power": 1.5,
+            "castTime": 0.15000000596046449,
+            "recovery": 0.15000000596046449,
+            "active": 0.10000000149011612,
+            "hitboxOffsetX": 1.399999976158142,
+            "hitboxOffsetY": 0.8999999761581421,
+            "hitboxWidth": 2.200000047683716,
+            "hitboxHeight": 1.600000023841858,
+            "knockback": 4.0,
+            "hitstop": 0.03999999910593033,
+            "buffDuration": 4.0
+        }
+    ],
+    "commands": [
+        {
+            "id": "fireball",
+            "magicId": "fire",
+            "directions": [
+                5,
+                4,
+                3
+            ],
+            "button": 5,
+            "window": 0.6000000238418579
+        },
+        {
+            "id": "cure",
+            "magicId": "cure",
+            "directions": [
+                5,
+                6,
+                7
+            ],
+            "button": 7,
+            "window": 0.6000000238418579
+        },
+        {
+            "id": "might",
+            "magicId": "might",
+            "directions": [
+                5,
+                6,
+                7
+            ],
+            "button": 4,
+            "window": 0.6000000238418579
+        }
+    ],
+    "commandTakesButton": true,
+    "minCommandDirections": 3,
+    "items": [
+        {
+            "id": "potion",
+            "displayName": "Potion",
+            "description": "Restores 20 HP.",
+            "kind": 0,
+            "effect": 1,
+            "amount": 20.0,
+            "magicId": "",
+            "cooldown": 1.0
+        },
+        {
+            "id": "scroll",
+            "displayName": "Fire Scroll",
+            "description": "Casts 'fire' once - the same magic data as the fireball command (R-02-10).",
+            "kind": 1,
+            "effect": 2,
+            "amount": 0.0,
+            "magicId": "fire",
+            "cooldown": 1.0
+        },
+        {
+            "id": "feather",
+            "displayName": "Phoenix Feather",
+            "description": "Revive item. Offered only when you die (EXP-DEATH-05).",
+            "kind": 0,
+            "effect": 3,
+            "amount": 0.0,
+            "magicId": "",
+            "cooldown": 0.0
+        }
+    ],
+    "startInventory": [
+        {
+            "itemId": "potion",
+            "count": 2
+        },
+        {
+            "itemId": "scroll",
+            "count": 2
+        },
+        {
+            "itemId": "feather",
+            "count": 1
+        }
+    ],
+    "startQuickslots": [
+        "",
+        "",
+        "scroll",
+        "feather"
+    ]
+}},
+{"asset":"PresentationLibrary","type":"PresentationLibrary","data":{
+    "meta": {
+        "domainId": "presentation.wp04",
+        "schemaVersion": 1,
+        "dataVersion": "wp04-3",
+        "status": "experimental",
+        "policyIds": [
+            "EXP-PRES-01",
+            "EXP-PRES-02",
+            "TEST-PRES-01"
+        ],
+        "relatedRIds": [
+            "R-08-11"
+        ],
+        "changeRequestId": ""
+    },
+    "animations": [
+        {
+            "id": "warden.roar",
+            "kind": 0,
+            "amplitude": 0.18000000715255738,
+            "frequency": 3.0,
+            "tint": {
+                "r": 1.0,
+                "g": 0.8999999761581421,
+                "b": 0.44999998807907107,
+                "a": 1.0
+            },
+            "tintAmount": 0.6000000238418579
+        },
+        {
+            "id": "warden.rage",
+            "kind": 1,
+            "amplitude": 0.14000000059604646,
+            "frequency": 10.0,
+            "tint": {
+                "r": 1.0,
+                "g": 0.15000000596046449,
+                "b": 0.10000000149011612,
+                "a": 1.0
+            },
+            "tintAmount": 0.699999988079071
+        },
+        {
+            "id": "sentinel.shift",
+            "kind": 2,
+            "amplitude": 0.0,
+            "frequency": 8.0,
+            "tint": {
+                "r": 0.4000000059604645,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "tintAmount": 0.800000011920929
+        }
+    ],
+    "vfx": [
+        {
+            "id": "vfx.armorGlow",
+            "kind": 0,
+            "color": {
+                "r": 1.0,
+                "g": 0.8500000238418579,
+                "b": 0.30000001192092898,
+                "a": 1.0
+            },
+            "rate": 70.0,
+            "burstCount": 30,
+            "size": 0.2199999988079071,
+            "speed": 1.0,
+            "radius": 1.2999999523162842,
+            "lifetime": 0.6000000238418579
+        },
+        {
+            "id": "vfx.redAura",
+            "kind": 1,
+            "color": {
+                "r": 1.0,
+                "g": 0.20000000298023225,
+                "b": 0.10000000149011612,
+                "a": 1.0
+            },
+            "rate": 30.0,
+            "burstCount": 35,
+            "size": 0.18000000715255738,
+            "speed": 2.5,
+            "radius": 0.800000011920929,
+            "lifetime": 0.5
+        },
+        {
+            "id": "vfx.blink",
+            "kind": 1,
+            "color": {
+                "r": 0.4000000059604645,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "rate": 12.0,
+            "burstCount": 30,
+            "size": 0.20000000298023225,
+            "speed": 4.0,
+            "radius": 0.6000000238418579,
+            "lifetime": 0.4000000059604645
+        }
+    ],
+    "cameras": [
+        {
+            "id": "cam.shakeSmall",
+            "kind": 1,
+            "amplitude": 0.11999999731779099,
+            "frequency": 18.0,
+            "fovDelta": -6.0
+        },
+        {
+            "id": "cam.zoomIn",
+            "kind": 2,
+            "amplitude": 0.11999999731779099,
+            "frequency": 18.0,
+            "fovDelta": -7.0
+        },
+        {
+            "id": "cam.none",
+            "kind": 0,
+            "amplitude": 0.11999999731779099,
+            "frequency": 18.0,
+            "fovDelta": -6.0
+        }
+    ]
+}}]
+}
