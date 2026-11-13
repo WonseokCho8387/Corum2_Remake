@@ -342,8 +342,14 @@ def check(ev):
                     ex = [x for x in sm if x["type"] in ("air.use", "motor.jump") and x["simulationTick"] > a["simulationTick"]]
                     off = rj[0]["simulationTick"] - a["simulationTick"] if rj else None
                     row.update({"rejectOffset": off, "afterEnd": [(x["type"], x["reason"], x["simulationTick"] - e["simulationTick"]) for x in ex]})
+                    # R4 (GPT R3 review #1): the press after the end executes as a jump: an ExtraJump air use after the air normal / air dash,
+                    # a ground jump (motor.jump) after the dive has landed. Another air ability on that input is not a jump.
+                    want = ("motor.jump", None) if atk == "Dive" else ("air.use", "ExtraJump")
+                    kind_ok = bool(ex) and ex[0]["type"] == want[0] and (want[1] is None or str(ex[0].get("reason", "")).startswith(want[1]))
+                    row["afterEndJumpKind"] = kind_ok
                     ok = within and len(jp) == 2 and len(rj) == 1 and rj[0].get("inputEventId") == jp[0].get("inputEventId") and 0 <= off <= n \
-                        and bool(ex) and all(x["simulationTick"] > e["simulationTick"] for x in ex) and ex[0].get("inputEventId") == jp[1].get("inputEventId")
+                        and bool(ex) and all(x["simulationTick"] > e["simulationTick"] for x in ex) and ex[0].get("inputEventId") == jp[1].get("inputEventId") \
+                        and kind_ok
                     offs["Jump"].append(off)
             row["pass"] = ok
             air_ok = air_ok and ok
@@ -653,6 +659,11 @@ def selftest(ev):
             if e["type"] == "tick" and (e["simulationTick"] - a["simulationTick"]) in c:
                 e["x"] = c[e["simulationTick"] - a["simulationTick"]] - next(x for x in segments(m)["AirAirNormal_Control"] if x["type"] == "tick" and x["simulationTick"] == next(y for y in segments(m)["AirAirNormal_Control"] if y["type"] == "attack.start")["simulationTick"])["x"] + next(x for x in s if x["type"] == "tick" and x["simulationTick"] == a["simulationTick"])["x"]
     mutate("R2 TC-05-01 held Left never steers after the air normal", "TC-05-01", no_steer_after)
+    # GPT R3 review #1 and its dive counterpart
+    mutate("GPT-R3 05-01 after-end ExtraJump relabelled AirDash", "TC-05-01",
+           lambda m: seg_first(m, "AirAirDash_Jumpmid", "air.use", lambda e: e["reason"] == "ExtraJump").update(reason="AirDash"))
+    mutate("R4 05-01 after the dive lands the press is an air ExtraJump", "TC-05-01",
+           lambda m: [e for e in segments(m)["AirDive_Jumpmid"] if e["type"] == "motor.jump"][-1].update(type="air.use", reason="ExtraJump"))
     return res
 
 

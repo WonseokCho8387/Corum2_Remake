@@ -71,9 +71,69 @@ ATTR_FIELDS = ("attribution", "velocitySets", "firstSource", "lastSource", "firs
 DIAG = {"r2": False}
 
 
+# R4 (GPT R3 review #2-#4): the rule set is chosen by the run's own build, not by whether a field is present.
+# The run manifest (<runId>.manifest.yaml, found next to the log or under Evidence / Diagnostics) gives source_revision;
+# a revision that contains 7a9ca55 requires every attribution field. A run whose manifest cannot be found, or whose revision is
+# not in this repository, is checked with the fields required (fail closed). A pre-7a9ca55 run that nevertheless carries any
+# attribution field is inconsistent and is also checked with the fields required.
+R2_DIAG_REV = "7a9ca559971a0bb2adc31619686dea75982334e3"
+REPO = None
+MANIFEST_DIRS = []
+_REV_CACHE = {}
+
+
+def _repo():
+    import pathlib
+    if REPO:
+        return pathlib.Path(REPO)
+    f = globals().get("__file__")
+    return pathlib.Path(f).resolve().parents[1] if f else pathlib.Path("D:/ProjectR/Corum2Remake")
+
+
+def run_file(ev, suffix):
+    """The run's own sidecar file (<runId><suffix>), next to the log or anywhere under Evidence / Diagnostics."""
+    import pathlib
+    rid = next((e.get("runId") for e in ev if e.get("runId")), None)
+    if not rid:
+        return None
+    for d in [*MANIFEST_DIRS, _repo() / "Evidence", _repo() / "Diagnostics"]:
+        d = pathlib.Path(d)
+        if (d / (rid + suffix)).is_file():
+            return d / (rid + suffix)
+        hit = next(iter(sorted(d.rglob(rid + suffix))), None) if d.is_dir() else None
+        if hit:
+            return hit
+    return None
+
+
+def run_revision(ev):
+    f = run_file(ev, ".manifest.yaml")
+    if not f:
+        return None
+    m = re.search(r'^source_revision:\s*"?([0-9a-f]{7,40})"?', f.read_text(encoding="utf-8"), re.M)
+    return m.group(1) if m else None
+
+
+def is_r2_build(rev):
+    import subprocess
+    if rev not in _REV_CACHE:
+        r = subprocess.run(["git", "-C", str(_repo()), "merge-base", "--is-ancestor", R2_DIAG_REV, rev], capture_output=True)
+        _REV_CACHE[rev] = {0: True, 1: False}.get(r.returncode)  # anything else: unknown revision
+    return _REV_CACHE[rev]
+
+
 def set_diag(ev):
-    DIAG["r2"] = any(e["type"] == "enemy.knockback" and "attribution" in e for e in ev)
-    return "R2 (attribution required)" if DIAG["r2"] else "legacy (pre-7a9ca55, no attribution fields)"
+    rev = run_revision(ev)
+    r2 = is_r2_build(rev) if rev else None
+    fields = any(e["type"] == "enemy.knockback" and any(f in e for f in ATTR_FIELDS) for e in ev)
+    if r2 is None:
+        DIAG["r2"] = True
+        return f"unverified build (manifest {'revision unknown: ' + rev if rev else 'not found'}): attribution required"
+    if not r2 and fields:
+        DIAG["r2"] = True
+        return f"inconsistent: pre-7a9ca55 build {rev[:7]} with attribution fields: attribution required"
+    DIAG["r2"] = r2
+    return f"R2 build {rev[:7]} (attribution required)" if r2 else f"legacy build {rev[:7]} (pre-7a9ca55, no attribution fields)"
 
 
 def attr_ok(k, h):
@@ -317,7 +377,7 @@ def check(ev):
         # R3 (GPT R2 review §4 #4): the ignored candidate is a real second attacker whose own attack instance is active on that tick
         ig = ign[0] if len(ign) == 1 else None
         ist = [e for e in sl if ig and e["type"] == "enemy.state" and e.get("actorId") == ig.get("actorId") and e.get("attackInstanceId") == ig.get("enemyAttackInstanceId")
-               and e["simulationTick"] <= ig["simulationTick"]]
+               and e["simulationTick"] <= ig["simulationTick"] and e["eventId"] < ig["eventId"]]  # R4 (GPT R3 review #5): active before the ignore event
         ig_active = bool(ist) and ist[-1].get("stateAfter") == "AttackActive"
         ig_ok = ig is not None and ig_active and ig.get("stateBefore") == ig.get("stateAfter") == "Dead" and ig.get("hp") == 0
         pr = [e for e in live if e["type"] == "input" and e.get("action") == "Attack" and e.get("edge") == "Press" and d and e["eventId"] > d["eventId"]]
@@ -621,11 +681,33 @@ def selftest(ev):
            lambda m: first(m, "DoubleLethalGuard", "hit.player.ignored").update(enemyAttackInstanceId=-5))
     mutate("R3 F02-R1 ignored candidate with HP left", "WP08-F02-R1", lambda m: first(m, "DoubleLethalHit", "hit.player.ignored").update(hp=3))
     mutate("R3 06-12 AI moved during the interval", "TC-06-12", lambda m: first(m, "ArmorWeakMagic", "enemy.knockback").update(aiMoveDuring=True))
+    # GPT R3 review #2-#4: every knockback record loses its attribution key and the checked weak hit is marked blocked;
+    # the run's manifest still names an R2 build, so the rule set stays R2 and the record is rejected
+    def strip_schema(scn):
+        def f(m):
+            for k in m:
+                if k["type"] == "enemy.knockback":
+                    k.pop("attribution", None)
+            next(e for e in segments(m)[scn] if e["type"] == "enemy.knockback")["blocked"] = True
+        return f
+    mutate("GPT-R3 06-12 attribution key stripped from every record, weak hit blocked", "TC-06-12", strip_schema("ArmorWeakMagic"))
+
+    def late_active(m):  # GPT R3 review #5: dn2's AttackActive moved just after the ignore event on the same tick, ids renumbered
+        s = segments(m)["DoubleLethalHit"]
+        ig = next(e for e in s if e["type"] == "hit.player.ignored")
+        en = next(e for e in s if e["type"] == "enemy.state" and e.get("actorId") == ig["actorId"] and e.get("attackInstanceId") == ig["enemyAttackInstanceId"]
+                  and e["stateAfter"] == "AttackActive")
+        m.remove(en); m.insert(m.index(ig) + 1, en)
+        for i, e in enumerate(m, start=m[0]["eventId"]):
+            e["eventId"] = i
+    mutate("GPT-R3 F02-R1 second attacker becomes active after the ignore event", "WP08-F02-R1", late_active)
     return res
 
 
 def main():
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
+    import os
+    MANIFEST_DIRS[:] = sorted({os.path.dirname(os.path.abspath(a)) for a in args})  # R4: the run's manifest beside its log
     if "--pw" in sys.argv:
         runs = [load(p) for p in args]
         out = {"logs": args, **pw_check(runs)}
