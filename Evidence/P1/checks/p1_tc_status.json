@@ -1217,11 +1217,9 @@
   },
   {
    "id": "P1-T120",
-   "tier": "A+S",
+   "tier": "A",
    "status": "PASS",
-   "openSubConditions": [
-    "S"
-   ],
+   "openSubConditions": [],
    "tests": [
     "P1MagicTests.T87_T118_T119_T120_T121_SummonRules"
    ],

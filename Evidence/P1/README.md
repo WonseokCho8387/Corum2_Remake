@@ -21,7 +21,7 @@ P1 전체 묶음(P1-A~D)의 실행 증빙입니다. 판정 기준은 [완화 테
 
 | 시나리오 (test case id) | 내용 | 캡처 |
 |---|---|---|
-| P1-PLAY-A-GROWTH | 적 3마리 처치 → EXP 130 → 첫 안전 경계에서 성장 화면(필수 매직 미사일 포함), A로 선택 | `p1_growth_screen.png` |
+| P1-PLAY-A-GROWTH | 적 3마리 처치 → EXP 130 → 첫 안전 경계에서 성장 화면(필수 매직 미사일 포함), A로 선택 | `p1_growth_screen.png` (출처: 같은 시나리오의 앞선 실행 RUN-20261114-231316. 최종 로그 232740의 성장 동작은 검사로 통과) |
 | P1-PLAY-A-MISSILE | 매직 미사일 커맨드 →↑←+X, 투사체 5, 유도 3장. 시작 시 미소비, 커밋 시 1회 소비 | `p1_missile_fan.png` |
 | P1-PLAY-B-SHOP | 상인 근처에서 ↑ → 상점, 영구팩 3장 표시(미결제) | `p1_shop.png`, `p1_shop_pack.png` |
 | P1-PLAY-T204 | 카드팩 표시 중 처치 레벨업 → 상점 강제 종료·팩 무료 취소 → 성장 우선 | `p1_t204_preempt.png` |
@@ -39,9 +39,11 @@ P1 전체 묶음(P1-A~D)의 실행 증빙입니다. 판정 기준은 [완화 테
 | PASS (자동 부분) | 203 |
 | HUMAN_REVIEW (T45 명중률 통계) | 1 |
 
-PASS 중 26개는 마스터 미정(S), 실기기(E), 플레이 측정(H) 하위 조건을 `openSubConditions`에 따로 남깁니다. 이 하위 조건은 PASS에 포함하지 않습니다.
+열린 하위 조건(마스터 미정 S, 실기기 E, 플레이 측정 H)이 있는 ID는 16개(PASS 15 + T45)이며 `openSubConditions`에 따로 남깁니다. T120은 BAL-11로 확정돼 GPT 검토 v1.0에 따라 해제했습니다. 이 하위 조건은 PASS에 포함하지 않습니다.
 
 ## 알려진 한계
+
+- R1 수정(패링 0, 기상 무적, 같은 틱 복수 입력, 링 왕복, 일반 B)은 EditMode와 GPT Core 대조로 확인했습니다. 기존 Play 실행은 R1 이전 소스라 이 다섯 경계의 Play 실측은 다음 통합 Play에 포함합니다.
 
 - 시험 씬의 상인 출현 확률은 화면 확인을 위해 1.0으로 올렸습니다. 기본값과 마스터 값은 0.15입니다.
 - 스폰 막힘(T203)은 실행 중 `Regions[1].SafeSpawns[0].Blocked = true`로 설정했고, 로그 marker `TestSetup:R2SafeSpawnBlocked`로 남겼습니다.
