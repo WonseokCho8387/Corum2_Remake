@@ -63,6 +63,8 @@ namespace Corum2.Core.P1
             "EXP-P1-B-01 B outside the ring without a completed motion keeps the P0 behaviour (selected-item use undecided)",
             "EXP-P1-REGION-01 merchant regions and safe spawns are sandbox test content",
             "EXP-P1-GROWTH-UI-01 growth screen input: left/right select, A confirm, Y reroll",
+            "EXP-P1-SHOP-01 Up near the merchant opens the shop; up/down select, A buy/pick, B close (asks); the game is paused while the shop is open",
+            "EXP-P1-EXIT-01 cancelling the region-exit question steps the player 0.6 u back from the edge",
         };
 
         public P1Runtime(Simulation sim, P1Profile p, P1Progress g = null)
@@ -72,7 +74,76 @@ namespace Corum2.Core.P1
             Buffs = new BuffSystem(p, sim.Log);
             Fx.Log = sim.Log;
             Magic = new P1MagicSystem(this);
+            Merchant = new MerchantSystem(this);
+            Merchant.Regions.AddRange(p.Regions);
             Bind(g ?? P1Progress.New(p));
+            if (sim.Death != null) sim.Death.ExternalReturn = opt => opt == "CheckpointRestart" && RestoreCheckpoint("CheckpointRestart(R-06-19, MER-30)");
+        }
+
+        // ================================================================ checkpoint
+
+        public string Checkpoint { get; private set; }
+
+        public void SaveCheckpoint(string reason)
+        {
+            Checkpoint = P1SaveSnapshot.Save(this);
+            Sim.Log.Emit("p1.checkpoint", PlayerMotor.Actor, "", "", "", reason, ("level", G.Level), ("levelExp", G.LevelExp), ("lv50Currency", G.Lv50Currency),
+                ("buffs", Buffs.Active.Count), ("summon", Magic.Summon?.SpellId ?? ""), ("bytes", Checkpoint.Length));
+        }
+
+        public bool RestoreCheckpoint(string reason)
+        {
+            if (Checkpoint == null) return false;
+            P1SaveSnapshot.Load(this, Checkpoint, reason);
+            return true;
+        }
+
+        public void OnLoaded()
+        {
+            _growthEntered = false;
+            PendingExit = null;
+            UiPause = false;
+            Magic.ClearProjectiles();
+            Magic.ClearBuffer("Load(MAG-99)");
+        }
+
+        // ================================================================ region exit (MER-25)
+
+        public sealed class ExitRequest
+        {
+            public string MapId = "", SpawnId = "", ConnectionId = "", Reason = "";
+        }
+
+        public ExitRequest PendingExit { get; private set; }
+
+        /// <summary>Simulation transition gate: leaving a region that still has the merchant asks first.</summary>
+        public bool BeforeTransition(string mapId, string spawnId, string connectionId, string reason)
+        {
+            var from = Merchant.RegionOfMap(Sim.CurrentMap.Id);
+            var to = Merchant.RegionOfMap(mapId);
+            if (from == null || to == from || !Merchant.PresentHere) return true;
+            PendingExit = new ExitRequest { MapId = mapId, SpawnId = spawnId, ConnectionId = connectionId, Reason = reason };
+            UiPause = true;
+            Sim.Log.Emit("p1.merchant.exitConfirm", PlayerMotor.Actor, "", "", "", "LeaveRegionAsk(MER-25)", ("from", from.Id), ("to", to?.Id ?? ""));
+            return false;
+        }
+
+        public void AnswerExit(bool leave)
+        {
+            var x = PendingExit;
+            if (x == null) return;
+            PendingExit = null;
+            UiPause = false;
+            if (!leave)
+            {
+                // stay: step back from the edge so the edge does not ask again at once (EXP-P1-EXIT-01)
+                var back = Sim.Player.Position.X < (Sim.CurrentMap.MinX + Sim.CurrentMap.MaxX) * 0.5f ? 0.6f : -0.6f;
+                Sim.Player.Position = new Vec2(Sim.Player.Position.X + back, Sim.Player.Position.Y);
+                Sim.Log.Emit("p1.merchant.exitCancel", PlayerMotor.Actor, "", "", "", "Stay(MER-25)", ("stock", MerchantSystem.Describe(Merchant.Here)));
+                return;
+            }
+            Merchant.Depart("LeftRegionConfirmed(MER-25)");
+            Sim.P1Transition(x.MapId, x.SpawnId, x.ConnectionId, x.Reason);
         }
 
         /// <summary>(Re)binds a progress state (new game or loaded snapshot).</summary>
@@ -92,6 +163,7 @@ namespace Corum2.Core.P1
                 Bridge = new P1CombatBridge(P, Prog, Buffs, Fx, Sim.Combat, Sim.Log);
                 Sim.Combat.Ext = Bridge;
                 Sim.Combat.ExternalSpellEffect = Magic.OnEffectTime;
+                Bridge.OnFourthHit = Magic.OnFourthHit;
             }
             if (Sim.Items != null) Sim.Items.Ext = this;
             SyncUnlocks();
@@ -99,6 +171,7 @@ namespace Corum2.Core.P1
 
         public void OnStart()
         {
+            Merchant.OnMapEntered(Sim.CurrentMap.Id);
             Sim.Combat?.SetPlayerHp(Math.Min(G.CurHp, Prog.Rules.MaxHp(G)), "P1Start");
             Sim.Log.Emit("p1.start", PlayerMotor.Actor, "", "", "", "P1Runtime", ("profile", P.Version), ("level", G.Level),
                 ("experimentalPolicies", string.Join(" | ", ExperimentalPolicies)));
@@ -120,6 +193,7 @@ namespace Corum2.Core.P1
 
         void SyncUnlocks()
         {
+            Sim.Player.GroundSpeedScale = 1f + Buffs.Move; // BF-MOVE
             Sim.Unlocks.ExtraJump = G.Has("DoubleJump");
             Sim.Unlocks.AirDash = G.Has("AirDash");
             Sim.Unlocks.Dive = G.Has("AirDive");
@@ -138,7 +212,15 @@ namespace Corum2.Core.P1
             Magic.PreScan(events, Sim.GameTime);
         }
 
-        public string TryCommand(in InputEvent e) => Magic.TryCommand(e);
+        public string TryCommand(in InputEvent e)
+        {
+            if (e.Edge == InputEdge.Press && e.Action == LogicalAction.MoveUp && CombatContext && Merchant.NearMerchant())
+            {
+                var r = Merchant.OpenShop();
+                return r == null ? "p1shop:open" : "rejected:p1shop:" + r;
+            }
+            return Magic.TryCommand(e);
+        }
 
         public void Observe(Dir8 held) => Magic.Observe(held, Sim.GameTime);
 
@@ -174,6 +256,7 @@ namespace Corum2.Core.P1
         /// <summary>Input while paused by the growth screen (EXP-P1-GROWTH-UI-01).</summary>
         public void HandlePausedInput(List<InputEvent> events)
         {
+            if (GrowthOpen) EnterGrowth(); // a level-up granted outside the step still pre-empts the ring / pending use
             foreach (var e in events)
             {
                 if (e.Edge != InputEdge.Press) continue;
@@ -187,6 +270,11 @@ namespace Corum2.Core.P1
                         case LogicalAction.SpecialAttack: Prog.Reroll(); break;
                         case LogicalAction.Jump: ChooseGrowth(GrowthCursor); break;
                     }
+                }
+                else if (PendingExit != null)
+                {
+                    if (e.Action == LogicalAction.Jump) AnswerExit(true);
+                    else if (e.Action == LogicalAction.ButtonB) AnswerExit(false);
                 }
                 else Merchant?.HandleInput(e);
             }
@@ -205,7 +293,11 @@ namespace Corum2.Core.P1
             return r;
         }
 
-        public void OnMapChanged() => Magic.OnMapChanged();
+        public void OnMapChanged()
+        {
+            Magic.OnMapChanged();
+            Merchant.OnMapEntered(Sim.CurrentMap.Id);
+        }
 
         // ================================================================ items
 

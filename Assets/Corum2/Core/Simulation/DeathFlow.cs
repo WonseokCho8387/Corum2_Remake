@@ -44,6 +44,9 @@ namespace Corum2.Core
 
         public DeathFlow(Simulation sim) => _sim = sim;
 
+        /// <summary>P1 hook: performs a game-over return (checkpoint restart). True = done, the flow ends.</summary>
+        public System.Func<string, bool> ExternalReturn;
+
         DiagLogger Log => _sim.Log;
         public bool Active => Stage != DeathStage.None;
 
@@ -168,6 +171,14 @@ namespace Corum2.Core
             var opt = GameOverOptions[Cursor];
             LastChoice = opt;
             Message = opt + ": return not implemented - BLOCKED_SPEC (U-08, TC-06-19b)";
+            if (ExternalReturn != null && ExternalReturn(opt))
+            {
+                Message = "";
+                Stage = DeathStage.None;
+                Log.Emit("death.menuSelect", PlayerMotor.Actor, "", "GameOver", "None", "Selected:" + opt + "(R-06-19)",
+                    ("inputEventId", e.EventId), ("option", opt), ("returnPerformed", true), ("by", "P1 checkpoint (MER-30, BUF-05, MAG-91)"));
+                return "death:GameOver:return:" + opt;
+            }
             Log.Emit("death.menuSelect", PlayerMotor.Actor, "", "GameOver", "GameOver", "Selected:" + opt + "(R-06-19)",
                 ("inputEventId", e.EventId), ("option", opt), ("returnPerformed", false), ("tc19b", "BLOCKED_SPEC(U-08)"));
             return "death:GameOver:select:" + opt;

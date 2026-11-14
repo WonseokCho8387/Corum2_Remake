@@ -445,8 +445,31 @@ namespace Corum2.Core
             DoTransition(hit.TargetMapId, hit.TargetSpawnId, hit.Id, wanted == PointDirection.Up ? "UpPoint(R-01-04)" : "DownPoint(R-01-04)", e.EventId);
         }
 
+        bool _p1Bypass;
+
+        /// <summary>P1: performs a transition that the P1 region-exit confirmation allowed (MER-25).</summary>
+        public void P1Transition(string mapId, string spawnId, string connectionId, string reason)
+        {
+            _p1Bypass = true;
+            try { DoTransition(mapId, spawnId, connectionId, reason, -1); }
+            finally { _p1Bypass = false; }
+        }
+
+        /// <summary>P1 checkpoint / load: place the player on a map at a saved position.</summary>
+        public void P1Place(string mapId, Vec2 pos, int facing, string reason)
+        {
+            var target = World.FindMap(mapId);
+            CurrentMap = target;
+            Player.PlaceAt(target, new SpawnPoint { Id = "p1.load", Position = pos, Facing = facing }, reason);
+            Camera.Snap(target, Player.Position);
+            Combat?.OnMapEntered(target, reason);
+            P1?.OnMapChanged();
+            Log.Emit("map.place", PlayerMotor.Actor, "", "", target.Id, reason, ("position", Player.Position));
+        }
+
         void DoTransition(string mapId, string spawnId, string connectionId, string reason, long inputEventId)
         {
+            if (P1 != null && !_p1Bypass && !P1.BeforeTransition(mapId, spawnId, connectionId, reason)) return;
             var from = CurrentMap;
             var fromPos = Player.Position;
             var target = World.FindMap(mapId);

@@ -561,7 +561,7 @@ namespace Corum2.Core
 
             if (!playerFrozen && Attack != null && !Attack.MotorDriven)
             {
-                Attack.Elapsed += dt;
+                Attack.Elapsed += dt * (Ext?.MotionSpeed(Attack.Def.Kind) ?? 1f);
                 StepSpell();
                 if (Attack.Def.Kind == AttackKind.AirNormal && P.Grounded) EndAttack(map, "LandedDuringAirAttack(EXP-ATK-02)");
                 else if (Attack.Elapsed >= Attack.Def.Total - TimerEps) EndAttack(map, "MotionEnd");
@@ -599,19 +599,26 @@ namespace Corum2.Core
             foreach (var en in Enemies) UpdateEnemy(map, en, dt);
             StepProjectiles(map, dt);
             ResolveHits(map, playerFrozen);
-            if (Ext != null)
-            {
-                Ext.EndTick();
-                if (_deathDeferred)
-                {
-                    _deathDeferred = false;
-                    if (Ext.HoldDeath())
-                        Log.Emit("player.deathHeld", Pl, "", P.State.ToString(), P.State.ToString(), "SameEventLevelUpFirst(P1-GRO-45)",
-                            ("hp", PlayerHp), ("cause", _deferredDeathCause));
-                    else if (PlayerHp <= 0f && P.State != MotorState.Dead) CommitDeferredDeath();
-                }
-            }
+            ExtEndTick();
         }
+
+        void ExtEndTick()
+        {
+            if (Ext == null) return;
+            Ext.EndTick();
+            if (!_deathDeferred) return;
+            _deathDeferred = false;
+            if (Ext.HoldDeath())
+                Log.Emit("player.deathHeld", Pl, "", P.State.ToString(), P.State.ToString(), "SameEventLevelUpFirst(P1-GRO-45)",
+                    ("hp", PlayerHp), ("cause", _deferredDeathCause));
+            else if (PlayerHp <= 0f && P.State != MotorState.Dead) CommitDeferredDeath();
+        }
+
+        /// <summary>Core test hook: an enemy attack reaches the player now (same path as a real hit).</summary>
+        public void TestHitPlayer(AttackDefinition d, string ownerId, float srcX) => ApplyAttackToPlayer(ownerId, d, 0, srcX, null, "TestHook");
+
+        /// <summary>Core test hook: run the end-of-tick part of the combat step (P1 hold / commit of a lethal hit).</summary>
+        public void TestFinishTick() => ExtEndTick();
 
         /// <summary>P1 (GRO-45): commit a lethal hit held to the end of the tick.</summary>
         public void CommitDeferredDeath()

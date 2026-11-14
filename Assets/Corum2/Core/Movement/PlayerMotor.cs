@@ -61,6 +61,8 @@ namespace Corum2.Core
         public float VelX;
         public float VelY;
         public int Facing = 1;
+        /// <summary>P1 BF-MOVE ground move speed scale (1 in P0 scenes).</summary>
+        public float GroundSpeedScale = 1f;
         public MotorState State = MotorState.Idle;
         public bool Grounded = true;
         public readonly AirAbilityState Air = new AirAbilityState();
@@ -303,12 +305,12 @@ namespace Corum2.Core
             else if (RunDir == h)
             {
                 kind = "Run";
-                vx = h * _m.RunSpeed;
+                vx = h * _m.RunSpeed * GroundSpeedScale;
             }
             else
             {
                 kind = "Walk";
-                vx = h * _m.WalkSpeed;
+                vx = h * _m.WalkSpeed * GroundSpeedScale;
             }
 
             var before = State;

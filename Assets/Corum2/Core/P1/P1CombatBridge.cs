@@ -34,6 +34,7 @@ namespace Corum2.Core.P1
         }
 
         public float MaxHp => R.MaxHp(G);
+        public System.Action<PlayerAttack> OnFourthHit;
         public float LaunchHeightBonus => G.Axis("skill.launcher.height");
         public float LaunchHangBonus => G.Axis("skill.launcher.time");
 
@@ -112,6 +113,7 @@ namespace Corum2.Core.P1
         {
             var sw = _fx.Sword;
             var physical = a.Def.DamageType != DamageType.Magic && !a.External;
+            if (a.NormalIndex == 4 && !a.External) OnFourthHit?.Invoke(a);
             if (sw != null && sw.Dark && physical && lost > 0f)
             {
                 var key = (a.InstanceId, hitEvent);
@@ -150,5 +152,9 @@ namespace Corum2.Core.P1
         }
 
         public bool HoldDeath() => _holdCandidate && _prog.GrowthPending;
+
+        /// <summary>BF-ASPD (BUF, §5.1): only the ground and air normal strings; launcher, dash, dive and spells unchanged.</summary>
+        public float MotionSpeed(AttackKind kind) =>
+            kind == AttackKind.GroundNormal || kind == AttackKind.AirNormal ? 1f + _buffs.AttackSpeed : 1f;
     }
 }

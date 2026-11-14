@@ -279,6 +279,8 @@ namespace Corum2.Core.P1
         public MerchantProfile Merchant = new MerchantProfile();
         public DamageProfile Damage = new DamageProfile();
         public List<TestItemDef> Items = new List<TestItemDef>();
+        /// <summary>Merchant regions and registered safe spawns (sandbox content, EXP-P1-REGION-01).</summary>
+        public List<RegionDef> Regions = new List<RegionDef>();
         /// <summary>Distinct item stacks the bag holds (inventory size is 미정, EXP-P1-BAG-01).</summary>
         public int BagStackLimit = 16;
         public int BagCountLimit = 99;

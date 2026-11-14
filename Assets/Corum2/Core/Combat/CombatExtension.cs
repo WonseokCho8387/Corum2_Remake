@@ -26,6 +26,9 @@ namespace Corum2.Core
         /// the same tick is pending (GRO-45); false = commit the death now.</summary>
         bool HoldDeath();
 
+        /// <summary>Animation speed of a player motion (BF-ASPD: ground / air normal strings only, 1 otherwise).</summary>
+        float MotionSpeed(AttackKind kind);
+
         void EndTick();
     }
 }

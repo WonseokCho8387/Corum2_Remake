@@ -770,6 +770,16 @@ namespace Corum2.Core.P1
             Emit("p1.magic.swordWave", "LegendaryWave(MAG-71)", ("damage", sw.Wave));
         }
 
+        public void ClearProjectiles()
+        {
+            Projectiles.Clear();
+            Walls.Clear();
+            Explosions.Clear();
+            Dots.Clear();
+            _queued.Clear();
+            _cast = null;
+        }
+
         /// <summary>MAG-32: projectiles, walls, explosions and DOTs end with the map; the summon follows (MAG-90).</summary>
         public void OnMapChanged()
         {
