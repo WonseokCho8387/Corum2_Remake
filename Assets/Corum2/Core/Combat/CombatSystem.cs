@@ -37,6 +37,17 @@ namespace Corum2.Core
     }
 
     /// <summary>Training dummy (test fixture). Its attack timer is NOT the P0-08 AI.</summary>
+    /// <summary>Presentation cue raised by a combat result (hit / guard / parry). Read and cleared by the view; no rule reads it.</summary>
+    public enum CombatFeedbackKind { PlayerHit, PlayerGuard, PlayerParry, EnemyHit, EnemyGuard }
+
+    public struct CombatFeedback
+    {
+        public CombatFeedbackKind Kind;
+        public string TargetId;
+        public float X, Y;
+        public float Amount;
+    }
+
     public sealed class EnemyActor
     {
         public readonly EnemyDefinition Def;
@@ -135,6 +146,8 @@ namespace Corum2.Core
         public float Elapsed;
         public int ChainStep;
         public int Hits;
+        /// <summary>This launcher lifted at least one enemy (EXP-COMBO-07: Jump may cancel its remaining motion).</summary>
+        public bool Launched;
         /// <summary>Set for a magic cast (WP-05): the shared MagicDefinition and where the cast came from.</summary>
         public MagicDefinition Magic;
         public string MagicSource = "";
@@ -165,6 +178,14 @@ namespace Corum2.Core
 
         public float PlayerHp;
         public float PlayerMaxHp => _p.PlayerMaxHp;
+        /// <summary>Presentation cues since the view last drained the list (capped; never read by game rules).</summary>
+        public readonly List<CombatFeedback> Feedback = new List<CombatFeedback>();
+
+        void Cue(CombatFeedbackKind k, string target, float x, float y, float amount)
+        {
+            if (Feedback.Count >= 64) Feedback.RemoveAt(0);
+            Feedback.Add(new CombatFeedback { Kind = k, TargetId = target, X = x, Y = y, Amount = amount });
+        }
         public PlayerAttack Attack { get; private set; }
 
         public long ChainId { get; private set; }
@@ -252,6 +273,8 @@ namespace Corum2.Core
             {
                 case LogicalAction.Guard:
                     return e.Edge == InputEdge.Press ? GuardPress(e) : GuardRelease();
+                case LogicalAction.Jump:
+                    return e.Edge == InputEdge.Press ? LauncherJumpCancel(e) : null;
                 case LogicalAction.Attack:
                 case LogicalAction.SpecialAttack:
                     return e.Edge == InputEdge.Press ? AttackPress(map, e) : null;
@@ -280,6 +303,20 @@ namespace Corum2.Core
             P.EnterLocked(MotorState.Guard, "GuardPress");
             if (P.Grounded) P.VelX = 0f;
             return "guard";
+        }
+
+        /// <summary>EXP-COMBO-07 (user play feedback 2026-11-14): once the launcher has lifted an enemy, Jump cancels the rest of the
+        /// launcher motion so the player can follow the enemy up for an air combo. The chain stays alive. Returns null so the motor
+        /// performs the jump from the released ground state.</summary>
+        string LauncherJumpCancel(in InputEvent e)
+        {
+            var a = Attack;
+            if (P.State != MotorState.GroundAttack || a == null || a.Def.Kind != AttackKind.Launcher || !a.Launched) return null;
+            Log.Emit("attack.cancel", Pl, "", P.State.ToString(), "Idle", "LauncherJumpCancel(EXP-COMBO-07)",
+                ("inputEventId", e.EventId), ("attackInstanceId", a.InstanceId), ("elapsed", a.Elapsed));
+            CancelAttack("LauncherJumpCancel(EXP-COMBO-07)");
+            P.ReleaseLocked("LauncherJumpCancel(EXP-COMBO-07)");
+            return null;
         }
 
         string GuardRelease()
@@ -1118,6 +1155,7 @@ namespace Corum2.Core
                     en.Grounded = false;
                     en.VelY = v;
                     en.AttackSpent = true;
+                    a.Launched = true;
                     reaction = "Launched:" + en.Launch + "(R-06-08)";
                 }
                 else
@@ -1157,6 +1195,7 @@ namespace Corum2.Core
                 ("buffMultiplier", buff), ("magicId", a.Magic?.Id ?? ""), ("magicSource", a.MagicSource),
                 ("chainId", ChainId), ("attackChainStep", a.ChainStep), ("comboBefore", comboBefore), ("comboAfter", ComboHits),
                 ("motionProgress", a.MotorDriven ? -1f : a.Elapsed / d.Total));
+            Cue(guarded ? CombatFeedbackKind.EnemyGuard : CombatFeedbackKind.EnemyHit, en.Id, en.Position.X, en.Position.Y + en.Def.BodyHeight * 0.6f, taken);
             if (en.State == EnemyState.Dead)
                 Log.Emit("combo.linkEnd", Pl, en.Id, "", "", "TargetDeath(R-04-10: this target only)", ("chainId", ChainId), ("chainAlive", ChainAlive));
         }
@@ -1200,6 +1239,7 @@ namespace Corum2.Core
                         ("enemyAttackInstanceId", en.AttackInstanceId), ("rbToHit", sinceRb), ("parryWindow", _p.ParryWindow),
                         ("windowMeaning", "last W s before the hit, game time (EXP-PARRY-01, CF-04)"), ("damageD", dmg), ("damageTaken", g),
                         ("damagePolicy", "EXP-PARRY-02 guard rule"), ("hpBefore", hpBefore), ("hpAfter", PlayerHp), ("enemyStun", _p.ParryStunTime));
+                    Cue(CombatFeedbackKind.PlayerParry, Pl, P.Position.X - away * 0.45f, P.Position.Y + P.Height * 0.6f, g);
                     if (PlayerHp <= 0f) KillPlayerByDefendedHit(ownerId, stateBefore, "Parry");
                     return;
                 }
@@ -1207,6 +1247,7 @@ namespace Corum2.Core
                     ("enemyAttackInstanceId", attackInstanceId), ("via", via), ("parry", en == null ? "not for projectiles (EXP-AI-05)" : "outside window"), ("rbToHit", sinceRb), ("damageD", dmg), ("damageTaken", g),
                     ("guardRule", "D*0.1, <1 -> 0; " + GuardRule.RoundingPolicy), ("damagePolicy", TestDamageResolver.PolicyId),
                     ("hpBefore", hpBefore), ("hpAfter", PlayerHp));
+                Cue(CombatFeedbackKind.PlayerGuard, Pl, P.Position.X - away * 0.45f, P.Position.Y + P.Height * 0.6f, g);
                 if (PlayerHp <= 0f)
                 {
                     KillPlayerByDefendedHit(ownerId, stateBefore, d.GuardBreak ? "GuardBreak" : "Guard");
@@ -1237,6 +1278,7 @@ namespace Corum2.Core
                 ("enemyAttackInstanceId", attackInstanceId), ("via", via), ("attackId", d.Id), ("damageD", dmg), ("damagePolicy", TestDamageResolver.PolicyId),
                 ("hpBefore", hpBefore), ("hpAfter", PlayerHp), ("front", front), ("knockbackVel", P.VelX), ("hitstun", _p.PlayerHitstun),
                 ("extraInvulnerability", "none (R-06-13/14)"));
+            Cue(CombatFeedbackKind.PlayerHit, Pl, P.Position.X, P.Position.Y + P.Height * 0.6f, dmg);
         }
 
         /// <summary>WP08-F02: guard / parry damage that brings HP to 0 is a death like any other (R-06-19).</summary>

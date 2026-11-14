@@ -69,6 +69,7 @@ namespace Corum2.Unity
         readonly TickInput _tick = new TickInput();
         WorldView _worldView;
         CombatView _combatView;
+        CombatHudView _combatHud;
         DeathView _deathView;
         BossPresentationView _presentationView;
         PlayerView _playerView;
@@ -199,6 +200,8 @@ namespace Corum2.Unity
             {
                 _combatView = new CombatView(transform, _worldView, enemies);
                 _presentationView = new BossPresentationView(transform, _combatView, presentation);
+                if (_hudCanvas == null) BuildCanvas();
+                _combatHud = new CombatHudView(_hudCanvas);
             }
             if (Sim.Ring != null)
             {
@@ -323,6 +326,7 @@ namespace Corum2.Unity
                 }
             }
             if (_presentationView != null) _presentationView.Sync(Sim, z, Time.fixedDeltaTime);
+            if (_combatHud != null) _combatHud.Sync(Sim, _camera, new Vector3(p.x, p.y, z), Time.unscaledDeltaTime);
             _viewFrames++;
             var pz = Mathf.Abs(_playerView.Root.position.z - z);
             _maxViewZError = Mathf.Max(_maxViewZError, pz);
