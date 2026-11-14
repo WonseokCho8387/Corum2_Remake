@@ -52,6 +52,8 @@ namespace Corum2.Core
         public bool HitsDowned;
         /// <summary>No hitbox at all (heal / buff casts).</summary>
         public bool NoHitbox;
+        /// <summary>P1: sword-tagged physical attack (light sword bonus, MAG-78). Default true for player physical attacks.</summary>
+        public bool Sword = true;
 
         public float Total => Startup + Active + Recovery;
     }
@@ -109,6 +111,10 @@ namespace Corum2.Core
         public DataMeta Meta = new DataMeta();
         public string Id = "";
         public float MaxHp = 100f;
+        /// <summary>P1 common defence (BAL-02/03). 0 in every P0 scene.</summary>
+        public float Defense;
+        /// <summary>P1 EXP granted when this enemy dies (test values in the P1 sandbox). 0 in P0 scenes.</summary>
+        public int Exp;
         public float BodyWidth = 0.8f;
         public float BodyHeight = 1.6f;
         public float Gravity = 30f;

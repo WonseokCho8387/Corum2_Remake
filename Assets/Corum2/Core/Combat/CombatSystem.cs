@@ -71,6 +71,8 @@ namespace Corum2.Core
         public float Cooldown;
         public float Hitstop;
         public float JuggleTimer;
+        /// <summary>P1 launcher hang time (GRO-17): vertical speed held at 0 at the apex for this long.</summary>
+        public float HangTimer;
         public bool Grounded = true;
         public long AttackInstanceId;
         public bool AttackSpent;
@@ -148,6 +150,15 @@ namespace Corum2.Core
         public int Hits;
         /// <summary>This launcher lifted at least one enemy (EXP-COMBO-07: Jump may cancel its remaining motion).</summary>
         public bool Launched;
+        /// <summary>1..4 = position in the ground / air normal string (P1 4th-hit sword effects), 0 = other attacks.</summary>
+        public int NormalIndex;
+        /// <summary>P1 hit made outside the player motion (projectile, explosion, wall, summon): no combo, no chain.</summary>
+        public bool External;
+        /// <summary>P1 damage-over-time tick: damage only, no hit reaction or hitstop (MAG-65).</summary>
+        public bool DamageOnly;
+        /// <summary>P1 pre-buff damage already computed by the P1 spell (spell growth + magic attack), -1 = not set.</summary>
+        public float P1PreBuff = -1f;
+        public string P1Source = "";
         /// <summary>Set for a magic cast (WP-05): the shared MagicDefinition and where the cast came from.</summary>
         public MagicDefinition Magic;
         public string MagicSource = "";
@@ -177,7 +188,11 @@ namespace Corum2.Core
         public readonly List<EnemyActor> Enemies = new List<EnemyActor>();
 
         public float PlayerHp;
-        public float PlayerMaxHp => _p.PlayerMaxHp;
+        public float PlayerMaxHp => Ext?.MaxHp ?? _p.PlayerMaxHp;
+        /// <summary>P1 hook (null in P0 scenes = P0 behaviour).</summary>
+        public ICombatExtension Ext;
+        bool _deathDeferred;
+        string _deferredDeathCause = "";
         /// <summary>Presentation cues since the view last drained the list (capped; never read by game rules).</summary>
         public readonly List<CombatFeedback> Feedback = new List<CombatFeedback>();
 
@@ -410,6 +425,7 @@ namespace Corum2.Core
         string StartTimed(AttackKind kind, in InputEvent e)
         {
             AttackDefinition def;
+            var normalIndex = 0;
             var newChain = !ChainAlive;
             if (!newChain && ChainSteps >= StandardChainMax)
                 return Reject(e, "ChainMax:Total" + StandardChainMax,
@@ -423,12 +439,14 @@ namespace Corum2.Core
                         return Reject(e, "ChainMax:Ground" + _p.GroundNormals.Length, "R-04-01");
                     def = _p.GroundNormals[GroundSteps];
                     GroundSteps++;
+                    normalIndex = GroundSteps;
                     break;
                 case AttackKind.AirNormal:
                     if (AirSteps >= _p.AirNormals.Length)
                         return Reject(e, "ChainMax:Air" + _p.AirNormals.Length, "R-04-01");
                     def = _p.AirNormals[AirSteps];
                     AirSteps++;
+                    normalIndex = AirSteps;
                     break;
                 case AttackKind.Launcher:
                     def = _p.Launcher;
@@ -442,6 +460,7 @@ namespace Corum2.Core
             if (kind == AttackKind.DownAttack) P.Facing = h;
             else if (h != 0) P.Facing = h; // EXP-ATK-01 facing set at attack start, no turn during the motion (U-05)
             Attack = NewAttack(def);
+            Attack.NormalIndex = normalIndex;
             P.EnterLocked(kind == AttackKind.AirNormal ? MotorState.AirAttack : MotorState.GroundAttack, "Attack:" + kind);
             if (kind != AttackKind.AirNormal) P.VelX = 0f;
             P.LockedMaxFall = kind == AttackKind.AirNormal ? _p.AirAttackFallSpeed : float.MaxValue;
@@ -580,6 +599,37 @@ namespace Corum2.Core
             foreach (var en in Enemies) UpdateEnemy(map, en, dt);
             StepProjectiles(map, dt);
             ResolveHits(map, playerFrozen);
+            if (Ext != null)
+            {
+                Ext.EndTick();
+                if (_deathDeferred)
+                {
+                    _deathDeferred = false;
+                    if (Ext.HoldDeath())
+                        Log.Emit("player.deathHeld", Pl, "", P.State.ToString(), P.State.ToString(), "SameEventLevelUpFirst(P1-GRO-45)",
+                            ("hp", PlayerHp), ("cause", _deferredDeathCause));
+                    else if (PlayerHp <= 0f && P.State != MotorState.Dead) CommitDeferredDeath();
+                }
+            }
+        }
+
+        /// <summary>P1 (GRO-45): commit a lethal hit held to the end of the tick.</summary>
+        public void CommitDeferredDeath()
+        {
+            var before = P.State;
+            if (Attack != null) CancelAttack("PlayerDeath");
+            EndChain("PlayerDeath");
+            _buffered = false;
+            P.EnterLocked(MotorState.Dead, "PlayerDeath");
+            Log.Emit("player.death", Pl, "", before.ToString(), "Dead", "HP0->DeathFlow(R-06-19)", ("cause", _deferredDeathCause), ("deferred", "P1-GRO-45"));
+        }
+
+        /// <summary>P1: HP restored after a held death (level-up full heal).</summary>
+        public void SetPlayerHp(float hp, string reason)
+        {
+            var before = PlayerHp;
+            PlayerHp = Math.Max(0f, Math.Min(PlayerMaxHp, hp));
+            Log.Emit("player.hpSet", Pl, "", "", "", reason, ("hpBefore", before), ("hpAfter", PlayerHp));
         }
 
         void SyncMotorAttacks(MapData map)
@@ -747,7 +797,12 @@ namespace Corum2.Core
             // physics
             if (!en.Grounded)
             {
-                en.VelY -= en.Def.Gravity * dt;
+                if (en.HangTimer > 0f && en.State == EnemyState.Launched && en.VelY <= 0f)
+                {
+                    en.HangTimer -= dt; // P1 GRO-17 launcher hang time at the apex
+                    en.VelY = 0f;
+                }
+                else en.VelY -= en.Def.Gravity * dt;
                 if (en.JuggleTimer > 0f)
                 {
                     en.JuggleTimer -= dt;
@@ -1078,15 +1133,16 @@ namespace Corum2.Core
         {
             var d = a.Def;
             var dmg = TestDamageResolver.Resolve(d);
-            var buff = a.Magic == null && BuffMultiplier != 1f ? BuffMultiplier : 1f; // EXP-MAGIC-04: physical player attacks only
+            var buff = Ext == null && a.Magic == null && BuffMultiplier != 1f ? BuffMultiplier : 1f; // EXP-MAGIC-04: physical player attacks only
             dmg *= buff;
             var hpBefore = en.Hp;
             var stateBefore = en.State;
             // R-08-11 boss guard (EXP-BOSS-06): front physical hits only; magic / unblockable / back hits are not guarded.
             var guarded = en.State == EnemyState.Guard && d.DamageType != DamageType.Magic && !d.Unblockable &&
                           (P.Position.X - en.Position.X) * en.Facing >= 0f;
-            var taken = guarded ? GuardRule.Apply(dmg) : dmg;
+            var taken = Ext != null ? Ext.OutgoingDamage(a, en, TestDamageResolver.Resolve(d), guarded) : guarded ? GuardRule.Apply(dmg) : dmg;
             en.Hp = Math.Max(0f, en.Hp - taken);
+            Ext?.OnEnemyHpLost(a, en, ev, hpBefore - en.Hp, en.Hp <= 0f);
             a.Hits++;
             a.HitByEvent[ev].Add(en.Id);
             // WP06-F01 (EXP-COMBO-06): a motor-driven dash / dive keeps moving after an enemy guard ended the chain (R-05-03).
@@ -1102,7 +1158,7 @@ namespace Corum2.Core
             }
             var comboBefore = ComboHits;
             // EXP-COMBO-05: a hit absorbed by an enemy guard is not an effective hit (R-04-03/04): no combo count.
-            if (ChainAlive && !guarded) ComboHits++;
+            if (ChainAlive && !guarded && !a.External) ComboHits++;
             if (guarded) _guardedHits++;
             var away = Math.Sign(en.Position.X - P.Position.X);
             if (away == 0) away = P.Facing;
@@ -1128,6 +1184,10 @@ namespace Corum2.Core
             {
                 reaction = "BossGuard:GuardRule(R-08-11, EXP-BOSS-06)";
             }
+            else if (a.DamageOnly)
+            {
+                reaction = "DamageOnlyTick(P1-MAG-65)";
+            }
             else if (d.DamageType == DamageType.Magic)
             {
                 if (armor) en.ArmorBrokenThisAttack = true; // this action only (R-06-12)
@@ -1149,6 +1209,9 @@ namespace Corum2.Core
             else if (d.Kind == AttackKind.Launcher && en.Grounded)
             {
                 var v = en.Launch == LaunchResponse.Immune ? 0f : d.LaunchVelocity * (en.Launch == LaunchResponse.Resist ? en.Def.LaunchResistScale : 1f);
+                if (v > 0f && Ext != null && Ext.LaunchHeightBonus > 0f)
+                    v = (float)Math.Sqrt(v * v + 2f * en.Def.Gravity * Ext.LaunchHeightBonus); // GRO-17 extra height
+                if (v > 0f && Ext != null) en.HangTimer = Ext.LaunchHangBonus;
                 if (v > 0f)
                 {
                     en.State = EnemyState.Launched;
@@ -1185,8 +1248,8 @@ namespace Corum2.Core
                 kb = away * d.Knockback * en.Def.PhysicalKnockbackScale;
                 SetKnock(en, kb, "Hit:" + d.Id, a.InstanceId);
             }
-            en.Hitstop = d.Hitstop;
-            if (!guarded && !reaction.StartsWith("SuperArmor")) CutAiPropulsion(en, reaction);
+            if (!a.DamageOnly) en.Hitstop = d.Hitstop;
+            if (!guarded && !a.DamageOnly && !reaction.StartsWith("SuperArmor")) CutAiPropulsion(en, reaction);
 
             Log.Emit("hit", Pl, en.Id, stateBefore.ToString(), en.State.ToString(), reaction,
                 ("attackInstanceId", a.InstanceId), ("hitEventId", a.InstanceId + ":" + ev), ("attackId", d.Id), ("attackKind", d.Kind),
@@ -1226,7 +1289,7 @@ namespace Corum2.Core
             if (P.State == MotorState.Guard && front && !d.Unblockable)
             {
                 var sinceRb = _sim.GameTime - _guardPressGameTime;
-                var g = GuardRule.Apply(dmg);
+                var g = Ext != null ? Ext.IncomingDamage(d, dmg, true, ownerId) : GuardRule.Apply(dmg);
                 PlayerHp = Math.Max(0f, PlayerHp - g);
                 if (en != null && sinceRb <= _p.ParryWindow + 1e-6)
                 {
@@ -1258,11 +1321,21 @@ namespace Corum2.Core
             }
 
             var why = P.State == MotorState.Guard ? (d.Unblockable ? "Unblockable(R-07-06)" : "HitFromBehind(R-07-01)") : "Hit";
+            if (Ext != null) dmg = Ext.IncomingDamage(d, dmg, false, ownerId);
             PlayerHp = Math.Max(0f, PlayerHp - dmg);
             if (Attack != null) CancelAttack("PlayerHit");
             EndChain("PlayerHit(EnemyCancel)");
             _buffered = false;
-            if (PlayerHp <= 0f)
+            if (PlayerHp <= 0f && Ext != null)
+            {
+                // P1 GRO-45: hold the death to the end of the tick; react like a normal hit meanwhile
+                _deathDeferred = true;
+                _deferredDeathCause = "Hit:" + ownerId;
+                P.EnterLocked(MotorState.HitStun, "PlayerHit(lethal, held to tick end P1-GRO-45)");
+                P.VelX = away * d.Knockback;
+                _playerLockTimer = _p.PlayerHitstun;
+            }
+            else if (PlayerHp <= 0f)
             {
                 P.EnterLocked(MotorState.Dead, "PlayerDeath");
                 if (Attack != null) CancelAttack("PlayerDeath");
@@ -1284,6 +1357,12 @@ namespace Corum2.Core
         /// <summary>WP08-F02: guard / parry damage that brings HP to 0 is a death like any other (R-06-19).</summary>
         void KillPlayerByDefendedHit(string ownerId, MotorState stateBefore, string defense)
         {
+            if (Ext != null)
+            {
+                _deathDeferred = true;
+                _deferredDeathCause = "DefendedHit:" + defense;
+                return;
+            }
             if (Attack != null) CancelAttack("PlayerDeath");
             EndChain("PlayerDeath");
             _buffered = false;
@@ -1307,6 +1386,21 @@ namespace Corum2.Core
             if (!ChainAlive) BeginChain(0);
             var a = NewAttack(def);
             ApplyHitToEnemy(a, en, 0, "TestHook");
+        }
+
+        /// <summary>P1: a hit from a projectile / explosion / wall / summon (not the player motion).</summary>
+        public PlayerAttack NewExternalAttack(AttackDefinition def, string source)
+        {
+            var a = NewAttack(def);
+            a.External = true;
+            a.P1Source = source;
+            return a;
+        }
+
+        public void ApplyExternalHit(PlayerAttack a, EnemyActor en, string how)
+        {
+            if (en == null || !en.Targetable) return;
+            ApplyHitToEnemy(a, en, 0, how);
         }
 
         public string DescribeEnemies()

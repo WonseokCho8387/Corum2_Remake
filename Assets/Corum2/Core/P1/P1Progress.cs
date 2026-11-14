@@ -66,6 +66,8 @@ namespace Corum2.Core.P1
         public readonly HashSet<long> ExpEvents = new HashSet<long>();
         public readonly List<UnclaimedReward> Unclaimed = new List<UnclaimedReward>();
         public int PermPackUses;
+        /// <summary>Persistent id source for EXP / combat events (unique across save/load, GRO-48).</summary>
+        public long NextEventId = 1;
         public float CurHp;
         public float CurMp;
         public readonly P1Rng GrowthRng = new P1Rng(0x5EEDC0DE12345UL);
@@ -97,7 +99,7 @@ namespace Corum2.Core.P1
             var o = new MiniJson.Obj()
                 .Set("characterId", CharacterId).Set("level", Level).Set("levelExp", LevelExp).Set("totalExp", (double)TotalExp)
                 .Set("lv50Currency", Lv50Currency).Set("karz", Karz).Set("stage", Stage.ToString()).Set("pendingLevels", PendingLevels)
-                .Set("rerollTokens", RerollTokens).Set("equipReroll", EquipRerollOption).Set("permPackUses", PermPackUses)
+                .Set("rerollTokens", RerollTokens).Set("equipReroll", EquipRerollOption).Set("permPackUses", PermPackUses).Set("nextEventId", (double)NextEventId)
                 .Set("curHp", (double)CurHp).Set("curMp", (double)CurMp).Set("growthRng", GrowthRng.State.ToString());
             var ax = new MiniJson.Obj();
             foreach (var k in Sorted(Axes.Keys)) ax.Set(k, (double)Axes[k]);
@@ -137,7 +139,7 @@ namespace Corum2.Core.P1
             {
                 CharacterId = o.Str("characterId"), Level = o.Int("level"), LevelExp = o.Int("levelExp"), TotalExp = o.Long("totalExp"),
                 Lv50Currency = o.Int("lv50Currency"), Karz = o.Int("karz"), PendingLevels = o.Int("pendingLevels"),
-                RerollTokens = o.Int("rerollTokens"), EquipRerollOption = o.Bool("equipReroll"), PermPackUses = o.Int("permPackUses"),
+                RerollTokens = o.Int("rerollTokens"), EquipRerollOption = o.Bool("equipReroll"), PermPackUses = o.Int("permPackUses"), NextEventId = o.Long("nextEventId", 1),
                 CurHp = o.Flt("curHp"), CurMp = o.Flt("curMp"),
             };
             g.Stage = (StoryStage)Enum.Parse(typeof(StoryStage), o.Str("stage", "Early"));
