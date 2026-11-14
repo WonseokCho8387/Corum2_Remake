@@ -1,0 +1,5461 @@
+{
+"runId":"RUN-20261114-232740",
+"movement":{
+    "meta": {
+        "domainId": "movement.player",
+        "schemaVersion": 1,
+        "dataVersion": "wp01-r1",
+        "status": "experimental",
+        "policyIds": [
+            "EXP-MOVE-01"
+        ],
+        "relatedRIds": [
+            "R-03-01",
+            "R-03-02",
+            "R-03-04",
+            "R-03-05",
+            "R-03-06"
+        ],
+        "changeRequestId": ""
+    },
+    "walkSpeed": 3.5,
+    "runSpeed": 7.0,
+    "gravity": 30.0,
+    "jumpHeight": 2.200000047683716,
+    "extraJumpHeight": 1.7999999523162842,
+    "airControlSpeed": 3.5,
+    "airAcceleration": 18.0,
+    "maxFallSpeed": 22.0,
+    "slideSpeed": 9.0,
+    "slideDuration": 0.3499999940395355,
+    "rollSpeed": 7.0,
+    "rollDuration": 0.4000000059604645,
+    "dashSpeed": 12.0,
+    "dashDuration": 0.25,
+    "dashEndSpeed": 3.5,
+    "diveSpeed": 14.0,
+    "diveAngleDeg": 45.0,
+    "bodyWidth": 0.6000000238418579,
+    "standHeight": 1.7999999523162842,
+    "crouchHeight": 0.8999999761581421
+},
+"input":{
+    "meta": {
+        "domainId": "input.profile",
+        "schemaVersion": 1,
+        "dataVersion": "wp03-1",
+        "status": "experimental",
+        "policyIds": [
+            "EXP-INPUT-01",
+            "EXP-INPUT-02",
+            "EXP-INPUT-03",
+            "EXP-TIME-01",
+            "EXP-INPUT-04"
+        ],
+        "relatedRIds": [
+            "R-02-01",
+            "R-03-01"
+        ],
+        "changeRequestId": ""
+    },
+    "stickDeadzone": 0.3499999940395355,
+    "doubleTapWindow": 0.25,
+    "moveStickPaths": [
+        "<Gamepad>/leftStick"
+    ],
+    "moveKeyComposites": [
+        "<Keyboard>/w,<Keyboard>/s,<Keyboard>/a,<Keyboard>/d",
+        "<Keyboard>/upArrow,<Keyboard>/downArrow,<Keyboard>/leftArrow,<Keyboard>/rightArrow"
+    ],
+    "buttons": [
+        {
+            "action": 4,
+            "paths": [
+                "<Gamepad>/buttonSouth",
+                "<Keyboard>/space"
+            ],
+            "policy": "keyboard key EXP-INPUT-02"
+        },
+        {
+            "action": 5,
+            "paths": [
+                "<Gamepad>/buttonWest",
+                "<Keyboard>/j"
+            ],
+            "policy": "keyboard key EXP-INPUT-02"
+        },
+        {
+            "action": 6,
+            "paths": [
+                "<Gamepad>/buttonNorth",
+                "<Keyboard>/k"
+            ],
+            "policy": "EXP-INPUT-01"
+        },
+        {
+            "action": 7,
+            "paths": [
+                "<Gamepad>/rightShoulder",
+                "<Keyboard>/l"
+            ],
+            "policy": "keyboard key EXP-INPUT-02"
+        },
+        {
+            "action": 8,
+            "paths": [
+                "<Gamepad>/leftShoulder",
+                "<Keyboard>/q"
+            ],
+            "policy": "keyboard key EXP-INPUT-02"
+        },
+        {
+            "action": 9,
+            "paths": [
+                "<Gamepad>/dpad/up",
+                "<Keyboard>/1"
+            ],
+            "policy": "EXP-INPUT-02"
+        },
+        {
+            "action": 12,
+            "paths": [
+                "<Gamepad>/dpad/right",
+                "<Keyboard>/2"
+            ],
+            "policy": "EXP-INPUT-02"
+        },
+        {
+            "action": 10,
+            "paths": [
+                "<Gamepad>/dpad/down",
+                "<Keyboard>/3"
+            ],
+            "policy": "EXP-INPUT-02"
+        },
+        {
+            "action": 11,
+            "paths": [
+                "<Gamepad>/dpad/left",
+                "<Keyboard>/4"
+            ],
+            "policy": "EXP-INPUT-02"
+        },
+        {
+            "action": 13,
+            "paths": [
+                "<Gamepad>/buttonEast",
+                "<Keyboard>/e"
+            ],
+            "policy": "EXP-INPUT-04"
+        },
+        {
+            "action": 14,
+            "paths": [
+                "<Gamepad>/leftTrigger",
+                "<Keyboard>/z"
+            ],
+            "policy": "EXP-INPUT-04"
+        },
+        {
+            "action": 15,
+            "paths": [
+                "<Gamepad>/rightTrigger",
+                "<Keyboard>/c"
+            ],
+            "policy": "EXP-INPUT-04"
+        }
+    ]
+},
+"unlocks":{
+    "meta": {
+        "domainId": "unlock.AirUnlocks_None",
+        "schemaVersion": 1,
+        "dataVersion": "wp01-r1",
+        "status": "experimental",
+        "policyIds": [],
+        "relatedRIds": [
+            "R-03-03"
+        ],
+        "changeRequestId": ""
+    },
+    "extraJump": false,
+    "airDash": false,
+    "dive": false
+},
+"world":{"startMapId":"P1A","startSpawnId":"Start","maps":[
+{
+    "meta": {
+        "domainId": "map.P1A",
+        "schemaVersion": 1,
+        "dataVersion": "p1-sandbox-1",
+        "status": "experimental",
+        "policyIds": [],
+        "relatedRIds": [],
+        "changeRequestId": ""
+    },
+    "mapId": "P1A",
+    "minX": 0.0,
+    "maxX": 90.0,
+    "killY": -10.0,
+    "combatPlaneZ": 0.0,
+    "solids": [
+        {
+            "min": {
+                "x": -1.0,
+                "y": -2.0
+            },
+            "max": {
+                "x": 91.0,
+                "y": 0.0
+            }
+        },
+        {
+            "min": {
+                "x": 70.0,
+                "y": 0.0
+            },
+            "max": {
+                "x": 71.5,
+                "y": 1.399999976158142
+            }
+        }
+    ],
+    "spawns": [
+        {
+            "id": "Start",
+            "position": {
+                "x": 4.0,
+                "y": 0.0
+            },
+            "facing": 1
+        },
+        {
+            "id": "FromB",
+            "position": {
+                "x": 41.0,
+                "y": 0.0
+            },
+            "facing": 1
+        },
+        {
+            "id": "FromC",
+            "position": {
+                "x": 88.0,
+                "y": 0.0
+            },
+            "facing": -1
+        },
+        {
+            "id": "Field",
+            "position": {
+                "x": 54.0,
+                "y": 0.0
+            },
+            "facing": 1
+        },
+        {
+            "id": "Shop",
+            "position": {
+                "x": 28.0,
+                "y": 0.0
+            },
+            "facing": 1
+        }
+    ],
+    "left": {
+        "policy": 0,
+        "connectionId": "",
+        "targetMapId": "",
+        "targetSpawnId": ""
+    },
+    "right": {
+        "policy": 1,
+        "connectionId": "C-P1A-P1C",
+        "targetMapId": "P1C",
+        "targetSpawnId": "FromA"
+    },
+    "points": [
+        {
+            "id": "P1A-UP",
+            "area": {
+                "min": {
+                    "x": 40.0,
+                    "y": 0.0
+                },
+                "max": {
+                    "x": 42.0,
+                    "y": 2.0
+                }
+            },
+            "direction": 0,
+            "targetMapId": "P1B",
+            "targetSpawnId": "FromA"
+        }
+    ],
+    "enemies": [
+        {
+            "instanceId": "k1",
+            "enemyId": "p1Kobold",
+            "position": {
+                "x": 12.0,
+                "y": 0.0
+            },
+            "facing": -1
+        },
+        {
+            "instanceId": "k2",
+            "enemyId": "p1Kobold",
+            "position": {
+                "x": 14.0,
+                "y": 0.0
+            },
+            "facing": -1
+        },
+        {
+            "instanceId": "t1",
+            "enemyId": "p1Thief",
+            "position": {
+                "x": 17.0,
+                "y": 0.0
+            },
+            "facing": -1
+        },
+        {
+            "instanceId": "rk",
+            "enemyId": "p1RedKobold",
+            "position": {
+                "x": 22.0,
+                "y": 0.0
+            },
+            "facing": -1
+        },
+        {
+            "instanceId": "d1",
+            "enemyId": "p1Dummy",
+            "position": {
+                "x": 55.0,
+                "y": 0.0
+            },
+            "facing": -1
+        },
+        {
+            "instanceId": "d2",
+            "enemyId": "p1Dummy",
+            "position": {
+                "x": 58.0,
+                "y": 0.0
+            },
+            "facing": -1
+        },
+        {
+            "instanceId": "d3",
+            "enemyId": "p1Dummy",
+            "position": {
+                "x": 62.0,
+                "y": 0.0
+            },
+            "facing": -1
+        },
+        {
+            "instanceId": "lz",
+            "enemyId": "p1Lizard",
+            "position": {
+                "x": 66.0,
+                "y": 0.0
+            },
+            "facing": -1
+        }
+    ],
+    "cameraMinX": 9.0,
+    "cameraMaxX": 81.0,
+    "cameraY": 2.5,
+    "cameraFollowSharpness": 10.0,
+    "groundColor": {
+        "r": 0.3799999952316284,
+        "g": 0.41999998688697817,
+        "b": 0.36000001430511477,
+        "a": 1.0
+    }
+},
+{
+    "meta": {
+        "domainId": "map.P1B",
+        "schemaVersion": 1,
+        "dataVersion": "p1-sandbox-1",
+        "status": "experimental",
+        "policyIds": [],
+        "relatedRIds": [],
+        "changeRequestId": ""
+    },
+    "mapId": "P1B",
+    "minX": 0.0,
+    "maxX": 30.0,
+    "killY": -10.0,
+    "combatPlaneZ": 0.0,
+    "solids": [
+        {
+            "min": {
+                "x": -1.0,
+                "y": -2.0
+            },
+            "max": {
+                "x": 31.0,
+                "y": 0.0
+            }
+        }
+    ],
+    "spawns": [
+        {
+            "id": "FromA",
+            "position": {
+                "x": 3.0,
+                "y": 0.0
+            },
+            "facing": 1
+        }
+    ],
+    "left": {
+        "policy": 0,
+        "connectionId": "",
+        "targetMapId": "",
+        "targetSpawnId": ""
+    },
+    "right": {
+        "policy": 0,
+        "connectionId": "",
+        "targetMapId": "",
+        "targetSpawnId": ""
+    },
+    "points": [
+        {
+            "id": "P1B-DOWN",
+            "area": {
+                "min": {
+                    "x": 2.0,
+                    "y": 0.0
+                },
+                "max": {
+                    "x": 4.0,
+                    "y": 2.0
+                }
+            },
+            "direction": 1,
+            "targetMapId": "P1A",
+            "targetSpawnId": "FromB"
+        }
+    ],
+    "enemies": [
+        {
+            "instanceId": "b1",
+            "enemyId": "p1Kobold",
+            "position": {
+                "x": 15.0,
+                "y": 0.0
+            },
+            "facing": -1
+        },
+        {
+            "instanceId": "b2",
+            "enemyId": "p1Kobold",
+            "position": {
+                "x": 18.0,
+                "y": 0.0
+            },
+            "facing": -1
+        }
+    ],
+    "cameraMinX": 9.0,
+    "cameraMaxX": 21.0,
+    "cameraY": 2.5,
+    "cameraFollowSharpness": 10.0,
+    "groundColor": {
+        "r": 0.3400000035762787,
+        "g": 0.36000001430511477,
+        "b": 0.4399999976158142,
+        "a": 1.0
+    }
+},
+{
+    "meta": {
+        "domainId": "map.P1C",
+        "schemaVersion": 1,
+        "dataVersion": "p1-sandbox-1",
+        "status": "experimental",
+        "policyIds": [],
+        "relatedRIds": [],
+        "changeRequestId": ""
+    },
+    "mapId": "P1C",
+    "minX": 0.0,
+    "maxX": 40.0,
+    "killY": -10.0,
+    "combatPlaneZ": 0.0,
+    "solids": [
+        {
+            "min": {
+                "x": -1.0,
+                "y": -2.0
+            },
+            "max": {
+                "x": 41.0,
+                "y": 0.0
+            }
+        }
+    ],
+    "spawns": [
+        {
+            "id": "FromA",
+            "position": {
+                "x": 2.0,
+                "y": 0.0
+            },
+            "facing": 1
+        }
+    ],
+    "left": {
+        "policy": 1,
+        "connectionId": "C-P1C-P1A",
+        "targetMapId": "P1A",
+        "targetSpawnId": "FromC"
+    },
+    "right": {
+        "policy": 0,
+        "connectionId": "",
+        "targetMapId": "",
+        "targetSpawnId": ""
+    },
+    "points": [],
+    "enemies": [
+        {
+            "instanceId": "c1",
+            "enemyId": "p1Goblin",
+            "position": {
+                "x": 20.0,
+                "y": 0.0
+            },
+            "facing": -1
+        },
+        {
+            "instanceId": "c2",
+            "enemyId": "p1Kobold",
+            "position": {
+                "x": 25.0,
+                "y": 0.0
+            },
+            "facing": -1
+        }
+    ],
+    "cameraMinX": 9.0,
+    "cameraMaxX": 31.0,
+    "cameraY": 2.5,
+    "cameraFollowSharpness": 10.0,
+    "groundColor": {
+        "r": 0.4399999976158142,
+        "g": 0.36000001430511477,
+        "b": 0.3199999928474426,
+        "a": 1.0
+    }
+}]},
+"extra":[
+{"asset":"CombatConfig_P1","type":"CombatConfig","data":{
+    "meta": {
+        "domainId": "combat.player.p1",
+        "schemaVersion": 1,
+        "dataVersion": "p1-sandbox-1",
+        "status": "experimental",
+        "policyIds": [
+            "EXP-ATK-00",
+            "TEST-DMG-01"
+        ],
+        "relatedRIds": [
+            "R-04-01",
+            "R-05-02",
+            "R-06-01",
+            "R-07-02"
+        ],
+        "changeRequestId": ""
+    },
+    "playerMaxHp": 10.0,
+    "deathMotionTime": 1.2000000476837159,
+    "reviveHpRatio": 0.5,
+    "reviveInvulnTime": 1.5,
+    "groundNormals": [
+        {
+            "id": "ground1",
+            "kind": 0,
+            "damageType": 0,
+            "startup": 0.05999999865889549,
+            "active": 0.07999999821186066,
+            "recovery": 0.11999999731779099,
+            "offsetX": 0.800000011920929,
+            "offsetY": 0.8999999761581421,
+            "width": 1.0,
+            "height": 1.2000000476837159,
+            "testDamage": 1.0,
+            "hitstop": 0.03999999910593033,
+            "knockback": 1.5,
+            "launchVelocity": 0.0,
+            "hitEvents": 1,
+            "unblockable": false,
+            "guardBreak": false,
+            "superArmor": false,
+            "hitsDowned": false
+        },
+        {
+            "id": "ground2",
+            "kind": 0,
+            "damageType": 0,
+            "startup": 0.05999999865889549,
+            "active": 0.07999999821186066,
+            "recovery": 0.11999999731779099,
+            "offsetX": 0.800000011920929,
+            "offsetY": 0.8999999761581421,
+            "width": 1.0,
+            "height": 1.2000000476837159,
+            "testDamage": 1.0,
+            "hitstop": 0.03999999910593033,
+            "knockback": 1.5,
+            "launchVelocity": 0.0,
+            "hitEvents": 1,
+            "unblockable": false,
+            "guardBreak": false,
+            "superArmor": false,
+            "hitsDowned": false
+        },
+        {
+            "id": "ground3",
+            "kind": 0,
+            "damageType": 0,
+            "startup": 0.05999999865889549,
+            "active": 0.07999999821186066,
+            "recovery": 0.11999999731779099,
+            "offsetX": 0.800000011920929,
+            "offsetY": 0.8999999761581421,
+            "width": 1.0,
+            "height": 1.2000000476837159,
+            "testDamage": 1.0,
+            "hitstop": 0.03999999910593033,
+            "knockback": 1.5,
+            "launchVelocity": 0.0,
+            "hitEvents": 1,
+            "unblockable": false,
+            "guardBreak": false,
+            "superArmor": false,
+            "hitsDowned": false
+        },
+        {
+            "id": "ground4",
+            "kind": 0,
+            "damageType": 0,
+            "startup": 0.05999999865889549,
+            "active": 0.07999999821186066,
+            "recovery": 0.11999999731779099,
+            "offsetX": 0.800000011920929,
+            "offsetY": 0.8999999761581421,
+            "width": 1.0,
+            "height": 1.2000000476837159,
+            "testDamage": 1.0,
+            "hitstop": 0.03999999910593033,
+            "knockback": 1.5,
+            "launchVelocity": 0.0,
+            "hitEvents": 1,
+            "unblockable": false,
+            "guardBreak": false,
+            "superArmor": false,
+            "hitsDowned": false
+        }
+    ],
+    "launcher": {
+        "id": "launcher",
+        "kind": 1,
+        "damageType": 0,
+        "startup": 0.05999999865889549,
+        "active": 0.07999999821186066,
+        "recovery": 0.11999999731779099,
+        "offsetX": 0.800000011920929,
+        "offsetY": 0.8999999761581421,
+        "width": 1.0,
+        "height": 1.2000000476837159,
+        "testDamage": 1.0,
+        "hitstop": 0.07999999821186066,
+        "knockback": 0.0,
+        "launchVelocity": 14.0,
+        "hitEvents": 1,
+        "unblockable": false,
+        "guardBreak": false,
+        "superArmor": false,
+        "hitsDowned": false
+    },
+    "airNormals": [
+        {
+            "id": "air1",
+            "kind": 2,
+            "damageType": 0,
+            "startup": 0.05999999865889549,
+            "active": 0.07999999821186066,
+            "recovery": 0.11999999731779099,
+            "offsetX": 0.699999988079071,
+            "offsetY": 0.8999999761581421,
+            "width": 1.2000000476837159,
+            "height": 1.7999999523162842,
+            "testDamage": 1.0,
+            "hitstop": 0.03999999910593033,
+            "knockback": 1.5,
+            "launchVelocity": 0.0,
+            "hitEvents": 1,
+            "unblockable": false,
+            "guardBreak": false,
+            "superArmor": false,
+            "hitsDowned": false
+        },
+        {
+            "id": "air2",
+            "kind": 2,
+            "damageType": 0,
+            "startup": 0.05999999865889549,
+            "active": 0.07999999821186066,
+            "recovery": 0.11999999731779099,
+            "offsetX": 0.699999988079071,
+            "offsetY": 0.8999999761581421,
+            "width": 1.2000000476837159,
+            "height": 1.7999999523162842,
+            "testDamage": 1.0,
+            "hitstop": 0.03999999910593033,
+            "knockback": 1.5,
+            "launchVelocity": 0.0,
+            "hitEvents": 1,
+            "unblockable": false,
+            "guardBreak": false,
+            "superArmor": false,
+            "hitsDowned": false
+        },
+        {
+            "id": "air3",
+            "kind": 2,
+            "damageType": 0,
+            "startup": 0.05999999865889549,
+            "active": 0.07999999821186066,
+            "recovery": 0.11999999731779099,
+            "offsetX": 0.699999988079071,
+            "offsetY": 0.8999999761581421,
+            "width": 1.2000000476837159,
+            "height": 1.7999999523162842,
+            "testDamage": 1.0,
+            "hitstop": 0.03999999910593033,
+            "knockback": 1.5,
+            "launchVelocity": 0.0,
+            "hitEvents": 1,
+            "unblockable": false,
+            "guardBreak": false,
+            "superArmor": false,
+            "hitsDowned": false
+        },
+        {
+            "id": "air4",
+            "kind": 2,
+            "damageType": 0,
+            "startup": 0.05999999865889549,
+            "active": 0.07999999821186066,
+            "recovery": 0.11999999731779099,
+            "offsetX": 0.699999988079071,
+            "offsetY": 0.8999999761581421,
+            "width": 1.2000000476837159,
+            "height": 1.7999999523162842,
+            "testDamage": 1.0,
+            "hitstop": 0.03999999910593033,
+            "knockback": 1.5,
+            "launchVelocity": 0.0,
+            "hitEvents": 1,
+            "unblockable": false,
+            "guardBreak": false,
+            "superArmor": false,
+            "hitsDowned": false
+        }
+    ],
+    "airDash": {
+        "id": "airDash",
+        "kind": 3,
+        "damageType": 0,
+        "startup": 0.05999999865889549,
+        "active": 0.07999999821186066,
+        "recovery": 0.11999999731779099,
+        "offsetX": 0.4000000059604645,
+        "offsetY": 0.8999999761581421,
+        "width": 1.2000000476837159,
+        "height": 1.7999999523162842,
+        "testDamage": 1.0,
+        "hitstop": 0.05999999865889549,
+        "knockback": 3.0,
+        "launchVelocity": 0.0,
+        "hitEvents": 1,
+        "unblockable": false,
+        "guardBreak": false,
+        "superArmor": false,
+        "hitsDowned": false
+    },
+    "dive": {
+        "id": "dive",
+        "kind": 4,
+        "damageType": 0,
+        "startup": 0.05999999865889549,
+        "active": 0.07999999821186066,
+        "recovery": 0.11999999731779099,
+        "offsetX": 0.0,
+        "offsetY": 0.6000000238418579,
+        "width": 1.0,
+        "height": 1.399999976158142,
+        "testDamage": 2.0,
+        "hitstop": 0.11999999731779099,
+        "knockback": 2.0,
+        "launchVelocity": 0.0,
+        "hitEvents": 1,
+        "unblockable": false,
+        "guardBreak": false,
+        "superArmor": false,
+        "hitsDowned": true
+    },
+    "downAttack": {
+        "id": "downAttack",
+        "kind": 5,
+        "damageType": 0,
+        "startup": 0.05999999865889549,
+        "active": 0.07999999821186066,
+        "recovery": 0.11999999731779099,
+        "offsetX": 0.8999999761581421,
+        "offsetY": 0.30000001192092898,
+        "width": 1.399999976158142,
+        "height": 0.800000011920929,
+        "testDamage": 1.0,
+        "hitstop": 0.05999999865889549,
+        "knockback": 0.0,
+        "launchVelocity": 0.0,
+        "hitEvents": 1,
+        "unblockable": false,
+        "guardBreak": false,
+        "superArmor": false,
+        "hitsDowned": true
+    },
+    "comboWindow": 0.5,
+    "airAttackFallSpeed": 1.5,
+    "parryWindow": 0.15000000596046449,
+    "parryStunTime": 0.800000011920929,
+    "parryKnockback": 6.0,
+    "dodgeReactionTime": 0.3499999940395355,
+    "dodgeKnockback": 5.0,
+    "playerHitstun": 0.4000000059604645,
+    "knockbackDecel": 30.0,
+    "rollInvulnStart": 0.05000000074505806,
+    "rollInvulnEnd": 0.30000001192092898,
+    "diveAreaRadius": 2.5,
+    "downAttackRange": 2.5
+}},
+{"asset":"CombatUnlocks_None","type":"CombatUnlockFixture","data":{
+    "meta": {
+        "domainId": "combat.CombatUnlocks_None",
+        "schemaVersion": 1,
+        "dataVersion": "wp02-r1",
+        "status": "experimental",
+        "policyIds": [],
+        "relatedRIds": [
+            "R-04-06",
+            "R-04-08"
+        ],
+        "changeRequestId": ""
+    },
+    "dashPierce": false,
+    "diveArea": false
+}},
+{"asset":"Enemy_p1Kobold","type":"EnemyDefinitionAsset","data":{
+    "meta": {
+        "domainId": "enemy.p1Kobold",
+        "schemaVersion": 1,
+        "dataVersion": "p1-sandbox-1",
+        "status": "experimental",
+        "policyIds": [
+            "TEST-P1-01"
+        ],
+        "relatedRIds": [],
+        "changeRequestId": ""
+    },
+    "enemyId": "p1Kobold",
+    "maxHp": 5.0,
+    "bodyWidth": 0.800000011920929,
+    "bodyHeight": 1.600000023841858,
+    "gravity": 30.0,
+    "staggerTime": 0.4000000059604645,
+    "staggerResistance": 0.0,
+    "physicalKnockbackScale": 1.0,
+    "magicKnockbackScale": 1.0,
+    "launch": 0,
+    "launchResistScale": 0.5,
+    "juggleFallSpeed": 2.0,
+    "juggleSlowTime": 0.3499999940395355,
+    "downTime": 1.0,
+    "wakeupTime": 0.6000000238418579,
+    "deathTime": 0.800000011920929,
+    "vanishTime": 0.4000000059604645,
+    "hasAttack": true,
+    "attack": {
+        "id": "p1Kobold.atk",
+        "kind": 6,
+        "damageType": 0,
+        "startup": 0.44999998807907107,
+        "active": 0.10000000149011612,
+        "recovery": 0.4000000059604645,
+        "offsetX": 0.699999988079071,
+        "offsetY": 0.8999999761581421,
+        "width": 1.0,
+        "height": 1.2000000476837159,
+        "testDamage": 1.0,
+        "hitstop": 0.03999999910593033,
+        "knockback": 3.0,
+        "launchVelocity": 0.0,
+        "hitEvents": 1,
+        "unblockable": false,
+        "guardBreak": false,
+        "superArmor": false,
+        "hitsDowned": false
+    },
+    "attackRange": 1.2999999523162842,
+    "attackInterval": 2.200000047683716,
+    "firstAttackDelay": 1.5,
+    "ai": {
+        "type": 0,
+        "moveSpeed": 2.0,
+        "trackRange": 12.0,
+        "fleeSpeed": 3.5,
+        "fleeTime": 1.2000000476837159,
+        "reapproachAfterFlee": true,
+        "jumpMinDistance": 2.5,
+        "jumpMaxDistance": 5.0,
+        "jumpSpeedX": 5.0,
+        "jumpVelocityY": 9.0,
+        "jumpCooldown": 1.5,
+        "hasAirAttack": false,
+        "airAttack": {
+            "id": "",
+            "kind": 6,
+            "damageType": 0,
+            "startup": 0.05999999865889549,
+            "active": 0.07999999821186066,
+            "recovery": 0.11999999731779099,
+            "offsetX": 0.800000011920929,
+            "offsetY": 0.8999999761581421,
+            "width": 1.0,
+            "height": 1.2000000476837159,
+            "testDamage": 10.0,
+            "hitstop": 0.03999999910593033,
+            "knockback": 1.5,
+            "launchVelocity": 0.0,
+            "hitEvents": 1,
+            "unblockable": false,
+            "guardBreak": false,
+            "superArmor": false,
+            "hitsDowned": false
+        },
+        "airAttackRange": 1.600000023841858,
+        "hasProjectile": false,
+        "projectile": {
+            "speed": 8.0,
+            "maxDistance": 12.0,
+            "width": 0.4000000059604645,
+            "height": 0.4000000059604645,
+            "spawnOffsetX": 0.6000000238418579,
+            "spawnOffsetY": 1.0
+        },
+        "retreatSpeed": 3.0,
+        "retreatTime": 0.800000011920929
+    },
+    "boss": {
+        "startPhase": "",
+        "phases": []
+    },
+    "exp": 40,
+    "defense": 0.0,
+    "color": {
+        "r": 0.550000011920929,
+        "g": 0.75,
+        "b": 0.3499999940395355,
+        "a": 1.0
+    }
+}},
+{"asset":"Enemy_p1Thief","type":"EnemyDefinitionAsset","data":{
+    "meta": {
+        "domainId": "enemy.p1Thief",
+        "schemaVersion": 1,
+        "dataVersion": "p1-sandbox-1",
+        "status": "experimental",
+        "policyIds": [
+            "TEST-P1-01"
+        ],
+        "relatedRIds": [],
+        "changeRequestId": ""
+    },
+    "enemyId": "p1Thief",
+    "maxHp": 7.0,
+    "bodyWidth": 0.800000011920929,
+    "bodyHeight": 1.600000023841858,
+    "gravity": 30.0,
+    "staggerTime": 0.4000000059604645,
+    "staggerResistance": 0.0,
+    "physicalKnockbackScale": 1.0,
+    "magicKnockbackScale": 1.0,
+    "launch": 0,
+    "launchResistScale": 0.5,
+    "juggleFallSpeed": 2.0,
+    "juggleSlowTime": 0.3499999940395355,
+    "downTime": 1.0,
+    "wakeupTime": 0.6000000238418579,
+    "deathTime": 0.800000011920929,
+    "vanishTime": 0.4000000059604645,
+    "hasAttack": true,
+    "attack": {
+        "id": "p1Thief.atk",
+        "kind": 6,
+        "damageType": 0,
+        "startup": 0.44999998807907107,
+        "active": 0.10000000149011612,
+        "recovery": 0.4000000059604645,
+        "offsetX": 0.699999988079071,
+        "offsetY": 0.8999999761581421,
+        "width": 1.0,
+        "height": 1.2000000476837159,
+        "testDamage": 1.0,
+        "hitstop": 0.03999999910593033,
+        "knockback": 3.0,
+        "launchVelocity": 0.0,
+        "hitEvents": 1,
+        "unblockable": false,
+        "guardBreak": false,
+        "superArmor": false,
+        "hitsDowned": false
+    },
+    "attackRange": 1.2999999523162842,
+    "attackInterval": 2.200000047683716,
+    "firstAttackDelay": 1.5,
+    "ai": {
+        "type": 0,
+        "moveSpeed": 2.0,
+        "trackRange": 12.0,
+        "fleeSpeed": 3.5,
+        "fleeTime": 1.2000000476837159,
+        "reapproachAfterFlee": true,
+        "jumpMinDistance": 2.5,
+        "jumpMaxDistance": 5.0,
+        "jumpSpeedX": 5.0,
+        "jumpVelocityY": 9.0,
+        "jumpCooldown": 1.5,
+        "hasAirAttack": false,
+        "airAttack": {
+            "id": "",
+            "kind": 6,
+            "damageType": 0,
+            "startup": 0.05999999865889549,
+            "active": 0.07999999821186066,
+            "recovery": 0.11999999731779099,
+            "offsetX": 0.800000011920929,
+            "offsetY": 0.8999999761581421,
+            "width": 1.0,
+            "height": 1.2000000476837159,
+            "testDamage": 10.0,
+            "hitstop": 0.03999999910593033,
+            "knockback": 1.5,
+            "launchVelocity": 0.0,
+            "hitEvents": 1,
+            "unblockable": false,
+            "guardBreak": false,
+            "superArmor": false,
+            "hitsDowned": false
+        },
+        "airAttackRange": 1.600000023841858,
+        "hasProjectile": false,
+        "projectile": {
+            "speed": 8.0,
+            "maxDistance": 12.0,
+            "width": 0.4000000059604645,
+            "height": 0.4000000059604645,
+            "spawnOffsetX": 0.6000000238418579,
+            "spawnOffsetY": 1.0
+        },
+        "retreatSpeed": 3.0,
+        "retreatTime": 0.800000011920929
+    },
+    "boss": {
+        "startPhase": "",
+        "phases": []
+    },
+    "exp": 50,
+    "defense": 0.0,
+    "color": {
+        "r": 0.5,
+        "g": 0.5,
+        "b": 0.6000000238418579,
+        "a": 1.0
+    }
+}},
+{"asset":"Enemy_p1RedKobold","type":"EnemyDefinitionAsset","data":{
+    "meta": {
+        "domainId": "enemy.p1RedKobold",
+        "schemaVersion": 1,
+        "dataVersion": "p1-sandbox-1",
+        "status": "experimental",
+        "policyIds": [
+            "TEST-P1-01"
+        ],
+        "relatedRIds": [],
+        "changeRequestId": ""
+    },
+    "enemyId": "p1RedKobold",
+    "maxHp": 15.0,
+    "bodyWidth": 0.800000011920929,
+    "bodyHeight": 1.600000023841858,
+    "gravity": 30.0,
+    "staggerTime": 0.4000000059604645,
+    "staggerResistance": 0.0,
+    "physicalKnockbackScale": 1.0,
+    "magicKnockbackScale": 1.0,
+    "launch": 0,
+    "launchResistScale": 0.5,
+    "juggleFallSpeed": 2.0,
+    "juggleSlowTime": 0.3499999940395355,
+    "downTime": 1.0,
+    "wakeupTime": 0.6000000238418579,
+    "deathTime": 0.800000011920929,
+    "vanishTime": 0.4000000059604645,
+    "hasAttack": true,
+    "attack": {
+        "id": "p1RedKobold.atk",
+        "kind": 6,
+        "damageType": 0,
+        "startup": 0.44999998807907107,
+        "active": 0.10000000149011612,
+        "recovery": 0.4000000059604645,
+        "offsetX": 0.699999988079071,
+        "offsetY": 0.8999999761581421,
+        "width": 1.0,
+        "height": 1.2000000476837159,
+        "testDamage": 2.0,
+        "hitstop": 0.03999999910593033,
+        "knockback": 3.0,
+        "launchVelocity": 0.0,
+        "hitEvents": 1,
+        "unblockable": false,
+        "guardBreak": false,
+        "superArmor": false,
+        "hitsDowned": false
+    },
+    "attackRange": 1.2999999523162842,
+    "attackInterval": 2.200000047683716,
+    "firstAttackDelay": 1.5,
+    "ai": {
+        "type": 0,
+        "moveSpeed": 2.0,
+        "trackRange": 12.0,
+        "fleeSpeed": 3.5,
+        "fleeTime": 1.2000000476837159,
+        "reapproachAfterFlee": true,
+        "jumpMinDistance": 2.5,
+        "jumpMaxDistance": 5.0,
+        "jumpSpeedX": 5.0,
+        "jumpVelocityY": 9.0,
+        "jumpCooldown": 1.5,
+        "hasAirAttack": false,
+        "airAttack": {
+            "id": "",
+            "kind": 6,
+            "damageType": 0,
+            "startup": 0.05999999865889549,
+            "active": 0.07999999821186066,
+            "recovery": 0.11999999731779099,
+            "offsetX": 0.800000011920929,
+            "offsetY": 0.8999999761581421,
+            "width": 1.0,
+            "height": 1.2000000476837159,
+            "testDamage": 10.0,
+            "hitstop": 0.03999999910593033,
+            "knockback": 1.5,
+            "launchVelocity": 0.0,
+            "hitEvents": 1,
+            "unblockable": false,
+            "guardBreak": false,
+            "superArmor": false,
+            "hitsDowned": false
+        },
+        "airAttackRange": 1.600000023841858,
+        "hasProjectile": false,
+        "projectile": {
+            "speed": 8.0,
+            "maxDistance": 12.0,
+            "width": 0.4000000059604645,
+            "height": 0.4000000059604645,
+            "spawnOffsetX": 0.6000000238418579,
+            "spawnOffsetY": 1.0
+        },
+        "retreatSpeed": 3.0,
+        "retreatTime": 0.800000011920929
+    },
+    "boss": {
+        "startPhase": "",
+        "phases": []
+    },
+    "exp": 80,
+    "defense": 0.0,
+    "color": {
+        "r": 0.8500000238418579,
+        "g": 0.30000001192092898,
+        "b": 0.25,
+        "a": 1.0
+    }
+}},
+{"asset":"Enemy_p1Lizard","type":"EnemyDefinitionAsset","data":{
+    "meta": {
+        "domainId": "enemy.p1Lizard",
+        "schemaVersion": 1,
+        "dataVersion": "p1-sandbox-1",
+        "status": "experimental",
+        "policyIds": [
+            "TEST-P1-01"
+        ],
+        "relatedRIds": [],
+        "changeRequestId": ""
+    },
+    "enemyId": "p1Lizard",
+    "maxHp": 27.0,
+    "bodyWidth": 0.800000011920929,
+    "bodyHeight": 1.600000023841858,
+    "gravity": 30.0,
+    "staggerTime": 0.4000000059604645,
+    "staggerResistance": 0.0,
+    "physicalKnockbackScale": 1.0,
+    "magicKnockbackScale": 1.0,
+    "launch": 0,
+    "launchResistScale": 0.5,
+    "juggleFallSpeed": 2.0,
+    "juggleSlowTime": 0.3499999940395355,
+    "downTime": 1.0,
+    "wakeupTime": 0.6000000238418579,
+    "deathTime": 0.800000011920929,
+    "vanishTime": 0.4000000059604645,
+    "hasAttack": true,
+    "attack": {
+        "id": "p1Lizard.atk",
+        "kind": 6,
+        "damageType": 0,
+        "startup": 0.44999998807907107,
+        "active": 0.10000000149011612,
+        "recovery": 0.4000000059604645,
+        "offsetX": 0.699999988079071,
+        "offsetY": 0.8999999761581421,
+        "width": 1.0,
+        "height": 1.2000000476837159,
+        "testDamage": 2.0,
+        "hitstop": 0.03999999910593033,
+        "knockback": 3.0,
+        "launchVelocity": 0.0,
+        "hitEvents": 1,
+        "unblockable": false,
+        "guardBreak": false,
+        "superArmor": false,
+        "hitsDowned": false
+    },
+    "attackRange": 1.2999999523162842,
+    "attackInterval": 2.200000047683716,
+    "firstAttackDelay": 1.5,
+    "ai": {
+        "type": 0,
+        "moveSpeed": 2.0,
+        "trackRange": 12.0,
+        "fleeSpeed": 3.5,
+        "fleeTime": 1.2000000476837159,
+        "reapproachAfterFlee": true,
+        "jumpMinDistance": 2.5,
+        "jumpMaxDistance": 5.0,
+        "jumpSpeedX": 5.0,
+        "jumpVelocityY": 9.0,
+        "jumpCooldown": 1.5,
+        "hasAirAttack": false,
+        "airAttack": {
+            "id": "",
+            "kind": 6,
+            "damageType": 0,
+            "startup": 0.05999999865889549,
+            "active": 0.07999999821186066,
+            "recovery": 0.11999999731779099,
+            "offsetX": 0.800000011920929,
+            "offsetY": 0.8999999761581421,
+            "width": 1.0,
+            "height": 1.2000000476837159,
+            "testDamage": 10.0,
+            "hitstop": 0.03999999910593033,
+            "knockback": 1.5,
+            "launchVelocity": 0.0,
+            "hitEvents": 1,
+            "unblockable": false,
+            "guardBreak": false,
+            "superArmor": false,
+            "hitsDowned": false
+        },
+        "airAttackRange": 1.600000023841858,
+        "hasProjectile": false,
+        "projectile": {
+            "speed": 8.0,
+            "maxDistance": 12.0,
+            "width": 0.4000000059604645,
+            "height": 0.4000000059604645,
+            "spawnOffsetX": 0.6000000238418579,
+            "spawnOffsetY": 1.0
+        },
+        "retreatSpeed": 3.0,
+        "retreatTime": 0.800000011920929
+    },
+    "boss": {
+        "startPhase": "",
+        "phases": []
+    },
+    "exp": 120,
+    "defense": 0.0,
+    "color": {
+        "r": 0.30000001192092898,
+        "g": 0.6000000238418579,
+        "b": 0.550000011920929,
+        "a": 1.0
+    }
+}},
+{"asset":"Enemy_p1Goblin","type":"EnemyDefinitionAsset","data":{
+    "meta": {
+        "domainId": "enemy.p1Goblin",
+        "schemaVersion": 1,
+        "dataVersion": "p1-sandbox-1",
+        "status": "experimental",
+        "policyIds": [
+            "TEST-P1-01"
+        ],
+        "relatedRIds": [],
+        "changeRequestId": ""
+    },
+    "enemyId": "p1Goblin",
+    "maxHp": 15.0,
+    "bodyWidth": 0.800000011920929,
+    "bodyHeight": 1.600000023841858,
+    "gravity": 30.0,
+    "staggerTime": 0.4000000059604645,
+    "staggerResistance": 0.0,
+    "physicalKnockbackScale": 1.0,
+    "magicKnockbackScale": 1.0,
+    "launch": 0,
+    "launchResistScale": 0.5,
+    "juggleFallSpeed": 2.0,
+    "juggleSlowTime": 0.3499999940395355,
+    "downTime": 1.0,
+    "wakeupTime": 0.6000000238418579,
+    "deathTime": 0.800000011920929,
+    "vanishTime": 0.4000000059604645,
+    "hasAttack": true,
+    "attack": {
+        "id": "p1Goblin.atk",
+        "kind": 6,
+        "damageType": 0,
+        "startup": 0.44999998807907107,
+        "active": 0.10000000149011612,
+        "recovery": 0.4000000059604645,
+        "offsetX": 0.699999988079071,
+        "offsetY": 0.8999999761581421,
+        "width": 1.0,
+        "height": 1.2000000476837159,
+        "testDamage": 2.0,
+        "hitstop": 0.03999999910593033,
+        "knockback": 3.0,
+        "launchVelocity": 0.0,
+        "hitEvents": 1,
+        "unblockable": false,
+        "guardBreak": false,
+        "superArmor": false,
+        "hitsDowned": false
+    },
+    "attackRange": 1.2999999523162842,
+    "attackInterval": 2.200000047683716,
+    "firstAttackDelay": 1.5,
+    "ai": {
+        "type": 0,
+        "moveSpeed": 2.0,
+        "trackRange": 12.0,
+        "fleeSpeed": 3.5,
+        "fleeTime": 1.2000000476837159,
+        "reapproachAfterFlee": true,
+        "jumpMinDistance": 2.5,
+        "jumpMaxDistance": 5.0,
+        "jumpSpeedX": 5.0,
+        "jumpVelocityY": 9.0,
+        "jumpCooldown": 1.5,
+        "hasAirAttack": false,
+        "airAttack": {
+            "id": "",
+            "kind": 6,
+            "damageType": 0,
+            "startup": 0.05999999865889549,
+            "active": 0.07999999821186066,
+            "recovery": 0.11999999731779099,
+            "offsetX": 0.800000011920929,
+            "offsetY": 0.8999999761581421,
+            "width": 1.0,
+            "height": 1.2000000476837159,
+            "testDamage": 10.0,
+            "hitstop": 0.03999999910593033,
+            "knockback": 1.5,
+            "launchVelocity": 0.0,
+            "hitEvents": 1,
+            "unblockable": false,
+            "guardBreak": false,
+            "superArmor": false,
+            "hitsDowned": false
+        },
+        "airAttackRange": 1.600000023841858,
+        "hasProjectile": false,
+        "projectile": {
+            "speed": 8.0,
+            "maxDistance": 12.0,
+            "width": 0.4000000059604645,
+            "height": 0.4000000059604645,
+            "spawnOffsetX": 0.6000000238418579,
+            "spawnOffsetY": 1.0
+        },
+        "retreatSpeed": 3.0,
+        "retreatTime": 0.800000011920929
+    },
+    "boss": {
+        "startPhase": "",
+        "phases": []
+    },
+    "exp": 90,
+    "defense": 0.0,
+    "color": {
+        "r": 0.6000000238418579,
+        "g": 0.5,
+        "b": 0.20000000298023225,
+        "a": 1.0
+    }
+}},
+{"asset":"Enemy_p1Dummy","type":"EnemyDefinitionAsset","data":{
+    "meta": {
+        "domainId": "enemy.p1Dummy",
+        "schemaVersion": 1,
+        "dataVersion": "p1-sandbox-1",
+        "status": "experimental",
+        "policyIds": [
+            "TEST-P1-01"
+        ],
+        "relatedRIds": [],
+        "changeRequestId": ""
+    },
+    "enemyId": "p1Dummy",
+    "maxHp": 9999.0,
+    "bodyWidth": 0.800000011920929,
+    "bodyHeight": 1.600000023841858,
+    "gravity": 30.0,
+    "staggerTime": 0.4000000059604645,
+    "staggerResistance": 0.0,
+    "physicalKnockbackScale": 1.0,
+    "magicKnockbackScale": 1.0,
+    "launch": 0,
+    "launchResistScale": 0.5,
+    "juggleFallSpeed": 2.0,
+    "juggleSlowTime": 0.3499999940395355,
+    "downTime": 1.0,
+    "wakeupTime": 0.6000000238418579,
+    "deathTime": 0.800000011920929,
+    "vanishTime": 0.4000000059604645,
+    "hasAttack": false,
+    "attack": {
+        "id": "p1Dummy.atk",
+        "kind": 6,
+        "damageType": 0,
+        "startup": 0.44999998807907107,
+        "active": 0.10000000149011612,
+        "recovery": 0.4000000059604645,
+        "offsetX": 0.699999988079071,
+        "offsetY": 0.8999999761581421,
+        "width": 1.0,
+        "height": 1.2000000476837159,
+        "testDamage": 0.0,
+        "hitstop": 0.03999999910593033,
+        "knockback": 3.0,
+        "launchVelocity": 0.0,
+        "hitEvents": 1,
+        "unblockable": false,
+        "guardBreak": false,
+        "superArmor": false,
+        "hitsDowned": false
+    },
+    "attackRange": 1.2999999523162842,
+    "attackInterval": 2.200000047683716,
+    "firstAttackDelay": 1.5,
+    "ai": {
+        "type": 0,
+        "moveSpeed": 2.0,
+        "trackRange": 12.0,
+        "fleeSpeed": 3.5,
+        "fleeTime": 1.2000000476837159,
+        "reapproachAfterFlee": true,
+        "jumpMinDistance": 2.5,
+        "jumpMaxDistance": 5.0,
+        "jumpSpeedX": 5.0,
+        "jumpVelocityY": 9.0,
+        "jumpCooldown": 1.5,
+        "hasAirAttack": false,
+        "airAttack": {
+            "id": "",
+            "kind": 6,
+            "damageType": 0,
+            "startup": 0.05999999865889549,
+            "active": 0.07999999821186066,
+            "recovery": 0.11999999731779099,
+            "offsetX": 0.800000011920929,
+            "offsetY": 0.8999999761581421,
+            "width": 1.0,
+            "height": 1.2000000476837159,
+            "testDamage": 10.0,
+            "hitstop": 0.03999999910593033,
+            "knockback": 1.5,
+            "launchVelocity": 0.0,
+            "hitEvents": 1,
+            "unblockable": false,
+            "guardBreak": false,
+            "superArmor": false,
+            "hitsDowned": false
+        },
+        "airAttackRange": 1.600000023841858,
+        "hasProjectile": false,
+        "projectile": {
+            "speed": 8.0,
+            "maxDistance": 12.0,
+            "width": 0.4000000059604645,
+            "height": 0.4000000059604645,
+            "spawnOffsetX": 0.6000000238418579,
+            "spawnOffsetY": 1.0
+        },
+        "retreatSpeed": 3.0,
+        "retreatTime": 0.800000011920929
+    },
+    "boss": {
+        "startPhase": "",
+        "phases": []
+    },
+    "exp": 0,
+    "defense": 0.0,
+    "color": {
+        "r": 0.699999988079071,
+        "g": 0.699999988079071,
+        "b": 0.699999988079071,
+        "a": 1.0
+    }
+}},
+{"asset":"RingConfig_P1","type":"RingConfig","data":{
+    "meta": {
+        "domainId": "ring.p1",
+        "schemaVersion": 1,
+        "dataVersion": "p1-sandbox-1",
+        "status": "experimental",
+        "policyIds": [
+            "EXP-P1-ITEM-01"
+        ],
+        "relatedRIds": [],
+        "changeRequestId": ""
+    },
+    "slowScale": 0.20000000298023225,
+    "slotsPerPage": 8,
+    "cursorDeadzone": 0.3499999940395355,
+    "magics": [],
+    "commands": [],
+    "commandTakesButton": true,
+    "minCommandDirections": 3,
+    "items": [],
+    "startInventory": [
+        {
+            "itemId": "p1test.potion.hp",
+            "count": 3
+        },
+        {
+            "itemId": "p1test.potion.mp",
+            "count": 3
+        },
+        {
+            "itemId": "p1test.potion.mix",
+            "count": 1
+        },
+        {
+            "itemId": "p1test.revive",
+            "count": 1
+        },
+        {
+            "itemId": "p1test.scroll.missile",
+            "count": 2
+        },
+        {
+            "itemId": "p1test.scroll.light_orb",
+            "count": 2
+        },
+        {
+            "itemId": "p1test.scroll.dark_orb",
+            "count": 2
+        },
+        {
+            "itemId": "p1test.scroll.heal",
+            "count": 2
+        },
+        {
+            "itemId": "p1test.scroll.fire_ball",
+            "count": 2
+        },
+        {
+            "itemId": "p1test.scroll.light_sword",
+            "count": 2
+        },
+        {
+            "itemId": "p1test.scroll.dark_sword",
+            "count": 2
+        },
+        {
+            "itemId": "p1test.scroll.shield",
+            "count": 2
+        },
+        {
+            "itemId": "p1test.scroll.archangel",
+            "count": 2
+        },
+        {
+            "itemId": "p1test.scroll.demon",
+            "count": 2
+        },
+        {
+            "itemId": "p1test.scroll.fire_wall",
+            "count": 2
+        }
+    ],
+    "startQuickslots": [
+        "p1test.potion.hp",
+        "p1test.potion.mp",
+        "p1test.scroll.missile",
+        "p1test.scroll.fire_ball"
+    ]
+}},
+{"asset":"P1Profile_Sandbox","type":"P1ProfileAsset","data":{
+    "profile": {
+        "Version": "p1-test-1",
+        "Characters": [
+            {
+                "Id": "volker",
+                "BaseMaxHp": 10,
+                "BaseMaxMp": 5,
+                "CapMaxHp": 100,
+                "CapMaxMp": 100,
+                "CapPhysAtk": 30,
+                "CapMagAtk": 30,
+                "CapDefense": 40,
+                "StartKarz": 100,
+                "WeaponBaseDamage": 1.0
+            }
+        ],
+        "MaxLevel": 50,
+        "ExpToNext": [
+            0,
+            100,
+            100,
+            200,
+            300,
+            400,
+            500,
+            600,
+            700,
+            800,
+            900,
+            1000,
+            1100,
+            1200,
+            1300,
+            1400,
+            1500,
+            1600,
+            1700,
+            1800,
+            1900,
+            2000,
+            2100,
+            2200,
+            2300,
+            2400,
+            2500,
+            2600,
+            2700,
+            2800,
+            2900,
+            3000,
+            3100,
+            3200,
+            3300,
+            3400,
+            3500,
+            3600,
+            3700,
+            3800,
+            3900,
+            4000,
+            4100,
+            4200,
+            4300,
+            4400,
+            4500,
+            4600,
+            4700,
+            4800,
+            4900
+        ],
+        "Lv50CurrencyRate": 1.0,
+        "PermanentSlotWeight": 0.75,
+        "TemporarySlotWeight": 0.25,
+        "StoryRarity": [
+            {
+                "Stage": 0,
+                "Normal": 80.0,
+                "Rare": 20.0,
+                "Epic": 0.0,
+                "Legendary": 0.0
+            },
+            {
+                "Stage": 1,
+                "Normal": 70.0,
+                "Rare": 23.0,
+                "Epic": 7.0,
+                "Legendary": 0.0
+            },
+            {
+                "Stage": 2,
+                "Normal": 70.0,
+                "Rare": 22.0,
+                "Epic": 7.0,
+                "Legendary": 1.0
+            }
+        ],
+        "Mandatory": [
+            {
+                "Id": "MagicMissile",
+                "CardId": "card.mandatory.MagicMissile",
+                "FirstLevel": 2,
+                "Order": 1,
+                "StoryGateEnabled": false,
+                "PrerequisiteMandatoryIds": []
+            },
+            {
+                "Id": "DoubleJump",
+                "CardId": "card.mandatory.DoubleJump",
+                "FirstLevel": 4,
+                "Order": 2,
+                "StoryGateEnabled": false,
+                "PrerequisiteMandatoryIds": []
+            },
+            {
+                "Id": "AirDash",
+                "CardId": "card.mandatory.AirDash",
+                "FirstLevel": 6,
+                "Order": 3,
+                "StoryGateEnabled": false,
+                "PrerequisiteMandatoryIds": []
+            },
+            {
+                "Id": "AirDive",
+                "CardId": "card.mandatory.AirDive",
+                "FirstLevel": 8,
+                "Order": 4,
+                "StoryGateEnabled": false,
+                "PrerequisiteMandatoryIds": []
+            }
+        ],
+        "Cards": [
+            {
+                "Id": "card.mandatory.MagicMissile",
+                "Kind": 6,
+                "Rarity": 0,
+                "Permanent": true,
+                "RequiresLearned": "",
+                "Unlocks": "MagicMissile",
+                "OneTime": true,
+                "MinLevel": 0,
+                "SpellId": "spell.missile",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": true,
+                "Axes": [],
+                "Label": "매직 미사일 습득"
+            },
+            {
+                "Id": "card.mandatory.DoubleJump",
+                "Kind": 6,
+                "Rarity": 0,
+                "Permanent": true,
+                "RequiresLearned": "",
+                "Unlocks": "DoubleJump",
+                "OneTime": true,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": true,
+                "Axes": [],
+                "Label": "2단 점프 습득"
+            },
+            {
+                "Id": "card.mandatory.AirDash",
+                "Kind": 6,
+                "Rarity": 0,
+                "Permanent": true,
+                "RequiresLearned": "",
+                "Unlocks": "AirDash",
+                "OneTime": true,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": true,
+                "Axes": [],
+                "Label": "공중 직선 돌진 습득"
+            },
+            {
+                "Id": "card.mandatory.AirDive",
+                "Kind": 6,
+                "Rarity": 0,
+                "Permanent": true,
+                "RequiresLearned": "",
+                "Unlocks": "AirDive",
+                "OneTime": true,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": true,
+                "Axes": [],
+                "Label": "공중 낙하 강공격 습득"
+            },
+            {
+                "Id": "card.stat.MaxHp.N",
+                "Kind": 0,
+                "Rarity": 0,
+                "Permanent": true,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "stat.MaxHp",
+                        "Delta": 2.0,
+                        "Limit": 0.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "최대 HP +2"
+            },
+            {
+                "Id": "card.stat.MaxHp.R",
+                "Kind": 0,
+                "Rarity": 1,
+                "Permanent": true,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "stat.MaxHp",
+                        "Delta": 3.0,
+                        "Limit": 0.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "최대 HP +3"
+            },
+            {
+                "Id": "card.stat.MaxHp.E",
+                "Kind": 0,
+                "Rarity": 2,
+                "Permanent": true,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "stat.MaxHp",
+                        "Delta": 5.0,
+                        "Limit": 0.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "최대 HP +5"
+            },
+            {
+                "Id": "card.stat.MaxHp.L",
+                "Kind": 0,
+                "Rarity": 3,
+                "Permanent": true,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "stat.MaxHp",
+                        "Delta": 8.0,
+                        "Limit": 0.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "최대 HP +8"
+            },
+            {
+                "Id": "card.stat.MaxMp.N",
+                "Kind": 0,
+                "Rarity": 0,
+                "Permanent": true,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "stat.MaxMp",
+                        "Delta": 1.0,
+                        "Limit": 0.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "최대 MP +1"
+            },
+            {
+                "Id": "card.stat.MaxMp.R",
+                "Kind": 0,
+                "Rarity": 1,
+                "Permanent": true,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "stat.MaxMp",
+                        "Delta": 2.0,
+                        "Limit": 0.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "최대 MP +2"
+            },
+            {
+                "Id": "card.stat.MaxMp.E",
+                "Kind": 0,
+                "Rarity": 2,
+                "Permanent": true,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "stat.MaxMp",
+                        "Delta": 3.0,
+                        "Limit": 0.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "최대 MP +3"
+            },
+            {
+                "Id": "card.stat.MaxMp.L",
+                "Kind": 0,
+                "Rarity": 3,
+                "Permanent": true,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "stat.MaxMp",
+                        "Delta": 5.0,
+                        "Limit": 0.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "최대 MP +5"
+            },
+            {
+                "Id": "card.stat.PhysAtk.N",
+                "Kind": 0,
+                "Rarity": 0,
+                "Permanent": true,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "stat.PhysAtk",
+                        "Delta": 1.0,
+                        "Limit": 0.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "물리 공격 +1"
+            },
+            {
+                "Id": "card.stat.PhysAtk.R",
+                "Kind": 0,
+                "Rarity": 1,
+                "Permanent": true,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "stat.PhysAtk",
+                        "Delta": 2.0,
+                        "Limit": 0.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "물리 공격 +2"
+            },
+            {
+                "Id": "card.stat.PhysAtk.E",
+                "Kind": 0,
+                "Rarity": 2,
+                "Permanent": true,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "stat.PhysAtk",
+                        "Delta": 3.0,
+                        "Limit": 0.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "물리 공격 +3"
+            },
+            {
+                "Id": "card.stat.PhysAtk.L",
+                "Kind": 0,
+                "Rarity": 3,
+                "Permanent": true,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "stat.PhysAtk",
+                        "Delta": 5.0,
+                        "Limit": 0.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "물리 공격 +5"
+            },
+            {
+                "Id": "card.stat.MagAtk.N",
+                "Kind": 0,
+                "Rarity": 0,
+                "Permanent": true,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "stat.MagAtk",
+                        "Delta": 1.0,
+                        "Limit": 0.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "마법 공격 +1"
+            },
+            {
+                "Id": "card.stat.MagAtk.R",
+                "Kind": 0,
+                "Rarity": 1,
+                "Permanent": true,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "stat.MagAtk",
+                        "Delta": 2.0,
+                        "Limit": 0.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "마법 공격 +2"
+            },
+            {
+                "Id": "card.stat.MagAtk.E",
+                "Kind": 0,
+                "Rarity": 2,
+                "Permanent": true,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "stat.MagAtk",
+                        "Delta": 3.0,
+                        "Limit": 0.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "마법 공격 +3"
+            },
+            {
+                "Id": "card.stat.MagAtk.L",
+                "Kind": 0,
+                "Rarity": 3,
+                "Permanent": true,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "stat.MagAtk",
+                        "Delta": 5.0,
+                        "Limit": 0.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "마법 공격 +5"
+            },
+            {
+                "Id": "card.stat.Defense.N",
+                "Kind": 0,
+                "Rarity": 0,
+                "Permanent": true,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "stat.Defense",
+                        "Delta": 1.0,
+                        "Limit": 0.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "방어 +1"
+            },
+            {
+                "Id": "card.stat.Defense.R",
+                "Kind": 0,
+                "Rarity": 1,
+                "Permanent": true,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "stat.Defense",
+                        "Delta": 2.0,
+                        "Limit": 0.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "방어 +2"
+            },
+            {
+                "Id": "card.stat.Defense.E",
+                "Kind": 0,
+                "Rarity": 2,
+                "Permanent": true,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "stat.Defense",
+                        "Delta": 3.0,
+                        "Limit": 0.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "방어 +3"
+            },
+            {
+                "Id": "card.stat.Defense.L",
+                "Kind": 0,
+                "Rarity": 3,
+                "Permanent": true,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "stat.Defense",
+                        "Delta": 5.0,
+                        "Limit": 0.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "방어 +5"
+            },
+            {
+                "Id": "card.skill.groundBasic.N",
+                "Kind": 1,
+                "Rarity": 0,
+                "Permanent": true,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "skill.groundBasic.dmg",
+                        "Delta": 1.0,
+                        "Limit": 10.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "지상 4연타 전타 피해 +1"
+            },
+            {
+                "Id": "card.skill.groundBasic.R",
+                "Kind": 1,
+                "Rarity": 1,
+                "Permanent": true,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "skill.groundBasic.dmg",
+                        "Delta": 2.0,
+                        "Limit": 10.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "지상 4연타 전타 피해 +2"
+            },
+            {
+                "Id": "card.skill.groundBasic.E",
+                "Kind": 1,
+                "Rarity": 2,
+                "Permanent": true,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "skill.groundBasic.dmg",
+                        "Delta": 3.0,
+                        "Limit": 10.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "지상 4연타 전타 피해 +3"
+            },
+            {
+                "Id": "card.skill.groundBasic.L",
+                "Kind": 1,
+                "Rarity": 3,
+                "Permanent": true,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "skill.groundBasic.dmg",
+                        "Delta": 5.0,
+                        "Limit": 10.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "지상 4연타 전타 피해 +5"
+            },
+            {
+                "Id": "card.skill.airBasic.N",
+                "Kind": 1,
+                "Rarity": 0,
+                "Permanent": true,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "skill.airBasic.dmg",
+                        "Delta": 1.0,
+                        "Limit": 10.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "공중 4연타 전타 피해 +1"
+            },
+            {
+                "Id": "card.skill.airBasic.R",
+                "Kind": 1,
+                "Rarity": 1,
+                "Permanent": true,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "skill.airBasic.dmg",
+                        "Delta": 2.0,
+                        "Limit": 10.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "공중 4연타 전타 피해 +2"
+            },
+            {
+                "Id": "card.skill.airBasic.E",
+                "Kind": 1,
+                "Rarity": 2,
+                "Permanent": true,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "skill.airBasic.dmg",
+                        "Delta": 3.0,
+                        "Limit": 10.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "공중 4연타 전타 피해 +3"
+            },
+            {
+                "Id": "card.skill.airBasic.L",
+                "Kind": 1,
+                "Rarity": 3,
+                "Permanent": true,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "skill.airBasic.dmg",
+                        "Delta": 5.0,
+                        "Limit": 10.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "공중 4연타 전타 피해 +5"
+            },
+            {
+                "Id": "card.skill.airDash.N",
+                "Kind": 1,
+                "Rarity": 0,
+                "Permanent": true,
+                "RequiresLearned": "AirDash",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "skill.airDash.dmg",
+                        "Delta": 1.0,
+                        "Limit": 12.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "공중 돌진 피해 +1"
+            },
+            {
+                "Id": "card.skill.airDash.R",
+                "Kind": 1,
+                "Rarity": 1,
+                "Permanent": true,
+                "RequiresLearned": "AirDash",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "skill.airDash.dmg",
+                        "Delta": 2.0,
+                        "Limit": 12.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "공중 돌진 피해 +2"
+            },
+            {
+                "Id": "card.skill.airDash.E",
+                "Kind": 1,
+                "Rarity": 2,
+                "Permanent": true,
+                "RequiresLearned": "AirDash",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "skill.airDash.dmg",
+                        "Delta": 3.0,
+                        "Limit": 12.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "공중 돌진 피해 +3"
+            },
+            {
+                "Id": "card.skill.airDash.L",
+                "Kind": 1,
+                "Rarity": 3,
+                "Permanent": true,
+                "RequiresLearned": "AirDash",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "skill.airDash.dmg",
+                        "Delta": 5.0,
+                        "Limit": 12.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "공중 돌진 피해 +5"
+            },
+            {
+                "Id": "card.skill.airDiveDowned.N",
+                "Kind": 1,
+                "Rarity": 0,
+                "Permanent": true,
+                "RequiresLearned": "AirDive",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "skill.airDiveDowned.dmg",
+                        "Delta": 1.0,
+                        "Limit": 10.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "낙하 강공격 다운 추가 피해 +1"
+            },
+            {
+                "Id": "card.skill.airDiveDowned.R",
+                "Kind": 1,
+                "Rarity": 1,
+                "Permanent": true,
+                "RequiresLearned": "AirDive",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "skill.airDiveDowned.dmg",
+                        "Delta": 2.0,
+                        "Limit": 10.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "낙하 강공격 다운 추가 피해 +2"
+            },
+            {
+                "Id": "card.skill.airDiveDowned.E",
+                "Kind": 1,
+                "Rarity": 2,
+                "Permanent": true,
+                "RequiresLearned": "AirDive",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "skill.airDiveDowned.dmg",
+                        "Delta": 3.0,
+                        "Limit": 10.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "낙하 강공격 다운 추가 피해 +3"
+            },
+            {
+                "Id": "card.skill.airDiveDowned.L",
+                "Kind": 1,
+                "Rarity": 3,
+                "Permanent": true,
+                "RequiresLearned": "AirDive",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "skill.airDiveDowned.dmg",
+                        "Delta": 5.0,
+                        "Limit": 10.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "낙하 강공격 다운 추가 피해 +5"
+            },
+            {
+                "Id": "card.skill.downAttack.N",
+                "Kind": 1,
+                "Rarity": 0,
+                "Permanent": true,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "skill.downAttack.dmg",
+                        "Delta": 1.0,
+                        "Limit": 10.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "다운 공격 피해 +1"
+            },
+            {
+                "Id": "card.skill.downAttack.R",
+                "Kind": 1,
+                "Rarity": 1,
+                "Permanent": true,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "skill.downAttack.dmg",
+                        "Delta": 2.0,
+                        "Limit": 10.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "다운 공격 피해 +2"
+            },
+            {
+                "Id": "card.skill.downAttack.E",
+                "Kind": 1,
+                "Rarity": 2,
+                "Permanent": true,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "skill.downAttack.dmg",
+                        "Delta": 3.0,
+                        "Limit": 10.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "다운 공격 피해 +3"
+            },
+            {
+                "Id": "card.skill.downAttack.L",
+                "Kind": 1,
+                "Rarity": 3,
+                "Permanent": true,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "skill.downAttack.dmg",
+                        "Delta": 5.0,
+                        "Limit": 10.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "다운 공격 피해 +5"
+            },
+            {
+                "Id": "card.skill.launcher.N",
+                "Kind": 1,
+                "Rarity": 0,
+                "Permanent": true,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "skill.launcher.height",
+                        "Delta": 0.15000000596046449,
+                        "Limit": 1.5,
+                        "First": 0.0
+                    },
+                    {
+                        "Axis": "skill.launcher.time",
+                        "Delta": 0.05000000074505806,
+                        "Limit": 0.5,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "런처 띄우기 높이/체공"
+            },
+            {
+                "Id": "card.skill.launcher.R",
+                "Kind": 1,
+                "Rarity": 1,
+                "Permanent": true,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "skill.launcher.height",
+                        "Delta": 0.25,
+                        "Limit": 1.5,
+                        "First": 0.0
+                    },
+                    {
+                        "Axis": "skill.launcher.time",
+                        "Delta": 0.09000000357627869,
+                        "Limit": 0.5,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "런처 띄우기 높이/체공"
+            },
+            {
+                "Id": "card.skill.launcher.E",
+                "Kind": 1,
+                "Rarity": 2,
+                "Permanent": true,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "skill.launcher.height",
+                        "Delta": 0.4000000059604645,
+                        "Limit": 1.5,
+                        "First": 0.0
+                    },
+                    {
+                        "Axis": "skill.launcher.time",
+                        "Delta": 0.14000000059604646,
+                        "Limit": 0.5,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "런처 띄우기 높이/체공"
+            },
+            {
+                "Id": "card.skill.launcher.L",
+                "Kind": 1,
+                "Rarity": 3,
+                "Permanent": true,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "skill.launcher.height",
+                        "Delta": 0.6000000238418579,
+                        "Limit": 1.5,
+                        "First": 0.0
+                    },
+                    {
+                        "Axis": "skill.launcher.time",
+                        "Delta": 0.20000000298023225,
+                        "Limit": 0.5,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "런처 띄우기 높이/체공"
+            },
+            {
+                "Id": "card.missile.N",
+                "Kind": 2,
+                "Rarity": 0,
+                "Permanent": true,
+                "RequiresLearned": "MagicMissile",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "spell.missile",
+                "MpDelta": 1,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "mm.dmg",
+                        "Delta": 2.0,
+                        "Limit": 0.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "매직 미사일 피해+2 / MP+1"
+            },
+            {
+                "Id": "card.missile.R",
+                "Kind": 2,
+                "Rarity": 1,
+                "Permanent": true,
+                "RequiresLearned": "MagicMissile",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "spell.missile",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "mm.dmg",
+                        "Delta": 3.0,
+                        "Limit": 0.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "매직 미사일 피해+3"
+            },
+            {
+                "Id": "card.missile.E.proj",
+                "Kind": 2,
+                "Rarity": 2,
+                "Permanent": true,
+                "RequiresLearned": "MagicMissile",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "spell.missile",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "mm.proj",
+                        "Delta": 1.0,
+                        "Limit": 0.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "매직 미사일 투사체+1"
+            },
+            {
+                "Id": "card.missile.E.homing",
+                "Kind": 2,
+                "Rarity": 2,
+                "Permanent": true,
+                "RequiresLearned": "MagicMissile",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "spell.missile",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "mm.homing",
+                        "Delta": 1.0,
+                        "Limit": 0.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "매직 미사일 유도 강화"
+            },
+            {
+                "Id": "card.missile.L",
+                "Kind": 2,
+                "Rarity": 3,
+                "Permanent": true,
+                "RequiresLearned": "MagicMissile",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "spell.missile",
+                "MpDelta": -1,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "mm.dmg",
+                        "Delta": 5.0,
+                        "Limit": 0.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "매직 미사일 피해+5 / MP-1"
+            },
+            {
+                "Id": "card.spell.light_orb.unlock",
+                "Kind": 3,
+                "Rarity": 0,
+                "Permanent": true,
+                "RequiresLearned": "",
+                "Unlocks": "spell.light_orb",
+                "OneTime": true,
+                "MinLevel": 4,
+                "SpellId": "spell.light_orb",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [],
+                "Label": "빛의 구 해금"
+            },
+            {
+                "Id": "card.spell.dark_orb.unlock",
+                "Kind": 3,
+                "Rarity": 0,
+                "Permanent": true,
+                "RequiresLearned": "",
+                "Unlocks": "spell.dark_orb",
+                "OneTime": true,
+                "MinLevel": 6,
+                "SpellId": "spell.dark_orb",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [],
+                "Label": "어둠의 구 해금"
+            },
+            {
+                "Id": "card.spell.heal.unlock",
+                "Kind": 3,
+                "Rarity": 0,
+                "Permanent": true,
+                "RequiresLearned": "",
+                "Unlocks": "spell.heal",
+                "OneTime": true,
+                "MinLevel": 8,
+                "SpellId": "spell.heal",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [],
+                "Label": "회복 해금"
+            },
+            {
+                "Id": "card.spell.fire_ball.unlock",
+                "Kind": 3,
+                "Rarity": 0,
+                "Permanent": true,
+                "RequiresLearned": "",
+                "Unlocks": "spell.fire_ball",
+                "OneTime": true,
+                "MinLevel": 14,
+                "SpellId": "spell.fire_ball",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [],
+                "Label": "화이어 볼 해금"
+            },
+            {
+                "Id": "card.spell.light_sword.unlock",
+                "Kind": 3,
+                "Rarity": 0,
+                "Permanent": true,
+                "RequiresLearned": "",
+                "Unlocks": "spell.light_sword",
+                "OneTime": true,
+                "MinLevel": 16,
+                "SpellId": "spell.light_sword",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [],
+                "Label": "빛의 검 해금"
+            },
+            {
+                "Id": "card.spell.dark_sword.unlock",
+                "Kind": 3,
+                "Rarity": 0,
+                "Permanent": true,
+                "RequiresLearned": "",
+                "Unlocks": "spell.dark_sword",
+                "OneTime": true,
+                "MinLevel": 18,
+                "SpellId": "spell.dark_sword",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [],
+                "Label": "어둠의 검 해금"
+            },
+            {
+                "Id": "card.spell.shield.unlock",
+                "Kind": 3,
+                "Rarity": 0,
+                "Permanent": true,
+                "RequiresLearned": "",
+                "Unlocks": "spell.shield",
+                "OneTime": true,
+                "MinLevel": 28,
+                "SpellId": "spell.shield",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [],
+                "Label": "매직 실드 해금"
+            },
+            {
+                "Id": "card.spell.archangel.unlock",
+                "Kind": 3,
+                "Rarity": 0,
+                "Permanent": true,
+                "RequiresLearned": "",
+                "Unlocks": "spell.archangel",
+                "OneTime": true,
+                "MinLevel": 34,
+                "SpellId": "spell.archangel",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [],
+                "Label": "대천사 소환 해금"
+            },
+            {
+                "Id": "card.spell.demon.unlock",
+                "Kind": 3,
+                "Rarity": 0,
+                "Permanent": true,
+                "RequiresLearned": "",
+                "Unlocks": "spell.demon",
+                "OneTime": true,
+                "MinLevel": 36,
+                "SpellId": "spell.demon",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [],
+                "Label": "악마 소환 해금"
+            },
+            {
+                "Id": "card.spell.fire_wall.unlock",
+                "Kind": 3,
+                "Rarity": 0,
+                "Permanent": true,
+                "RequiresLearned": "",
+                "Unlocks": "spell.fire_wall",
+                "OneTime": true,
+                "MinLevel": 38,
+                "SpellId": "spell.fire_wall",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [],
+                "Label": "화이어 월 해금"
+            },
+            {
+                "Id": "card.spell.light_orb.N",
+                "Kind": 4,
+                "Rarity": 0,
+                "Permanent": true,
+                "RequiresLearned": "spell.light_orb",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "spell.light_orb",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "spell.light_orb.dmg",
+                        "Delta": 1.0,
+                        "Limit": 10.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "빛의 구 피해+1"
+            },
+            {
+                "Id": "card.spell.light_orb.R",
+                "Kind": 4,
+                "Rarity": 1,
+                "Permanent": true,
+                "RequiresLearned": "spell.light_orb",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "spell.light_orb",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "spell.light_orb.speed",
+                        "Delta": 1.5,
+                        "Limit": 5.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "빛의 구 속도+1.5"
+            },
+            {
+                "Id": "card.spell.light_orb.E",
+                "Kind": 4,
+                "Rarity": 2,
+                "Permanent": true,
+                "RequiresLearned": "spell.light_orb",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "spell.light_orb",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "spell.light_orb.chain",
+                        "Delta": 1.0,
+                        "Limit": 3.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "빛의 구 연쇄+1"
+            },
+            {
+                "Id": "card.spell.light_orb.L",
+                "Kind": 4,
+                "Rarity": 3,
+                "Permanent": true,
+                "RequiresLearned": "spell.light_orb",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "spell.light_orb",
+                "MpDelta": 1,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "spell.light_orb.extraShots",
+                        "Delta": 1.0,
+                        "Limit": 2.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "빛의 구 연속 발사+1"
+            },
+            {
+                "Id": "card.spell.dark_orb.N",
+                "Kind": 4,
+                "Rarity": 0,
+                "Permanent": true,
+                "RequiresLearned": "spell.dark_orb",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "spell.dark_orb",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "spell.dark_orb.dmg",
+                        "Delta": 2.0,
+                        "Limit": 14.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "어둠의 구 피해+2"
+            },
+            {
+                "Id": "card.spell.dark_orb.R",
+                "Kind": 4,
+                "Rarity": 1,
+                "Permanent": true,
+                "RequiresLearned": "spell.dark_orb",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "spell.dark_orb",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "spell.dark_orb.radius",
+                        "Delta": 0.07999999821186066,
+                        "Limit": 0.3199999928474426,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "어둠의 구 크기+0.08"
+            },
+            {
+                "Id": "card.spell.dark_orb.E",
+                "Kind": 4,
+                "Rarity": 2,
+                "Permanent": true,
+                "RequiresLearned": "spell.dark_orb",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "spell.dark_orb",
+                "MpDelta": 1,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "spell.dark_orb.pierce",
+                        "Delta": 1.0,
+                        "Limit": 2.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "어둠의 구 관통+1"
+            },
+            {
+                "Id": "card.spell.dark_orb.L",
+                "Kind": 4,
+                "Rarity": 3,
+                "Permanent": true,
+                "RequiresLearned": "spell.dark_orb",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "spell.dark_orb",
+                "MpDelta": 1,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "spell.dark_orb.shock",
+                        "Delta": 2.0,
+                        "Limit": 8.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "어둠의 구 충격파"
+            },
+            {
+                "Id": "card.spell.fire_ball.N",
+                "Kind": 4,
+                "Rarity": 0,
+                "Permanent": true,
+                "RequiresLearned": "spell.fire_ball",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "spell.fire_ball",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "spell.fire_ball.dmg",
+                        "Delta": 2.0,
+                        "Limit": 12.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "화이어 볼 폭발 피해+2"
+            },
+            {
+                "Id": "card.spell.fire_ball.R",
+                "Kind": 4,
+                "Rarity": 1,
+                "Permanent": true,
+                "RequiresLearned": "spell.fire_ball",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "spell.fire_ball",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "spell.fire_ball.radius",
+                        "Delta": 0.25,
+                        "Limit": 1.25,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "화이어 볼 반경+0.25"
+            },
+            {
+                "Id": "card.spell.fire_ball.E",
+                "Kind": 4,
+                "Rarity": 2,
+                "Permanent": true,
+                "RequiresLearned": "spell.fire_ball",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "spell.fire_ball",
+                "MpDelta": 1,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "spell.fire_ball.burn",
+                        "Delta": 1.0,
+                        "Limit": 5.0,
+                        "First": 3.0
+                    }
+                ],
+                "Label": "화이어 볼 화상"
+            },
+            {
+                "Id": "card.spell.fire_ball.L",
+                "Kind": 4,
+                "Rarity": 3,
+                "Permanent": true,
+                "RequiresLearned": "spell.fire_ball",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "spell.fire_ball",
+                "MpDelta": 1,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "spell.fire_ball.delayed",
+                        "Delta": 1.0,
+                        "Limit": 2.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "화이어 볼 지연 폭발+1"
+            },
+            {
+                "Id": "card.spell.fire_wall.N",
+                "Kind": 4,
+                "Rarity": 0,
+                "Permanent": true,
+                "RequiresLearned": "spell.fire_wall",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "spell.fire_wall",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "spell.fire_wall.tick",
+                        "Delta": 1.0,
+                        "Limit": 3.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "화이어 월 틱 피해+1"
+            },
+            {
+                "Id": "card.spell.fire_wall.R",
+                "Kind": 4,
+                "Rarity": 1,
+                "Permanent": true,
+                "RequiresLearned": "spell.fire_wall",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "spell.fire_wall",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "spell.fire_wall.width",
+                        "Delta": 0.4000000059604645,
+                        "Limit": 1.5,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "화이어 월 너비+0.4"
+            },
+            {
+                "Id": "card.spell.fire_wall.E",
+                "Kind": 4,
+                "Rarity": 2,
+                "Permanent": true,
+                "RequiresLearned": "spell.fire_wall",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "spell.fire_wall",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "spell.fire_wall.duration",
+                        "Delta": 1.0,
+                        "Limit": 4.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "화이어 월 지속+1초"
+            },
+            {
+                "Id": "card.spell.fire_wall.L",
+                "Kind": 4,
+                "Rarity": 3,
+                "Permanent": true,
+                "RequiresLearned": "spell.fire_wall",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "spell.fire_wall",
+                "MpDelta": 2,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "spell.fire_wall.extraWalls",
+                        "Delta": 1.0,
+                        "Limit": 1.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "화이어 월 추가 벽+1"
+            },
+            {
+                "Id": "card.spell.heal.N",
+                "Kind": 4,
+                "Rarity": 0,
+                "Permanent": true,
+                "RequiresLearned": "spell.heal",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "spell.heal",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "spell.heal.heal",
+                        "Delta": 2.0,
+                        "Limit": 20.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "회복량+2"
+            },
+            {
+                "Id": "card.spell.heal.R",
+                "Kind": 4,
+                "Rarity": 1,
+                "Permanent": true,
+                "RequiresLearned": "spell.heal",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "spell.heal",
+                "MpDelta": -1,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [],
+                "Label": "회복 MP-1"
+            },
+            {
+                "Id": "card.spell.heal.E",
+                "Kind": 4,
+                "Rarity": 2,
+                "Permanent": true,
+                "RequiresLearned": "spell.heal",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "spell.heal",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "spell.heal.cure",
+                        "Delta": 1.0,
+                        "Limit": 1.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "회복 시 중독·혼란 해제"
+            },
+            {
+                "Id": "card.spell.heal.L",
+                "Kind": 4,
+                "Rarity": 3,
+                "Permanent": true,
+                "RequiresLearned": "spell.heal",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "spell.heal",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "spell.heal.hot",
+                        "Delta": 1.0,
+                        "Limit": 6.0,
+                        "First": 3.0
+                    }
+                ],
+                "Label": "지속 회복"
+            },
+            {
+                "Id": "card.spell.shield.N",
+                "Kind": 4,
+                "Rarity": 0,
+                "Permanent": true,
+                "RequiresLearned": "spell.shield",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "spell.shield",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "spell.shield.absorb",
+                        "Delta": 3.0,
+                        "Limit": 20.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "실드 흡수+3"
+            },
+            {
+                "Id": "card.spell.shield.R",
+                "Kind": 4,
+                "Rarity": 1,
+                "Permanent": true,
+                "RequiresLearned": "spell.shield",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "spell.shield",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "spell.shield.duration",
+                        "Delta": 3.0,
+                        "Limit": 12.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "실드 지속+3초"
+            },
+            {
+                "Id": "card.spell.shield.E",
+                "Kind": 4,
+                "Rarity": 2,
+                "Permanent": true,
+                "RequiresLearned": "spell.shield",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "spell.shield",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "spell.shield.statusBlock",
+                        "Delta": 1.0,
+                        "Limit": 1.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "실드 중 상태이상 차단"
+            },
+            {
+                "Id": "card.spell.shield.L",
+                "Kind": 4,
+                "Rarity": 3,
+                "Permanent": true,
+                "RequiresLearned": "spell.shield",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "spell.shield",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "spell.shield.absorb",
+                        "Delta": 6.0,
+                        "Limit": 20.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "실드 흡수+6"
+            },
+            {
+                "Id": "card.spell.light_sword.N",
+                "Kind": 4,
+                "Rarity": 0,
+                "Permanent": true,
+                "RequiresLearned": "spell.light_sword",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "spell.light_sword",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "spell.light_sword.bonus",
+                        "Delta": 1.0,
+                        "Limit": 7.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "빛의 검 공격+1"
+            },
+            {
+                "Id": "card.spell.light_sword.R",
+                "Kind": 4,
+                "Rarity": 1,
+                "Permanent": true,
+                "RequiresLearned": "spell.light_sword",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "spell.light_sword",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "spell.light_sword.duration",
+                        "Delta": 3.0,
+                        "Limit": 12.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "빛의 검 지속+3초"
+            },
+            {
+                "Id": "card.spell.light_sword.E",
+                "Kind": 4,
+                "Rarity": 2,
+                "Permanent": true,
+                "RequiresLearned": "spell.light_sword",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "spell.light_sword",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "spell.light_sword.lastHit",
+                        "Delta": 2.0,
+                        "Limit": 10.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "빛의 검 4타 빛 피해+2"
+            },
+            {
+                "Id": "card.spell.light_sword.L",
+                "Kind": 4,
+                "Rarity": 3,
+                "Permanent": true,
+                "RequiresLearned": "spell.light_sword",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "spell.light_sword",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "spell.light_sword.wave",
+                        "Delta": 2.0,
+                        "Limit": 9.0,
+                        "First": 3.0
+                    }
+                ],
+                "Label": "빛의 검 4타 검기"
+            },
+            {
+                "Id": "card.spell.dark_sword.N",
+                "Kind": 4,
+                "Rarity": 0,
+                "Permanent": true,
+                "RequiresLearned": "spell.dark_sword",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "spell.dark_sword",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "spell.dark_sword.rate",
+                        "Delta": 0.05000000074505806,
+                        "Limit": 0.25,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "어둠의 검 흡혈+5%p"
+            },
+            {
+                "Id": "card.spell.dark_sword.R",
+                "Kind": 4,
+                "Rarity": 1,
+                "Permanent": true,
+                "RequiresLearned": "spell.dark_sword",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "spell.dark_sword",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "spell.dark_sword.duration",
+                        "Delta": 3.0,
+                        "Limit": 12.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "어둠의 검 지속+3초"
+            },
+            {
+                "Id": "card.spell.dark_sword.E",
+                "Kind": 4,
+                "Rarity": 2,
+                "Permanent": true,
+                "RequiresLearned": "spell.dark_sword",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "spell.dark_sword",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "spell.dark_sword.killHeal",
+                        "Delta": 1.0,
+                        "Limit": 6.0,
+                        "First": 2.0
+                    }
+                ],
+                "Label": "어둠의 검 처치 회복"
+            },
+            {
+                "Id": "card.spell.dark_sword.L",
+                "Kind": 4,
+                "Rarity": 3,
+                "Permanent": true,
+                "RequiresLearned": "spell.dark_sword",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "spell.dark_sword",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "spell.dark_sword.comboRate",
+                        "Delta": 0.05000000074505806,
+                        "Limit": 0.25,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "어둠의 검 연속 적중 흡혈"
+            },
+            {
+                "Id": "card.spell.archangel.N",
+                "Kind": 4,
+                "Rarity": 0,
+                "Permanent": true,
+                "RequiresLearned": "spell.archangel",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "spell.archangel",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "spell.archangel.heal",
+                        "Delta": 2.0,
+                        "Limit": 7.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "대천사 회복량+2"
+            },
+            {
+                "Id": "card.spell.archangel.R",
+                "Kind": 4,
+                "Rarity": 1,
+                "Permanent": true,
+                "RequiresLearned": "spell.archangel",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "spell.archangel",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "spell.archangel.healInterval",
+                        "Delta": -0.5,
+                        "Limit": -2.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "대천사 회복 간격-0.5초"
+            },
+            {
+                "Id": "card.spell.archangel.E",
+                "Kind": 4,
+                "Rarity": 2,
+                "Permanent": true,
+                "RequiresLearned": "spell.archangel",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "spell.archangel",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "spell.archangel.cure",
+                        "Delta": 1.0,
+                        "Limit": 1.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "대천사 상태이상 해제"
+            },
+            {
+                "Id": "card.spell.archangel.L",
+                "Kind": 4,
+                "Rarity": 3,
+                "Permanent": true,
+                "RequiresLearned": "spell.archangel",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "spell.archangel",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "spell.archangel.shield",
+                        "Delta": 2.0,
+                        "Limit": 12.0,
+                        "First": 4.0
+                    }
+                ],
+                "Label": "대천사 보호막"
+            },
+            {
+                "Id": "card.spell.demon.N",
+                "Kind": 4,
+                "Rarity": 0,
+                "Permanent": true,
+                "RequiresLearned": "spell.demon",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "spell.demon",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "spell.demon.attack",
+                        "Delta": 2.0,
+                        "Limit": 8.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "악마 공격+2"
+            },
+            {
+                "Id": "card.spell.demon.R",
+                "Kind": 4,
+                "Rarity": 1,
+                "Permanent": true,
+                "RequiresLearned": "spell.demon",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "spell.demon",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "spell.demon.attackInterval",
+                        "Delta": -0.25,
+                        "Limit": -1.0,
+                        "First": 0.0
+                    }
+                ],
+                "Label": "악마 공격 간격-0.25초"
+            },
+            {
+                "Id": "card.spell.demon.E",
+                "Kind": 4,
+                "Rarity": 2,
+                "Permanent": true,
+                "RequiresLearned": "spell.demon",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "spell.demon",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "spell.demon.aoe",
+                        "Delta": 1.0,
+                        "Limit": 6.0,
+                        "First": 2.0
+                    }
+                ],
+                "Label": "악마 범위 공격"
+            },
+            {
+                "Id": "card.spell.demon.L",
+                "Kind": 4,
+                "Rarity": 3,
+                "Permanent": true,
+                "RequiresLearned": "spell.demon",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "spell.demon",
+                "MpDelta": 0,
+                "BuffId": "",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [
+                    {
+                        "Axis": "spell.demon.flame",
+                        "Delta": 1.0,
+                        "Limit": 6.0,
+                        "First": 3.0
+                    }
+                ],
+                "Label": "악마 흑염"
+            },
+            {
+                "Id": "card.buff.BF-PATK.N",
+                "Kind": 5,
+                "Rarity": 0,
+                "Permanent": false,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "BF-PATK",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [],
+                "Label": "투지"
+            },
+            {
+                "Id": "card.buff.BF-PATK.R",
+                "Kind": 5,
+                "Rarity": 1,
+                "Permanent": false,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "BF-PATK",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [],
+                "Label": "투지"
+            },
+            {
+                "Id": "card.buff.BF-PATK.E",
+                "Kind": 5,
+                "Rarity": 2,
+                "Permanent": false,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "BF-PATK",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [],
+                "Label": "투지"
+            },
+            {
+                "Id": "card.buff.BF-PATK.L",
+                "Kind": 5,
+                "Rarity": 3,
+                "Permanent": false,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "BF-PATK",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [],
+                "Label": "투지"
+            },
+            {
+                "Id": "card.buff.BF-DEF.N",
+                "Kind": 5,
+                "Rarity": 0,
+                "Permanent": false,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "BF-DEF",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [],
+                "Label": "강철 피부"
+            },
+            {
+                "Id": "card.buff.BF-DEF.R",
+                "Kind": 5,
+                "Rarity": 1,
+                "Permanent": false,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "BF-DEF",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [],
+                "Label": "강철 피부"
+            },
+            {
+                "Id": "card.buff.BF-DEF.E",
+                "Kind": 5,
+                "Rarity": 2,
+                "Permanent": false,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "BF-DEF",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [],
+                "Label": "강철 피부"
+            },
+            {
+                "Id": "card.buff.BF-DEF.L",
+                "Kind": 5,
+                "Rarity": 3,
+                "Permanent": false,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "BF-DEF",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [],
+                "Label": "강철 피부"
+            },
+            {
+                "Id": "card.buff.BF-MATK.N",
+                "Kind": 5,
+                "Rarity": 0,
+                "Permanent": false,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "BF-MATK",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [],
+                "Label": "마력 증폭"
+            },
+            {
+                "Id": "card.buff.BF-MATK.R",
+                "Kind": 5,
+                "Rarity": 1,
+                "Permanent": false,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "BF-MATK",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [],
+                "Label": "마력 증폭"
+            },
+            {
+                "Id": "card.buff.BF-MATK.E",
+                "Kind": 5,
+                "Rarity": 2,
+                "Permanent": false,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "BF-MATK",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [],
+                "Label": "마력 증폭"
+            },
+            {
+                "Id": "card.buff.BF-MATK.L",
+                "Kind": 5,
+                "Rarity": 3,
+                "Permanent": false,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "BF-MATK",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [],
+                "Label": "마력 증폭"
+            },
+            {
+                "Id": "card.buff.BF-MPCOST.N",
+                "Kind": 5,
+                "Rarity": 0,
+                "Permanent": false,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "BF-MPCOST",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [],
+                "Label": "마력 절약"
+            },
+            {
+                "Id": "card.buff.BF-MPCOST.R",
+                "Kind": 5,
+                "Rarity": 1,
+                "Permanent": false,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "BF-MPCOST",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [],
+                "Label": "마력 절약"
+            },
+            {
+                "Id": "card.buff.BF-MPCOST.E",
+                "Kind": 5,
+                "Rarity": 2,
+                "Permanent": false,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "BF-MPCOST",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [],
+                "Label": "마력 절약"
+            },
+            {
+                "Id": "card.buff.BF-MPCOST.L",
+                "Kind": 5,
+                "Rarity": 3,
+                "Permanent": false,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "BF-MPCOST",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [],
+                "Label": "마력 절약"
+            },
+            {
+                "Id": "card.buff.BF-AIR.N",
+                "Kind": 5,
+                "Rarity": 0,
+                "Permanent": false,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "BF-AIR",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [],
+                "Label": "공중 지배"
+            },
+            {
+                "Id": "card.buff.BF-AIR.R",
+                "Kind": 5,
+                "Rarity": 1,
+                "Permanent": false,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "BF-AIR",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [],
+                "Label": "공중 지배"
+            },
+            {
+                "Id": "card.buff.BF-AIR.E",
+                "Kind": 5,
+                "Rarity": 2,
+                "Permanent": false,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "BF-AIR",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [],
+                "Label": "공중 지배"
+            },
+            {
+                "Id": "card.buff.BF-AIR.L",
+                "Kind": 5,
+                "Rarity": 3,
+                "Permanent": false,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "BF-AIR",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [],
+                "Label": "공중 지배"
+            },
+            {
+                "Id": "card.buff.BF-MOVE.N",
+                "Kind": 5,
+                "Rarity": 0,
+                "Permanent": false,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "BF-MOVE",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [],
+                "Label": "질풍"
+            },
+            {
+                "Id": "card.buff.BF-MOVE.R",
+                "Kind": 5,
+                "Rarity": 1,
+                "Permanent": false,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "BF-MOVE",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [],
+                "Label": "질풍"
+            },
+            {
+                "Id": "card.buff.BF-MOVE.E",
+                "Kind": 5,
+                "Rarity": 2,
+                "Permanent": false,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "BF-MOVE",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [],
+                "Label": "질풍"
+            },
+            {
+                "Id": "card.buff.BF-MOVE.L",
+                "Kind": 5,
+                "Rarity": 3,
+                "Permanent": false,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "BF-MOVE",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [],
+                "Label": "질풍"
+            },
+            {
+                "Id": "card.buff.BF-ASPD.N",
+                "Kind": 5,
+                "Rarity": 0,
+                "Permanent": false,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "BF-ASPD",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [],
+                "Label": "신속"
+            },
+            {
+                "Id": "card.buff.BF-ASPD.R",
+                "Kind": 5,
+                "Rarity": 1,
+                "Permanent": false,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "BF-ASPD",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [],
+                "Label": "신속"
+            },
+            {
+                "Id": "card.buff.BF-ASPD.E",
+                "Kind": 5,
+                "Rarity": 2,
+                "Permanent": false,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "BF-ASPD",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [],
+                "Label": "신속"
+            },
+            {
+                "Id": "card.buff.BF-ASPD.L",
+                "Kind": 5,
+                "Rarity": 3,
+                "Permanent": false,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "BF-ASPD",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [],
+                "Label": "신속"
+            },
+            {
+                "Id": "card.buff.BF-ITEM.N",
+                "Kind": 5,
+                "Rarity": 0,
+                "Permanent": false,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "BF-ITEM",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [],
+                "Label": "연금술의 축복"
+            },
+            {
+                "Id": "card.buff.BF-ITEM.R",
+                "Kind": 5,
+                "Rarity": 1,
+                "Permanent": false,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "BF-ITEM",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [],
+                "Label": "연금술의 축복"
+            },
+            {
+                "Id": "card.buff.BF-ITEM.E",
+                "Kind": 5,
+                "Rarity": 2,
+                "Permanent": false,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "BF-ITEM",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [],
+                "Label": "연금술의 축복"
+            },
+            {
+                "Id": "card.buff.BF-ITEM.L",
+                "Kind": 5,
+                "Rarity": 3,
+                "Permanent": false,
+                "RequiresLearned": "",
+                "Unlocks": "",
+                "OneTime": false,
+                "MinLevel": 0,
+                "SpellId": "",
+                "MpDelta": 0,
+                "BuffId": "BF-ITEM",
+                "Weight": 1.0,
+                "ExcludedFromMerchantPack": false,
+                "Axes": [],
+                "Label": "연금술의 축복"
+            }
+        ],
+        "Fallbacks": [
+            {
+                "CardId": "FallbackHPItem",
+                "ItemId": "p1test.potion.hp",
+                "Count": 1,
+                "Enabled": true
+            },
+            {
+                "CardId": "FallbackMPItem",
+                "ItemId": "p1test.potion.mp",
+                "Count": 1,
+                "Enabled": true
+            }
+        ],
+        "EpicMissileVariantWeight": 0.5,
+        "RerollsPerLevel": 1,
+        "MissileBaseProjectiles": 1,
+        "MissileMaxProjectiles": 5,
+        "MissilePermanentDamageCap": 20.0,
+        "HomingAngleFirst": 12.0,
+        "HomingAngleStep": 12.0,
+        "HomingAngleCap": 48.0,
+        "HomingRangeFirst": 5.0,
+        "HomingRangeStep": 1.5,
+        "HomingRangeCap": 11.0,
+        "HomingTurnFirst": 40.0,
+        "HomingTurnStep": 25.0,
+        "HomingTurnCap": 140.0,
+        "Spells": [
+            {
+                "Id": "spell.missile",
+                "Name": "매직 미사일",
+                "Kind": 0,
+                "Motion": 0,
+                "Button": 0,
+                "BaseMp": 1,
+                "MinMp": 1,
+                "MinLevel": 2,
+                "CastTime": 0.25,
+                "Recovery": 0.20000000298023225,
+                "OriginPower": 3.0,
+                "Params": [
+                    {
+                        "Key": "damage",
+                        "Value": 3.0
+                    },
+                    {
+                        "Key": "speed",
+                        "Value": 8.0
+                    },
+                    {
+                        "Key": "lifetime",
+                        "Value": 2.0
+                    },
+                    {
+                        "Key": "radius",
+                        "Value": 0.20000000298023225
+                    },
+                    {
+                        "Key": "spreadDeg",
+                        "Value": 6.0
+                    }
+                ]
+            },
+            {
+                "Id": "spell.light_orb",
+                "Name": "빛의 구",
+                "Kind": 1,
+                "Motion": 1,
+                "Button": 0,
+                "BaseMp": 2,
+                "MinMp": 1,
+                "MinLevel": 4,
+                "CastTime": 0.25,
+                "Recovery": 0.20000000298023225,
+                "OriginPower": 5.0,
+                "Params": [
+                    {
+                        "Key": "damage",
+                        "Value": 5.0
+                    },
+                    {
+                        "Key": "speed",
+                        "Value": 11.0
+                    },
+                    {
+                        "Key": "lifetime",
+                        "Value": 2.0
+                    },
+                    {
+                        "Key": "radius",
+                        "Value": 0.25
+                    },
+                    {
+                        "Key": "chainRadius",
+                        "Value": 3.0
+                    },
+                    {
+                        "Key": "extraShotInterval",
+                        "Value": 0.11999999731779099
+                    }
+                ]
+            },
+            {
+                "Id": "spell.dark_orb",
+                "Name": "어둠의 구",
+                "Kind": 2,
+                "Motion": 2,
+                "Button": 0,
+                "BaseMp": 3,
+                "MinMp": 1,
+                "MinLevel": 6,
+                "CastTime": 0.25,
+                "Recovery": 0.20000000298023225,
+                "OriginPower": 10.0,
+                "Params": [
+                    {
+                        "Key": "damage",
+                        "Value": 10.0
+                    },
+                    {
+                        "Key": "speed",
+                        "Value": 6.0
+                    },
+                    {
+                        "Key": "lifetime",
+                        "Value": 2.5
+                    },
+                    {
+                        "Key": "radius",
+                        "Value": 0.2800000011920929
+                    },
+                    {
+                        "Key": "shockRadius",
+                        "Value": 1.0
+                    }
+                ]
+            },
+            {
+                "Id": "spell.heal",
+                "Name": "회복",
+                "Kind": 5,
+                "Motion": 1,
+                "Button": 2,
+                "BaseMp": 3,
+                "MinMp": 1,
+                "MinLevel": 8,
+                "CastTime": 0.25,
+                "Recovery": 0.20000000298023225,
+                "OriginPower": 0.0,
+                "Params": [
+                    {
+                        "Key": "heal",
+                        "Value": 5.0
+                    },
+                    {
+                        "Key": "hotPerSecond",
+                        "Value": 1.0
+                    }
+                ]
+            },
+            {
+                "Id": "spell.fire_ball",
+                "Name": "화이어 볼",
+                "Kind": 3,
+                "Motion": 3,
+                "Button": 0,
+                "BaseMp": 5,
+                "MinMp": 1,
+                "MinLevel": 14,
+                "CastTime": 0.25,
+                "Recovery": 0.20000000298023225,
+                "OriginPower": 15.0,
+                "Params": [
+                    {
+                        "Key": "damage",
+                        "Value": 15.0
+                    },
+                    {
+                        "Key": "radius",
+                        "Value": 1.25
+                    },
+                    {
+                        "Key": "speed",
+                        "Value": 9.0
+                    },
+                    {
+                        "Key": "lifetime",
+                        "Value": 1.5
+                    },
+                    {
+                        "Key": "projRadius",
+                        "Value": 0.30000001192092898
+                    },
+                    {
+                        "Key": "burnTick",
+                        "Value": 1.0
+                    },
+                    {
+                        "Key": "burnInterval",
+                        "Value": 1.0
+                    },
+                    {
+                        "Key": "delay",
+                        "Value": 0.4000000059604645
+                    },
+                    {
+                        "Key": "delayedRatio",
+                        "Value": 0.5
+                    }
+                ]
+            },
+            {
+                "Id": "spell.light_sword",
+                "Name": "빛의 검",
+                "Kind": 7,
+                "Motion": 1,
+                "Button": 1,
+                "BaseMp": 6,
+                "MinMp": 1,
+                "MinLevel": 16,
+                "CastTime": 0.25,
+                "Recovery": 0.20000000298023225,
+                "OriginPower": 0.0,
+                "Params": [
+                    {
+                        "Key": "bonus",
+                        "Value": 3.0
+                    },
+                    {
+                        "Key": "duration",
+                        "Value": 12.0
+                    },
+                    {
+                        "Key": "waveSpeed",
+                        "Value": 10.0
+                    },
+                    {
+                        "Key": "waveLifetime",
+                        "Value": 0.6000000238418579
+                    }
+                ]
+            },
+            {
+                "Id": "spell.dark_sword",
+                "Name": "어둠의 검",
+                "Kind": 8,
+                "Motion": 2,
+                "Button": 1,
+                "BaseMp": 7,
+                "MinMp": 1,
+                "MinLevel": 18,
+                "CastTime": 0.25,
+                "Recovery": 0.20000000298023225,
+                "OriginPower": 0.0,
+                "Params": [
+                    {
+                        "Key": "lifesteal",
+                        "Value": 0.25
+                    },
+                    {
+                        "Key": "duration",
+                        "Value": 12.0
+                    }
+                ]
+            },
+            {
+                "Id": "spell.shield",
+                "Name": "매직 실드",
+                "Kind": 6,
+                "Motion": 3,
+                "Button": 1,
+                "BaseMp": 10,
+                "MinMp": 1,
+                "MinLevel": 28,
+                "CastTime": 0.25,
+                "Recovery": 0.20000000298023225,
+                "OriginPower": 0.0,
+                "Params": [
+                    {
+                        "Key": "absorb",
+                        "Value": 10.0
+                    },
+                    {
+                        "Key": "duration",
+                        "Value": 12.0
+                    }
+                ]
+            },
+            {
+                "Id": "spell.archangel",
+                "Name": "대천사 소환",
+                "Kind": 9,
+                "Motion": 5,
+                "Button": 0,
+                "BaseMp": 25,
+                "MinMp": 1,
+                "MinLevel": 34,
+                "CastTime": 0.25,
+                "Recovery": 0.20000000298023225,
+                "OriginPower": 30.0,
+                "Params": [
+                    {
+                        "Key": "duration",
+                        "Value": 18.0
+                    },
+                    {
+                        "Key": "extend",
+                        "Value": 18.0
+                    },
+                    {
+                        "Key": "durationCap",
+                        "Value": 36.0
+                    },
+                    {
+                        "Key": "attack",
+                        "Value": 2.0
+                    },
+                    {
+                        "Key": "attackInterval",
+                        "Value": 3.0
+                    },
+                    {
+                        "Key": "heal",
+                        "Value": 5.0
+                    },
+                    {
+                        "Key": "healInterval",
+                        "Value": 4.0
+                    },
+                    {
+                        "Key": "healThreshold",
+                        "Value": 0.5
+                    },
+                    {
+                        "Key": "range",
+                        "Value": 6.0
+                    }
+                ]
+            },
+            {
+                "Id": "spell.demon",
+                "Name": "악마 소환",
+                "Kind": 10,
+                "Motion": 6,
+                "Button": 0,
+                "BaseMp": 30,
+                "MinMp": 1,
+                "MinLevel": 36,
+                "CastTime": 0.25,
+                "Recovery": 0.20000000298023225,
+                "OriginPower": 40.0,
+                "Params": [
+                    {
+                        "Key": "duration",
+                        "Value": 18.0
+                    },
+                    {
+                        "Key": "extend",
+                        "Value": 18.0
+                    },
+                    {
+                        "Key": "durationCap",
+                        "Value": 36.0
+                    },
+                    {
+                        "Key": "attack",
+                        "Value": 6.0
+                    },
+                    {
+                        "Key": "attackInterval",
+                        "Value": 2.0
+                    },
+                    {
+                        "Key": "aoeRadius",
+                        "Value": 1.0
+                    },
+                    {
+                        "Key": "flameTick",
+                        "Value": 1.0
+                    },
+                    {
+                        "Key": "flameInterval",
+                        "Value": 1.0
+                    },
+                    {
+                        "Key": "range",
+                        "Value": 6.0
+                    },
+                    {
+                        "Key": "meleeReach",
+                        "Value": 1.2000000476837159
+                    }
+                ]
+            },
+            {
+                "Id": "spell.fire_wall",
+                "Name": "화이어 월",
+                "Kind": 4,
+                "Motion": 4,
+                "Button": 0,
+                "BaseMp": 15,
+                "MinMp": 1,
+                "MinLevel": 38,
+                "CastTime": 0.25,
+                "Recovery": 0.20000000298023225,
+                "OriginPower": 10.0,
+                "Params": [
+                    {
+                        "Key": "tick",
+                        "Value": 2.0
+                    },
+                    {
+                        "Key": "interval",
+                        "Value": 0.75
+                    },
+                    {
+                        "Key": "duration",
+                        "Value": 4.0
+                    },
+                    {
+                        "Key": "width",
+                        "Value": 1.5
+                    },
+                    {
+                        "Key": "height",
+                        "Value": 2.200000047683716
+                    },
+                    {
+                        "Key": "distance",
+                        "Value": 2.0
+                    },
+                    {
+                        "Key": "spacing",
+                        "Value": 1.2000000476837159
+                    }
+                ]
+            }
+        ],
+        "Buffs": [
+            {
+                "Id": "BF-PATK",
+                "Family": "PhysAtk",
+                "NormalStrength": 0.07999999821186066,
+                "MaxStacks": 3,
+                "FamilyCap": 0.30000001192092898,
+                "Label": "투지"
+            },
+            {
+                "Id": "BF-DEF",
+                "Family": "DamageReduction",
+                "NormalStrength": 0.07999999821186066,
+                "MaxStacks": 3,
+                "FamilyCap": 0.25,
+                "Label": "강철 피부"
+            },
+            {
+                "Id": "BF-MATK",
+                "Family": "MagAtk",
+                "NormalStrength": 0.10000000149011612,
+                "MaxStacks": 3,
+                "FamilyCap": 0.30000001192092898,
+                "Label": "마력 증폭"
+            },
+            {
+                "Id": "BF-MPCOST",
+                "Family": "MpCost",
+                "NormalStrength": 0.10000000149011612,
+                "MaxStacks": 3,
+                "FamilyCap": 0.30000001192092898,
+                "Label": "마력 절약"
+            },
+            {
+                "Id": "BF-AIR",
+                "Family": "AirAtk",
+                "NormalStrength": 0.10000000149011612,
+                "MaxStacks": 3,
+                "FamilyCap": 0.30000001192092898,
+                "Label": "공중 지배"
+            },
+            {
+                "Id": "BF-MOVE",
+                "Family": "Move",
+                "NormalStrength": 0.05000000074505806,
+                "MaxStacks": 3,
+                "FamilyCap": 0.15000000596046449,
+                "Label": "질풍"
+            },
+            {
+                "Id": "BF-ASPD",
+                "Family": "AttackSpeed",
+                "NormalStrength": 0.05000000074505806,
+                "MaxStacks": 3,
+                "FamilyCap": 0.20000000298023225,
+                "Label": "신속"
+            },
+            {
+                "Id": "BF-ITEM",
+                "Family": "ItemHeal",
+                "NormalStrength": 0.10000000149011612,
+                "MaxStacks": 3,
+                "FamilyCap": 0.30000001192092898,
+                "Label": "연금술의 축복"
+            }
+        ],
+        "BuffRules": {
+            "NormalDuration": 180.0,
+            "LongDuration": 240.0,
+            "StrongMultiplier": 1.5,
+            "ActiveStackWeightFactor": 0.5
+        },
+        "Merchant": {
+            "BaseChance": 1.0,
+            "ChanceStep": 0.10000000149011612,
+            "MaxChance": 1.0,
+            "MinStock": 3,
+            "MaxStock": 5,
+            "PermPackUseLimit": 5,
+            "Lv50PriceReference": 500,
+            "Products": [
+                {
+                    "Kind": "PermPack",
+                    "PriceRatio": 0.800000011920929,
+                    "MinPrice": 120,
+                    "Weight": 1.0,
+                    "FirstVisitWeight": 4.0
+                },
+                {
+                    "Kind": "TempPack",
+                    "PriceRatio": 0.4000000059604645,
+                    "MinPrice": 70,
+                    "Weight": 1.0,
+                    "FirstVisitWeight": 1.0
+                },
+                {
+                    "Kind": "Buff",
+                    "PriceRatio": 0.3499999940395355,
+                    "MinPrice": 60,
+                    "Weight": 1.0,
+                    "FirstVisitWeight": 1.0
+                },
+                {
+                    "Kind": "RerollToken",
+                    "PriceRatio": 0.44999998807907107,
+                    "MinPrice": 80,
+                    "Weight": 1.0,
+                    "FirstVisitWeight": 1.0
+                }
+            ]
+        },
+        "Damage": {
+            "DefenseK": 20.0,
+            "TempDamageReductionCap": 0.25,
+            "MinDamage": 1,
+            "GuardMultiplier": 0.10000000149011612
+        },
+        "Items": [
+            {
+                "Id": "p1test.potion.hp",
+                "Name": "치료제(시험)",
+                "HpRestore": 5,
+                "MpRestore": 0,
+                "HpParts": [],
+                "MpParts": [],
+                "Revive": false,
+                "ScrollSpellId": ""
+            },
+            {
+                "Id": "p1test.potion.mp",
+                "Name": "소마석(시험)",
+                "HpRestore": 0,
+                "MpRestore": 8,
+                "HpParts": [],
+                "MpParts": [],
+                "Revive": false,
+                "ScrollSpellId": ""
+            },
+            {
+                "Id": "p1test.potion.mix",
+                "Name": "혼합 회복약(시험)",
+                "HpRestore": 0,
+                "MpRestore": 0,
+                "HpParts": [
+                    2,
+                    1
+                ],
+                "MpParts": [
+                    3,
+                    2
+                ],
+                "Revive": false,
+                "ScrollSpellId": ""
+            },
+            {
+                "Id": "p1test.revive",
+                "Name": "부활석(시험)",
+                "HpRestore": 0,
+                "MpRestore": 0,
+                "HpParts": [],
+                "MpParts": [],
+                "Revive": true,
+                "ScrollSpellId": ""
+            },
+            {
+                "Id": "p1test.scroll.missile",
+                "Name": "매직 미사일 스크롤(시험)",
+                "HpRestore": 0,
+                "MpRestore": 0,
+                "HpParts": [],
+                "MpParts": [],
+                "Revive": false,
+                "ScrollSpellId": "spell.missile"
+            },
+            {
+                "Id": "p1test.scroll.light_orb",
+                "Name": "빛의 구 스크롤(시험)",
+                "HpRestore": 0,
+                "MpRestore": 0,
+                "HpParts": [],
+                "MpParts": [],
+                "Revive": false,
+                "ScrollSpellId": "spell.light_orb"
+            },
+            {
+                "Id": "p1test.scroll.dark_orb",
+                "Name": "어둠의 구 스크롤(시험)",
+                "HpRestore": 0,
+                "MpRestore": 0,
+                "HpParts": [],
+                "MpParts": [],
+                "Revive": false,
+                "ScrollSpellId": "spell.dark_orb"
+            },
+            {
+                "Id": "p1test.scroll.heal",
+                "Name": "회복 스크롤(시험)",
+                "HpRestore": 0,
+                "MpRestore": 0,
+                "HpParts": [],
+                "MpParts": [],
+                "Revive": false,
+                "ScrollSpellId": "spell.heal"
+            },
+            {
+                "Id": "p1test.scroll.fire_ball",
+                "Name": "화이어 볼 스크롤(시험)",
+                "HpRestore": 0,
+                "MpRestore": 0,
+                "HpParts": [],
+                "MpParts": [],
+                "Revive": false,
+                "ScrollSpellId": "spell.fire_ball"
+            },
+            {
+                "Id": "p1test.scroll.light_sword",
+                "Name": "빛의 검 스크롤(시험)",
+                "HpRestore": 0,
+                "MpRestore": 0,
+                "HpParts": [],
+                "MpParts": [],
+                "Revive": false,
+                "ScrollSpellId": "spell.light_sword"
+            },
+            {
+                "Id": "p1test.scroll.dark_sword",
+                "Name": "어둠의 검 스크롤(시험)",
+                "HpRestore": 0,
+                "MpRestore": 0,
+                "HpParts": [],
+                "MpParts": [],
+                "Revive": false,
+                "ScrollSpellId": "spell.dark_sword"
+            },
+            {
+                "Id": "p1test.scroll.shield",
+                "Name": "매직 실드 스크롤(시험)",
+                "HpRestore": 0,
+                "MpRestore": 0,
+                "HpParts": [],
+                "MpParts": [],
+                "Revive": false,
+                "ScrollSpellId": "spell.shield"
+            },
+            {
+                "Id": "p1test.scroll.archangel",
+                "Name": "대천사 소환 스크롤(시험)",
+                "HpRestore": 0,
+                "MpRestore": 0,
+                "HpParts": [],
+                "MpParts": [],
+                "Revive": false,
+                "ScrollSpellId": "spell.archangel"
+            },
+            {
+                "Id": "p1test.scroll.demon",
+                "Name": "악마 소환 스크롤(시험)",
+                "HpRestore": 0,
+                "MpRestore": 0,
+                "HpParts": [],
+                "MpParts": [],
+                "Revive": false,
+                "ScrollSpellId": "spell.demon"
+            },
+            {
+                "Id": "p1test.scroll.fire_wall",
+                "Name": "화이어 월 스크롤(시험)",
+                "HpRestore": 0,
+                "MpRestore": 0,
+                "HpParts": [],
+                "MpParts": [],
+                "Revive": false,
+                "ScrollSpellId": "spell.fire_wall"
+            }
+        ],
+        "Regions": [
+            {
+                "Id": "R1",
+                "MapIds": [
+                    "P1A",
+                    "P1B"
+                ],
+                "SafeSpawns": [
+                    {
+                        "MapId": "P1A",
+                        "X": 30.0,
+                        "Y": 0.0,
+                        "Blocked": false
+                    }
+                ]
+            },
+            {
+                "Id": "R2",
+                "MapIds": [
+                    "P1C"
+                ],
+                "SafeSpawns": [
+                    {
+                        "MapId": "P1C",
+                        "X": 12.0,
+                        "Y": 0.0,
+                        "Blocked": false
+                    }
+                ]
+            }
+        ],
+        "BagStackLimit": 16,
+        "BagCountLimit": 99,
+        "MotionWindow": 0.44999998807907107,
+        "ButtonWindow": 0.15000000596046449,
+        "MissileWindow": 0.6000000238418579
+    }
+}}]
+}

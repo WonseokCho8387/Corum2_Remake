@@ -1,0 +1,120 @@
+{
+ "log": "Diagnostics/Runs/RUN-20261114-232740.ndjson",
+ "checks": {
+  "growth_screen": {
+   "pass": true,
+   "growthOpenTick": 87,
+   "expGrants": 3,
+   "chosen": [
+    "card.mandatory.MagicMissile"
+   ]
+  },
+  "missile_commit": {
+   "pass": true,
+   "castStartTicks": [
+    185,
+    1784,
+    3147
+   ],
+   "commitTicks": [
+    197,
+    1796,
+    3159
+   ],
+   "mpCost": [
+    1,
+    1,
+    1
+   ],
+   "projectiles": [
+    5,
+    5,
+    5
+   ]
+  },
+  "shop_pack_unpaid": {
+   "pass": true,
+   "pack": "card.stat.MaxHp.N,card.skill.groundBasic.N,card.stat.Defense.N"
+  },
+  "T204": {
+   "pass": true,
+   "interrupt": "GrowthPreempt(GRO-47/50)",
+   "cancelConsumed": false
+  },
+  "T201": {
+   "pass": true,
+   "deathHeldTick": 8245,
+   "deaths": 0,
+   "ringCloseReason": "GrowthPreempt(GRO-47)",
+   "levelUp": [
+    [
+     4,
+     10
+    ]
+   ],
+   "hpSetAfter": [
+    10
+   ]
+  },
+  "T202": {
+   "pass": true,
+   "firstGrant": {
+    "newLevels": 2,
+    "lv50Currency": 30,
+    "lv50CurrencyGain": 30
+   },
+   "shopWhilePending": "GrowthPending(GRO-50)",
+   "buys": [
+    [
+     "RerollTokenBought",
+     225
+    ]
+   ],
+   "afterLoad": {
+    "level": 50,
+    "lv50Currency": 30
+   }
+  },
+  "T203": {
+   "pass": true,
+   "exitAsks": 2,
+   "cancel": 1,
+   "error": "SpawnBlockedAfterSuccessfulRoll(MER-28)",
+   "reentries": [
+    "R1",
+    "R2"
+   ]
+  },
+  "spells": {
+   "pass": true,
+   "commits": [
+    [
+     "spell.fire_wall",
+     15
+    ],
+    [
+     "spell.archangel",
+     25
+    ],
+    [
+     "spell.shield",
+     10
+    ],
+    [
+     "spell.light_orb",
+     2
+    ]
+   ]
+  }
+ },
+ "summary": {
+  "growth_screen": true,
+  "missile_commit": true,
+  "shop_pack_unpaid": true,
+  "T204": true,
+  "T201": true,
+  "T202": true,
+  "T203": true,
+  "spells": true
+ }
+}

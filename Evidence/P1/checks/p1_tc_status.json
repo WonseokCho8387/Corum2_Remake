@@ -1,0 +1,2085 @@
+{
+ "summary": {
+  "PASS": 203,
+  "HUMAN_REVIEW": 1
+ },
+ "rows": [
+  {
+   "id": "P1-T01",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1GrowthTests.T01_NewGameVolkerTestProfile"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T02",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1GrowthTests.T02_LevelUpNoAutoStatsFullHealAfterCard"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T03",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1GrowthTests.T03_SlotWeights75_25AndAllTemporaryPossible"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T04",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1GrowthTests.T04_T62_MandatoryThreeTwoOneAndRerollKeepsIt"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T05",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T05_AirActionsLockedUntilLearned",
+    "P1MagicTests.T05_T58_T62_UnlearnedMissileCommandRefusedScrollWorks"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T06",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T06_T77_CommandAndScrollSameEffectAfterLearning"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T07",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1GrowthTests.T07_StatCardsFixedAmountsEditableAndCapped"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T08",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1DamageTests.T08_BuffsGoBeyondPermanentCap"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T09",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1SystemTests.T09_TwoByTwoRarity"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T10",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1SystemTests.T10_T177_AdditiveCapIndependentTimersStackCap"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T11",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1SystemTests.T11_DeathMenuCheckpointRestart",
+    "P1SystemTests.T11_T126_ReviveKeepsCheckpointRestoresSnapshot"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T12",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1SystemTests.T12_T175_T176_SpeedAndAirScope"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T13",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1SystemTests.T13_T179_ItemBuffPotionsOnlyOneFloorPerResource"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T14",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1SystemTests.T14_ChanceStepsAndReset"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T15",
+   "tier": "A+P",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1SystemTests.T15_T16_SpawnStockCloseConfirm"
+   ],
+   "play": "T203:PASS"
+  },
+  {
+   "id": "P1-T16",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1SystemTests.T15_T16_SpawnStockCloseConfirm"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T17",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1SystemTests.T17_T180_T181_PriceAndExpPayment"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T18",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1SystemTests.T18_T153_T182_T184_PermPackRules"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T19",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1GrowthTests.T19_OriginExpCurve"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T20",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1GrowthTests.T20_SecondCharacterDataDoesNotTouchVolker"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T21",
+   "tier": "A+H",
+   "status": "PASS",
+   "openSubConditions": [
+    "H"
+   ],
+   "tests": [
+    "P1DamageTests.T21_T64_T65_KoboldHitsAndAllFourHits"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T22",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1DamageTests.T22_MissilePermanentSegmentSeparateAndCapped"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T23",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1DamageTests.T164_T165_T23_CommonDefenseCurve"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T24",
+   "tier": "A+S",
+   "status": "PASS",
+   "openSubConditions": [
+    "S"
+   ],
+   "tests": [
+    "P1MagicTests.T24_T25_EquipmentTraitsOnly"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T25",
+   "tier": "A+S",
+   "status": "PASS",
+   "openSubConditions": [
+    "S"
+   ],
+   "tests": [
+    "P1MagicTests.T24_T25_EquipmentTraitsOnly"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T26",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T26_T28_T34_T35_T36_MissileCardArithmetic"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T27",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1CoverageTests.T27_CommandAndScrollSameProjectilesAtCap"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T28",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T26_T28_T34_T35_T36_MissileCardArithmetic"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T29",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T29_T30_T31_T40_ProjectileCapAndFilter"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T30",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T29_T30_T31_T40_ProjectileCapAndFilter"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T31",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T29_T30_T31_T40_ProjectileCapAndFilter"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T32",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T32_T33_T38_T42_T43_T44_HomingAxes"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T33",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T32_T33_T38_T42_T43_T44_HomingAxes"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T34",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T26_T28_T34_T35_T36_MissileCardArithmetic"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T35",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T26_T28_T34_T35_T36_MissileCardArithmetic"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T36",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T26_T28_T34_T35_T36_MissileCardArithmetic"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T37",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T37_T54_T55_T60_EachProjectileHitsOnceAndStops"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T38",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T32_T33_T38_T42_T43_T44_HomingAxes"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T39",
+   "tier": "A+H",
+   "status": "PASS",
+   "openSubConditions": [
+    "H"
+   ],
+   "tests": [
+    "P1CoverageTests.T39_HomingTurnsGradually"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T40",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T29_T30_T31_T40_ProjectileCapAndFilter"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T41",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T41_T46_T48_HomingSelection"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T42",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T32_T33_T38_T42_T43_T44_HomingAxes"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T43",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T32_T33_T38_T42_T43_T44_HomingAxes"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T44",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T32_T33_T38_T42_T43_T44_HomingAxes"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T45",
+   "tier": "H",
+   "status": "HUMAN_REVIEW",
+   "openSubConditions": [
+    "H"
+   ],
+   "tests": [],
+   "play": null
+  },
+  {
+   "id": "P1-T46",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T41_T46_T48_HomingSelection"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T47",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T47_T49_TargetInvalidStraightNoResearch"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T48",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T41_T46_T48_HomingSelection"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T49",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T47_T49_TargetInvalidStraightNoResearch"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T50",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1CoverageTests.T50_T53_LaunchTargetIgnoresObstaclePerProjectile"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T51",
+   "tier": "A+S",
+   "status": "PASS",
+   "openSubConditions": [
+    "S"
+   ],
+   "tests": [
+    "P1CoverageTests.T51_T63_MissileCommandKeptAimSeparate"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T52",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T52_FanAngles"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T53",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1CoverageTests.T50_T53_LaunchTargetIgnoresObstaclePerProjectile"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T54",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T37_T54_T55_T60_EachProjectileHitsOnceAndStops"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T55",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T37_T54_T55_T60_EachProjectileHitsOnceAndStops"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T56",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T56_MapChangeClearsProjectiles"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T57",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T57_T90_T137_T138_T98_EligibleMaxMpAndPostCardCost"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T58",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T05_T58_T62_UnlearnedMissileCommandRefusedScrollWorks"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T59",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1CoverageTests.T59_EpicVariantsTogetherAndHalfHalf"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T60",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T37_T54_T55_T60_EachProjectileHitsOnceAndStops"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T61",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1CoverageTests.T61_MissileCapEditableAndCardExcludedAtCap"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T62",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1GrowthTests.T04_T62_MandatoryThreeTwoOneAndRerollKeepsIt",
+    "P1MagicTests.T05_T58_T62_UnlearnedMissileCommandRefusedScrollWorks"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T63",
+   "tier": "A+S",
+   "status": "PASS",
+   "openSubConditions": [
+    "S"
+   ],
+   "tests": [
+    "P1CoverageTests.T51_T63_MissileCommandKeptAimSeparate"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T64",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1DamageTests.T21_T64_T65_KoboldHitsAndAllFourHits"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T65",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1DamageTests.T21_T64_T65_KoboldHitsAndAllFourHits"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T66",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1DamageTests.T66_LauncherHeightAndHang"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T67",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1DamageTests.T67_AirDashDamageOnly"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T68",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1DamageTests.T169_T68_T69_DownedDiveAddsBothCappedBonuses"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T69",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1DamageTests.T169_T68_T69_DownedDiveAddsBothCappedBonuses"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T70",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1GrowthTests.T70_T71_T72_NoExtraCardsForJumpGuardParryRollSlide"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T71",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1GrowthTests.T70_T71_T72_NoExtraCardsForJumpGuardParryRollSlide"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T72",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1GrowthTests.T70_T71_T72_NoExtraCardsForJumpGuardParryRollSlide"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T73",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1GrowthTests.T73_T74_PhysicalSkillSameEffectPerRarityRequiresSkillAndCaps"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T74",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1GrowthTests.T73_T74_PhysicalSkillSameEffectPerRarityRequiresSkillAndCaps"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T75",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T75_T76_T79_T80_UnlockCardsAndNoHiddenActions"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T76",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T75_T76_T79_T80_UnlockCardsAndNoHiddenActions"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T77",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T06_T77_CommandAndScrollSameEffectAfterLearning"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T78",
+   "tier": "A+E",
+   "status": "PASS",
+   "openSubConditions": [
+    "E"
+   ],
+   "tests": [
+    "P1MagicTests.T78_T127_T128_CommandMapAndMirroring"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T79",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T75_T76_T79_T80_UnlockCardsAndNoHiddenActions"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T80",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T75_T76_T79_T80_UnlockCardsAndNoHiddenActions"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T81",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1CoverageTests.T81_TenSpellsFourDistinctRarityFunctions"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T82",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T82_T94_LightOrbFastWeakChainExtra"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T83",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1CoverageTests.T83_FireBallBurstVsFireWallDuration"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T84",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T84_T104_T108_HealFixedClampSelfHot"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T85",
+   "tier": "A+S",
+   "status": "PASS",
+   "openSubConditions": [
+    "S"
+   ],
+   "tests": [
+    "P1MagicTests.T85_T112_SwordsExclusiveFailedCastKeepsOld"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T86",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T86_T109_T110_T111_ShieldAfterGuardRecastReplaces"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T87",
+   "tier": "A+S",
+   "status": "PASS",
+   "openSubConditions": [
+    "S"
+   ],
+   "tests": [
+    "P1MagicTests.T87_T118_T119_T120_T121_SummonRules"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T88",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1CoverageTests.T88_OriginMpSeedsLoaded"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T89",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T89_T141_MpShortFailsNoDowngradeNoFallback"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T90",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T57_T90_T137_T138_T98_EligibleMaxMpAndPostCardCost"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T91",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T91_MaintainedTimersPauseInRing"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T92",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1CoverageTests.T92_T103_PerEffectCapsOnlyAllCappedExcluded"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T93",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T93_NoCooldown"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T94",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T82_T94_LightOrbFastWeakChainExtra"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T95",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T95_T99_DarkOrbPierceAndShock"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T96",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T96_T174_T100_FireBallBurnDelayedSeparateEvents"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T97",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T97_T101_T102_FireWallTicksReplaceFixed"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T98",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T57_T90_T137_T138_T98_EligibleMaxMpAndPostCardCost"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T99",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T95_T99_DarkOrbPierceAndShock"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T100",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T96_T174_T100_FireBallBurnDelayedSeparateEvents"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T101",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T97_T101_T102_FireWallTicksReplaceFixed"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T102",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T97_T101_T102_FireWallTicksReplaceFixed"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T103",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1CoverageTests.T92_T103_PerEffectCapsOnlyAllCappedExcluded"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T104",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T84_T104_T108_HealFixedClampSelfHot"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T105",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1CoverageTests.T105_ShieldRarityFunctions"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T106",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T106_T113_LightSwordSwordTaggedAndFourthHit"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T107",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T107_T114_DarkSwordActualLossKillHeal"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T108",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T84_T104_T108_HealFixedClampSelfHot"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T109",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T86_T109_T110_T111_ShieldAfterGuardRecastReplaces"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T110",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T86_T109_T110_T111_ShieldAfterGuardRecastReplaces"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T111",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T86_T109_T110_T111_ShieldAfterGuardRecastReplaces"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T112",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T85_T112_SwordsExclusiveFailedCastKeepsOld"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T113",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T106_T113_LightSwordSwordTaggedAndFourthHit"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T114",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T107_T114_DarkSwordActualLossKillHeal"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T115",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T115_T122_T123_DemonHitsNearestFrontMagic"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T116",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1CoverageTests.T116_ArchangelCureAndShield"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T117",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1CoverageTests.T117_DemonAreaAndFlameDamageOnly"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T118",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T87_T118_T119_T120_T121_SummonRules"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T119",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T87_T118_T119_T120_T121_SummonRules"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T120",
+   "tier": "A+S",
+   "status": "PASS",
+   "openSubConditions": [
+    "S"
+   ],
+   "tests": [
+    "P1MagicTests.T87_T118_T119_T120_T121_SummonRules"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T121",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T87_T118_T119_T120_T121_SummonRules"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T122",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T115_T122_T123_DemonHitsNearestFrontMagic"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T123",
+   "tier": "A+S",
+   "status": "PASS",
+   "openSubConditions": [
+    "S"
+   ],
+   "tests": [
+    "P1MagicTests.T115_T122_T123_DemonHitsNearestFrontMagic"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T124",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T124_ArchangelHealsOnlyBelowThreshold"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T125",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T125_SummonKeepsTimeAcrossMaps"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T126",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1SystemTests.T11_T126_ReviveKeepsCheckpointRestoresSnapshot"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T127",
+   "tier": "A+E",
+   "status": "PASS",
+   "openSubConditions": [
+    "E"
+   ],
+   "tests": [
+    "P1MagicTests.T78_T127_T128_CommandMapAndMirroring"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T128",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T78_T127_T128_CommandMapAndMirroring"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T129",
+   "tier": "A+E",
+   "status": "PASS",
+   "openSubConditions": [
+    "E"
+   ],
+   "tests": [
+    "P1MagicTests.T129_LongestMotionWins"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T130",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T130_AimFollowsDirectionNotCommandEnd"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T131",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T131_T132_RbIsGuardOnly"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T132",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T131_T132_RbIsGuardOnly"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T133",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T133_T140_HealQcfB_FailureDoesNotUseItem"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T134",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T134_T135_T136_NonCombatContextDropsBuffer"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T135",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T134_T135_T136_NonCombatContextDropsBuffer"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T136",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T134_T135_T136_NonCombatContextDropsBuffer"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T137",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T57_T90_T137_T138_T98_EligibleMaxMpAndPostCardCost"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T138",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T57_T90_T137_T138_T98_EligibleMaxMpAndPostCardCost"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T139",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T139_PerSpellMinimumAndScrollZero"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T140",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T133_T140_HealQcfB_FailureDoesNotUseItem"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T141",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T89_T141_MpShortFailsNoDowngradeNoFallback"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T142",
+   "tier": "A+S",
+   "status": "PASS",
+   "openSubConditions": [
+    "S"
+   ],
+   "tests": [
+    "P1MagicTests.T142_CannotCastStateDiscardsNoLaterAutoCast"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T143",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T143_TwoSpellsSameTickAllRefused"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T144",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T144_T172_SpendOnceAtCommitRecheckAndCancel"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T145",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1GrowthTests.T145_MultipleMandatoriesShownTogether"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T146",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1GrowthTests.T146_DeclineOnlyForShownMandatories"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T147",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1GrowthTests.T147_PreFilterBeforeDraw"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T148",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1GrowthTests.T148_EmptyTypeRenormalised"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T149",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1GrowthTests.T149_RarityRenormalisedByStory"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T150",
+   "tier": "A+S",
+   "status": "PASS",
+   "openSubConditions": [
+    "S"
+   ],
+   "tests": [
+    "P1GrowthTests.T150_T155_FallbackFillsNormalScreenOnly"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T151",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1GrowthTests.T151_ZeroCandidatesSkipsWithHealAndWarning"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T152",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1GrowthTests.T152_T159_RerollNoChangeNoCostAndFallbackFixed"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T153",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1SystemTests.T18_T153_T182_T184_PermPackRules"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T154",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1GrowthTests.T154_T162_MandatoryLv50WorstCaseFeasibility"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T155",
+   "tier": "A+S",
+   "status": "PASS",
+   "openSubConditions": [
+    "S"
+   ],
+   "tests": [
+    "P1GrowthTests.T150_T155_FallbackFillsNormalScreenOnly"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T156",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1GrowthTests.T156_FallbackCountEditAppliesToLaterPicksOnly"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T157",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1GrowthTests.T157_FullBagQueueClaimOnceAndSaveLoad"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T158",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1GrowthTests.T158_FallbackRepeatsAcrossLevels"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T159",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1GrowthTests.T152_T159_RerollNoChangeNoCostAndFallbackFixed"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T160",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1GrowthTests.T160_T161_MandatoryFirstLevelEditableNoStoryGate"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T161",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1GrowthTests.T160_T161_MandatoryFirstLevelEditableNoStoryGate"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T162",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1GrowthTests.T154_T162_MandatoryLv50WorstCaseFeasibility",
+    "P1GrowthTests.T162_AirDashWithoutDoubleJump"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T163",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1DamageTests.T163_SumBonusesThenBuff"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T164",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1DamageTests.T164_T165_T23_CommonDefenseCurve"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T165",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1DamageTests.T164_T165_T23_CommonDefenseCurve"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T166",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1DamageTests.T166_DefenseTimesTemporaryReduction"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T167",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1DamageTests.T167_MinOneGuardZeroShieldZero"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T168",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1DamageTests.T168_GuardBeforeDefense"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T169",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1DamageTests.T169_T68_T69_DownedDiveAddsBothCappedBonuses"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T170",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1DamageTests.T170_LifestealSumsOneEventThenFloorsOnce"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T171",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1DamageTests.T171_MagicShieldThenArchangel"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T172",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T144_T172_SpendOnceAtCommitRecheckAndCancel"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T173",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T173_FullHpHealStillSpends"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T174",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T96_T174_T100_FireBallBurnDelayedSeparateEvents"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T175",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1SystemTests.T12_T175_T176_SpeedAndAirScope"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T176",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1SystemTests.T12_T175_T176_SpeedAndAirScope"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T177",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1SystemTests.T10_T177_AdditiveCapIndependentTimersStackCap",
+    "P1SystemTests.T177_MerchantBuffRefusedAtStackCap"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T178",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1MagicTests.T178_MpDiscountFloorThenMinimum"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T179",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1SystemTests.T13_T179_ItemBuffPotionsOnlyOneFloorPerResource"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T180",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1SystemTests.T17_T180_T181_PriceAndExpPayment"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T181",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1SystemTests.T17_T180_T181_PriceAndExpPayment"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T182",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1SystemTests.T18_T153_T182_T184_PermPackRules"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T183",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1SystemTests.T183_FirstVisitPremiumKeepsStoryRarity"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T184",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1SystemTests.T18_T153_T182_T184_PermPackRules"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T185",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1SystemTests.T185_T186_Lv50CurrencyAndPrices"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T186",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1SystemTests.T185_T186_Lv50CurrencyAndPrices"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T187",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1SystemTests.T187_RerollTokenFirstThenEquipment"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T188",
+   "tier": "A+P",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1SystemTests.T188_LevelUpAtFirstSafeBoundaryPausesGame"
+   ],
+   "play": "growth_screen:PASS"
+  },
+  {
+   "id": "P1-T189",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1SystemTests.T189_SameEventLethalHitLevelUpFirst"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T190",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1GrowthTests.T190_MultiLevelSequentialScreens"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T191",
+   "tier": "A+P",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1SystemTests.T191_RingAndPendingUseClosedWithoutCost"
+   ],
+   "play": "T201:PASS"
+  },
+  {
+   "id": "P1-T192",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1GrowthTests.T192_SaveMidOfferResumesWithoutRedraw"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T193",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1GrowthTests.T193_Lv50ExcessOnlyToCurrencyOnce"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T194",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1SystemTests.T194_MerchantBlockedWhileGrowthPending"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T195",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1SystemTests.T195_RegionExitConfirm"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T196",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1SystemTests.T196_LoadDuringPackCancelsFree"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T197",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1SystemTests.T197_NoSafeSpawnNotEligible"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T198",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1SystemTests.T198_BlockedAfterSuccessKeepsCountersAndState"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T199",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1SystemTests.T199_T200_RegionSnapshotAndCheckpointTogether"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T200",
+   "tier": "A",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1SystemTests.T199_T200_RegionSnapshotAndCheckpointTogether"
+   ],
+   "play": null
+  },
+  {
+   "id": "P1-T201",
+   "tier": "P",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1SystemTests.T201_RingOpenSameEventLethalLevelUpSaveLoad"
+   ],
+   "play": "T201:PASS"
+  },
+  {
+   "id": "P1-T202",
+   "tier": "P",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1SystemTests.T202_Lv49ToLv50ChainMerchantCheckpoint"
+   ],
+   "play": "T202:PASS"
+  },
+  {
+   "id": "P1-T203",
+   "tier": "P",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1SystemTests.T203_SpawnFailureAndReentryStable"
+   ],
+   "play": "T203:PASS"
+  },
+  {
+   "id": "P1-T204",
+   "tier": "P",
+   "status": "PASS",
+   "openSubConditions": [],
+   "tests": [
+    "P1SystemTests.T204_UiCloseVsCommittedTrade"
+   ],
+   "play": "T204:PASS"
+  }
+ ]
+}
