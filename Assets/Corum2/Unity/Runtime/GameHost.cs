@@ -36,6 +36,9 @@ namespace Corum2.Unity
         [Header("Boss transition presentation (R-08-11, EXP-PRES-01; needed when a boss phase has presentation ids)")]
         public PresentationLibrary presentation;
 
+        [Header("P1 (magic, growth, buffs, merchant). Leave empty for P0 scenes")]
+        public P1ProfileAsset p1;
+
         [Header("Run")]
         public string testCaseId = "manual";
         [Tooltip("Write a 'tick' log line every fixed step (trajectory logs).")]
@@ -70,6 +73,7 @@ namespace Corum2.Unity
         WorldView _worldView;
         CombatView _combatView;
         CombatHudView _combatHud;
+        P1View _p1View;
         DeathView _deathView;
         BossPresentationView _presentationView;
         PlayerView _playerView;
@@ -156,9 +160,17 @@ namespace Corum2.Unity
                     if (d.Ai != null && d.Ai.Type == AiType.Boss && d.Boss != null) bosses.Add(d.Boss);
                 foreach (var issue in PresentationLibrary.Validate(presentation, bosses)) ValidationErrors.Add(issue);
             }
+            Corum2.Core.P1.P1Profile p1Profile = null;
+            if (p1 != null)
+            {
+                p1Profile = p1.ToCore();
+                foreach (var e in p1Profile.Validate()) ValidationErrors.Add("P1Profile: " + e);
+                if (combat == null || ring == null) ValidationErrors.Add("P1Profile: P1 scenes need combat and ring data");
+            }
             if (ring != null)
             {
                 _ringProfile = ring.ToCore();
+                if (p1Profile != null) Corum2.Core.P1.P1Runtime.AddRingItems(p1Profile, _ringProfile);
                 foreach (var issue in RingValidator.Validate(_ringProfile)) ValidationErrors.Add(issue.ToString());
                 if (combat == null) ValidationErrors.Add("RingConfig: ring scenes need combat data (player HP for heal items)");
             }
@@ -185,10 +197,11 @@ namespace Corum2.Unity
                 if (e != null) extra.Add(e);
             if (ring != null) extra.Add(ring);
             if (presentation != null) extra.Add(presentation);
+            if (p1 != null) extra.Add(p1);
             DataSnapshotPath = RunFiles.WriteDataSnapshot(dir, RunId, world, movement, inputProfile, unlocks, extra);
 
             var log = new DiagLogger(new SinkTee(_sink, this)) { RunId = RunId, TestCaseId = testCaseId, TickSamples = tickSamples };
-            Sim = new Simulation(worldData, move, input, unlock, log, combatProfile, combatUnlock, enemyDefs, _ringProfile);
+            Sim = new Simulation(worldData, move, input, unlock, log, combatProfile, combatUnlock, enemyDefs, _ringProfile, p1Profile);
             _transport = new InputTransport();
             if (Sim.Router != null) _gameTransport = new InputTransport();
             _collector = new InputCollector(inputProfile, _transport);
@@ -212,6 +225,11 @@ namespace Corum2.Unity
             {
                 if (_hudCanvas == null) BuildCanvas();
                 _deathView = new DeathView(_hudCanvas.transform);
+            }
+            if (Sim.P1 != null)
+            {
+                if (_hudCanvas == null) BuildCanvas();
+                _p1View = new P1View(_hudCanvas, transform, _worldView);
             }
             _camera = Camera.main;
             if (_camera != null)
@@ -349,6 +367,7 @@ namespace Corum2.Unity
             }
 
             _deathView?.Apply(Sim);
+            _p1View?.Apply(Sim, _camera, z);
 
             var dt = Time.unscaledDeltaTime;
             if (dt > 0f) _fpsSmoothed = _fpsSmoothed <= 0f ? 1f / dt : Mathf.Lerp(_fpsSmoothed, 1f / dt, 0.05f);
@@ -586,6 +605,50 @@ namespace Corum2.Unity
             _simCostMsThisFrame = 0;
         }
 
+        /// <summary>
+        /// P1 script / test commands (evidence setup and screen driving, all logged):
+        /// p1=exp:N | learn:Flag | mp:N | grow:I | reroll | buff:Id:Rarity | axis:Key:V | stage:Mid | shop | buy:I | pack:I |
+        /// close:yes|no | exit:yes|no | save | load | cancelpack
+        /// </summary>
+        void P1Exec(string arg)
+        {
+            var rt = Sim.P1;
+            if (rt == null) return;
+            var kv = arg.Split(':');
+            string res = "ok";
+            switch (kv[0])
+            {
+                case "exp": rt.Prog.GrantExp(int.Parse(kv[1], CultureInfo.InvariantCulture), rt.G.NextEventId++, "script"); break;
+                case "learn": rt.G.Learned.Add(kv[1]); break;
+                case "mp": rt.G.CurMp = float.Parse(kv[1], CultureInfo.InvariantCulture); break;
+                case "grow": res = rt.ChooseGrowth(int.Parse(kv[1], CultureInfo.InvariantCulture)) ?? "ok"; break;
+                case "reroll": res = rt.Prog.Reroll().ToString(); break;
+                case "buff": rt.Buffs.Add(kv[1], (Corum2.Core.P1.Rarity)Enum.Parse(typeof(Corum2.Core.P1.Rarity), kv[2]), "script"); break;
+                case "axis": rt.G.Axes[kv[1]] = float.Parse(kv[2], CultureInfo.InvariantCulture); break;
+                case "stage": rt.G.Stage = (Corum2.Core.P1.StoryStage)Enum.Parse(typeof(Corum2.Core.P1.StoryStage), kv[1]); break;
+                case "tokens": rt.G.RerollTokens = int.Parse(kv[1], CultureInfo.InvariantCulture); break;
+                case "shop": res = rt.Merchant.OpenShop() ?? "ok"; break;
+                case "buy": res = rt.Merchant.Buy(int.Parse(kv[1], CultureInfo.InvariantCulture)) ?? "ok"; break;
+                case "pack": res = rt.Merchant.ChoosePack(int.Parse(kv[1], CultureInfo.InvariantCulture)) ?? "ok"; break;
+                case "cancelpack": rt.Merchant.CancelPack("script"); break;
+                case "close": rt.Merchant.RequestClose(); rt.Merchant.AnswerClose(kv[1] == "yes"); break;
+                case "exit": rt.AnswerExit(kv[1] == "yes"); break;
+                case "save": rt.SaveCheckpoint("script"); break;
+                case "load": res = rt.RestoreCheckpoint("script") ? "ok" : "noCheckpoint"; break;
+                case "lethal":
+                    // lethal=<damage>: an enemy hit on the player through the real path, then the end-of-tick hold / commit
+                    Sim.Combat.TestHitPlayer(new AttackDefinition { Id = "script.lethal", Kind = AttackKind.EnemyMelee, TestDamage = float.Parse(kv[1], CultureInfo.InvariantCulture), Knockback = 1 }, "script", Sim.Player.Position.X + Sim.Player.Facing);
+                    Sim.Combat.TestFinishTick();
+                    break;
+                case "kill":
+                    // kill=<enemyInstanceId>: a player hit large enough to kill (EXP / growth trigger)
+                    Sim.Combat.TestApplyHit(new AttackDefinition { Id = "script.kill", Kind = AttackKind.GroundNormal, TestDamage = 9999, Knockback = 1 }, kv[1]);
+                    break;
+            }
+            Sim.Log.Emit("marker", "player", "", "", "", "P1Script:" + kv[0], ("arg", arg), ("result", res), ("level", rt.G.Level), ("pending", rt.G.PendingLevels),
+                ("levelExp", rt.G.LevelExp), ("mp", rt.G.CurMp));
+        }
+
         void Exec(string cmd)
         {
             var eq = cmd.IndexOf('=');
@@ -681,6 +744,9 @@ namespace Corum2.Unity
                     }
                     break;
                 }
+                case "p1":
+                    P1Exec(arg);
+                    break;
                 case "spawn":
                     // spawn=<spawnId> on the current map (test setup)
                     var s = Sim.CurrentMap.FindSpawn(arg);

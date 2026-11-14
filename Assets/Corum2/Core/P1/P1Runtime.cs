@@ -328,7 +328,7 @@ namespace Corum2.Core.P1
                 var d = new ItemDefinition { Id = t.Id, Name = t.Name, Description = t.Name, Cooldown = 0.5f };
                 if (t.ScrollSpellId != "") { d.Kind = ItemKind.MagicScroll; d.Effect = ItemEffectType.Magic; d.MagicId = t.ScrollSpellId; }
                 else if (t.Revive) { d.Kind = ItemKind.Consumable; d.Effect = ItemEffectType.Revive; }
-                else { d.Kind = ItemKind.Consumable; d.Effect = ItemEffectType.Heal; d.Amount = t.HpTotal; }
+                else { d.Kind = ItemKind.Consumable; d.Effect = ItemEffectType.Heal; d.Amount = Math.Max(1, t.HpTotal + t.MpTotal); } // P1 computes HP/MP itself (BUF-11)
                 ring.Items.Add(d);
             }
             foreach (var s in p.Spells)

@@ -1,0 +1,2981 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56644c0dd6754e842812a1f9a65fa1fd, type: 3}
+  m_Name: P1Profile_Sandbox
+  m_EditorClassIdentifier: Corum2.Unity::Corum2.Unity.P1ProfileAsset
+  profile:
+    Version: p1-test-1
+    Characters:
+    - Id: volker
+      BaseMaxHp: 10
+      BaseMaxMp: 5
+      CapMaxHp: 100
+      CapMaxMp: 100
+      CapPhysAtk: 30
+      CapMagAtk: 30
+      CapDefense: 40
+      StartKarz: 100
+      WeaponBaseDamage: 1
+    MaxLevel: 50
+    ExpToNext: 000000006400000064000000c80000002c01000090010000f401000058020000bc0200002003000084030000e80300004c040000b00400001405000078050000dc05000040060000a4060000080700006c070000d00700003408000098080000fc08000060090000c4090000280a00008c0a0000f00a0000540b0000b80b00001c0c0000800c0000e40c0000480d0000ac0d0000100e0000740e0000d80e00003c0f0000a00f00000410000068100000cc1000003011000094110000f81100005c120000c012000024130000
+    Lv50CurrencyRate: 1
+    PermanentSlotWeight: 0.75
+    TemporarySlotWeight: 0.25
+    StoryRarity:
+    - Stage: 0
+      Normal: 80
+      Rare: 20
+      Epic: 0
+      Legendary: 0
+    - Stage: 1
+      Normal: 70
+      Rare: 23
+      Epic: 7
+      Legendary: 0
+    - Stage: 2
+      Normal: 70
+      Rare: 22
+      Epic: 7
+      Legendary: 1
+    Mandatory:
+    - Id: MagicMissile
+      CardId: card.mandatory.MagicMissile
+      FirstLevel: 2
+      Order: 1
+      StoryGateEnabled: 0
+      PrerequisiteMandatoryIds: []
+    - Id: DoubleJump
+      CardId: card.mandatory.DoubleJump
+      FirstLevel: 4
+      Order: 2
+      StoryGateEnabled: 0
+      PrerequisiteMandatoryIds: []
+    - Id: AirDash
+      CardId: card.mandatory.AirDash
+      FirstLevel: 6
+      Order: 3
+      StoryGateEnabled: 0
+      PrerequisiteMandatoryIds: []
+    - Id: AirDive
+      CardId: card.mandatory.AirDive
+      FirstLevel: 8
+      Order: 4
+      StoryGateEnabled: 0
+      PrerequisiteMandatoryIds: []
+    Cards:
+    - Id: card.mandatory.MagicMissile
+      Kind: 6
+      Rarity: 0
+      Permanent: 1
+      RequiresLearned: 
+      Unlocks: MagicMissile
+      OneTime: 1
+      MinLevel: 0
+      SpellId: spell.missile
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 1
+      Axes: []
+      Label: "\uB9E4\uC9C1 \uBBF8\uC0AC\uC77C \uC2B5\uB4DD"
+    - Id: card.mandatory.DoubleJump
+      Kind: 6
+      Rarity: 0
+      Permanent: 1
+      RequiresLearned: 
+      Unlocks: DoubleJump
+      OneTime: 1
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 1
+      Axes: []
+      Label: "2\uB2E8 \uC810\uD504 \uC2B5\uB4DD"
+    - Id: card.mandatory.AirDash
+      Kind: 6
+      Rarity: 0
+      Permanent: 1
+      RequiresLearned: 
+      Unlocks: AirDash
+      OneTime: 1
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 1
+      Axes: []
+      Label: "\uACF5\uC911 \uC9C1\uC120 \uB3CC\uC9C4 \uC2B5\uB4DD"
+    - Id: card.mandatory.AirDive
+      Kind: 6
+      Rarity: 0
+      Permanent: 1
+      RequiresLearned: 
+      Unlocks: AirDive
+      OneTime: 1
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 1
+      Axes: []
+      Label: "\uACF5\uC911 \uB099\uD558 \uAC15\uACF5\uACA9 \uC2B5\uB4DD"
+    - Id: card.stat.MaxHp.N
+      Kind: 0
+      Rarity: 0
+      Permanent: 1
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: stat.MaxHp
+        Delta: 2
+        Limit: 0
+        First: 0
+      Label: "\uCD5C\uB300 HP +2"
+    - Id: card.stat.MaxHp.R
+      Kind: 0
+      Rarity: 1
+      Permanent: 1
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: stat.MaxHp
+        Delta: 3
+        Limit: 0
+        First: 0
+      Label: "\uCD5C\uB300 HP +3"
+    - Id: card.stat.MaxHp.E
+      Kind: 0
+      Rarity: 2
+      Permanent: 1
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: stat.MaxHp
+        Delta: 5
+        Limit: 0
+        First: 0
+      Label: "\uCD5C\uB300 HP +5"
+    - Id: card.stat.MaxHp.L
+      Kind: 0
+      Rarity: 3
+      Permanent: 1
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: stat.MaxHp
+        Delta: 8
+        Limit: 0
+        First: 0
+      Label: "\uCD5C\uB300 HP +8"
+    - Id: card.stat.MaxMp.N
+      Kind: 0
+      Rarity: 0
+      Permanent: 1
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: stat.MaxMp
+        Delta: 1
+        Limit: 0
+        First: 0
+      Label: "\uCD5C\uB300 MP +1"
+    - Id: card.stat.MaxMp.R
+      Kind: 0
+      Rarity: 1
+      Permanent: 1
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: stat.MaxMp
+        Delta: 2
+        Limit: 0
+        First: 0
+      Label: "\uCD5C\uB300 MP +2"
+    - Id: card.stat.MaxMp.E
+      Kind: 0
+      Rarity: 2
+      Permanent: 1
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: stat.MaxMp
+        Delta: 3
+        Limit: 0
+        First: 0
+      Label: "\uCD5C\uB300 MP +3"
+    - Id: card.stat.MaxMp.L
+      Kind: 0
+      Rarity: 3
+      Permanent: 1
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: stat.MaxMp
+        Delta: 5
+        Limit: 0
+        First: 0
+      Label: "\uCD5C\uB300 MP +5"
+    - Id: card.stat.PhysAtk.N
+      Kind: 0
+      Rarity: 0
+      Permanent: 1
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: stat.PhysAtk
+        Delta: 1
+        Limit: 0
+        First: 0
+      Label: "\uBB3C\uB9AC \uACF5\uACA9 +1"
+    - Id: card.stat.PhysAtk.R
+      Kind: 0
+      Rarity: 1
+      Permanent: 1
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: stat.PhysAtk
+        Delta: 2
+        Limit: 0
+        First: 0
+      Label: "\uBB3C\uB9AC \uACF5\uACA9 +2"
+    - Id: card.stat.PhysAtk.E
+      Kind: 0
+      Rarity: 2
+      Permanent: 1
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: stat.PhysAtk
+        Delta: 3
+        Limit: 0
+        First: 0
+      Label: "\uBB3C\uB9AC \uACF5\uACA9 +3"
+    - Id: card.stat.PhysAtk.L
+      Kind: 0
+      Rarity: 3
+      Permanent: 1
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: stat.PhysAtk
+        Delta: 5
+        Limit: 0
+        First: 0
+      Label: "\uBB3C\uB9AC \uACF5\uACA9 +5"
+    - Id: card.stat.MagAtk.N
+      Kind: 0
+      Rarity: 0
+      Permanent: 1
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: stat.MagAtk
+        Delta: 1
+        Limit: 0
+        First: 0
+      Label: "\uB9C8\uBC95 \uACF5\uACA9 +1"
+    - Id: card.stat.MagAtk.R
+      Kind: 0
+      Rarity: 1
+      Permanent: 1
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: stat.MagAtk
+        Delta: 2
+        Limit: 0
+        First: 0
+      Label: "\uB9C8\uBC95 \uACF5\uACA9 +2"
+    - Id: card.stat.MagAtk.E
+      Kind: 0
+      Rarity: 2
+      Permanent: 1
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: stat.MagAtk
+        Delta: 3
+        Limit: 0
+        First: 0
+      Label: "\uB9C8\uBC95 \uACF5\uACA9 +3"
+    - Id: card.stat.MagAtk.L
+      Kind: 0
+      Rarity: 3
+      Permanent: 1
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: stat.MagAtk
+        Delta: 5
+        Limit: 0
+        First: 0
+      Label: "\uB9C8\uBC95 \uACF5\uACA9 +5"
+    - Id: card.stat.Defense.N
+      Kind: 0
+      Rarity: 0
+      Permanent: 1
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: stat.Defense
+        Delta: 1
+        Limit: 0
+        First: 0
+      Label: "\uBC29\uC5B4 +1"
+    - Id: card.stat.Defense.R
+      Kind: 0
+      Rarity: 1
+      Permanent: 1
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: stat.Defense
+        Delta: 2
+        Limit: 0
+        First: 0
+      Label: "\uBC29\uC5B4 +2"
+    - Id: card.stat.Defense.E
+      Kind: 0
+      Rarity: 2
+      Permanent: 1
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: stat.Defense
+        Delta: 3
+        Limit: 0
+        First: 0
+      Label: "\uBC29\uC5B4 +3"
+    - Id: card.stat.Defense.L
+      Kind: 0
+      Rarity: 3
+      Permanent: 1
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: stat.Defense
+        Delta: 5
+        Limit: 0
+        First: 0
+      Label: "\uBC29\uC5B4 +5"
+    - Id: card.skill.groundBasic.N
+      Kind: 1
+      Rarity: 0
+      Permanent: 1
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: skill.groundBasic.dmg
+        Delta: 1
+        Limit: 10
+        First: 0
+      Label: "\uC9C0\uC0C1 4\uC5F0\uD0C0 \uC804\uD0C0 \uD53C\uD574 +1"
+    - Id: card.skill.groundBasic.R
+      Kind: 1
+      Rarity: 1
+      Permanent: 1
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: skill.groundBasic.dmg
+        Delta: 2
+        Limit: 10
+        First: 0
+      Label: "\uC9C0\uC0C1 4\uC5F0\uD0C0 \uC804\uD0C0 \uD53C\uD574 +2"
+    - Id: card.skill.groundBasic.E
+      Kind: 1
+      Rarity: 2
+      Permanent: 1
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: skill.groundBasic.dmg
+        Delta: 3
+        Limit: 10
+        First: 0
+      Label: "\uC9C0\uC0C1 4\uC5F0\uD0C0 \uC804\uD0C0 \uD53C\uD574 +3"
+    - Id: card.skill.groundBasic.L
+      Kind: 1
+      Rarity: 3
+      Permanent: 1
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: skill.groundBasic.dmg
+        Delta: 5
+        Limit: 10
+        First: 0
+      Label: "\uC9C0\uC0C1 4\uC5F0\uD0C0 \uC804\uD0C0 \uD53C\uD574 +5"
+    - Id: card.skill.airBasic.N
+      Kind: 1
+      Rarity: 0
+      Permanent: 1
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: skill.airBasic.dmg
+        Delta: 1
+        Limit: 10
+        First: 0
+      Label: "\uACF5\uC911 4\uC5F0\uD0C0 \uC804\uD0C0 \uD53C\uD574 +1"
+    - Id: card.skill.airBasic.R
+      Kind: 1
+      Rarity: 1
+      Permanent: 1
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: skill.airBasic.dmg
+        Delta: 2
+        Limit: 10
+        First: 0
+      Label: "\uACF5\uC911 4\uC5F0\uD0C0 \uC804\uD0C0 \uD53C\uD574 +2"
+    - Id: card.skill.airBasic.E
+      Kind: 1
+      Rarity: 2
+      Permanent: 1
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: skill.airBasic.dmg
+        Delta: 3
+        Limit: 10
+        First: 0
+      Label: "\uACF5\uC911 4\uC5F0\uD0C0 \uC804\uD0C0 \uD53C\uD574 +3"
+    - Id: card.skill.airBasic.L
+      Kind: 1
+      Rarity: 3
+      Permanent: 1
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: skill.airBasic.dmg
+        Delta: 5
+        Limit: 10
+        First: 0
+      Label: "\uACF5\uC911 4\uC5F0\uD0C0 \uC804\uD0C0 \uD53C\uD574 +5"
+    - Id: card.skill.airDash.N
+      Kind: 1
+      Rarity: 0
+      Permanent: 1
+      RequiresLearned: AirDash
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: skill.airDash.dmg
+        Delta: 1
+        Limit: 12
+        First: 0
+      Label: "\uACF5\uC911 \uB3CC\uC9C4 \uD53C\uD574 +1"
+    - Id: card.skill.airDash.R
+      Kind: 1
+      Rarity: 1
+      Permanent: 1
+      RequiresLearned: AirDash
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: skill.airDash.dmg
+        Delta: 2
+        Limit: 12
+        First: 0
+      Label: "\uACF5\uC911 \uB3CC\uC9C4 \uD53C\uD574 +2"
+    - Id: card.skill.airDash.E
+      Kind: 1
+      Rarity: 2
+      Permanent: 1
+      RequiresLearned: AirDash
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: skill.airDash.dmg
+        Delta: 3
+        Limit: 12
+        First: 0
+      Label: "\uACF5\uC911 \uB3CC\uC9C4 \uD53C\uD574 +3"
+    - Id: card.skill.airDash.L
+      Kind: 1
+      Rarity: 3
+      Permanent: 1
+      RequiresLearned: AirDash
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: skill.airDash.dmg
+        Delta: 5
+        Limit: 12
+        First: 0
+      Label: "\uACF5\uC911 \uB3CC\uC9C4 \uD53C\uD574 +5"
+    - Id: card.skill.airDiveDowned.N
+      Kind: 1
+      Rarity: 0
+      Permanent: 1
+      RequiresLearned: AirDive
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: skill.airDiveDowned.dmg
+        Delta: 1
+        Limit: 10
+        First: 0
+      Label: "\uB099\uD558 \uAC15\uACF5\uACA9 \uB2E4\uC6B4 \uCD94\uAC00 \uD53C\uD574
+        +1"
+    - Id: card.skill.airDiveDowned.R
+      Kind: 1
+      Rarity: 1
+      Permanent: 1
+      RequiresLearned: AirDive
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: skill.airDiveDowned.dmg
+        Delta: 2
+        Limit: 10
+        First: 0
+      Label: "\uB099\uD558 \uAC15\uACF5\uACA9 \uB2E4\uC6B4 \uCD94\uAC00 \uD53C\uD574
+        +2"
+    - Id: card.skill.airDiveDowned.E
+      Kind: 1
+      Rarity: 2
+      Permanent: 1
+      RequiresLearned: AirDive
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: skill.airDiveDowned.dmg
+        Delta: 3
+        Limit: 10
+        First: 0
+      Label: "\uB099\uD558 \uAC15\uACF5\uACA9 \uB2E4\uC6B4 \uCD94\uAC00 \uD53C\uD574
+        +3"
+    - Id: card.skill.airDiveDowned.L
+      Kind: 1
+      Rarity: 3
+      Permanent: 1
+      RequiresLearned: AirDive
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: skill.airDiveDowned.dmg
+        Delta: 5
+        Limit: 10
+        First: 0
+      Label: "\uB099\uD558 \uAC15\uACF5\uACA9 \uB2E4\uC6B4 \uCD94\uAC00 \uD53C\uD574
+        +5"
+    - Id: card.skill.downAttack.N
+      Kind: 1
+      Rarity: 0
+      Permanent: 1
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: skill.downAttack.dmg
+        Delta: 1
+        Limit: 10
+        First: 0
+      Label: "\uB2E4\uC6B4 \uACF5\uACA9 \uD53C\uD574 +1"
+    - Id: card.skill.downAttack.R
+      Kind: 1
+      Rarity: 1
+      Permanent: 1
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: skill.downAttack.dmg
+        Delta: 2
+        Limit: 10
+        First: 0
+      Label: "\uB2E4\uC6B4 \uACF5\uACA9 \uD53C\uD574 +2"
+    - Id: card.skill.downAttack.E
+      Kind: 1
+      Rarity: 2
+      Permanent: 1
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: skill.downAttack.dmg
+        Delta: 3
+        Limit: 10
+        First: 0
+      Label: "\uB2E4\uC6B4 \uACF5\uACA9 \uD53C\uD574 +3"
+    - Id: card.skill.downAttack.L
+      Kind: 1
+      Rarity: 3
+      Permanent: 1
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: skill.downAttack.dmg
+        Delta: 5
+        Limit: 10
+        First: 0
+      Label: "\uB2E4\uC6B4 \uACF5\uACA9 \uD53C\uD574 +5"
+    - Id: card.skill.launcher.N
+      Kind: 1
+      Rarity: 0
+      Permanent: 1
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: skill.launcher.height
+        Delta: 0.15
+        Limit: 1.5
+        First: 0
+      - Axis: skill.launcher.time
+        Delta: 0.05
+        Limit: 0.5
+        First: 0
+      Label: "\uB7F0\uCC98 \uB744\uC6B0\uAE30 \uB192\uC774/\uCCB4\uACF5"
+    - Id: card.skill.launcher.R
+      Kind: 1
+      Rarity: 1
+      Permanent: 1
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: skill.launcher.height
+        Delta: 0.25
+        Limit: 1.5
+        First: 0
+      - Axis: skill.launcher.time
+        Delta: 0.09
+        Limit: 0.5
+        First: 0
+      Label: "\uB7F0\uCC98 \uB744\uC6B0\uAE30 \uB192\uC774/\uCCB4\uACF5"
+    - Id: card.skill.launcher.E
+      Kind: 1
+      Rarity: 2
+      Permanent: 1
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: skill.launcher.height
+        Delta: 0.4
+        Limit: 1.5
+        First: 0
+      - Axis: skill.launcher.time
+        Delta: 0.14
+        Limit: 0.5
+        First: 0
+      Label: "\uB7F0\uCC98 \uB744\uC6B0\uAE30 \uB192\uC774/\uCCB4\uACF5"
+    - Id: card.skill.launcher.L
+      Kind: 1
+      Rarity: 3
+      Permanent: 1
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: skill.launcher.height
+        Delta: 0.6
+        Limit: 1.5
+        First: 0
+      - Axis: skill.launcher.time
+        Delta: 0.2
+        Limit: 0.5
+        First: 0
+      Label: "\uB7F0\uCC98 \uB744\uC6B0\uAE30 \uB192\uC774/\uCCB4\uACF5"
+    - Id: card.missile.N
+      Kind: 2
+      Rarity: 0
+      Permanent: 1
+      RequiresLearned: MagicMissile
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: spell.missile
+      MpDelta: 1
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: mm.dmg
+        Delta: 2
+        Limit: 0
+        First: 0
+      Label: "\uB9E4\uC9C1 \uBBF8\uC0AC\uC77C \uD53C\uD574+2 / MP+1"
+    - Id: card.missile.R
+      Kind: 2
+      Rarity: 1
+      Permanent: 1
+      RequiresLearned: MagicMissile
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: spell.missile
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: mm.dmg
+        Delta: 3
+        Limit: 0
+        First: 0
+      Label: "\uB9E4\uC9C1 \uBBF8\uC0AC\uC77C \uD53C\uD574+3"
+    - Id: card.missile.E.proj
+      Kind: 2
+      Rarity: 2
+      Permanent: 1
+      RequiresLearned: MagicMissile
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: spell.missile
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: mm.proj
+        Delta: 1
+        Limit: 0
+        First: 0
+      Label: "\uB9E4\uC9C1 \uBBF8\uC0AC\uC77C \uD22C\uC0AC\uCCB4+1"
+    - Id: card.missile.E.homing
+      Kind: 2
+      Rarity: 2
+      Permanent: 1
+      RequiresLearned: MagicMissile
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: spell.missile
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: mm.homing
+        Delta: 1
+        Limit: 0
+        First: 0
+      Label: "\uB9E4\uC9C1 \uBBF8\uC0AC\uC77C \uC720\uB3C4 \uAC15\uD654"
+    - Id: card.missile.L
+      Kind: 2
+      Rarity: 3
+      Permanent: 1
+      RequiresLearned: MagicMissile
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: spell.missile
+      MpDelta: -1
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: mm.dmg
+        Delta: 5
+        Limit: 0
+        First: 0
+      Label: "\uB9E4\uC9C1 \uBBF8\uC0AC\uC77C \uD53C\uD574+5 / MP-1"
+    - Id: card.spell.light_orb.unlock
+      Kind: 3
+      Rarity: 0
+      Permanent: 1
+      RequiresLearned: 
+      Unlocks: spell.light_orb
+      OneTime: 1
+      MinLevel: 4
+      SpellId: spell.light_orb
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes: []
+      Label: "\uBE5B\uC758 \uAD6C \uD574\uAE08"
+    - Id: card.spell.dark_orb.unlock
+      Kind: 3
+      Rarity: 0
+      Permanent: 1
+      RequiresLearned: 
+      Unlocks: spell.dark_orb
+      OneTime: 1
+      MinLevel: 6
+      SpellId: spell.dark_orb
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes: []
+      Label: "\uC5B4\uB460\uC758 \uAD6C \uD574\uAE08"
+    - Id: card.spell.heal.unlock
+      Kind: 3
+      Rarity: 0
+      Permanent: 1
+      RequiresLearned: 
+      Unlocks: spell.heal
+      OneTime: 1
+      MinLevel: 8
+      SpellId: spell.heal
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes: []
+      Label: "\uD68C\uBCF5 \uD574\uAE08"
+    - Id: card.spell.fire_ball.unlock
+      Kind: 3
+      Rarity: 0
+      Permanent: 1
+      RequiresLearned: 
+      Unlocks: spell.fire_ball
+      OneTime: 1
+      MinLevel: 14
+      SpellId: spell.fire_ball
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes: []
+      Label: "\uD654\uC774\uC5B4 \uBCFC \uD574\uAE08"
+    - Id: card.spell.light_sword.unlock
+      Kind: 3
+      Rarity: 0
+      Permanent: 1
+      RequiresLearned: 
+      Unlocks: spell.light_sword
+      OneTime: 1
+      MinLevel: 16
+      SpellId: spell.light_sword
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes: []
+      Label: "\uBE5B\uC758 \uAC80 \uD574\uAE08"
+    - Id: card.spell.dark_sword.unlock
+      Kind: 3
+      Rarity: 0
+      Permanent: 1
+      RequiresLearned: 
+      Unlocks: spell.dark_sword
+      OneTime: 1
+      MinLevel: 18
+      SpellId: spell.dark_sword
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes: []
+      Label: "\uC5B4\uB460\uC758 \uAC80 \uD574\uAE08"
+    - Id: card.spell.shield.unlock
+      Kind: 3
+      Rarity: 0
+      Permanent: 1
+      RequiresLearned: 
+      Unlocks: spell.shield
+      OneTime: 1
+      MinLevel: 28
+      SpellId: spell.shield
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes: []
+      Label: "\uB9E4\uC9C1 \uC2E4\uB4DC \uD574\uAE08"
+    - Id: card.spell.archangel.unlock
+      Kind: 3
+      Rarity: 0
+      Permanent: 1
+      RequiresLearned: 
+      Unlocks: spell.archangel
+      OneTime: 1
+      MinLevel: 34
+      SpellId: spell.archangel
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes: []
+      Label: "\uB300\uCC9C\uC0AC \uC18C\uD658 \uD574\uAE08"
+    - Id: card.spell.demon.unlock
+      Kind: 3
+      Rarity: 0
+      Permanent: 1
+      RequiresLearned: 
+      Unlocks: spell.demon
+      OneTime: 1
+      MinLevel: 36
+      SpellId: spell.demon
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes: []
+      Label: "\uC545\uB9C8 \uC18C\uD658 \uD574\uAE08"
+    - Id: card.spell.fire_wall.unlock
+      Kind: 3
+      Rarity: 0
+      Permanent: 1
+      RequiresLearned: 
+      Unlocks: spell.fire_wall
+      OneTime: 1
+      MinLevel: 38
+      SpellId: spell.fire_wall
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes: []
+      Label: "\uD654\uC774\uC5B4 \uC6D4 \uD574\uAE08"
+    - Id: card.spell.light_orb.N
+      Kind: 4
+      Rarity: 0
+      Permanent: 1
+      RequiresLearned: spell.light_orb
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: spell.light_orb
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: spell.light_orb.dmg
+        Delta: 1
+        Limit: 10
+        First: 0
+      Label: "\uBE5B\uC758 \uAD6C \uD53C\uD574+1"
+    - Id: card.spell.light_orb.R
+      Kind: 4
+      Rarity: 1
+      Permanent: 1
+      RequiresLearned: spell.light_orb
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: spell.light_orb
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: spell.light_orb.speed
+        Delta: 1.5
+        Limit: 5
+        First: 0
+      Label: "\uBE5B\uC758 \uAD6C \uC18D\uB3C4+1.5"
+    - Id: card.spell.light_orb.E
+      Kind: 4
+      Rarity: 2
+      Permanent: 1
+      RequiresLearned: spell.light_orb
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: spell.light_orb
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: spell.light_orb.chain
+        Delta: 1
+        Limit: 3
+        First: 0
+      Label: "\uBE5B\uC758 \uAD6C \uC5F0\uC1C4+1"
+    - Id: card.spell.light_orb.L
+      Kind: 4
+      Rarity: 3
+      Permanent: 1
+      RequiresLearned: spell.light_orb
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: spell.light_orb
+      MpDelta: 1
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: spell.light_orb.extraShots
+        Delta: 1
+        Limit: 2
+        First: 0
+      Label: "\uBE5B\uC758 \uAD6C \uC5F0\uC18D \uBC1C\uC0AC+1"
+    - Id: card.spell.dark_orb.N
+      Kind: 4
+      Rarity: 0
+      Permanent: 1
+      RequiresLearned: spell.dark_orb
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: spell.dark_orb
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: spell.dark_orb.dmg
+        Delta: 2
+        Limit: 14
+        First: 0
+      Label: "\uC5B4\uB460\uC758 \uAD6C \uD53C\uD574+2"
+    - Id: card.spell.dark_orb.R
+      Kind: 4
+      Rarity: 1
+      Permanent: 1
+      RequiresLearned: spell.dark_orb
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: spell.dark_orb
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: spell.dark_orb.radius
+        Delta: 0.08
+        Limit: 0.32
+        First: 0
+      Label: "\uC5B4\uB460\uC758 \uAD6C \uD06C\uAE30+0.08"
+    - Id: card.spell.dark_orb.E
+      Kind: 4
+      Rarity: 2
+      Permanent: 1
+      RequiresLearned: spell.dark_orb
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: spell.dark_orb
+      MpDelta: 1
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: spell.dark_orb.pierce
+        Delta: 1
+        Limit: 2
+        First: 0
+      Label: "\uC5B4\uB460\uC758 \uAD6C \uAD00\uD1B5+1"
+    - Id: card.spell.dark_orb.L
+      Kind: 4
+      Rarity: 3
+      Permanent: 1
+      RequiresLearned: spell.dark_orb
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: spell.dark_orb
+      MpDelta: 1
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: spell.dark_orb.shock
+        Delta: 2
+        Limit: 8
+        First: 0
+      Label: "\uC5B4\uB460\uC758 \uAD6C \uCDA9\uACA9\uD30C"
+    - Id: card.spell.fire_ball.N
+      Kind: 4
+      Rarity: 0
+      Permanent: 1
+      RequiresLearned: spell.fire_ball
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: spell.fire_ball
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: spell.fire_ball.dmg
+        Delta: 2
+        Limit: 12
+        First: 0
+      Label: "\uD654\uC774\uC5B4 \uBCFC \uD3ED\uBC1C \uD53C\uD574+2"
+    - Id: card.spell.fire_ball.R
+      Kind: 4
+      Rarity: 1
+      Permanent: 1
+      RequiresLearned: spell.fire_ball
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: spell.fire_ball
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: spell.fire_ball.radius
+        Delta: 0.25
+        Limit: 1.25
+        First: 0
+      Label: "\uD654\uC774\uC5B4 \uBCFC \uBC18\uACBD+0.25"
+    - Id: card.spell.fire_ball.E
+      Kind: 4
+      Rarity: 2
+      Permanent: 1
+      RequiresLearned: spell.fire_ball
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: spell.fire_ball
+      MpDelta: 1
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: spell.fire_ball.burn
+        Delta: 1
+        Limit: 5
+        First: 3
+      Label: "\uD654\uC774\uC5B4 \uBCFC \uD654\uC0C1"
+    - Id: card.spell.fire_ball.L
+      Kind: 4
+      Rarity: 3
+      Permanent: 1
+      RequiresLearned: spell.fire_ball
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: spell.fire_ball
+      MpDelta: 1
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: spell.fire_ball.delayed
+        Delta: 1
+        Limit: 2
+        First: 0
+      Label: "\uD654\uC774\uC5B4 \uBCFC \uC9C0\uC5F0 \uD3ED\uBC1C+1"
+    - Id: card.spell.fire_wall.N
+      Kind: 4
+      Rarity: 0
+      Permanent: 1
+      RequiresLearned: spell.fire_wall
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: spell.fire_wall
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: spell.fire_wall.tick
+        Delta: 1
+        Limit: 3
+        First: 0
+      Label: "\uD654\uC774\uC5B4 \uC6D4 \uD2F1 \uD53C\uD574+1"
+    - Id: card.spell.fire_wall.R
+      Kind: 4
+      Rarity: 1
+      Permanent: 1
+      RequiresLearned: spell.fire_wall
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: spell.fire_wall
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: spell.fire_wall.width
+        Delta: 0.4
+        Limit: 1.5
+        First: 0
+      Label: "\uD654\uC774\uC5B4 \uC6D4 \uB108\uBE44+0.4"
+    - Id: card.spell.fire_wall.E
+      Kind: 4
+      Rarity: 2
+      Permanent: 1
+      RequiresLearned: spell.fire_wall
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: spell.fire_wall
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: spell.fire_wall.duration
+        Delta: 1
+        Limit: 4
+        First: 0
+      Label: "\uD654\uC774\uC5B4 \uC6D4 \uC9C0\uC18D+1\uCD08"
+    - Id: card.spell.fire_wall.L
+      Kind: 4
+      Rarity: 3
+      Permanent: 1
+      RequiresLearned: spell.fire_wall
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: spell.fire_wall
+      MpDelta: 2
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: spell.fire_wall.extraWalls
+        Delta: 1
+        Limit: 1
+        First: 0
+      Label: "\uD654\uC774\uC5B4 \uC6D4 \uCD94\uAC00 \uBCBD+1"
+    - Id: card.spell.heal.N
+      Kind: 4
+      Rarity: 0
+      Permanent: 1
+      RequiresLearned: spell.heal
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: spell.heal
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: spell.heal.heal
+        Delta: 2
+        Limit: 20
+        First: 0
+      Label: "\uD68C\uBCF5\uB7C9+2"
+    - Id: card.spell.heal.R
+      Kind: 4
+      Rarity: 1
+      Permanent: 1
+      RequiresLearned: spell.heal
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: spell.heal
+      MpDelta: -1
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes: []
+      Label: "\uD68C\uBCF5 MP-1"
+    - Id: card.spell.heal.E
+      Kind: 4
+      Rarity: 2
+      Permanent: 1
+      RequiresLearned: spell.heal
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: spell.heal
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: spell.heal.cure
+        Delta: 1
+        Limit: 1
+        First: 0
+      Label: "\uD68C\uBCF5 \uC2DC \uC911\uB3C5\xB7\uD63C\uB780 \uD574\uC81C"
+    - Id: card.spell.heal.L
+      Kind: 4
+      Rarity: 3
+      Permanent: 1
+      RequiresLearned: spell.heal
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: spell.heal
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: spell.heal.hot
+        Delta: 1
+        Limit: 6
+        First: 3
+      Label: "\uC9C0\uC18D \uD68C\uBCF5"
+    - Id: card.spell.shield.N
+      Kind: 4
+      Rarity: 0
+      Permanent: 1
+      RequiresLearned: spell.shield
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: spell.shield
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: spell.shield.absorb
+        Delta: 3
+        Limit: 20
+        First: 0
+      Label: "\uC2E4\uB4DC \uD761\uC218+3"
+    - Id: card.spell.shield.R
+      Kind: 4
+      Rarity: 1
+      Permanent: 1
+      RequiresLearned: spell.shield
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: spell.shield
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: spell.shield.duration
+        Delta: 3
+        Limit: 12
+        First: 0
+      Label: "\uC2E4\uB4DC \uC9C0\uC18D+3\uCD08"
+    - Id: card.spell.shield.E
+      Kind: 4
+      Rarity: 2
+      Permanent: 1
+      RequiresLearned: spell.shield
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: spell.shield
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: spell.shield.statusBlock
+        Delta: 1
+        Limit: 1
+        First: 0
+      Label: "\uC2E4\uB4DC \uC911 \uC0C1\uD0DC\uC774\uC0C1 \uCC28\uB2E8"
+    - Id: card.spell.shield.L
+      Kind: 4
+      Rarity: 3
+      Permanent: 1
+      RequiresLearned: spell.shield
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: spell.shield
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: spell.shield.absorb
+        Delta: 6
+        Limit: 20
+        First: 0
+      Label: "\uC2E4\uB4DC \uD761\uC218+6"
+    - Id: card.spell.light_sword.N
+      Kind: 4
+      Rarity: 0
+      Permanent: 1
+      RequiresLearned: spell.light_sword
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: spell.light_sword
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: spell.light_sword.bonus
+        Delta: 1
+        Limit: 7
+        First: 0
+      Label: "\uBE5B\uC758 \uAC80 \uACF5\uACA9+1"
+    - Id: card.spell.light_sword.R
+      Kind: 4
+      Rarity: 1
+      Permanent: 1
+      RequiresLearned: spell.light_sword
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: spell.light_sword
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: spell.light_sword.duration
+        Delta: 3
+        Limit: 12
+        First: 0
+      Label: "\uBE5B\uC758 \uAC80 \uC9C0\uC18D+3\uCD08"
+    - Id: card.spell.light_sword.E
+      Kind: 4
+      Rarity: 2
+      Permanent: 1
+      RequiresLearned: spell.light_sword
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: spell.light_sword
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: spell.light_sword.lastHit
+        Delta: 2
+        Limit: 10
+        First: 0
+      Label: "\uBE5B\uC758 \uAC80 4\uD0C0 \uBE5B \uD53C\uD574+2"
+    - Id: card.spell.light_sword.L
+      Kind: 4
+      Rarity: 3
+      Permanent: 1
+      RequiresLearned: spell.light_sword
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: spell.light_sword
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: spell.light_sword.wave
+        Delta: 2
+        Limit: 9
+        First: 3
+      Label: "\uBE5B\uC758 \uAC80 4\uD0C0 \uAC80\uAE30"
+    - Id: card.spell.dark_sword.N
+      Kind: 4
+      Rarity: 0
+      Permanent: 1
+      RequiresLearned: spell.dark_sword
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: spell.dark_sword
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: spell.dark_sword.rate
+        Delta: 0.05
+        Limit: 0.25
+        First: 0
+      Label: "\uC5B4\uB460\uC758 \uAC80 \uD761\uD608+5%p"
+    - Id: card.spell.dark_sword.R
+      Kind: 4
+      Rarity: 1
+      Permanent: 1
+      RequiresLearned: spell.dark_sword
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: spell.dark_sword
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: spell.dark_sword.duration
+        Delta: 3
+        Limit: 12
+        First: 0
+      Label: "\uC5B4\uB460\uC758 \uAC80 \uC9C0\uC18D+3\uCD08"
+    - Id: card.spell.dark_sword.E
+      Kind: 4
+      Rarity: 2
+      Permanent: 1
+      RequiresLearned: spell.dark_sword
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: spell.dark_sword
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: spell.dark_sword.killHeal
+        Delta: 1
+        Limit: 6
+        First: 2
+      Label: "\uC5B4\uB460\uC758 \uAC80 \uCC98\uCE58 \uD68C\uBCF5"
+    - Id: card.spell.dark_sword.L
+      Kind: 4
+      Rarity: 3
+      Permanent: 1
+      RequiresLearned: spell.dark_sword
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: spell.dark_sword
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: spell.dark_sword.comboRate
+        Delta: 0.05
+        Limit: 0.25
+        First: 0
+      Label: "\uC5B4\uB460\uC758 \uAC80 \uC5F0\uC18D \uC801\uC911 \uD761\uD608"
+    - Id: card.spell.archangel.N
+      Kind: 4
+      Rarity: 0
+      Permanent: 1
+      RequiresLearned: spell.archangel
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: spell.archangel
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: spell.archangel.heal
+        Delta: 2
+        Limit: 7
+        First: 0
+      Label: "\uB300\uCC9C\uC0AC \uD68C\uBCF5\uB7C9+2"
+    - Id: card.spell.archangel.R
+      Kind: 4
+      Rarity: 1
+      Permanent: 1
+      RequiresLearned: spell.archangel
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: spell.archangel
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: spell.archangel.healInterval
+        Delta: -0.5
+        Limit: -2
+        First: 0
+      Label: "\uB300\uCC9C\uC0AC \uD68C\uBCF5 \uAC04\uACA9-0.5\uCD08"
+    - Id: card.spell.archangel.E
+      Kind: 4
+      Rarity: 2
+      Permanent: 1
+      RequiresLearned: spell.archangel
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: spell.archangel
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: spell.archangel.cure
+        Delta: 1
+        Limit: 1
+        First: 0
+      Label: "\uB300\uCC9C\uC0AC \uC0C1\uD0DC\uC774\uC0C1 \uD574\uC81C"
+    - Id: card.spell.archangel.L
+      Kind: 4
+      Rarity: 3
+      Permanent: 1
+      RequiresLearned: spell.archangel
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: spell.archangel
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: spell.archangel.shield
+        Delta: 2
+        Limit: 12
+        First: 4
+      Label: "\uB300\uCC9C\uC0AC \uBCF4\uD638\uB9C9"
+    - Id: card.spell.demon.N
+      Kind: 4
+      Rarity: 0
+      Permanent: 1
+      RequiresLearned: spell.demon
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: spell.demon
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: spell.demon.attack
+        Delta: 2
+        Limit: 8
+        First: 0
+      Label: "\uC545\uB9C8 \uACF5\uACA9+2"
+    - Id: card.spell.demon.R
+      Kind: 4
+      Rarity: 1
+      Permanent: 1
+      RequiresLearned: spell.demon
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: spell.demon
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: spell.demon.attackInterval
+        Delta: -0.25
+        Limit: -1
+        First: 0
+      Label: "\uC545\uB9C8 \uACF5\uACA9 \uAC04\uACA9-0.25\uCD08"
+    - Id: card.spell.demon.E
+      Kind: 4
+      Rarity: 2
+      Permanent: 1
+      RequiresLearned: spell.demon
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: spell.demon
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: spell.demon.aoe
+        Delta: 1
+        Limit: 6
+        First: 2
+      Label: "\uC545\uB9C8 \uBC94\uC704 \uACF5\uACA9"
+    - Id: card.spell.demon.L
+      Kind: 4
+      Rarity: 3
+      Permanent: 1
+      RequiresLearned: spell.demon
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: spell.demon
+      MpDelta: 0
+      BuffId: 
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes:
+      - Axis: spell.demon.flame
+        Delta: 1
+        Limit: 6
+        First: 3
+      Label: "\uC545\uB9C8 \uD751\uC5FC"
+    - Id: card.buff.BF-PATK.N
+      Kind: 5
+      Rarity: 0
+      Permanent: 0
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: BF-PATK
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes: []
+      Label: "\uD22C\uC9C0"
+    - Id: card.buff.BF-PATK.R
+      Kind: 5
+      Rarity: 1
+      Permanent: 0
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: BF-PATK
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes: []
+      Label: "\uD22C\uC9C0"
+    - Id: card.buff.BF-PATK.E
+      Kind: 5
+      Rarity: 2
+      Permanent: 0
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: BF-PATK
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes: []
+      Label: "\uD22C\uC9C0"
+    - Id: card.buff.BF-PATK.L
+      Kind: 5
+      Rarity: 3
+      Permanent: 0
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: BF-PATK
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes: []
+      Label: "\uD22C\uC9C0"
+    - Id: card.buff.BF-DEF.N
+      Kind: 5
+      Rarity: 0
+      Permanent: 0
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: BF-DEF
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes: []
+      Label: "\uAC15\uCCA0 \uD53C\uBD80"
+    - Id: card.buff.BF-DEF.R
+      Kind: 5
+      Rarity: 1
+      Permanent: 0
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: BF-DEF
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes: []
+      Label: "\uAC15\uCCA0 \uD53C\uBD80"
+    - Id: card.buff.BF-DEF.E
+      Kind: 5
+      Rarity: 2
+      Permanent: 0
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: BF-DEF
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes: []
+      Label: "\uAC15\uCCA0 \uD53C\uBD80"
+    - Id: card.buff.BF-DEF.L
+      Kind: 5
+      Rarity: 3
+      Permanent: 0
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: BF-DEF
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes: []
+      Label: "\uAC15\uCCA0 \uD53C\uBD80"
+    - Id: card.buff.BF-MATK.N
+      Kind: 5
+      Rarity: 0
+      Permanent: 0
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: BF-MATK
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes: []
+      Label: "\uB9C8\uB825 \uC99D\uD3ED"
+    - Id: card.buff.BF-MATK.R
+      Kind: 5
+      Rarity: 1
+      Permanent: 0
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: BF-MATK
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes: []
+      Label: "\uB9C8\uB825 \uC99D\uD3ED"
+    - Id: card.buff.BF-MATK.E
+      Kind: 5
+      Rarity: 2
+      Permanent: 0
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: BF-MATK
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes: []
+      Label: "\uB9C8\uB825 \uC99D\uD3ED"
+    - Id: card.buff.BF-MATK.L
+      Kind: 5
+      Rarity: 3
+      Permanent: 0
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: BF-MATK
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes: []
+      Label: "\uB9C8\uB825 \uC99D\uD3ED"
+    - Id: card.buff.BF-MPCOST.N
+      Kind: 5
+      Rarity: 0
+      Permanent: 0
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: BF-MPCOST
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes: []
+      Label: "\uB9C8\uB825 \uC808\uC57D"
+    - Id: card.buff.BF-MPCOST.R
+      Kind: 5
+      Rarity: 1
+      Permanent: 0
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: BF-MPCOST
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes: []
+      Label: "\uB9C8\uB825 \uC808\uC57D"
+    - Id: card.buff.BF-MPCOST.E
+      Kind: 5
+      Rarity: 2
+      Permanent: 0
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: BF-MPCOST
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes: []
+      Label: "\uB9C8\uB825 \uC808\uC57D"
+    - Id: card.buff.BF-MPCOST.L
+      Kind: 5
+      Rarity: 3
+      Permanent: 0
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: BF-MPCOST
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes: []
+      Label: "\uB9C8\uB825 \uC808\uC57D"
+    - Id: card.buff.BF-AIR.N
+      Kind: 5
+      Rarity: 0
+      Permanent: 0
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: BF-AIR
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes: []
+      Label: "\uACF5\uC911 \uC9C0\uBC30"
+    - Id: card.buff.BF-AIR.R
+      Kind: 5
+      Rarity: 1
+      Permanent: 0
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: BF-AIR
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes: []
+      Label: "\uACF5\uC911 \uC9C0\uBC30"
+    - Id: card.buff.BF-AIR.E
+      Kind: 5
+      Rarity: 2
+      Permanent: 0
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: BF-AIR
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes: []
+      Label: "\uACF5\uC911 \uC9C0\uBC30"
+    - Id: card.buff.BF-AIR.L
+      Kind: 5
+      Rarity: 3
+      Permanent: 0
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: BF-AIR
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes: []
+      Label: "\uACF5\uC911 \uC9C0\uBC30"
+    - Id: card.buff.BF-MOVE.N
+      Kind: 5
+      Rarity: 0
+      Permanent: 0
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: BF-MOVE
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes: []
+      Label: "\uC9C8\uD48D"
+    - Id: card.buff.BF-MOVE.R
+      Kind: 5
+      Rarity: 1
+      Permanent: 0
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: BF-MOVE
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes: []
+      Label: "\uC9C8\uD48D"
+    - Id: card.buff.BF-MOVE.E
+      Kind: 5
+      Rarity: 2
+      Permanent: 0
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: BF-MOVE
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes: []
+      Label: "\uC9C8\uD48D"
+    - Id: card.buff.BF-MOVE.L
+      Kind: 5
+      Rarity: 3
+      Permanent: 0
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: BF-MOVE
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes: []
+      Label: "\uC9C8\uD48D"
+    - Id: card.buff.BF-ASPD.N
+      Kind: 5
+      Rarity: 0
+      Permanent: 0
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: BF-ASPD
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes: []
+      Label: "\uC2E0\uC18D"
+    - Id: card.buff.BF-ASPD.R
+      Kind: 5
+      Rarity: 1
+      Permanent: 0
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: BF-ASPD
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes: []
+      Label: "\uC2E0\uC18D"
+    - Id: card.buff.BF-ASPD.E
+      Kind: 5
+      Rarity: 2
+      Permanent: 0
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: BF-ASPD
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes: []
+      Label: "\uC2E0\uC18D"
+    - Id: card.buff.BF-ASPD.L
+      Kind: 5
+      Rarity: 3
+      Permanent: 0
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: BF-ASPD
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes: []
+      Label: "\uC2E0\uC18D"
+    - Id: card.buff.BF-ITEM.N
+      Kind: 5
+      Rarity: 0
+      Permanent: 0
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: BF-ITEM
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes: []
+      Label: "\uC5F0\uAE08\uC220\uC758 \uCD95\uBCF5"
+    - Id: card.buff.BF-ITEM.R
+      Kind: 5
+      Rarity: 1
+      Permanent: 0
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: BF-ITEM
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes: []
+      Label: "\uC5F0\uAE08\uC220\uC758 \uCD95\uBCF5"
+    - Id: card.buff.BF-ITEM.E
+      Kind: 5
+      Rarity: 2
+      Permanent: 0
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: BF-ITEM
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes: []
+      Label: "\uC5F0\uAE08\uC220\uC758 \uCD95\uBCF5"
+    - Id: card.buff.BF-ITEM.L
+      Kind: 5
+      Rarity: 3
+      Permanent: 0
+      RequiresLearned: 
+      Unlocks: 
+      OneTime: 0
+      MinLevel: 0
+      SpellId: 
+      MpDelta: 0
+      BuffId: BF-ITEM
+      Weight: 1
+      ExcludedFromMerchantPack: 0
+      Axes: []
+      Label: "\uC5F0\uAE08\uC220\uC758 \uCD95\uBCF5"
+    Fallbacks:
+    - CardId: FallbackHPItem
+      ItemId: p1test.potion.hp
+      Count: 1
+      Enabled: 1
+    - CardId: FallbackMPItem
+      ItemId: p1test.potion.mp
+      Count: 1
+      Enabled: 1
+    EpicMissileVariantWeight: 0.5
+    RerollsPerLevel: 1
+    MissileBaseProjectiles: 1
+    MissileMaxProjectiles: 5
+    MissilePermanentDamageCap: 20
+    HomingAngleFirst: 12
+    HomingAngleStep: 12
+    HomingAngleCap: 48
+    HomingRangeFirst: 5
+    HomingRangeStep: 1.5
+    HomingRangeCap: 11
+    HomingTurnFirst: 40
+    HomingTurnStep: 25
+    HomingTurnCap: 140
+    Spells:
+    - Id: spell.missile
+      Name: "\uB9E4\uC9C1 \uBBF8\uC0AC\uC77C"
+      Kind: 0
+      Motion: 0
+      Button: 0
+      BaseMp: 1
+      MinMp: 1
+      MinLevel: 2
+      CastTime: 0.25
+      Recovery: 0.2
+      OriginPower: 3
+      Params:
+      - Key: damage
+        Value: 3
+      - Key: speed
+        Value: 8
+      - Key: lifetime
+        Value: 2
+      - Key: radius
+        Value: 0.2
+      - Key: spreadDeg
+        Value: 6
+    - Id: spell.light_orb
+      Name: "\uBE5B\uC758 \uAD6C"
+      Kind: 1
+      Motion: 1
+      Button: 0
+      BaseMp: 2
+      MinMp: 1
+      MinLevel: 4
+      CastTime: 0.25
+      Recovery: 0.2
+      OriginPower: 5
+      Params:
+      - Key: damage
+        Value: 5
+      - Key: speed
+        Value: 11
+      - Key: lifetime
+        Value: 2
+      - Key: radius
+        Value: 0.25
+      - Key: chainRadius
+        Value: 3
+      - Key: extraShotInterval
+        Value: 0.12
+    - Id: spell.dark_orb
+      Name: "\uC5B4\uB460\uC758 \uAD6C"
+      Kind: 2
+      Motion: 2
+      Button: 0
+      BaseMp: 3
+      MinMp: 1
+      MinLevel: 6
+      CastTime: 0.25
+      Recovery: 0.2
+      OriginPower: 10
+      Params:
+      - Key: damage
+        Value: 10
+      - Key: speed
+        Value: 6
+      - Key: lifetime
+        Value: 2.5
+      - Key: radius
+        Value: 0.28
+      - Key: shockRadius
+        Value: 1
+    - Id: spell.heal
+      Name: "\uD68C\uBCF5"
+      Kind: 5
+      Motion: 1
+      Button: 2
+      BaseMp: 3
+      MinMp: 1
+      MinLevel: 8
+      CastTime: 0.25
+      Recovery: 0.2
+      OriginPower: 0
+      Params:
+      - Key: heal
+        Value: 5
+      - Key: hotPerSecond
+        Value: 1
+    - Id: spell.fire_ball
+      Name: "\uD654\uC774\uC5B4 \uBCFC"
+      Kind: 3
+      Motion: 3
+      Button: 0
+      BaseMp: 5
+      MinMp: 1
+      MinLevel: 14
+      CastTime: 0.25
+      Recovery: 0.2
+      OriginPower: 15
+      Params:
+      - Key: damage
+        Value: 15
+      - Key: radius
+        Value: 1.25
+      - Key: speed
+        Value: 9
+      - Key: lifetime
+        Value: 1.5
+      - Key: projRadius
+        Value: 0.3
+      - Key: burnTick
+        Value: 1
+      - Key: burnInterval
+        Value: 1
+      - Key: delay
+        Value: 0.4
+      - Key: delayedRatio
+        Value: 0.5
+    - Id: spell.light_sword
+      Name: "\uBE5B\uC758 \uAC80"
+      Kind: 7
+      Motion: 1
+      Button: 1
+      BaseMp: 6
+      MinMp: 1
+      MinLevel: 16
+      CastTime: 0.25
+      Recovery: 0.2
+      OriginPower: 0
+      Params:
+      - Key: bonus
+        Value: 3
+      - Key: duration
+        Value: 12
+      - Key: waveSpeed
+        Value: 10
+      - Key: waveLifetime
+        Value: 0.6
+    - Id: spell.dark_sword
+      Name: "\uC5B4\uB460\uC758 \uAC80"
+      Kind: 8
+      Motion: 2
+      Button: 1
+      BaseMp: 7
+      MinMp: 1
+      MinLevel: 18
+      CastTime: 0.25
+      Recovery: 0.2
+      OriginPower: 0
+      Params:
+      - Key: lifesteal
+        Value: 0.25
+      - Key: duration
+        Value: 12
+    - Id: spell.shield
+      Name: "\uB9E4\uC9C1 \uC2E4\uB4DC"
+      Kind: 6
+      Motion: 3
+      Button: 1
+      BaseMp: 10
+      MinMp: 1
+      MinLevel: 28
+      CastTime: 0.25
+      Recovery: 0.2
+      OriginPower: 0
+      Params:
+      - Key: absorb
+        Value: 10
+      - Key: duration
+        Value: 12
+    - Id: spell.archangel
+      Name: "\uB300\uCC9C\uC0AC \uC18C\uD658"
+      Kind: 9
+      Motion: 5
+      Button: 0
+      BaseMp: 25
+      MinMp: 1
+      MinLevel: 34
+      CastTime: 0.25
+      Recovery: 0.2
+      OriginPower: 30
+      Params:
+      - Key: duration
+        Value: 18
+      - Key: extend
+        Value: 18
+      - Key: durationCap
+        Value: 36
+      - Key: attack
+        Value: 2
+      - Key: attackInterval
+        Value: 3
+      - Key: heal
+        Value: 5
+      - Key: healInterval
+        Value: 4
+      - Key: healThreshold
+        Value: 0.5
+      - Key: range
+        Value: 6
+    - Id: spell.demon
+      Name: "\uC545\uB9C8 \uC18C\uD658"
+      Kind: 10
+      Motion: 6
+      Button: 0
+      BaseMp: 30
+      MinMp: 1
+      MinLevel: 36
+      CastTime: 0.25
+      Recovery: 0.2
+      OriginPower: 40
+      Params:
+      - Key: duration
+        Value: 18
+      - Key: extend
+        Value: 18
+      - Key: durationCap
+        Value: 36
+      - Key: attack
+        Value: 6
+      - Key: attackInterval
+        Value: 2
+      - Key: aoeRadius
+        Value: 1
+      - Key: flameTick
+        Value: 1
+      - Key: flameInterval
+        Value: 1
+      - Key: range
+        Value: 6
+      - Key: meleeReach
+        Value: 1.2
+    - Id: spell.fire_wall
+      Name: "\uD654\uC774\uC5B4 \uC6D4"
+      Kind: 4
+      Motion: 4
+      Button: 0
+      BaseMp: 15
+      MinMp: 1
+      MinLevel: 38
+      CastTime: 0.25
+      Recovery: 0.2
+      OriginPower: 10
+      Params:
+      - Key: tick
+        Value: 2
+      - Key: interval
+        Value: 0.75
+      - Key: duration
+        Value: 4
+      - Key: width
+        Value: 1.5
+      - Key: height
+        Value: 2.2
+      - Key: distance
+        Value: 2
+      - Key: spacing
+        Value: 1.2
+    Buffs:
+    - Id: BF-PATK
+      Family: PhysAtk
+      NormalStrength: 0.08
+      MaxStacks: 3
+      FamilyCap: 0.3
+      Label: "\uD22C\uC9C0"
+    - Id: BF-DEF
+      Family: DamageReduction
+      NormalStrength: 0.08
+      MaxStacks: 3
+      FamilyCap: 0.25
+      Label: "\uAC15\uCCA0 \uD53C\uBD80"
+    - Id: BF-MATK
+      Family: MagAtk
+      NormalStrength: 0.1
+      MaxStacks: 3
+      FamilyCap: 0.3
+      Label: "\uB9C8\uB825 \uC99D\uD3ED"
+    - Id: BF-MPCOST
+      Family: MpCost
+      NormalStrength: 0.1
+      MaxStacks: 3
+      FamilyCap: 0.3
+      Label: "\uB9C8\uB825 \uC808\uC57D"
+    - Id: BF-AIR
+      Family: AirAtk
+      NormalStrength: 0.1
+      MaxStacks: 3
+      FamilyCap: 0.3
+      Label: "\uACF5\uC911 \uC9C0\uBC30"
+    - Id: BF-MOVE
+      Family: Move
+      NormalStrength: 0.05
+      MaxStacks: 3
+      FamilyCap: 0.15
+      Label: "\uC9C8\uD48D"
+    - Id: BF-ASPD
+      Family: AttackSpeed
+      NormalStrength: 0.05
+      MaxStacks: 3
+      FamilyCap: 0.2
+      Label: "\uC2E0\uC18D"
+    - Id: BF-ITEM
+      Family: ItemHeal
+      NormalStrength: 0.1
+      MaxStacks: 3
+      FamilyCap: 0.3
+      Label: "\uC5F0\uAE08\uC220\uC758 \uCD95\uBCF5"
+    BuffRules:
+      NormalDuration: 180
+      LongDuration: 240
+      StrongMultiplier: 1.5
+      ActiveStackWeightFactor: 0.5
+    Merchant:
+      BaseChance: 1
+      ChanceStep: 0.1
+      MaxChance: 1
+      MinStock: 3
+      MaxStock: 5
+      PermPackUseLimit: 5
+      Lv50PriceReference: 500
+      Products:
+      - Kind: PermPack
+        PriceRatio: 0.8
+        MinPrice: 120
+        Weight: 1
+        FirstVisitWeight: 4
+      - Kind: TempPack
+        PriceRatio: 0.4
+        MinPrice: 70
+        Weight: 1
+        FirstVisitWeight: 1
+      - Kind: Buff
+        PriceRatio: 0.35
+        MinPrice: 60
+        Weight: 1
+        FirstVisitWeight: 1
+      - Kind: RerollToken
+        PriceRatio: 0.45
+        MinPrice: 80
+        Weight: 1
+        FirstVisitWeight: 1
+    Damage:
+      DefenseK: 20
+      TempDamageReductionCap: 0.25
+      MinDamage: 1
+      GuardMultiplier: 0.1
+    Items:
+    - Id: p1test.potion.hp
+      Name: "\uCE58\uB8CC\uC81C(\uC2DC\uD5D8)"
+      HpRestore: 5
+      MpRestore: 0
+      HpParts: 
+      MpParts: 
+      Revive: 0
+      ScrollSpellId: 
+    - Id: p1test.potion.mp
+      Name: "\uC18C\uB9C8\uC11D(\uC2DC\uD5D8)"
+      HpRestore: 0
+      MpRestore: 8
+      HpParts: 
+      MpParts: 
+      Revive: 0
+      ScrollSpellId: 
+    - Id: p1test.potion.mix
+      Name: "\uD63C\uD569 \uD68C\uBCF5\uC57D(\uC2DC\uD5D8)"
+      HpRestore: 0
+      MpRestore: 0
+      HpParts: 0200000001000000
+      MpParts: 0300000002000000
+      Revive: 0
+      ScrollSpellId: 
+    - Id: p1test.revive
+      Name: "\uBD80\uD65C\uC11D(\uC2DC\uD5D8)"
+      HpRestore: 0
+      MpRestore: 0
+      HpParts: 
+      MpParts: 
+      Revive: 1
+      ScrollSpellId: 
+    - Id: p1test.scroll.missile
+      Name: "\uB9E4\uC9C1 \uBBF8\uC0AC\uC77C \uC2A4\uD06C\uB864(\uC2DC\uD5D8)"
+      HpRestore: 0
+      MpRestore: 0
+      HpParts: 
+      MpParts: 
+      Revive: 0
+      ScrollSpellId: spell.missile
+    - Id: p1test.scroll.light_orb
+      Name: "\uBE5B\uC758 \uAD6C \uC2A4\uD06C\uB864(\uC2DC\uD5D8)"
+      HpRestore: 0
+      MpRestore: 0
+      HpParts: 
+      MpParts: 
+      Revive: 0
+      ScrollSpellId: spell.light_orb
+    - Id: p1test.scroll.dark_orb
+      Name: "\uC5B4\uB460\uC758 \uAD6C \uC2A4\uD06C\uB864(\uC2DC\uD5D8)"
+      HpRestore: 0
+      MpRestore: 0
+      HpParts: 
+      MpParts: 
+      Revive: 0
+      ScrollSpellId: spell.dark_orb
+    - Id: p1test.scroll.heal
+      Name: "\uD68C\uBCF5 \uC2A4\uD06C\uB864(\uC2DC\uD5D8)"
+      HpRestore: 0
+      MpRestore: 0
+      HpParts: 
+      MpParts: 
+      Revive: 0
+      ScrollSpellId: spell.heal
+    - Id: p1test.scroll.fire_ball
+      Name: "\uD654\uC774\uC5B4 \uBCFC \uC2A4\uD06C\uB864(\uC2DC\uD5D8)"
+      HpRestore: 0
+      MpRestore: 0
+      HpParts: 
+      MpParts: 
+      Revive: 0
+      ScrollSpellId: spell.fire_ball
+    - Id: p1test.scroll.light_sword
+      Name: "\uBE5B\uC758 \uAC80 \uC2A4\uD06C\uB864(\uC2DC\uD5D8)"
+      HpRestore: 0
+      MpRestore: 0
+      HpParts: 
+      MpParts: 
+      Revive: 0
+      ScrollSpellId: spell.light_sword
+    - Id: p1test.scroll.dark_sword
+      Name: "\uC5B4\uB460\uC758 \uAC80 \uC2A4\uD06C\uB864(\uC2DC\uD5D8)"
+      HpRestore: 0
+      MpRestore: 0
+      HpParts: 
+      MpParts: 
+      Revive: 0
+      ScrollSpellId: spell.dark_sword
+    - Id: p1test.scroll.shield
+      Name: "\uB9E4\uC9C1 \uC2E4\uB4DC \uC2A4\uD06C\uB864(\uC2DC\uD5D8)"
+      HpRestore: 0
+      MpRestore: 0
+      HpParts: 
+      MpParts: 
+      Revive: 0
+      ScrollSpellId: spell.shield
+    - Id: p1test.scroll.archangel
+      Name: "\uB300\uCC9C\uC0AC \uC18C\uD658 \uC2A4\uD06C\uB864(\uC2DC\uD5D8)"
+      HpRestore: 0
+      MpRestore: 0
+      HpParts: 
+      MpParts: 
+      Revive: 0
+      ScrollSpellId: spell.archangel
+    - Id: p1test.scroll.demon
+      Name: "\uC545\uB9C8 \uC18C\uD658 \uC2A4\uD06C\uB864(\uC2DC\uD5D8)"
+      HpRestore: 0
+      MpRestore: 0
+      HpParts: 
+      MpParts: 
+      Revive: 0
+      ScrollSpellId: spell.demon
+    - Id: p1test.scroll.fire_wall
+      Name: "\uD654\uC774\uC5B4 \uC6D4 \uC2A4\uD06C\uB864(\uC2DC\uD5D8)"
+      HpRestore: 0
+      MpRestore: 0
+      HpParts: 
+      MpParts: 
+      Revive: 0
+      ScrollSpellId: spell.fire_wall
+    Regions:
+    - Id: R1
+      MapIds:
+      - P1A
+      - P1B
+      SafeSpawns:
+      - MapId: P1A
+        X: 30
+        Y: 0
+        Blocked: 0
+    - Id: R2
+      MapIds:
+      - P1C
+      SafeSpawns:
+      - MapId: P1C
+        X: 12
+        Y: 0
+        Blocked: 0
+    BagStackLimit: 16
+    BagCountLimit: 99
+    MotionWindow: 0.45
+    ButtonWindow: 0.15
+    MissileWindow: 0.6

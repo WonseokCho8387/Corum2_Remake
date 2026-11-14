@@ -31,6 +31,8 @@ namespace Corum2.Unity
         public float firstAttackDelay = 1f;
         [Header("P0-08 AI (WP-04). Type Fixture = WP-02 timed dummy")] public EnemyAIData ai = new EnemyAIData();
         [Tooltip("Used when ai.type is Boss (R-08-09).")] public BossData boss = new BossData();
+        [Header("P1 (0 in P0 scenes)")] public int exp;
+        public float defense;
         [Header("Presentation only")] public Color color = new Color(0.8f, 0.35f, 0.3f);
 
         public EnemyDefinition ToCore() => new EnemyDefinition
@@ -42,6 +44,7 @@ namespace Corum2.Unity
             Attack = hasAttack ? attack.ToCore() : null, AttackRange = attackRange, AttackInterval = attackInterval, FirstAttackDelay = firstAttackDelay,
             Ai = ai != null && ai.type != AiType.Fixture ? ai.ToCore() : null,
             Boss = ai != null && ai.type == AiType.Boss ? boss.ToCore() : null,
+            Exp = exp, Defense = defense,
         };
     }
 }
