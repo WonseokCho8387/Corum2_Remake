@@ -7,7 +7,7 @@ P1 전체 묶음(P1-A~D)의 실행 증빙입니다. 판정 기준은 [완화 테
 - `editmode/TestResults_441.xml`: Unity Test Framework 결과, **441/441 Passed**
   - P0 315개 회귀
   - P1 126개: `P1GrowthTests` 26, `P1DamageTests` 13, `P1MagicTests` 42, `P1SystemTests` 27, `P1CoverageTests` 13, `P1ReviewFixTests` 5 (GPT 중간 대조 반영)
-- 테스트 소스 커밋: `6bda526` (main)
+- 테스트 소스 커밋: `42f512b` (main)
 - 테스트 이름에 TC 번호가 들어 있습니다(예: `T05_T58_T62_...`). 한 테스트가 여러 TC를 덮을 수 있습니다.
 
 ## Play 스모크 (P1_Sandbox)

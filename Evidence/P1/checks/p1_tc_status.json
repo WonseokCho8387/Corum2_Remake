@@ -1359,7 +1359,8 @@
    "status": "PASS",
    "openSubConditions": [],
    "tests": [
-    "P1MagicTests.T133_T140_HealQcfB_FailureDoesNotUseItem"
+    "P1MagicTests.T133_T140_HealQcfB_FailureDoesNotUseItem",
+    "P1ReviewFixTests.T133_T140_PlainBUsesSelectedItemFailedQcfBDoesNot"
    ],
    "play": null
   },
@@ -1369,7 +1370,8 @@
    "status": "PASS",
    "openSubConditions": [],
    "tests": [
-    "P1MagicTests.T134_T135_T136_NonCombatContextDropsBuffer"
+    "P1MagicTests.T134_T135_T136_NonCombatContextDropsBuffer",
+    "P1ReviewFixTests.T134_RingOpenedAndClosedBetweenTicksDropsBuffer"
    ],
    "play": null
   },
@@ -1429,7 +1431,8 @@
    "status": "PASS",
    "openSubConditions": [],
    "tests": [
-    "P1MagicTests.T133_T140_HealQcfB_FailureDoesNotUseItem"
+    "P1MagicTests.T133_T140_HealQcfB_FailureDoesNotUseItem",
+    "P1ReviewFixTests.T133_T140_PlainBUsesSelectedItemFailedQcfBDoesNot"
    ],
    "play": null
   },
@@ -1461,7 +1464,8 @@
    "status": "PASS",
    "openSubConditions": [],
    "tests": [
-    "P1MagicTests.T143_TwoSpellsSameTickAllRefused"
+    "P1MagicTests.T143_TwoSpellsSameTickAllRefused",
+    "P1ReviewFixTests.T143_SecondPressOfSameTickPairDoesNotFallBack"
    ],
    "play": null
   },
@@ -1706,7 +1710,9 @@
    "status": "PASS",
    "openSubConditions": [],
    "tests": [
-    "P1DamageTests.T167_MinOneGuardZeroShieldZero"
+    "P1DamageTests.T167_MinOneGuardZeroShieldZero",
+    "P1ReviewFixTests.T167_ParryIsZeroDamageInP1",
+    "P1ReviewFixTests.T167_WakeupInvincibleToP1Hits"
    ],
    "play": null
   },
