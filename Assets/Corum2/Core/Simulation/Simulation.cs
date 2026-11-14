@@ -166,11 +166,13 @@ namespace Corum2.Core
         public readonly MagicCommandRecognizer Magic;
         /// <summary>R-06-19 death flow (null without combat).</summary>
         public readonly DeathFlow Death;
+        /// <summary>P1 systems (null unless a P1Profile is given; never present in P0 scenes).</summary>
+        public readonly P1.P1Runtime P1;
         long _syntheticEventId = 1000000000;
 
         public Simulation(WorldData world, MovementProfile movement, InputProfile input, AirUnlocks unlocks, DiagLogger log,
             CombatProfile combat = null, CombatUnlocks combatUnlocks = null, IEnumerable<EnemyDefinition> enemies = null,
-            RingProfile ring = null)
+            RingProfile ring = null, P1.P1Profile p1 = null)
         {
             World = world;
             Movement = movement;
@@ -192,6 +194,7 @@ namespace Corum2.Core
                 if (combat != null) Magic = new MagicCommandRecognizer(ring);
             }
             if (combat != null) Death = new DeathFlow(this);
+            if (p1 != null) P1 = new P1.P1Runtime(this, p1);
         }
 
         /// <summary>R-02-02 / EXP-CMD-01..06: try a magic command for a button press. Null = not taken; the press goes on to
@@ -298,17 +301,27 @@ namespace Corum2.Core
             Player.PlaceAt(map, map.FindSpawn(World.StartSpawnId), "RunStart");
             Camera.Snap(map, Player.Position);
             Combat?.OnMapEntered(map, "RunStart");
+            P1?.OnStart();
         }
 
         public void Step(TickInput input, float dt)
         {
             Tick++;
+            if (P1 != null && P1.Paused)
+            {
+                // P1 growth screen (GRO-44/46): the game is stopped; only the screen reads input. Game time does not pass.
+                Log.Tick = Tick;
+                Log.RealTime = input.RealTime;
+                P1.HandlePausedInput(input.Events);
+                return;
+            }
             GameTime += dt;
             Log.Tick = Tick;
             Log.GameTime = GameTime;
             Log.RealTime = input.RealTime;
 
             Items?.BeginTick();
+            P1?.BeginTick(input.Events);
 
             for (var ei = 0; ei < input.Events.Count; ei++)
             {
@@ -324,7 +337,7 @@ namespace Corum2.Core
                         ("latency", input.RealTime - e.RawTime), ("consumer", "death"), ("heldDir", Player.HeldDir));
                     continue;
                 }
-                var outcome = TryMagicCommand(e) ?? Combat?.HandleEvent(CurrentMap, e) ?? Player.HandleEvent(CurrentMap, e);
+                var outcome = (P1 != null ? P1.TryCommand(e) : null) ?? TryMagicCommand(e) ?? Combat?.HandleEvent(CurrentMap, e) ?? Player.HandleEvent(CurrentMap, e);
                 Log.Emit("input", PlayerMotor.Actor, "", stateBefore.ToString(), Player.State.ToString(), outcome,
                     ("device", e.Device), ("control", e.Control), ("action", e.Action), ("edge", e.Edge),
                     ("inputEventId", e.EventId), ("requestTime", e.RawTime), ("deliveredTick", Tick),
@@ -338,7 +351,10 @@ namespace Corum2.Core
                 // samples are recorded one by one even when their device times are equal.
                 if (!(IsMoveAction(e.Action) && e.SampleGroup != 0 && ei + 1 < input.Events.Count &&
                       input.Events[ei + 1].SampleGroup == e.SampleGroup))
+                {
                     Magic?.Observe(Player.HeldDir, GameTime, Tick);
+                    P1?.Observe(Player.HeldDir);
+                }
             }
 
             // Reconcile with the sampled direction (they should match; a mismatch means a lost edge).
@@ -352,12 +368,14 @@ namespace Corum2.Core
                 Player.HeldV = sampledV;
                 if (Player.RunDir != 0 && Player.RunDir != sampledH) Player.RunDir = 0;
                 if (Player.State != MotorState.Dead) Magic?.Observe(Player.HeldDir, GameTime, Tick);
+                P1?.Observe(Player.HeldDir);
             }
 
             var frozen = Combat != null && Combat.BeginTick(dt);
             var r = frozen ? new MoveResult { Position = Player.Position } : Player.Integrate(CurrentMap, dt);
             Combat?.Step(CurrentMap, dt, frozen);
             Death?.Step(dt);
+            P1?.Step(dt);
             if (r.StartedInside)
                 Log.Emit("collision.startInside", PlayerMotor.Actor, "", Player.State.ToString(), Player.State.ToString(),
                     "BodyOverlappedSolidBeforeMove(diagnostic)", ("position", Player.Position), ("height", Player.Height));
@@ -439,6 +457,7 @@ namespace Corum2.Core
             Player.PlaceAt(target, spawn, "MapTransition(EXP-MAP-01)");
             Camera.Snap(target, Player.Position);
             Combat?.OnMapEntered(target, "MapTransition");
+            P1?.OnMapChanged();
             Log.Emit("map.transition", PlayerMotor.Actor, "", from.Id, target.Id, reason,
                 ("fromMapId", from.Id), ("toMapId", target.Id), ("connectionId", connectionId), ("spawnId", spawnId),
                 ("fromPosition", fromPos), ("toPosition", Player.Position), ("inputEventId", inputEventId),

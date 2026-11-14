@@ -58,6 +58,17 @@ namespace Corum2.Core
         long _nextRequestId = 1;
 
         public PendingUse Pending { get; private set; }
+        /// <summary>P1 hook (null in P0 scenes): P1 heal items (BUF-11) and P1 scrolls (consumed at effect commit, MAG-107).</summary>
+        public IItemExtension Ext;
+
+        /// <summary>P1 GRO-47: a pending (not yet executed) use is cancelled without consuming anything.</summary>
+        public void CancelPending(string reason)
+        {
+            var u = Pending;
+            if (u == null) return;
+            Pending = null;
+            Log.Emit("item.cancel", PlayerMotor.Actor, u.ItemId, u.State, "Cancelled", reason, ("requestId", u.RequestId), ("consumed", false));
+        }
         /// <summary>Game time when the shared item cooldown ends.</summary>
         public double CooldownUntil { get; private set; }
         public string LastCooldownItem { get; private set; } = "";
@@ -153,6 +164,22 @@ namespace Corum2.Core
         {
             var item = _p.FindItem(u.ItemId);
             var cleared = new List<string>();
+            if (Ext != null && item != null && item.Effect == ItemEffectType.Magic && Inventory.Count(u.ItemId) > 0)
+            {
+                // P1 MAG-107: the scroll is only checked here; it is consumed when the spell effect commits.
+                var p1Refused = Ext.CastScroll(item, u.RequestId);
+                if (p1Refused != null)
+                {
+                    Log.Emit("item.cancel", PlayerMotor.Actor, u.ItemId, u.State, "Cancelled", "P1CastRefused:" + p1Refused,
+                        ("requestId", u.RequestId), ("consumed", false), ("count", Inventory.Count(u.ItemId)));
+                    return;
+                }
+                CooldownUntil = _sim.GameTime + item.Cooldown;
+                LastCooldownItem = item.Id;
+                Log.Emit("item.use", PlayerMotor.Actor, item.Id, u.State, "CastStarted", "P1ScrollCastStarted(consume at effect commit, P1-MAG-107)",
+                    ("requestId", u.RequestId), ("source", u.Source), ("countAfter", Inventory.Count(item.Id)), ("cooldownUntil", CooldownUntil));
+                return;
+            }
             if (item != null && item.Effect == ItemEffectType.Magic && Inventory.Count(u.ItemId) > 0)
             {
                 // WP05-F03 / EXP-ITEM-07: start the cast first; consume, clear slots and start the cooldown only if it started.
@@ -179,6 +206,9 @@ namespace Corum2.Core
             var effect = "none";
             switch (item.Effect)
             {
+                case ItemEffectType.Heal when Ext != null:
+                    effect = Ext.ItemHeal(item);
+                    break;
                 case ItemEffectType.Heal:
                     if (_sim.Combat != null)
                     {

@@ -25,6 +25,9 @@ namespace Corum2.Core
 
         public bool ReviveInvulnerable => _sim.GameTime < _reviveInvulnUntil;
 
+        /// <summary>P1: called when a cast with MagicEffect.External reaches its effect time (the P1 commit point).</summary>
+        public System.Action<PlayerAttack> ExternalSpellEffect;
+
         static AttackDefinition SpellDefinition(MagicDefinition m)
         {
             var atk = m.Effect == MagicEffect.Attack;
@@ -86,6 +89,9 @@ namespace Corum2.Core
                     PlayerHp = Math.Min(PlayerMaxHp, PlayerHp + m.Power);
                     Log.Emit("magic.effect", Pl, "", "", "", "Heal(EXP-MAGIC-04)", ("magicId", m.Id), ("source", a.MagicSource),
                         ("attackInstanceId", a.InstanceId), ("effectGameTime", _sim.GameTime), ("hpBefore", before), ("hpAfter", PlayerHp));
+                    break;
+                case MagicEffect.External:
+                    ExternalSpellEffect?.Invoke(a);
                     break;
                 case MagicEffect.Buff:
                     BuffMultiplier = m.Power;

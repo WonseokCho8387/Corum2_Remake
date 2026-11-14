@@ -23,11 +23,11 @@ namespace Corum2.Tests
 
         public SimHarness(string testCaseId, AirUnlocks unlocks = null, WorldData world = null, MovementProfile move = null,
             CombatProfile combat = null, CombatUnlocks combatUnlocks = null, List<EnemyDefinition> enemies = null,
-            RingProfile ring = null)
+            RingProfile ring = null, Corum2.Core.P1.P1Profile p1 = null)
         {
             var log = new DiagLogger(Sink) { RunId = "editmode", TestCaseId = testCaseId, TickSamples = true };
             Sim = new Simulation(world ?? Fixtures.World(), move ?? Fixtures.Movement(), Fixtures.Input(), unlocks ?? Fixtures.Unlocks(false, false, false), log,
-                combat, combatUnlocks, enemies, ring);
+                combat, combatUnlocks, enemies, ring, p1);
             Sim.Start(0);
         }
 

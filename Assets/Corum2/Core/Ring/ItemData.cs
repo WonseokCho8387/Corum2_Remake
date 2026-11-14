@@ -32,6 +32,8 @@ namespace Corum2.Core
         Heal,
         /// <summary>Player attack damage x Power for BuffDuration seconds.</summary>
         Buff,
+        /// <summary>P1: the cast motion only; the effect is created by the P1 magic system at its commit (MAG-107).</summary>
+        External,
     }
 
     /// <summary>
