@@ -633,6 +633,17 @@ namespace Corum2.Unity
                 case "cancelpack": rt.Merchant.CancelPack("script"); break;
                 case "close": rt.Merchant.RequestClose(); rt.Merchant.AnswerClose(kv[1] == "yes"); break;
                 case "exit": rt.AnswerExit(kv[1] == "yes"); break;
+                case "wallet": rt.G.LevelExp = int.Parse(kv[1], CultureInfo.InvariantCulture); break;
+                case "level": rt.G.Level = int.Parse(kv[1], CultureInfo.InvariantCulture); rt.G.LevelExp = 0; break;
+                case "buykind":
+                {
+                    // buykind=<Kind>: buy the first unsold stock of that kind (test setup adds one if the visit has none, logged)
+                    var st = rt.Merchant.Here;
+                    var i = st.Stock.FindIndex(x => x.Kind == kv[1] && !x.Sold);
+                    if (i < 0) { st.Stock.Add(new Corum2.Core.P1.MerchantStock { Kind = kv[1], BuffId = "BF-ITEM" }); i = st.Stock.Count - 1; res = "addedStock;"; }
+                    res += rt.Merchant.Buy(i) ?? "ok";
+                    break;
+                }
                 case "save": rt.SaveCheckpoint("script"); break;
                 case "load": res = rt.RestoreCheckpoint("script") ? "ok" : "noCheckpoint"; break;
                 case "lethal":
