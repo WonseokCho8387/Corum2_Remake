@@ -1,0 +1,152 @@
+{
+ "checker": "working tree",
+ "originalPass": {
+  "main": {
+   "TC-02-01": true,
+   "TC-03-01": true,
+   "TC-03-06": true,
+   "TC-03-07": true,
+   "TC-03-08": true,
+   "TC-03-09": true
+  },
+  "plane": {
+   "TC-01-01": true
+  },
+  "dev": {
+   "TC-02-01": true
+  },
+  "slide": {
+   "TC-03-04": true
+  }
+ },
+ "prior": [
+  {
+   "TC": "TC-01-01",
+   "case": "no_simulation_ticks",
+   "expected": false,
+   "actual": false
+  },
+  {
+   "TC": "TC-01-01",
+   "case": "enemy_plane_different_from_player",
+   "expected": false,
+   "actual": false
+  },
+  {
+   "TC": "TC-01-01",
+   "case": "boss_samples_exceed_all_samples",
+   "expected": false,
+   "actual": false
+  },
+  {
+   "TC": "TC-02-01",
+   "case": "second_jump_reuses_first_input",
+   "expected": false,
+   "actual": false
+  },
+  {
+   "TC": "TC-02-01",
+   "case": "second_scroll_reuses_first_request",
+   "expected": false,
+   "actual": false
+  },
+  {
+   "TC": "TC-02-01",
+   "case": "ring_B_disposition_absent",
+   "expected": false,
+   "actual": false
+  },
+  {
+   "TC": "TC-03-01",
+   "case": "run_continues_after_release",
+   "expected": false,
+   "actual": false
+  },
+  {
+   "TC": "TC-03-06",
+   "case": "no_direction_on_dive_input",
+   "expected": false,
+   "actual": false
+  },
+  {
+   "TC": "TC-03-07",
+   "case": "second_ability_after_landing",
+   "expected": false,
+   "actual": false
+  },
+  {
+   "TC": "TC-03-08",
+   "case": "rejected_attack_after_landing",
+   "expected": false,
+   "actual": false
+  },
+  {
+   "TC": "TC-03-09",
+   "case": "action_before_landing",
+   "expected": false,
+   "actual": false
+  },
+  {
+   "TC": "TC-03-09",
+   "case": "used_counter_missing_before_reset",
+   "expected": false,
+   "actual": false
+  }
+ ],
+ "new": [
+  {
+   "case": "jump_before_its_own_press",
+   "tc": "TC-02-01",
+   "expectedPass": false,
+   "actualPass": false
+  },
+  {
+   "case": "air_frames_exceed_all",
+   "tc": "TC-01-01",
+   "expectedPass": false,
+   "actualPass": false
+  },
+  {
+   "case": "impossible_boss_motion_subset",
+   "tc": "TC-01-01",
+   "expectedPass": false,
+   "actualPass": false
+  },
+  {
+   "case": "zero_propelled_despite_walking_AI",
+   "tc": "TC-01-01",
+   "expectedPass": false,
+   "actualPass": false
+  },
+  {
+   "case": "assignment_without_neutral_event",
+   "tc": "TC-02-01",
+   "expectedPass": false,
+   "actualPass": false
+  },
+  {
+   "case": "wrong_item_used_with_valid_request_id",
+   "tc": "TC-02-01",
+   "expectedPass": false,
+   "actualPass": false
+  },
+  {
+   "case": "discard_asked_for_other_selected_item",
+   "tc": "TC-02-01",
+   "expectedPass": false,
+   "actualPass": false
+  },
+  {
+   "case": "slide_claims_unrelated_jump_input",
+   "tc": "TC-03-04",
+   "expectedPass": false,
+   "actualPass": false
+  },
+  {
+   "case": "left_exit_ticks_never_leave_ceiling",
+   "tc": "TC-03-04",
+   "expectedPass": false,
+   "actualPass": false
+  }
+ ]
+}

@@ -13,6 +13,8 @@ the sidecar is used only when its runId equals the log's and, with a manifest be
 import copy
 import hashlib
 import json
+import struct
+import math
 import os
 import re
 import sys
@@ -53,8 +55,15 @@ def stick_neutral(stick, dz):
     """Dir8Util.FromStick: None when |v| < deadzone or |v| <= 0 (the exact boundary is not neutral)."""
     if dz is None or not (isinstance(stick, list) and len(stick) == 2 and all(isinstance(c, (int, float)) for c in stick)):
         return False
-    mag = (stick[0] ** 2 + stick[1] ** 2) ** 0.5
-    return mag < dz or mag <= 0.0
+    # R7 (GPT R5-R6 review): Core takes float x, y, deadzone; x * x + y * y is float arithmetic, then Math.Sqrt in double
+    # and the double compare with the float deadzone. Logged numbers are the shortest float round-trip, so f32() restores them.
+    x, y, d = f32(stick[0]), f32(stick[1]), f32(dz)
+    mag = math.sqrt(f32(f32(x * x) + f32(y * y)))
+    return mag < d or mag <= 0.0
+
+
+def f32(v):
+    return struct.unpack("<f", struct.pack("<f", float(v)))[0]
 
 
 def run_dt(ev):
@@ -654,11 +663,15 @@ def r3_invented_wait(m, s):
 
 
 def r4_boundary_release(m, s):
-    """The release stick has length exactly cursorDeadzone, which Dir8Util.FromStick does not treat as neutral."""
+    """The release stick is the smallest float x on the deadzone boundary that Dir8Util.FromStick does not treat as neutral.
+    R7 (GPT R5-R6 review): with float arithmetic, [dz, 0] itself can be neutral (e.g. 0.35f), so step up one float at a time."""
     dz = ring_deadzone()
+    v = f32(dz)
+    while stick_neutral([v, 0], dz):
+        v = struct.unpack("<f", struct.pack("<i", struct.unpack("<i", struct.pack("<f", v))[0] + 1))[0]
     for e in s:
-        if e["type"] in ("ring.release", "ring.cursor") and e["type"] == "ring.release":
-            e["stick"] = [dz, 0]
+        if e["type"] == "ring.release":
+            e["stick"] = [v, 0]
 
 
 def slide_selftest(ev):

@@ -1,0 +1,4 @@
+{
+ "GPT R5-R6 positive: dz 0.35f, stick [0.35,0] (Core: neutral, release + register)": true,
+ "GPT non-neutral control: dz 0.5f, stick [0.5,0] (Core: not neutral)": false
+}

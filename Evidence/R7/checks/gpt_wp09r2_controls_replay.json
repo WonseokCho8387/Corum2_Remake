@@ -1,0 +1,96 @@
+{
+ "controls": [
+  {
+   "mode": "plane",
+   "tc": "TC-01-01",
+   "segment": null,
+   "case": "teleport counted as moving boss",
+   "expected": false,
+   "actual": false,
+   "ok": true
+  },
+  {
+   "mode": "dev",
+   "tc": "TC-02-01",
+   "segment": "DevKb_RegisterUp",
+   "case": "non-neutral release vector",
+   "expected": false,
+   "actual": false,
+   "ok": true
+  },
+  {
+   "mode": "dev",
+   "tc": "TC-02-01",
+   "segment": "DevPad_UseQuickslots",
+   "case": "use before its own accepted request",
+   "expected": false,
+   "actual": false,
+   "ok": true
+  },
+  {
+   "mode": "dev",
+   "tc": "TC-02-01",
+   "segment": "DevPad_Discard",
+   "case": "confirmed item still in inventory",
+   "expected": false,
+   "actual": false,
+   "ok": true
+  },
+  {
+   "mode": "slide",
+   "tc": "TC-03-04",
+   "segment": "SlideLeftKb",
+   "case": "one consumed Jump press starts two slides",
+   "expected": false,
+   "actual": false,
+   "ok": true
+  },
+  {
+   "mode": "slide",
+   "tc": "TC-03-04",
+   "segment": "SlideLeftKb",
+   "case": "stationary until one-tick 3.24m exit",
+   "expected": false,
+   "actual": false,
+   "ok": true
+  },
+  {
+   "mode": "plane",
+   "tc": "TC-01-01",
+   "segment": null,
+   "case": "all samples propelled including first; compare source invariant only",
+   "expected": true,
+   "actual": true,
+   "ok": true
+  },
+  {
+   "mode": "main",
+   "case": "original",
+   "expected": true,
+   "actual": true,
+   "ok": true
+  },
+  {
+   "mode": "plane",
+   "case": "original",
+   "expected": true,
+   "actual": true,
+   "ok": true
+  },
+  {
+   "mode": "dev",
+   "case": "original",
+   "expected": true,
+   "actual": true,
+   "ok": true
+  },
+  {
+   "mode": "slide",
+   "case": "original",
+   "expected": true,
+   "actual": true,
+   "ok": true
+  }
+ ],
+ "all_ok": true
+}
