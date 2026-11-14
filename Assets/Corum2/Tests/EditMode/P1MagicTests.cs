@@ -254,7 +254,7 @@ namespace Corum2.Tests
             m.Motion(QCF);
             m.H.Press(LogicalAction.Attack).Press(LogicalAction.ButtonB).Step();
             m.Settle(20);
-            Assert.AreEqual(2, m.H.Count("p1.magic.refuse", "MultipleSpells"));
+            Assert.AreEqual(3, m.H.Count("p1.magic.refuse", "MultipleSpells"), "one tick summary + one per press");
             Assert.AreEqual(0, m.H.Count("p1.magic.commit"));
             Assert.AreEqual(5f, m.G.CurMp);
             Assert.AreEqual(0, m.H.Count("attack.start"));

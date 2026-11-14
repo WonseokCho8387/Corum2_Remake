@@ -1296,7 +1296,9 @@ namespace Corum2.Core
             if (P.State == MotorState.Guard && front && !d.Unblockable)
             {
                 var sinceRb = _sim.GameTime - _guardPressGameTime;
-                var g = Ext != null ? Ext.IncomingDamage(d, dmg, true, ownerId) : GuardRule.Apply(dmg);
+                var parried = en != null && sinceRb <= _p.ParryWindow + 1e-6;
+                // P1 BAL-05/06: a parry is a 0-damage event (P1 master §1.3 / BAL-05 "패링 0"); P0 keeps EXP-PARRY-02
+                var g = Ext != null ? (parried ? Ext.IncomingDamage(d, 0f, true, ownerId) : Ext.IncomingDamage(d, dmg, true, ownerId)) : GuardRule.Apply(dmg);
                 PlayerHp = Math.Max(0f, PlayerHp - g);
                 if (en != null && sinceRb <= _p.ParryWindow + 1e-6)
                 {
@@ -1404,9 +1406,17 @@ namespace Corum2.Core
             return a;
         }
 
+        /// <summary>P1: wake-up invincibility (R-06-10) applies to projectile / area / summon hits too.</summary>
+        public bool ExternalHittable(EnemyActor en) => en != null && en.Targetable && en.State != EnemyState.Wakeup;
+
         public void ApplyExternalHit(PlayerAttack a, EnemyActor en, string how)
         {
             if (en == null || !en.Targetable) return;
+            if (en.State == EnemyState.Wakeup)
+            {
+                Log.Emit("hit.skip", Pl, en.Id, "", en.State.ToString(), "TargetInvincible:Wakeup(R-06-10)", ("attackInstanceId", a.InstanceId), ("how", how));
+                return;
+            }
             ApplyHitToEnemy(a, en, 0, how);
         }
 

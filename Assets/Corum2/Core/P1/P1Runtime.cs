@@ -60,7 +60,7 @@ namespace Corum2.Core.P1
             "EXP-P1-STORY-01 story stage is a data field (chapter boundaries undecided)",
             "EXP-P1-FB-01 a fire ball that reaches the end of its life explodes there",
             "EXP-P1-WAVE-01 light sword legendary wave starts on the 4th normal hit",
-            "EXP-P1-B-01 B outside the ring without a completed motion keeps the P0 behaviour (selected-item use undecided)",
+            "EXP-P1-B-02 B outside the ring without a completed motion uses the item selected when the ring last closed (MAG-98 selected item)",
             "EXP-P1-REGION-01 merchant regions and safe spawns are sandbox test content",
             "EXP-P1-GROWTH-UI-01 growth screen input: left/right select, A confirm, Y reroll",
             "EXP-P1-SHOP-01 Up near the merchant opens the shop; up/down select, A buy/pick, B close (asks); the game is paused while the shop is open",
@@ -219,7 +219,18 @@ namespace Corum2.Core.P1
                 var r = Merchant.OpenShop();
                 return r == null ? "p1shop:open" : "rejected:p1shop:" + r;
             }
-            return Magic.TryCommand(e);
+            var mr = Magic.TryCommand(e);
+            if (mr != null) return mr;
+            // MAG-98: B without a completed motion uses the selected item (the item selected when the ring last closed;
+            // EXP-P1-B-02). In the ring, B stays discard (the router never sends it here).
+            if (e.Edge == InputEdge.Press && e.Action == LogicalAction.ButtonB && CombatContext && Sim.Items != null && Sim.Ring != null)
+            {
+                var item = Sim.Ring.LastSelectedItem;
+                if (string.IsNullOrEmpty(item) || Sim.Items.Inventory.Count(item) <= 0) return "p1B:noSelectedItem";
+                var u = Sim.Items.Request(item, UseSource.Quickslot, Sim.Log.RealTime, "B(selected item, MAG-98)");
+                return "p1B:use:" + item + ":" + u;
+            }
+            return null;
         }
 
         public void Observe(Dir8 held) => Magic.Observe(held, Sim.GameTime);

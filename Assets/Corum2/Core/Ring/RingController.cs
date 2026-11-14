@@ -48,6 +48,8 @@ namespace Corum2.Core
         public bool IsOpen => Mode != RingMode.Closed;
         public int Page { get; private set; }
         public int SelectedSlot { get; private set; } = -1;
+        /// <summary>Item that was selected when the ring last closed (P1 MAG-98: plain B outside the ring uses it).</summary>
+        public string LastSelectedItem { get; private set; } = "";
         public float CursorX { get; private set; }
         public float CursorY { get; private set; }
         /// <summary>Item fixed by Y (registration), shown in Detail, or asked about in ConfirmDiscard.</summary>
@@ -123,6 +125,7 @@ namespace Corum2.Core
         {
             if (!IsOpen) return;
             var before = Mode;
+            if (SelectedItem != null) LastSelectedItem = SelectedItem;
             Mode = RingMode.Closed;
             LastCloseReason = reason;
             TargetItem = "";

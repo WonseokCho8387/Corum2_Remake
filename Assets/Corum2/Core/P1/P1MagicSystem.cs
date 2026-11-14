@@ -126,12 +126,20 @@ namespace Corum2.Core.P1
             if (e.Edge != InputEdge.Press || !P1CommandRecognizer.TryButton(e.Action, out var button)) return null;
             if (!_rt.CombatContext) return null;
             var now = _rt.Sim.GameTime;
+            if (_multiRefused.Contains(e.EventId))
+            {
+                // MAG-106: every press of a same-tick multi-spell completion is refused, none falls back to X/A/B
+                Recognizer.Clear(Pl.HeldDir);
+                Refusals++;
+                LastResult = "refused:MultipleSpellsSameTick";
+                Emit("p1.magic.refuse", "MultipleSpellsSameTick(MAG-106)", ("inputEventId", e.EventId), ("consumed", false));
+                return "rejected:p1magic:MultipleSpellsSameTick(MAG-106)";
+            }
             var s = Recognizer.Match(button, now, out var motionFacing);
             if (s == null) return null;
             Emit("p1.magic.command", "Matched(MAG-92~94)", ("spellId", s.Id), ("button", button), ("inputEventId", e.EventId), ("facing", Pl.Facing),
                 ("history", Recognizer.Describe(now)));
             Recognizer.Clear(Pl.HeldDir);
-            if (_multiRefused.Contains(e.EventId)) return Refuse(s, "MultipleSpellsSameTick(MAG-106)", e.EventId);
             if (!Learned(s)) return Refuse(s, "NotLearned(MAG-06/41, no fallback MAG-103/104)", e.EventId);
             var summonRefuse = SummonConflict(s);
             if (summonRefuse != null) return Refuse(s, summonRefuse, e.EventId);
@@ -531,7 +539,7 @@ namespace Corum2.Core.P1
                 var bestD = float.MaxValue;
                 foreach (var en in C.Enemies)
                 {
-                    if (!en.Targetable || p.Hit.Contains(en.Id) || !en.Body.Overlaps(box)) continue;
+                    if (!C.ExternalHittable(en) || p.Hit.Contains(en.Id) || !en.Body.Overlaps(box)) continue;
                     var dd = Math.Abs(en.Body.CenterX - p.Pos.X);
                     if (dd < bestD) { bestD = dd; hit = en; }
                 }

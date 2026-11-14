@@ -243,6 +243,7 @@ namespace Corum2.Core
         {
             if (Router == null) { toGame.Add(e); return; }
             Router.Handle(e, toGame);
+            if (Ring.IsOpen) P1?.Magic.ClearBuffer("RingOpened(MAG-99)"); // even if it closes again before the next tick
         }
 
         float _stickX, _stickY;
